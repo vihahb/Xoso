@@ -1,0 +1,1824 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:visibility="invisible"
+            android:textColor="@color/colorPrimary"
+            android:gravity="center"
+            android:textSize="@dimen/font_16"
+            android:id="@+id/tvContent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Chưa có kết quả" />
+
+        <ScrollView
+            android:id="@+id/scroll_central"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:id="@+id/ln_data"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/size_8"
+                    android:layout_marginTop="@dimen/size_8"
+                    android:gravity="center"
+                    android:text="Kết quả xổ số miền Trung"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorPrimary"
+                    android:textStyle="bold" />
+
+
+                <!-- Linear Table -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+                    <!-- Table title -->
+                    <TableLayout
+                        android:layout_width="@dimen/size_36"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_height="@dimen/size_36"
+                            android:layout_weight="1"
+                            android:background="@drawable/bolder_table"
+                            android:gravity="center"
+                            android:text="Tỉnh"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/font_16"
+                            android:textStyle="bold" />
+                        <!-- Row giai 8 -->
+                        <TableRow
+                            android:id="@+id/tableRowEight"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/size_24">
+
+                            <ImageView
+                                android:id="@+id/icEightTitle"
+                                android:layout_width="0dp"
+                                android:layout_height="36dp"
+                                android:layout_weight="0.3"
+                                android:background="@drawable/bolder_table"
+                                android:gravity="center"
+                                android:src="@mipmap/ic_g8" />
+                        </TableRow>
+
+                        <!-- Row giai 7 -->
+                        <TableRow
+                            android:id="@+id/tableRowSeven"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:id="@+id/icSevenTitle"
+                                android:layout_width="0dp"
+                                android:layout_height="36dp"
+                                android:layout_weight="0.3"
+                                android:background="@drawable/bolder_table"
+                                android:gravity="center"
+                                android:src="@mipmap/ic_g7" />
+                        </TableRow>
+
+                        <!-- Row giai 6 -->
+                        <TableRow
+                            android:id="@+id/tableRowSix"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bolder_table">
+
+                            <ImageView
+                                android:id="@+id/icSixTitle"
+                                android:layout_width="0dp"
+                                android:layout_height="@dimen/size_108"
+                                android:layout_weight="0.3"
+                                android:gravity="center"
+                                android:src="@mipmap/ic_g6" />
+                        </TableRow>
+
+                        <!--Row giai 5-->
+                        <TableRow
+                            android:id="@+id/tableRowFive"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:id="@+id/icFiveTitle"
+                                android:layout_width="0dp"
+                                android:layout_height="@dimen/size_36"
+                                android:layout_weight="0.3"
+                                android:gravity="center"
+                                android:src="@mipmap/ic_g5" />
+                        </TableRow>
+
+                        <!-- Row giai 4 -->
+                        <TableRow
+                            android:id="@+id/tableRowFourd"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bolder_table">
+
+                            <ImageView
+                                android:id="@+id/icFourdTitle"
+                                android:layout_width="match_parent"
+                                android:layout_height="252dp"
+                                android:layout_weight="0.3"
+                                android:gravity="center"
+                                android:src="@mipmap/ic_g4" />
+                        </TableRow>
+
+                        <!--Row giai ba-->
+                        <TableRow
+                            android:id="@+id/tableRowThird"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ImageView
+                                android:id="@+id/icThirdTitle"
+                                android:layout_width="0dp"
+                                android:layout_height="@dimen/size_36"
+                                android:layout_marginBottom="@dimen/size_18"
+                                android:layout_marginTop="@dimen/size_18"
+                                android:layout_weight="0.3"
+                                android:gravity="center"
+                                android:src="@mipmap/ic_g3" />
+                        </TableRow>
+
+                        <!--Row giai nhi-->
+                        <TableRow
+                            android:id="@+id/tableRowSecond"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:id="@+id/icSecondTitle"
+                                android:layout_width="0dp"
+                                android:layout_height="36dp"
+                                android:layout_weight="0.3"
+                                android:background="@drawable/bolder_table"
+                                android:gravity="center"
+                                android:src="@mipmap/ic_g2" />
+                        </TableRow>
+
+                        <!--Row giai nhat-->
+                        <TableRow
+                            android:id="@+id/tableRowFirst"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:id="@+id/icFirstTitle"
+                                android:layout_width="0dp"
+                                android:layout_height="36dp"
+                                android:layout_weight="0.3"
+                                android:background="@drawable/bolder_table"
+                                android:gravity="center"
+                                android:src="@mipmap/ic_g1" />
+                        </TableRow>
+
+                        <!--Row giai dac biet-->
+                        <TableRow
+                            android:id="@+id/tableRowDB"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:id="@+id/tvSpecialTitle"
+                                android:layout_width="0dp"
+                                android:layout_height="36dp"
+                                android:layout_weight="0.3"
+                                android:background="@drawable/bolder_table"
+                                android:gravity="center"
+                                android:src="@mipmap/ic_gdb" />
+                        </TableRow>
+                    </TableLayout>
+
+                    <!--Table region 1-->
+                    <TableLayout
+                        android:id="@+id/central_region_1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bolder_table"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:background="@drawable/bolder_table"
+                            android:id="@+id/tvRegionTitle1"
+                            android:layout_height="@dimen/size_36"
+                            android:gravity="center"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/font_16"
+                            android:textStyle="bold" />
+
+                        <!-- Row giai 8 -->
+                        <TableRow
+                            android:id="@+id/tableRowEightVl1"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/size_24"
+                            android:background="@drawable/bolder_table">
+
+                            <TextView
+                                android:id="@+id/tv8_1"
+                                android:layout_height="@dimen/size_36"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:textColor="#000000"
+                                android:textSize="@dimen/font_15" />
+                        </TableRow>
+
+                        <!-- Row giai 7 -->
+                        <TableRow
+                            android:id="@+id/tableRowSevenVl1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bolder_table">
+
+                            <TextView
+                                android:id="@+id/tv7_1"
+                                android:layout_height="@dimen/size_36"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:textColor="#000000"
+                                android:textSize="@dimen/font_15" />
+
+                        </TableRow>
+
+                        <!-- Row giai 6 -->
+                        <TableRow
+                            android:id="@+id/tableRowSixVl1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bolder_table"
+                            android:weightSum="1">
+
+                            <TableLayout android:layout_weight="1">
+
+                                <TableRow
+                                    android:layout_width="0dp"
+                                    android:gravity="center">
+
+                                    <TextView
+                                        android:id="@+id/tv6_1"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/size_36"
+                                        android:gravity="center"
+                                        android:textStyle="bold"
+                                        android:textColor="#000000"
+                                        android:textSize="@dimen/font_15" />
+                                </TableRow>
+
+                                <TableRow
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:gravity="center">
+
+                                    <TextView
+                                        android:id="@+id/tv6_2"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/size_36"
+                                        android:gravity="center"
+                                        android:textStyle="bold"
+                                        android:textColor="#000000"
+                                        android:textSize="@dimen/font_15" />
+                                </TableRow>
+
+                                <TableRow
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:gravity="center">
+
+                                    <TextView
+                                        android:id="@+id/tv6_3"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/size_36"
+                                        android:gravity="center"
+                                        android:textStyle="bold"
+                                        android:textColor="#000000"
+                                        android:textSize="@dimen/font_15" />
+                                </TableRow>
+                            </TableLayout>
+                        </TableRow>
+
+                        <!--Row giai 5-->
+                        <TableRow
+                            android:id="@+id/tableRowFiveVl1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bolder_table"
+                            android:gravity="center">
+
+                            <TextView
+                                android:id="@+id/tv5_1"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/size_36"
+                                android:gravity="center"
+                                android:textColor="#000000"
+                                android:textStyle="bold"
+                                android:textSize="@dimen/font_15" />
+                        </TableRow>
+
+                        <!-- Row giai 4 -->
+                        <TableRow
+                            android:id="@+id/tableRowFourdVl1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bolder_table"
+                            android:weightSum="1">
+
+                            <TableLayout android:layout_weight="1">
+
+                                <TableRow
+                                    android:layout_width="0dp"
+                                    android:gravity="center">
+
+                                    <TextView
+                                        android:id="@+id/tv4_1"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/size_36"
+                                        android:gravity="center"
+                                        android:textStyle="bold"
+                                        android:textColor="#000000"
+                                        android:textSize="@dimen/font_15" />
+                                </TableRow>
+
+                                <TableRow
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:gravity="center">
+
+                                    <TextView
+                                        android:id="@+id/tv4_2"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/size_36"
+                                        android:gravity="center"
+                                        android:textStyle="bold"
+                                        android:textColor="#000000"
+                                        android:textSize="@dimen/font_15" />
+                                </TableRow>
+
+                                <TableRow
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:gravity="center">
+
+                                    <TextView
+                                        android:id="@+id/tv4_3"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/size_36"
+                                        android:gravity="center"
+                                        android:textStyle="bold"
+                                        android:textColor="#000000"
+                                        android:textSize="@dimen/font_15" />
+                                </TableRow>
+
+                                <TableRow
+                                    android:layout_width="0dp"
+                                    android:gravity="center">
+
+                                    <TextView
+                                        android:id="@+id/tv4_4"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/size_36"
+                                        android:gravity="center"
+                                        android:textStyle="bold"
+                                        android:textColor="#000000"
+                                        android:textSize="@dimen/font_15" />
+                                </TableRow>
+
+                                <TableRow
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:gravity="center">
+
+                                    <TextView
+                                        android:id="@+id/tv4_5"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/size_36"
+                                        android:gravity="center"
+                                        android:textStyle="bold"
+                                        android:textColor="#000000"
+                                        android:textSize="@dimen/font_15" />
+                                </TableRow>
+
+                                <TableRow
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:gravity="center">
+
+                                    <TextView
+                                        android:id="@+id/tv4_6"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/size_36"
+                                        android:gravity="center"
+                                        android:textStyle="bold"
+                                        android:textColor="#000000"
+                                        android:textSize="@dimen/font_15" />
+                                </TableRow>
+
+                                <TableRow
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:gravity="center">
+
+                                    <TextView
+                                        android:id="@+id/tv4_7"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/size_36"
+                                        android:gravity="center"
+                                        android:textStyle="bold"
+                                        android:textColor="#000000"
+                                        android:textSize="@dimen/font_15" />
+                                </TableRow>
+                            </TableLayout>
+                        </TableRow>
+
+                        <!--Row giai ba-->
+                        <TableRow
+                            android:id="@+id/tableRowThirdVl1"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/bolder_table">
+
+                            <TableLayout android:layout_weight="1">
+
+                                <TableRow
+                                    android:layout_width="0dp"
+                                    android:gravity="center">
+
+                                    <TextView
+                                        android:id="@+id/tv3_1"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/size_36"
+                                        android:gravity="center"
+                                        android:textStyle="bold"
+                                        android:textColor="#000000"
+                                        android:textSize="@dimen/font_15" />
+                                </TableRow>
+
+                                <TableRow
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:gravity="center">
+
+                                    <TextView
+                                        android:id="@+id/tv3_2"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/size_36"
+                                        android:gravity="center"
+                                        android:textStyle="bold"
+                                        android:textColor="#000000"
+                                        android:textSize="@dimen/font_15" />
+                                </TableRow>
+                            </TableLayout>
+                        </TableRow>
+
+                        <!--Row giai nhi-->
+                        <TableRow
+                            android:id="@+id/tableRowSecondVl1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bolder_table"
+                            android:gravity="center">
+
+                            <TextView
+                                android:id="@+id/tv2_1"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/size_36"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:textColor="#000000"
+                                android:textSize="@dimen/font_15" />
+                        </TableRow>
+
+                        <!--Row giai nhat-->
+                        <TableRow
+                            android:id="@+id/tableRowFirstVl1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bolder_table"
+                            android:gravity="center">
+
+                            <TextView
+                                android:id="@+id/tv1"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/size_36"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:textColor="#000000"
+                                android:textSize="@dimen/font_15" />
+                        </TableRow>
+
+                        <!--Row giai dac biet-->
+                        <TableRow
+                            android:id="@+id/tableRowDBVl1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bolder_table"
+                            android:gravity="center"
+                            android:weightSum="1">
+
+                            <TextView
+                                android:id="@+id/tvDb"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/size_36"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="@dimen/font_15" />
+                        </TableRow>
+                    </TableLayout>
+
+                    <!--Table region 2-->
+                    <TableLayout
+                        android:id="@+id/central_region_2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/tvRegionTitle2"
+                            android:layout_height="@dimen/size_36"
+                            android:background="@drawable/bolder_table"
+                            android:gravity="center"
+
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/font_16"
+                            android:textStyle="bold" />
+
+                        <!-- Row giai 8 -->
+                        <TableRow
+                            android:id="@+id/tableRowEightVl2"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/size_24"
+                            android:background="@drawable/bolder_table">
+
+                            <TextView
+                                android:id="@+id/tv8_2"
+                                android:layout_height="@dimen/size_36"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:textColor="#000000"
+                                android:textSize="@dimen/font_15" />
+                        </TableRow>
+
+                        <!-- Row giai 7 -->
+                        <TableRow
+                            android:id="@+id/tableRowSevenVl2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bolder_table">
+
+                            <TextView
+                                android:id="@+id/tv7_2"
+                                android:layout_height="@dimen/size_36"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:textColor="#000000"
+                                android:textSize="@dimen/font_15" />
+
+                        </TableRow>
+
+                        <!-- Row giai 6 -->
+                        <TableRow
+                            android:id="@+id/tableRowSixVl2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bolder_table"
+                            android:weightSum="1">
+
+                            <TableLayout android:layout_weight="1">
+
+                                <TableRow
+                                    android:layout_width="0dp"
+                                    android:gravity="center">
+
+                                    <TextView
+                                        android:id="@+id/tv6_1_2"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/size_36"
+                                        android:gravity="center"
+                                        android:textStyle="bold"
+                                        android:textColor="#000000"
+                                        android:textSize="@dimen/font_15" />
+                                </TableRow>
+
+                                <TableRow
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:gravity="center">
+
+                                    <TextView
+                                        android:id="@+id/tv6_2_2"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/size_36"
+                                        android:gravity="center"
+                                        android:textStyle="bold"
+                                        android:textColor="#000000"
+                                        android:textSize="@dimen/font_15" />
+                                </TableRow>
+
+                                <TableRow
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:gravity="center">
+
+                                    <TextView
+                                        android:id="@+id/tv6_3_2"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/size_36"
+                                        android:gravity="center"
+                                        android:textStyle="bold"
+                                        android:textColor="#000000"
+                                        android:textSize="@dimen/font_15" />
+                                </TableRow>
+                            </TableLayout>
+                        </TableRow>
+
+                        <!--Row giai 5-->
+                        <TableRow
+                            android:id="@+id/tableRowFiveVl2"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/bolder_table"
+                            android:gravity="center">
+
+                            <TextView
+                                android:id="@+id/tv5_2"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/size_36"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:textColor="#000000"
+                                android:textSize="@dimen/font_15" />
+                        </TableRow>
+
+                        <!-- Row giai 4 -->
+                        <TableRow
+                            android:id="@+id/tableRowFourdVl2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bolder_table"
+                            android:weightSum="1">
+
+                            <TableLayout android:layout_weight="1">
+
+                                <TableRow
+                                    android:layout_width="0dp"
+                                    android:gravity="center">
+
+                                    <TextView
+                                        android:id="@+id/tv4_1_2"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/size_36"
+                                        android:textStyle="bold"
+                                        android:gravity="center"
+                                        android:textColor="#000000"
+                                        android:textSize="@dimen/font_15" />
+                                </TableRow>
+
+                                <TableRow
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:gravity="center">
+
+                                    <TextView
+                                        android:id="@+id/tv4_2_2"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/size_36"
+                                        android:textStyle="bold"
+                                        android:gravity="center"
+                                        android:textColor="#000000"
+                                        android:textSize="@dimen/font_15" />
+                                </TableRow>
+
+                                <TableRow
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:gravity="center">
+
+                                    <TextView
+                                        android:id="@+id/tv4_3_2"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/size_36"
+                                        android:textStyle="bold"
+                                        android:gravity="center"
+                                        android:textColor="#000000"
+                                        android:textSize="@dimen/font_15" />
+                                </TableRow>
+
+                                <TableRow
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center">
+
+                                    <TextView
+                                        android:id="@+id/tv4_4_2"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/size_36"
+                                        android:textStyle="bold"
+                                        android:gravity="center"
+                                        android:textColor="#000000"
+                                        android:textSize="@dimen/font_15" />
+                                </TableRow>
+
+                                <TableRow
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:gravity="center">
+
+                                    <TextView
+                                        android:id="@+id/tv4_5_2"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/size_36"
+                                        android:textStyle="bold"
+                                        android:gravity="center"
+                                        android:textColor="#000000"
+                                        android:textSize="@dimen/font_15" />
+                                </TableRow>
+
+                                <TableRow
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:gravity="center">
+
+                                    <TextView
+                                        android:id="@+id/tv4_6_2"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/size_36"
+                                        android:textStyle="bold"
+                                        android:gravity="center"
+                                        android:textColor="#000000"
+                                        android:textSize="@dimen/font_15" />
+                                </TableRow>
+
+                                <TableRow
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:gravity="center">
+
+                                    <TextView
+                                        android:id="@+id/tv4_7_2"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/size_36"
+                                        android:textStyle="bold"
+                                        android:gravity="center"
+                                        android:textColor="#000000"
+                                        android:textSize="@dimen/font_15" />
+                                </TableRow>
+                            </TableLayout>
+                        </TableRow>
+
+                        <!--Row giai ba-->
+                        <TableRow
+                            android:id="@+id/tableRowThirdVl2"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/bolder_table">
+
+                            <TableLayout android:layout_weight="1">
+
+                                <TableRow
+                                    android:layout_width="0dp"
+                                    android:gravity="center">
+
+                                    <TextView
+                                        android:id="@+id/tv3_1_2"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/size_36"
+                                        android:gravity="center"
+                                        android:textStyle="bold"
+                                        android:textColor="#000000"
+                                        android:textSize="@dimen/font_15" />
+                                </TableRow>
+
+                                <TableRow
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:gravity="center">
+
+                                    <TextView
+                                        android:id="@+id/tv3_2_2"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/size_36"
+                                        android:gravity="center"
+                                        android:textStyle="bold"
+                                        android:textColor="#000000"
+                                        android:textSize="@dimen/font_15" />
+                                </TableRow>
+                            </TableLayout>
+                        </TableRow>
+
+                        <!--Row giai nhi-->
+                        <TableRow
+                            android:id="@+id/tableRowSecondVl2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bolder_table"
+                            android:gravity="center">
+
+                            <TextView
+                                android:id="@+id/tv2_2"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/size_36"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:textColor="#000000"
+                                android:textSize="@dimen/font_15" />
+                        </TableRow>
+
+                        <!--Row giai nhat-->
+                        <TableRow
+                            android:id="@+id/tableRowFirstVl2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bolder_table"
+                            android:gravity="center">
+
+                            <TextView
+                                android:id="@+id/tv1_2"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/size_36"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:textColor="#000000"
+                                android:textSize="@dimen/font_15" />
+                        </TableRow>
+
+                        <!--Row giai dac biet-->
+                        <TableRow
+                            android:id="@+id/tableRowDBVl2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bolder_table"
+                            android:gravity="center"
+                            android:weightSum="1">
+
+                            <TextView
+                                android:id="@+id/tvDb_2"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/size_36"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="@dimen/font_15" />
+                        </TableRow>
+                    </TableLayout>
+
+                    <!--Table region 3-->
+                    <TableLayout
+                        android:id="@+id/central_region_3"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/tvRegionTitle3"
+                            android:layout_height="@dimen/size_36"
+                            android:background="@drawable/bolder_table"
+                            android:gravity="center"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/font_16"
+                            android:textStyle="bold" />
+
+                        <!-- Row giai 8 -->
+                        <TableRow
+                            android:id="@+id/tableRowEightVl3"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/size_24"
+                            android:background="@drawable/bolder_table">
+
+                            <TextView
+                                android:id="@+id/tv8_3"
+                                android:layout_height="@dimen/size_36"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:textColor="#000000"
+                                android:textSize="@dimen/font_15" />
+                        </TableRow>
+
+                        <!-- Row giai 7 -->
+                        <TableRow
+                            android:id="@+id/tableRowSevenVl3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bolder_table">
+
+                            <TextView
+                                android:id="@+id/tv7_3"
+                                android:layout_height="@dimen/size_36"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:textColor="#000000"
+                                android:textSize="@dimen/font_15" />
+
+                        </TableRow>
+
+                        <!-- Row giai 6 -->
+                        <TableRow
+                            android:id="@+id/tableRowSixVl3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bolder_table"
+                            android:weightSum="1">
+
+                            <TableLayout
+                                android:layout_weight="1"
+                                android:background="@drawable/bolder_table">
+
+                                <TableRow
+                                    android:layout_width="0dp"
+                                    android:gravity="center">
+
+                                    <TextView
+                                        android:id="@+id/tv6_1_3"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/size_36"
+                                        android:gravity="center"
+                                        android:textStyle="bold"
+                                        android:textColor="#000000"
+                                        android:textSize="@dimen/font_15" />
+                                </TableRow>
+
+                                <TableRow
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:gravity="center">
+
+                                    <TextView
+                                        android:id="@+id/tv6_2_3"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/size_36"
+                                        android:gravity="center"
+                                        android:textStyle="bold"
+                                        android:textColor="#000000"
+                                        android:textSize="@dimen/font_15" />
+                                </TableRow>
+
+                                <TableRow
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:gravity="center">
+
+                                    <TextView
+                                        android:id="@+id/tv6_3_3"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/size_36"
+                                        android:gravity="center"
+                                        android:textStyle="bold"
+                                        android:textColor="#000000"
+                                        android:textSize="@dimen/font_15" />
+                                </TableRow>
+                            </TableLayout>
+                        </TableRow>
+
+                        <!--Row giai 5-->
+                        <TableRow
+                            android:id="@+id/tableRowFiveVl3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bolder_table"
+                            android:gravity="center">
+
+                            <TextView
+                                android:id="@+id/tv5_3"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/size_36"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:textColor="#000000"
+                                android:textSize="@dimen/font_15" />
+                        </TableRow>
+
+                        <!-- Row giai 4 -->
+                        <TableRow
+                            android:id="@+id/tableRowFourdVl3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bolder_table"
+                            android:weightSum="1">
+
+                            <TableLayout android:layout_weight="1">
+
+                                <TableRow
+                                    android:layout_width="0dp"
+                                    android:gravity="center">
+
+                                    <TextView
+                                        android:id="@+id/tv4_1_3"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/size_36"
+                                        android:gravity="center"
+                                        android:textStyle="bold"
+                                        android:textColor="#000000"
+                                        android:textSize="@dimen/font_15" />
+                                </TableRow>
+
+                                <TableRow
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:gravity="center">
+
+                                    <TextView
+                                        android:id="@+id/tv4_2_3"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/size_36"
+                                        android:gravity="center"
+                                        android:textStyle="bold"
+                                        android:textColor="#000000"
+                                        android:textSize="@dimen/font_15" />
+                                </TableRow>
+
+                                <TableRow
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:gravity="center">
+
+                                    <TextView
+                                        android:id="@+id/tv4_3_3"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/size_36"
+                                        android:gravity="center"
+                                        android:textStyle="bold"
+                                        android:textColor="#000000"
+                                        android:textSize="@dimen/font_15" />
+                                </TableRow>
+
+                                <TableRow
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center">
+
+                                    <TextView
+                                        android:id="@+id/tv4_4_3"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/size_36"
+                                        android:gravity="center"
+                                        android:textStyle="bold"
+                                        android:textColor="#000000"
+                                        android:textSize="@dimen/font_15" />
+                                </TableRow>
+
+                                <TableRow
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:gravity="center">
+
+                                    <TextView
+                                        android:id="@+id/tv4_5_3"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/size_36"
+                                        android:gravity="center"
+                                        android:textStyle="bold"
+                                        android:textColor="#000000"
+                                        android:textSize="@dimen/font_15" />
+                                </TableRow>
+
+                                <TableRow
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:gravity="center">
+
+                                    <TextView
+                                        android:id="@+id/tv4_6_3"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/size_36"
+                                        android:gravity="center"
+                                        android:textStyle="bold"
+                                        android:textColor="#000000"
+                                        android:textSize="@dimen/font_15" />
+                                </TableRow>
+
+                                <TableRow
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:gravity="center">
+
+                                    <TextView
+                                        android:id="@+id/tv4_7_3"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/size_36"
+                                        android:gravity="center"
+                                        android:textStyle="bold"
+                                        android:textColor="#000000"
+                                        android:textSize="@dimen/font_15" />
+                                </TableRow>
+                            </TableLayout>
+                        </TableRow>
+
+                        <!--Row giai ba-->
+                        <TableRow
+                            android:id="@+id/tableRowThirdVl3"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/bolder_table">
+
+                            <TableLayout android:layout_weight="1">
+
+                                <TableRow
+                                    android:layout_width="0dp"
+                                    android:gravity="center">
+
+                                    <TextView
+                                        android:id="@+id/tv3_1_3"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/size_36"
+                                        android:gravity="center"
+                                        android:textStyle="bold"
+                                        android:textColor="#000000"
+                                        android:textSize="@dimen/font_15" />
+                                </TableRow>
+
+                                <TableRow
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:gravity="center">
+
+                                    <TextView
+                                        android:id="@+id/tv3_2_3"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/size_36"
+                                        android:gravity="center"
+                                        android:textStyle="bold"
+                                        android:textColor="#000000"
+                                        android:textSize="@dimen/font_15" />
+                                </TableRow>
+                            </TableLayout>
+                        </TableRow>
+
+                        <!--Row giai nhi-->
+                        <TableRow
+                            android:id="@+id/tableRowSecondVl3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bolder_table"
+                            android:gravity="center">
+
+                            <TextView
+                                android:id="@+id/tv2_3"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/size_36"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:textColor="#000000"
+                                android:textSize="@dimen/font_15" />
+                        </TableRow>
+
+                        <!--Row giai nhat-->
+                        <TableRow
+                            android:id="@+id/tableRowFirstVl3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bolder_table"
+                            android:gravity="center">
+
+                            <TextView
+                                android:id="@+id/tv1_3"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/size_36"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:textColor="#000000"
+                                android:textSize="@dimen/font_15" />
+                        </TableRow>
+
+                        <!--Row giai dac biet-->
+                        <TableRow
+                            android:id="@+id/tableRowDBVl3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bolder_table"
+                            android:gravity="center"
+                            android:weightSum="1">
+
+                            <TextView
+                                android:id="@+id/tvDb_3"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/size_36"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="@dimen/font_15" />
+                        </TableRow>
+                    </TableLayout>
+                </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/tv_loto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/size_8"
+                    android:layout_marginTop="@dimen/size_8"
+                    android:gravity="center"
+                    android:text="Loto trực tiếp"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorPrimary"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TableLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/size_4"
+                        android:layout_weight="1"
+                        android:background="@drawable/bolder_table">
+
+                        <TableRow
+                            android:id="@+id/tableRowTitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4.5">
+
+                            <TextView
+                                android:id="@+id/tvTitle"
+                                android:layout_width="0dp"
+                                android:layout_height="36dp"
+                                android:layout_weight="0.5"
+                                android:background="@drawable/bolder_table"
+                                android:gravity="center"
+                                android:text="Đầu"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="@dimen/font_16" />
+
+                            <TextView
+                                android:id="@+id/tvLotoTitle1"
+                                android:layout_width="0dp"
+                                android:layout_height="36dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/bolder_table"
+                                android:gravity="center"
+
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="@dimen/font_16" />
+
+                            <TextView
+                                android:id="@+id/tvLotoTitle2"
+                                android:layout_width="0dp"
+                                android:layout_height="36dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/bolder_table"
+                                android:gravity="center"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="@dimen/font_16" />
+
+                            <TextView
+                                android:id="@+id/tvLotoTitle3"
+                                android:layout_width="0dp"
+                                android:layout_height="36dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/bolder_table"
+                                android:gravity="center"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="@dimen/font_16" />
+                        </TableRow>
+
+                        <!--dau 0-->
+                        <TableRow
+                            android:id="@+id/tableRow0"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4.5">
+
+                            <TextView
+                                android:id="@+id/tvTitle0"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.5"
+                                android:background="@drawable/bolder_table"
+                                android:gravity="center"
+                                android:text="0"
+                                android:textStyle="bold"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="@dimen/font_16" />
+
+                            <TextView
+                                android:id="@+id/tvLoto0_1"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@drawable/bolder_table"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:textColor="@color/black_75"
+                                android:textSize="@dimen/font_16" />
+
+                            <TextView
+                                android:id="@+id/tvLoto0_2"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@drawable/bolder_table"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:textColor="@color/black_75"
+                                android:textSize="@dimen/font_16" />
+
+                            <TextView
+                                android:id="@+id/tvLoto0_3"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@drawable/bolder_table"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:textColor="@color/black_75"
+                                android:textSize="@dimen/font_16" />
+
+                        </TableRow>
+
+                        <!--dau 1-->
+                        <TableRow
+                            android:id="@+id/tableRow1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4.5">
+
+                            <TextView
+                                android:id="@+id/tvTitle1"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.5"
+                                android:background="@drawable/bolder_table"
+                                android:gravity="center"
+                                android:text="1"
+                                android:textStyle="bold"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="@dimen/font_16" />
+
+                            <TextView
+                                android:id="@+id/tvLoto1_1"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@drawable/bolder_table"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:textColor="@color/black_75"
+                                android:textSize="@dimen/font_16" />
+
+                            <TextView
+                                android:id="@+id/tvLoto1_2"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@drawable/bolder_table"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:textColor="@color/black_75"
+                                android:textSize="@dimen/font_16" />
+
+                            <TextView
+                                android:id="@+id/tvLoto1_3"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@drawable/bolder_table"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:textColor="@color/black_75"
+                                android:textSize="@dimen/font_16" />
+
+                        </TableRow>
+
+                        <!--dau 2-->
+                        <TableRow
+                            android:id="@+id/tableRow2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4.5">
+
+                            <TextView
+                                android:id="@+id/tv2"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.5"
+                                android:background="@drawable/bolder_table"
+                                android:gravity="center"
+                                android:text="2"
+                                android:textStyle="bold"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="@dimen/font_16" />
+
+                            <TextView
+                                android:id="@+id/tvLoto2_1"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@drawable/bolder_table"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:textColor="@color/black_75"
+                                android:textSize="@dimen/font_16" />
+                            <TextView
+                                android:id="@+id/tvLoto2_2"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@drawable/bolder_table"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:textColor="@color/black_75"
+                                android:textSize="@dimen/font_16" />
+                            <TextView
+                                android:id="@+id/tvLoto2_3"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@drawable/bolder_table"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:textColor="@color/black_75"
+                                android:textSize="@dimen/font_16" />
+                        </TableRow>
+
+                        <!--dau 3-->
+                        <TableRow
+                            android:id="@+id/tableRow3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4.5">
+
+                            <TextView
+                                android:id="@+id/tv3"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.5"
+                                android:background="@drawable/bolder_table"
+                                android:gravity="center"
+                                android:text="3"
+                                android:textStyle="bold"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="@dimen/font_16" />
+
+                            <TextView
+                                android:id="@+id/tvLoto3_1"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@drawable/bolder_table"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:textColor="@color/black_75"
+                                android:textSize="@dimen/font_16" />
+                            <TextView
+                                android:id="@+id/tvLoto3_2"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@drawable/bolder_table"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:textColor="@color/black_75"
+                                android:textSize="@dimen/font_16" />
+                            <TextView
+                                android:id="@+id/tvLoto3_3"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@drawable/bolder_table"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:textColor="@color/black_75"
+                                android:textSize="@dimen/font_16" />
+
+                        </TableRow>
+
+                        <!--dau 4-->
+                        <TableRow
+                            android:id="@+id/tableRow4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4.5">
+
+                            <TextView
+                                android:id="@+id/tv4"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.5"
+                                android:background="@drawable/bolder_table"
+                                android:gravity="center"
+                                android:text="4"
+                                android:textStyle="bold"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="@dimen/font_16" />
+
+                            <TextView
+                                android:id="@+id/tvLoto4_1"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@drawable/bolder_table"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:textColor="@color/black_75"
+                                android:textSize="@dimen/font_16" />
+                            <TextView
+                                android:id="@+id/tvLoto4_2"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@drawable/bolder_table"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:textColor="@color/black_75"
+                                android:textSize="@dimen/font_16" />
+                            <TextView
+                                android:id="@+id/tvLoto4_3"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@drawable/bolder_table"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:textColor="@color/black_75"
+                                android:textSize="@dimen/font_16" />
+                        </TableRow>
+
+                        <!--dau 5-->
+                        <TableRow
+                            android:id="@+id/tableRow5"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4.5">
+
+                            <TextView
+                                android:id="@+id/tv5"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.5"
+                                android:background="@drawable/bolder_table"
+                                android:gravity="center"
+                                android:text="5"
+                                android:textStyle="bold"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="@dimen/font_16" />
+
+                            <TextView
+                                android:id="@+id/tvLoto5_1"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@drawable/bolder_table"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:textColor="@color/black_75"
+                                android:textSize="@dimen/font_16" />
+                            <TextView
+                                android:id="@+id/tvLoto5_2"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@drawable/bolder_table"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:textColor="@color/black_75"
+                                android:textSize="@dimen/font_16" />
+                            <TextView
+                                android:id="@+id/tvLoto5_3"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@drawable/bolder_table"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:textColor="@color/black_75"
+                                android:textSize="@dimen/font_16" />
+                        </TableRow>
+
+                        <!--dau 6-->
+                        <TableRow
+                            android:id="@+id/tableRow6"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4.5">
+
+                            <TextView
+                                android:id="@+id/tv6"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.5"
+                                android:background="@drawable/bolder_table"
+                                android:gravity="center"
+                                android:text="6"
+                                android:textStyle="bold"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="@dimen/font_16" />
+
+                            <TextView
+                                android:id="@+id/tvLoto6_1"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@drawable/bolder_table"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:textColor="@color/black_75"
+                                android:textSize="@dimen/font_16" />
+                            <TextView
+                                android:id="@+id/tvLoto6_2"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@drawable/bolder_table"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:textColor="@color/black_75"
+                                android:textSize="@dimen/font_16" />
+                            <TextView
+                                android:id="@+id/tvLoto6_3"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@drawable/bolder_table"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:textColor="@color/black_75"
+                                android:textSize="@dimen/font_16" />
+                        </TableRow>
+
+                        <!--dau 7-->
+                        <TableRow
+                            android:id="@+id/tableRow7"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4.5">
+
+                            <TextView
+                                android:id="@+id/tv7"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.5"
+                                android:background="@drawable/bolder_table"
+                                android:gravity="center"
+                                android:text="7"
+                                android:textStyle="bold"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="@dimen/font_16" />
+
+                            <TextView
+                                android:id="@+id/tvLoto7_1"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@drawable/bolder_table"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:textColor="@color/black_75"
+                                android:textSize="@dimen/font_16" />
+                            <TextView
+                                android:id="@+id/tvLoto7_2"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@drawable/bolder_table"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:textColor="@color/black_75"
+                                android:textSize="@dimen/font_16" />
+                            <TextView
+                                android:id="@+id/tvLoto7_3"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@drawable/bolder_table"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:textColor="@color/black_75"
+                                android:textSize="@dimen/font_16" />
+                        </TableRow>
+
+                        <!--dau 8-->
+                        <TableRow
+                            android:id="@+id/tableRow8"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4.5">
+
+                            <TextView
+                                android:id="@+id/tv8"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.5"
+                                android:background="@drawable/bolder_table"
+                                android:gravity="center"
+                                android:text="8"
+                                android:textStyle="bold"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="@dimen/font_16" />
+
+                            <TextView
+                                android:id="@+id/tvLoto8_1"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@drawable/bolder_table"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:textColor="@color/black_75"
+                                android:textSize="@dimen/font_16" />
+                            <TextView
+                                android:id="@+id/tvLoto8_2"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@drawable/bolder_table"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:textColor="@color/black_75"
+                                android:textSize="@dimen/font_16" />
+                            <TextView
+                                android:id="@+id/tvLoto8_3"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@drawable/bolder_table"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:textColor="@color/black_75"
+                                android:textSize="@dimen/font_16" />
+                        </TableRow>
+
+                        <!--dau 9-->
+                        <TableRow
+                            android:id="@+id/tableRow9"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4.5">
+
+                            <TextView
+                                android:id="@+id/tv9"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.5"
+                                android:background="@drawable/bolder_table"
+                                android:gravity="center"
+                                android:text="9"
+                                android:textStyle="bold"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="@dimen/font_16" />
+
+                            <TextView
+                                android:id="@+id/tvLoto9_1"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@drawable/bolder_table"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:textColor="@color/black_75"
+                                android:textSize="@dimen/font_16" />
+                            <TextView
+                                android:id="@+id/tvLoto9_2"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@drawable/bolder_table"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:textColor="@color/black_75"
+                                android:textSize="@dimen/font_16" />
+                            <TextView
+                                android:id="@+id/tvLoto9_3"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@drawable/bolder_table"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:textColor="@color/black_75"
+                                android:textSize="@dimen/font_16" />
+                        </TableRow>
+
+                    </TableLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </FrameLayout>
+</LinearLayout>

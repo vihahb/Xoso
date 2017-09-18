@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_north"
+        android:title="Miền Bắc" />
+    <item
+        android:id="@+id/menu_central"
+        android:title="Miền Trung" />
+    <item
+        android:id="@+id/menu_south"
+        android:title="Miền Nam" />
+    <item
+        android:id="@+id/menu_vietlott"
+        android:title="Vietlott" />
+</menu>

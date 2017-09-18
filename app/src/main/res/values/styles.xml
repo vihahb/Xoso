@@ -1,0 +1,53 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@mipmap/background_home</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="AppTabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabIndicatorHeight">0dp</item>
+        <item name="tabPaddingStart">0dp</item>
+        <item name="tabPaddingEnd">0dp</item>
+        <item name="tabBackground">?attr/selectableItemBackground</item>
+        <item name="tabTextAppearance">@style/AppTabTextAppearance</item>
+        <item name="tabSelectedTextColor">@color/colorPrimary</item>
+    </style>
+
+    <!-- for text -->
+    <style name="AppTabTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">12sp</item>
+        <item name="textAllCaps">false</item>
+    </style>
+
+    <!--Edit Text-->
+    <style name="EditProfile">
+        <item name="android:layout_marginLeft">@dimen/size_16</item>
+        <item name="android:layout_marginRight">@dimen/size_16</item>
+        <item name="android:background">@drawable/shadow_edtitext_2</item>
+        <item name="android:textColor">@color/black_75</item>
+        <item name="android:textColorHint">@color/black_55</item>
+        <item name="android:textSize">@dimen/font_16</item>
+        <item name="android:lines">1</item>
+        <item name="android:paddingLeft">@dimen/size_16</item>
+        <item name="android:paddingRight">@dimen/size_16</item>
+    </style>
+
+    <!--Button Primary-->
+    <style name="ButtonPrimary" parent="Base.Widget.AppCompat.Button">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">@dimen/font_16</item>
+        <item name="android:background">@drawable/button_background</item>
+        <item name="android:layout_marginLeft">32dp</item>
+        <item name="android:layout_marginRight">32dp</item>
+    </style>
+</resources>

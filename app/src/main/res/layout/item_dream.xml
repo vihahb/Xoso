@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <View
+            android:layout_width="@dimen/size_0_5"
+            android:layout_height="match_parent"
+            android:background="@color/black_10"/>
+        <TextView
+            android:paddingTop="@dimen/size_4"
+            android:paddingBottom="@dimen/size_4"
+            android:gravity="center"
+            android:id="@+id/tv_dream_id"
+            android:layout_weight="0.5"
+            android:layout_width="0dp"
+            android:textSize="@dimen/font_16"
+            android:text="001"
+            android:layout_height="wrap_content" />
+        <View
+            android:layout_width="@dimen/size_0_5"
+            android:layout_height="match_parent"
+            android:background="@color/black_10"/>
+        <TextView
+            android:gravity="center"
+            android:id="@+id/tv_dream_name"
+            android:layout_weight="1.5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/font_16"
+            android:text="Bác Hồ"
+            android:paddingTop="@dimen/size_4"
+            android:paddingBottom="@dimen/size_4"/>
+
+        <View
+            android:layout_width="@dimen/size_0_5"
+            android:layout_height="match_parent"
+            android:background="@color/black_10"/>
+        <TextView
+            android:gravity="center"
+            android:id="@+id/tv_dream_number"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/font_16"
+            android:text="số 59 - 06"
+            android:paddingTop="@dimen/size_4"
+            android:paddingBottom="@dimen/size_4"/>
+        <View
+            android:layout_width="@dimen/size_0_5"
+            android:layout_height="match_parent"
+            android:background="@color/black_10"/>
+    </LinearLayout>
+
+</LinearLayout>
