@@ -18,7 +18,7 @@
             android:text="Chưa có kết quả" />
 
         <ScrollView
-            android:id="@+id/scroll_central"
+            android:id="@+id/scroll_central_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -85,7 +85,8 @@
                         <TableRow
                             android:id="@+id/tableRowSeven"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bolder_with_background">
 
                             <ImageView
                                 android:id="@+id/icSevenTitle"
@@ -115,6 +116,7 @@
 
                         <!--Row giai 5-->
                         <TableRow
+                            android:background="@drawable/bolder_with_background"
                             android:id="@+id/tableRowFive"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
@@ -146,6 +148,7 @@
 
                         <!--Row giai ba-->
                         <TableRow
+                            android:background="@drawable/bolder_with_background"
                             android:id="@+id/tableRowThird"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
@@ -179,6 +182,7 @@
 
                         <!--Row giai nhat-->
                         <TableRow
+                            android:background="@drawable/bolder_with_background"
                             android:id="@+id/tableRowFirst"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
@@ -249,7 +253,7 @@
                             android:id="@+id/tableRowSevenVl1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/bolder_table">
+                            android:background="@drawable/bolder_with_background">
 
                             <TextView
                                 android:id="@+id/tv7_1"
@@ -270,10 +274,14 @@
                             android:background="@drawable/bolder_table"
                             android:weightSum="1">
 
-                            <TableLayout android:layout_weight="1">
+                            <TableLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1">
 
                                 <TableRow
                                     android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
                                     android:gravity="center">
 
                                     <TextView
@@ -289,6 +297,7 @@
                                 <TableRow
                                     android:layout_width="0dp"
                                     android:layout_weight="1"
+                                    android:layout_height="wrap_content"
                                     android:gravity="center">
 
                                     <TextView
@@ -304,6 +313,7 @@
                                 <TableRow
                                     android:layout_width="0dp"
                                     android:layout_weight="1"
+                                    android:layout_height="wrap_content"
                                     android:gravity="center">
 
                                     <TextView
@@ -323,7 +333,7 @@
                             android:id="@+id/tableRowFiveVl1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/bolder_table"
+                            android:background="@drawable/bolder_with_background"
                             android:gravity="center">
 
                             <TextView
@@ -344,7 +354,10 @@
                             android:background="@drawable/bolder_table"
                             android:weightSum="1">
 
-                            <TableLayout android:layout_weight="1">
+                            <TableLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1">
 
                                 <TableRow
                                     android:layout_width="0dp"
@@ -456,9 +469,11 @@
                             android:id="@+id/tableRowThirdVl1"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="@drawable/bolder_table">
+                            android:background="@drawable/bolder_with_background">
 
-                            <TableLayout android:layout_weight="1">
+                            <TableLayout android:layout_weight="1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
 
                                 <TableRow
                                     android:layout_width="0dp"
@@ -514,7 +529,7 @@
                             android:id="@+id/tableRowFirstVl1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/bolder_table"
+                            android:background="@drawable/bolder_with_background"
                             android:gravity="center">
 
                             <TextView
@@ -586,7 +601,7 @@
                             android:id="@+id/tableRowSevenVl2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/bolder_table">
+                            android:background="@drawable/bolder_with_background">
 
                             <TextView
                                 android:id="@+id/tv7_2"
@@ -607,7 +622,9 @@
                             android:background="@drawable/bolder_table"
                             android:weightSum="1">
 
-                            <TableLayout android:layout_weight="1">
+                            <TableLayout android:layout_weight="1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
 
                                 <TableRow
                                     android:layout_width="0dp"
@@ -660,7 +677,7 @@
                             android:id="@+id/tableRowFiveVl2"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="@drawable/bolder_table"
+                            android:background="@drawable/bolder_with_background"
                             android:gravity="center">
 
                             <TextView
@@ -681,7 +698,10 @@
                             android:background="@drawable/bolder_table"
                             android:weightSum="1">
 
-                            <TableLayout android:layout_weight="1">
+                            <TableLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1">
 
                                 <TableRow
                                     android:layout_width="0dp"
@@ -794,9 +814,12 @@
                             android:id="@+id/tableRowThirdVl2"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="@drawable/bolder_table">
+                            android:background="@drawable/bolder_with_background">
 
-                            <TableLayout android:layout_weight="1">
+                            <TableLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1">
 
                                 <TableRow
                                     android:layout_width="0dp"
@@ -852,7 +875,7 @@
                             android:id="@+id/tableRowFirstVl2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/bolder_table"
+                            android:background="@drawable/bolder_with_background"
                             android:gravity="center">
 
                             <TextView
@@ -871,8 +894,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/bolder_table"
-                            android:gravity="center"
-                            android:weightSum="1">
+                            android:gravity="center">
 
                             <TextView
                                 android:id="@+id/tvDb_2"
@@ -923,7 +945,7 @@
                             android:id="@+id/tableRowSevenVl3"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/bolder_table">
+                            android:background="@drawable/bolder_with_background">
 
                             <TextView
                                 android:id="@+id/tv7_3"
@@ -945,6 +967,8 @@
                             android:weightSum="1">
 
                             <TableLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:background="@drawable/bolder_table">
 
@@ -999,7 +1023,7 @@
                             android:id="@+id/tableRowFiveVl3"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/bolder_table"
+                            android:background="@drawable/bolder_with_background"
                             android:gravity="center">
 
                             <TextView
@@ -1020,7 +1044,10 @@
                             android:background="@drawable/bolder_table"
                             android:weightSum="1">
 
-                            <TableLayout android:layout_weight="1">
+                            <TableLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1">
 
                                 <TableRow
                                     android:layout_width="0dp"
@@ -1133,9 +1160,12 @@
                             android:id="@+id/tableRowThirdVl3"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="@drawable/bolder_table">
+                            android:background="@drawable/bolder_with_background">
 
-                            <TableLayout android:layout_weight="1">
+                            <TableLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1">
 
                                 <TableRow
                                     android:layout_width="0dp"
@@ -1191,7 +1221,7 @@
                             android:id="@+id/tableRowFirstVl3"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/bolder_table"
+                            android:background="@drawable/bolder_with_background"
                             android:gravity="center">
 
                             <TextView

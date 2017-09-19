@@ -142,7 +142,7 @@ public class FragmentSouthContentPresenter {
                                     cat_area_3 = String.valueOf(resp_result.getData().get(2).getCat_id());
                                     break;
                             }
-                            view.setDataSocket(resp_result);
+//                            view.setDataSocket(resp_result);
                         }
                     });
                 }
@@ -152,21 +152,22 @@ public class FragmentSouthContentPresenter {
         socket.on("new_result", new Emitter.Listener() {
             @Override
             public void call(final Object... args) {
-
-                view.getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        RESP_NewResult newResult = JsonHelper.getObjectNoException(args[0].toString(), RESP_NewResult.class);
-                        Log.e(TAG, "new_result: " + Arrays.toString(args));
-                        if (newResult.getCat_id().equals(cat_area_1)) {
-                            view.setNewResult(newResult, 1);
-                        } else if (newResult.getCat_id().equals(cat_area_2)) {
-                            view.setNewResult(newResult, 2);
-                        } else if (newResult.getCat_id().equals(cat_area_3)) {
-                            view.setNewResult(newResult, 3);
+                if (view.getActivity() != null) {
+                    view.getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            RESP_NewResult newResult = JsonHelper.getObjectNoException(args[0].toString(), RESP_NewResult.class);
+                            Log.e(TAG, "new_result: " + Arrays.toString(args));
+                            if (newResult.getCat_id().equals(cat_area_1)) {
+                                view.setNewResult(newResult, 1);
+                            } else if (newResult.getCat_id().equals(cat_area_2)) {
+                                view.setNewResult(newResult, 2);
+                            } else if (newResult.getCat_id().equals(cat_area_3)) {
+                                view.setNewResult(newResult, 3);
+                            }
                         }
-                    }
-                });
+                    });
+                }
             }
         });
     }

@@ -1,4 +1,19 @@
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.+'
+    }
+}
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
+
 apply plugin: 'realm-android'
 
 android {
@@ -29,9 +44,17 @@ dependencies {
     compile 'com.github.ittianyu:BottomNavigationViewEx:1.2.1'
     compile 'com.google.code.gson:gson:2.7'
     compile 'com.squareup.okhttp3:okhttp:3.7.0'
-    compile 'org.greenrobot:eventbus:3.0.0'
+    compile 'com.github.todou:calendarpager:1+'
     testCompile 'junit:junit:4.12'
     compile ('com.github.nkzawa:socket.io-client:0.4.1'){
         exclude group: 'org.json', module: 'json'
+    }
+
+    compile ('io.socket:engine.io-client:1.0.0') {
+        // excluding org.json which is provided by Android
+        exclude group: 'org.json', module: 'json'
+    }
+    compile('com.crashlytics.sdk.android:crashlytics:2.6.8@aar') {
+        transitive = true;
     }
 }

@@ -52,11 +52,11 @@ public class BasicActivity extends IActivity {
         }
     }
 
-    public void replaceFragment(Fragment fragment){
+    public void replaceFragment(int id, Fragment fragment){
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         //Khi được goi, fragment truyền vào sẽ thay thế vào vị trí FrameLayout trong Activity chính
-        transaction.replace(R.id.fr_layout, fragment);
+        transaction.replace(id, fragment);
         transaction.commit();
     }
 

@@ -3,6 +3,8 @@ package com.xtelsolution.xoso.xoso;
 import android.app.Application;
 import android.content.Context;
 
+import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 import io.realm.Realm;
 
 
@@ -17,6 +19,7 @@ public class ProjectApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
         context = this;
         initLeakCanary();
     }

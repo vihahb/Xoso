@@ -79,44 +79,50 @@ public class FragmentNorthContentPresenter {
     private void listenSocketEvent() {
         socket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
             @Override
-            public void call(Object... args) {
-                Log.e(TAG, "connect success: " + Arrays.toString(args));
-                socket.emit("get_current_result");
-            }
-        });
-
-        socket.on("current_result", new Emitter.Listener() {
-            @Override
             public void call(final Object... args) {
-                if (view.getActivity() != null) {
+                if (view.getActivity() !=null){
                     view.getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            if (args[0]!=null) {
-                                Log.e(TAG, "get_current_result: " + args[0].toString());
-                                RESP_Result resp_result = JsonHelper.getObjectNoException(args[0].toString(), RESP_Result.class);
-                                if (resp_result.getMessage()!=null){
-                                } else {
-                                    Log.e(TAG, "Helper: " + resp_result.toString());
-                                    view.setDataSocket(resp_result);
+                            Log.e(TAG, "connect success: " + Arrays.toString(args));
+                            socket.emit("get_current_result");
+                            socket.on("current_result", new Emitter.Listener() {
+                                @Override
+                                public void call(final Object... args) {
+                                    if (view.getActivity() != null) {
+                                        view.getActivity().runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                if (args[0]!=null) {
+                                                    Log.e(TAG, "get_current_result: " + args[0].toString());
+                                                    RESP_Result resp_result = JsonHelper.getObjectNoException(args[0].toString(), RESP_Result.class);
+                                                    if (resp_result.getMessage()!=null){
+                                                    } else {
+                                                        Log.e(TAG, "Helper: " + resp_result.toString());
+                                                        view.setDataSocket(resp_result);
+                                                    }
+                                                }
+                                            }
+                                        });
+                                    }
                                 }
-                            }
-                        }
-                    });
-                }
-            }
-        });
+                            });
 
-        socket.on("new_result", new Emitter.Listener() {
-            @Override
-            public void call(final Object... args) {
-                if (view.getActivity() != null) {
-                    view.getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            RESP_NewResult newResult = JsonHelper.getObjectNoException(args[0].toString(), RESP_NewResult.class);
-                            Log.e(TAG, "call: new result " + newResult.toString());
-                            view.setNewResult(newResult);
+                            socket.on("new_result", new Emitter.Listener() {
+                                @Override
+                                public void call(final Object... args) {
+                                    if (view.getActivity() != null) {
+                                        view.getActivity().runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                RESP_NewResult newResult = JsonHelper.getObjectNoException(args[0].toString(), RESP_NewResult.class);
+                                                Log.e(TAG, "call: new result " + newResult.toString());
+                                                view.setNewResult(newResult);
+                                            }
+                                        });
+                                    }
+                                }
+                            });
                         }
                     });
                 }
@@ -125,6 +131,8 @@ public class FragmentNorthContentPresenter {
     }
 
     public void disconnectSocket() {
-        socket.disconnect();
+        if (socket!=null){
+            socket.disconnect();
+        }
     }
 }

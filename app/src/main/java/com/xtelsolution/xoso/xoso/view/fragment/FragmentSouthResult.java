@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import com.xtelsolution.xoso.R;
 import com.xtelsolution.xoso.sdk.utils.TimeUtils;
 import com.xtelsolution.xoso.xoso.view.adapter.CachingFragmentStatePagerAdapter;
+import com.xtelsolution.xoso.xoso.view.widget.PageTransformer;
 
 import java.util.Calendar;
 
@@ -53,31 +54,11 @@ public class FragmentSouthResult extends BasicFragment {
     private void initView(View view) {
         mContext = getContext();
         final ViewPager vpPager = view.findViewById(R.id.vpPager);
-        adapterViewPager = new MyPagerAdapter(getActivity().getSupportFragmentManager());
+        adapterViewPager = new MyPagerAdapter(getChildFragmentManager());
+        vpPager.setPageTransformer(false, new PageTransformer());
         vpPager.setAdapter(adapterViewPager);
         // set pager to current date
         vpPager.setCurrentItem(TimeUtils.getPositionForDay(Calendar.getInstance()));
-        vpPager.setOffscreenPageLimit(1);
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-            //you are visible to user now - so set whatever you need
-            initResources();
-        }
-        else {
-            //you are no longer visible to the user so cleanup whatever you need
-            cleanupResources();
-        }
-    }
-
-    private void initResources() {
-
-    }
-
-    private void cleanupResources() {
     }
 
     public static class MyPagerAdapter extends CachingFragmentStatePagerAdapter {

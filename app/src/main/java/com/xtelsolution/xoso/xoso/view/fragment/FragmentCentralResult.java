@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import com.xtelsolution.xoso.R;
 import com.xtelsolution.xoso.sdk.utils.TimeUtils;
 import com.xtelsolution.xoso.xoso.view.adapter.CachingFragmentStatePagerAdapter;
+import com.xtelsolution.xoso.xoso.view.widget.PageTransformer;
 
 import java.util.Calendar;
 
@@ -51,9 +52,10 @@ public class FragmentCentralResult extends BasicFragment {
         mContext = getContext();
         final ViewPager vpPager = view.findViewById(R.id.vpPager);
         adapterViewPager = new MyPagerAdapter(getChildFragmentManager());
+        vpPager.setPageTransformer(false, new PageTransformer());
         vpPager.setAdapter(adapterViewPager);
         // set pager to current date
-        if (TimeUtils.checkTimeInMilisecondNorth(17, 0, 17, 30)){
+        if (TimeUtils.checkTimeInMilisecondNorth(17, 12, 23, 58)){
             vpPager.setCurrentItem(TimeUtils.getPositionForDay(Calendar.getInstance()));
         }else {
             vpPager.setCurrentItem(TimeUtils.getPositionForDay(Calendar.getInstance())-1);

@@ -12,6 +12,7 @@ public class Constants {
     public static final String NOTIFICATION_ID = "notify_id";
     public static final String NOTIFICATION = "notification";
     public static final String AREA_NOTIFY = "area_notify";
+    public static final String GET_FULL_VALUE = "get_full_value";
 
 
     public static String SHARED_NAME = "xoso_pref";

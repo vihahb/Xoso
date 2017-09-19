@@ -27,10 +27,9 @@
         tools:targetApi="lollipop">
     </android.support.design.widget.TabLayout>
 
-    <LinearLayout
-        android:orientation="horizontal"
+    <com.xtelsolution.xoso.xoso.view.widget.LockableViewPager
         android:elevation="0dp"
-        android:id="@+id/fr_result"
+        android:id="@+id/vp_result"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"

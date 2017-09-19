@@ -94,20 +94,12 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
 
         millis = getArguments().getLong(KEY_DATE);
 
-        if (TimeUtils.getToday().equals(getDateTime)) {
-            toDay = true;
-        } else {
-            toDay = false;
-        }
-
         if (millis > 0) {
             final Context context = getActivity();
-            if (context != null) {
-                getDateTime = TimeUtils.getFormattedDate(context, millis);
-                return;
-            }
-        } else
-            getDateTime = "";
+            getDateTime = TimeUtils.getFormattedDate(context, millis);
+            String todays = TimeUtils.getToday();
+            toDay = todays.trim().equals(getDateTime.trim());
+        }
     }
 
     @Override
@@ -186,20 +178,13 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
                 tvLotoDuoi9 = view.findViewById(R.id.tvLotoDuoi9);
 
 
-                if (toDay){
+                if (toDay && TimeUtils.checkTimeInMilisecondNorth(18, 12, 18, 40)) {
                     presenter.socketConnect();
                 } else {
                     presenter.getResultLottery(getDateTime);
                 }
             }
         }, 100);
-//        if (TimeUtils.checkTimeInMilisecondNorth(15, 0, 15, 40)){
-//            presenter.socketConnect();
-//        } else {
-//            presenter.getResultLottery(getDateTime);
-//        }
-
-//        presenter.listenSocketEvent();
     }
 
     @Override
@@ -694,63 +679,16 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onDestroyView() {
+        super.onDestroyView();
         presenter.disconnectSocket();
         destroyView();
     }
 
     private void destroyView() {
-        player.stop();
-        tvSpecial = null;
-        tvFirst = null;
-        tv_21 = null;
-        tv_22 = null;
-        tv_31 = null;
-        tv_32 = null;
-        tv_33 = null;
-        tv_34 = null;
-        tv_35 = null;
-        tv_36 = null;
-        tv_41 = null;
-        tv_42 = null;
-        tv_43 = null;
-        tv_44 = null;
-        tv_51 = null;
-        tv_52 = null;
-        tv_53 = null;
-        tv_54 = null;
-        tv_55 = null;
-        tv_56 = null;
-        tv_61 = null;
-        tv_62 = null;
-        tv_63 = null;
-        tv_71 = null;
-        tv_72 = null;
-        tv_73 = null;
-        tv_74 = null;
-
-        tvLotoDuoi0 = null;
-        tvLotoDuoi1 = null;
-        tvLotoDuoi2 = null;
-        tvLotoDuoi3 = null;
-        tvLotoDuoi4 = null;
-        tvLotoDuoi5 = null;
-        tvLotoDuoi6 = null;
-        tvLotoDuoi7 = null;
-        tvLotoDuoi8 = null;
-        tvLotoDuoi9 = null;
-
-        tvLoto0 = null;
-        tvLoto1 = null;
-        tvLoto2 = null;
-        tvLoto3 = null;
-        tvLoto4 = null;
-        tvLoto5 = null;
-        tvLoto6 = null;
-        tvLoto7 = null;
-        tvLoto8 = null;
-        tvLoto9 = null;
+        if (player != null) {
+            player.stop();
+        }
     }
 
     private void setResultLottery(List<String> special,

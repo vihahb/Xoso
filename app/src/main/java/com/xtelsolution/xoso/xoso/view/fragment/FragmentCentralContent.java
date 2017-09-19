@@ -14,7 +14,10 @@ import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
+import com.test.tudou.library.model.CalendarDay;
 import com.xtelsolution.xoso.R;
+import com.xtelsolution.xoso.sdk.common.Constants;
+import com.xtelsolution.xoso.sdk.utils.SharedUtils;
 import com.xtelsolution.xoso.sdk.utils.TimeUtils;
 import com.xtelsolution.xoso.xoso.model.entity.BeginResult;
 import com.xtelsolution.xoso.xoso.model.entity.ResultLottery;
@@ -84,10 +87,6 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
             tvLotoTitle3, tvLoto0_3, tvLoto1_3, tvLoto2_3, tvLoto3_3,
             tvLoto4_3, tvLoto5_3, tvLoto6_3, tvLoto7_3, tvLoto8_3, tvLoto9_3;
 
-    /**
-     * Random number
-     */
-
     long millis;
 
     /**
@@ -111,10 +110,9 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
             rl43, rl432, rl433, rl434, rl435, rl436, rl437,
             rl331, rl332, rl_second_3, rl_first_3, rl_special_3;
 
-    private List<String> eight_list_1, sevent_list_1, sixth_list_1, fiveth_list_1, fourth_list_1, thrid_list_1, second_list_1, first_list_1, special_list_1;
-    private List<String> eight_list_2, sevent_list_2, sixth_list_2, fiveth_list_2, fourth_list_2, thrid_list_2, second_list_2, first_list_2, special_list_2;
-    private List<String> eight_list_3, sevent_list_3, sixth_list_3, fiveth_list_3, fourth_list_3, thrid_list_3, second_list_3, first_list_3, special_list_3;
-
+//    private List<String> eight_list_1, sevent_list_1, sixth_list_1, fiveth_list_1, fourth_list_1, thrid_list_1, second_list_1, first_list_1, special_list_1;
+//    private List<String> eight_list_2, sevent_list_2, sixth_list_2, fiveth_list_2, fourth_list_2, thrid_list_2, second_list_2, first_list_2, special_list_2;
+//    private List<String> eight_list_3, sevent_list_3, sixth_list_3, fiveth_list_3, fourth_list_3, thrid_list_3, second_list_3, first_list_3, special_list_3;
 
     private static final String KEY_DATE = "date";
 
@@ -134,44 +132,42 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initListBeginEnd();
-
     }
 
     private void initListBeginEnd() {
-        eight_list_1 = new ArrayList<>();
-        sevent_list_1 = new ArrayList<>();
-        sixth_list_1 = new ArrayList<>();
-        fiveth_list_1 = new ArrayList<>();
-        fourth_list_1 = new ArrayList<>();
-        thrid_list_1 = new ArrayList<>();
-        second_list_1 = new ArrayList<>();
-        first_list_1 = new ArrayList<>();
-        special_list_1 = new ArrayList<>();
-
-        eight_list_2 = new ArrayList<>();
-        sevent_list_2 = new ArrayList<>();
-        sixth_list_2 = new ArrayList<>();
-        fiveth_list_2 = new ArrayList<>();
-        fourth_list_2 = new ArrayList<>();
-        thrid_list_2 = new ArrayList<>();
-        second_list_2 = new ArrayList<>();
-        first_list_2 = new ArrayList<>();
-        special_list_2 = new ArrayList<>();
-
-        eight_list_3 = new ArrayList<>();
-        sevent_list_3 = new ArrayList<>();
-        sixth_list_3 = new ArrayList<>();
-        fiveth_list_3 = new ArrayList<>();
-        fourth_list_3 = new ArrayList<>();
-        thrid_list_3 = new ArrayList<>();
-        second_list_3 = new ArrayList<>();
-        first_list_3 = new ArrayList<>();
-        special_list_3 = new ArrayList<>();
+//        eight_list_1 = new ArrayList<>();
+//        sevent_list_1 = new ArrayList<>();
+//        sixth_list_1 = new ArrayList<>();
+//        fiveth_list_1 = new ArrayList<>();
+//        fourth_list_1 = new ArrayList<>();
+//        thrid_list_1 = new ArrayList<>();
+//        second_list_1 = new ArrayList<>();
+//        first_list_1 = new ArrayList<>();
+//        special_list_1 = new ArrayList<>();
+//
+//        eight_list_2 = new ArrayList<>();
+//        sevent_list_2 = new ArrayList<>();
+//        sixth_list_2 = new ArrayList<>();
+//        fiveth_list_2 = new ArrayList<>();
+//        fourth_list_2 = new ArrayList<>();
+//        thrid_list_2 = new ArrayList<>();
+//        second_list_2 = new ArrayList<>();
+//        first_list_2 = new ArrayList<>();
+//        special_list_2 = new ArrayList<>();
+//
+//        eight_list_3 = new ArrayList<>();
+//        sevent_list_3 = new ArrayList<>();
+//        sixth_list_3 = new ArrayList<>();
+//        fiveth_list_3 = new ArrayList<>();
+//        fourth_list_3 = new ArrayList<>();
+//        thrid_list_3 = new ArrayList<>();
+//        second_list_3 = new ArrayList<>();
+//        first_list_3 = new ArrayList<>();
+//        special_list_3 = new ArrayList<>();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         return inflater.inflate(R.layout.fragment_central_content, container, false);
     }
 
@@ -181,15 +177,9 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-
                 player = MediaPlayer.create(getContext(), Settings.System.DEFAULT_NOTIFICATION_URI);
-                scroll_central = view.findViewById(R.id.scroll_central);
-                tvContent = view.findViewById(R.id.tvContent);
-                initTable1(view);
-                initTable2(view);
-                initTable3(view);
-
-                initRandomRolling();
+                initView(view);
+                presenter = new FragmentCentralContentPresenter(FragmentCentralContent.this);
 
                 millis = getArguments().getLong(KEY_DATE);
 
@@ -199,20 +189,26 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
 
                     toDay = todays.trim().equals(getDateTime.trim());
                     Log.e(TAG, "onViewCreated: " + todays + " " + getDateTime);
-                } else
-                    getDateTime = "";
-
+                }
                 Log.e(TAG, "onViewCreated: " + toDay);
-                presenter = new FragmentCentralContentPresenter(FragmentCentralContent.this);
-                if (toDay) {
-
-                    presenter.connectSocket(getDateTime);
+                if (toDay && TimeUtils.checkTimeInMilisecondNorth(17, 12, 17, 45)) {
+                        presenter.connectSocket();
                 } else {
                     presenter.checkSocket();
                     presenter.getResultLottery(getDateTime);
                 }
             }
         },100);
+    }
+
+    private void initView(View view) {
+        scroll_central = view.findViewById(R.id.scroll_central_content);
+        tvContent = view.findViewById(R.id.tvContent);
+        initTable1(view);
+        initTable2(view);
+        initTable3(view);
+
+        initRandomRolling();
     }
 
     private void initTable1(View view) {
@@ -325,6 +321,7 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
         Log.e(TAG, "setDataSocket: "+toDay );
         switch (resp_result.getData().size()) {
             case 1:
+                Log.e(TAG, "swith case result size()" + resp_result.getData().size());
                 setTable2Hidden();
                 setTable3Hidden();
                 setResultLotteryTable1(
@@ -341,6 +338,7 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
                         resp_result.getData().get(0).getBegin_with());
                 break;
             case 2:
+                Log.e(TAG, "swith case result size()" + resp_result.getData().size());
                 setResultLotteryTable1(
                         resp_result.getData().get(0).getArea(),
                         resp_result.getData().get(0).getRes_special(),
@@ -368,6 +366,7 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
                 setTable3Hidden();
                 break;
             case 3:
+                Log.e(TAG, "swith case result size()" + resp_result.getData().size());
                 setResultLotteryTable1(
                         resp_result.getData().get(0).getArea(),
                         resp_result.getData().get(0).getRes_special(),
@@ -457,19 +456,56 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
     }
 
     private void initRandomRolling() {
+        /**
+         * 8
+         * Random number table all*/
         if (rl81 == null) {
             rl81 = new Roller(tv8_1, 100000, 80, 99, 10);
         }
         rl82 = new Roller(tv8_2, 100000, 80, 99, 10);
         rl83 = new Roller(tv8_3, 100000, 80, 99, 10);
 
+
+        /**
+         * 7
+         * Random number table all*/
         rl71 = new Roller(tv7_1, 10000, 80, 999, 100);
+        rl72 = new Roller(tv7_2, 10000, 80, 999, 100);
+        rl73 = new Roller(tv7_3, 10000, 80, 999, 100);
+
+        /**
+         * 6
+         * Random number table 1*/
         rl611 = new Roller(tv6_1, 10000, 80, 9999, 1000);
         rl612 = new Roller(tv6_2, 10000, 80, 9999, 1000);
         rl613 = new Roller(tv6_3, 10000, 80, 9999, 1000);
 
-        rl51 = new Roller(tv5_1, 10000, 80, 9999, 1000);
 
+        /**
+         * 6
+         * Random number table 2*/
+        rl621 = new Roller(tv6_1_2, 10000, 80, 9999, 1000);
+        rl622 = new Roller(tv6_2_2, 10000, 80, 9999, 1000);
+        rl623 = new Roller(tv6_3_2, 10000, 80, 9999, 1000);
+
+
+        /**
+         * 6
+         * Random number table 3*/
+        rl631 = new Roller(tv6_1_3, 10000, 80, 9999, 1000);
+        rl632 = new Roller(tv6_2_3, 10000, 80, 9999, 1000);
+        rl633 = new Roller(tv6_3_3, 10000, 80, 9999, 1000);
+
+        /**
+         * 5
+         * Random number table all*/
+        rl51 = new Roller(tv5_1, 10000, 80, 9999, 1000);
+        rl52 = new Roller(tv5_2, 10000, 80, 9999, 1000);
+        rl53 = new Roller(tv5_3, 10000, 80, 9999, 1000);
+
+        /**
+         * 4
+         * Random number table 1*/
         rl41 = new Roller(tv4_1, 10000, 80, 99999, 10000);
         rl412 = new Roller(tv4_2, 10000, 80, 99999, 10000);
         rl413 = new Roller(tv4_3, 10000, 80, 99999, 10000);
@@ -478,12 +514,66 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
         rl416 = new Roller(tv4_6, 10000, 80, 99999, 10000);
         rl417 = new Roller(tv4_7, 10000, 80, 99999, 10000);
 
+        /**
+         * 4
+         * Random number table 2*/
+        rl42 = new Roller(tv4_1_2, 10000, 80, 99999, 10000);
+        rl422 = new Roller(tv4_2_2, 10000, 80, 99999, 10000);
+        rl423 = new Roller(tv4_3_2, 10000, 80, 99999, 10000);
+        rl424 = new Roller(tv4_4_2, 10000, 80, 99999, 10000);
+        rl425 = new Roller(tv4_5_2, 10000, 80, 99999, 10000);
+        rl426 = new Roller(tv4_6_2, 10000, 80, 99999, 10000);
+        rl427 = new Roller(tv4_7_2, 10000, 80, 99999, 10000);
+
+        /**
+         * 4
+         * Random number table 3*/
+        rl43 = new Roller(tv4_1_3, 10000, 80, 99999, 10000);
+        rl432 = new Roller(tv4_2_3, 10000, 80, 99999, 10000);
+        rl433 = new Roller(tv4_3_3, 10000, 80, 99999, 10000);
+        rl434 = new Roller(tv4_4_3, 10000, 80, 99999, 10000);
+        rl435 = new Roller(tv4_5_3, 10000, 80, 99999, 10000);
+        rl436 = new Roller(tv4_6_3, 10000, 80, 99999, 10000);
+        rl437 = new Roller(tv4_7_3, 10000, 80, 99999, 10000);
+
+        /**
+         * 3
+         * Random number table 1*/
         rl311 = new Roller(tv3_1, 10000, 80, 99999, 10000);
         rl312 = new Roller(tv3_2, 10000, 80, 99999, 10000);
 
+        /**
+         * 3
+         * Random number table 2*/
+        rl321 = new Roller(tv3_1_2, 10000, 80, 99999, 10000);
+        rl322 = new Roller(tv3_2_2, 10000, 80, 99999, 10000);
+
+        /**
+         * 3
+         * Random number table 3*/
+        rl331 = new Roller(tv3_1_3, 10000, 80, 99999, 10000);
+        rl332 = new Roller(tv3_2_3, 10000, 80, 99999, 10000);
+
+        /**
+         * 2
+         * Random number table all*/
         rl_second_1 = new Roller(tv2_1, 10000, 80, 99999, 10000);
+        rl_second_2 = new Roller(tv2_2, 10000, 80, 99999, 10000);
+        rl_second_3 = new Roller(tv2_3, 10000, 80, 99999, 10000);
+
+        /**
+         * 1
+         * Random number table all*/
         rl_first_1 = new Roller(tv1_1, 10000, 80, 99999, 10000);
+        rl_first_2 = new Roller(tv1_2, 10000, 80, 99999, 10000);
+        rl_first_3 = new Roller(tv1_3, 10000, 80, 99999, 10000);
+
+        /**
+         * DB
+         * Random number table all*/
         rl_special_1 = new Roller(tvDb, 10000, 80, 99999, 10000);
+        rl_special_2 = new Roller(tvDb_2, 10000, 80, 99999, 10000);
+        rl_special_3 = new Roller(tvDb_3, 10000, 80, 99999, 10000);
     }
 
     @Override
@@ -517,7 +607,6 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
                             if (rl81 != null) {
                                 rl81.shutdownThread();
                             }
-                            eight_list_1.add(0, newResult.getValue());
                             rl71.run();
                             tv8_1.setText(newResult.getValue());
                         }
@@ -642,7 +731,7 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
                                     }
 
                                     rl312.run();
-                                    tv6_1.setText(newResult.getValue());
+                                    tv3_1.setText(newResult.getValue());
                                     break;
                                 case "1":
                                     if (rl312 != null) {
@@ -650,7 +739,7 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
                                     }
 
                                     rl_second_1.run();
-                                    tv2_1.setText(newResult.getValue());
+                                    tv3_2.setText(newResult.getValue());
                                     break;
                             }
                         }
@@ -689,7 +778,7 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
                             if (rl82 != null) {
                                 rl82.shutdownThread();
                             }
-                            rl72 = new Roller(tv7_2, 10000, 80, 999, 100);
+                            if (rl72!=null)
                             rl72.run();
                             tv8_2.setText(newResult.getValue());
                         }
@@ -699,7 +788,6 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
                             if (rl72 != null) {
                                 rl72.shutdownThread();
                             }
-                            rl621 = new Roller(tv6_1_2, 10000, 80, 9999, 1000);
                             rl621.run();
                             tv7_2.setText(newResult.getValue());
                         }
@@ -711,7 +799,6 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
                                     if (rl621 != null) {
                                         rl621.shutdownThread();
                                     }
-                                    rl622 = new Roller(tv6_2_2, 10000, 80, 9999, 1000);
                                     rl622.run();
                                     tv6_1_2.setText(newResult.getValue());
                                     break;
@@ -719,7 +806,6 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
                                     if (rl622 != null) {
                                         rl622.shutdownThread();
                                     }
-                                    rl623 = new Roller(tv6_3_2, 10000, 80, 9999, 1000);
                                     rl623.run();
                                     tv6_2_2.setText(newResult.getValue());
                                     break;
@@ -727,7 +813,6 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
                                     if (rl623 != null) {
                                         rl623.shutdownThread();
                                     }
-                                    rl52 = new Roller(tv5_2, 10000, 80, 9999, 1000);
                                     rl52.run();
                                     tv6_3_2.setText(newResult.getValue());
                                     break;
@@ -739,7 +824,7 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
                         if (rl52 != null) {
                             rl52.shutdownThread();
                         }
-                        rl42 = new Roller(tv4_1_2, 10000, 80, 99999, 10000);
+//                        rl42 = new Roller(tv4_1_2, 10000, 80, 99999, 10000);
                         rl42.run();
                         tv5_2.setText(newResult.getValue());
                         break;
@@ -750,15 +835,15 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
                                     if (rl42 != null) {
                                         rl42.shutdownThread();
                                     }
-                                    rl422 = new Roller(tv4_2_2, 10000, 80, 99999, 10000);
+//                                    rl422 = new Roller(tv4_2_2, 10000, 80, 99999, 10000);
                                     rl422.run();
-                                    tv4_2.setText(newResult.getValue());
+                                    tv4_1_2.setText(newResult.getValue());
                                     break;
                                 case "1":
                                     if (rl422 != null) {
                                         rl422.shutdownThread();
                                     }
-                                    rl423 = new Roller(tv4_3_2, 10000, 80, 99999, 10000);
+//                                    rl423 = new Roller(tv4_3_2, 10000, 80, 99999, 10000);
                                     rl423.run();
                                     tv4_2_2.setText(newResult.getValue());
                                     break;
@@ -766,7 +851,7 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
                                     if (rl423 != null) {
                                         rl423.shutdownThread();
                                     }
-                                    rl424 = new Roller(tv4_4_2, 10000, 80, 99999, 10000);
+//                                    rl424 = new Roller(tv4_4_2, 10000, 80, 99999, 10000);
                                     rl424.run();
                                     tv4_3_2.setText(newResult.getValue());
                                     break;
@@ -775,7 +860,7 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
                                     if (rl424 != null) {
                                         rl424.shutdownThread();
                                     }
-                                    rl425 = new Roller(tv4_5_2, 10000, 80, 99999, 10000);
+//                                    rl425 = new Roller(tv4_5_2, 10000, 80, 99999, 10000);
                                     rl425.run();
                                     tv4_4_2.setText(newResult.getValue());
                                     break;
@@ -783,7 +868,7 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
                                     if (rl425 != null) {
                                         rl425.shutdownThread();
                                     }
-                                    rl426 = new Roller(tv4_6_2, 10000, 80, 99999, 10000);
+//                                    rl426 = new Roller(tv4_6_2, 10000, 80, 99999, 10000);
                                     rl426.run();
                                     tv4_5_2.setText(newResult.getValue());
                                     break;
@@ -791,7 +876,7 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
                                     if (rl426 != null) {
                                         rl426.shutdownThread();
                                     }
-                                    rl427 = new Roller(tv4_7_2, 10000, 80, 99999, 10000);
+//                                    rl427 = new Roller(tv4_7_2, 10000, 80, 99999, 10000);
                                     rl427.run();
                                     tv4_6_2.setText(newResult.getValue());
                                     break;
@@ -799,7 +884,7 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
                                     if (rl427 != null) {
                                         rl427.shutdownThread();
                                     }
-                                    rl321 = new Roller(tv3_1_2, 10000, 80, 99999, 10000);
+//                                    rl321 = new Roller(tv3_1_2, 10000, 80, 99999, 10000);
                                     rl321.run();
                                     tv4_7_2.setText(newResult.getValue());
                                     break;
@@ -814,7 +899,7 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
                                     if (rl321 != null) {
                                         rl321.shutdownThread();
                                     }
-                                    rl322 = new Roller(tv3_2_2, 10000, 80, 99999, 10000);
+//                                    rl322 = new Roller(tv3_2_2, 10000, 80, 99999, 10000);
                                     rl322.run();
                                     tv3_1_2.setText(newResult.getValue());
                                     break;
@@ -822,7 +907,7 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
                                     if (rl322 != null) {
                                         rl322.shutdownThread();
                                     }
-                                    rl_second_2 = new Roller(tv2_2, 10000, 80, 99999, 10000);
+//                                    rl_second_2 = new Roller(tv2_2, 10000, 80, 99999, 10000);
                                     rl_second_2.run();
                                     tv3_2_2.setText(newResult.getValue());
                                     break;
@@ -833,7 +918,7 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
                         if (rl_second_2 != null) {
                             rl_second_2.shutdownThread();
                         }
-                        rl_first_2 = new Roller(tv1_2, 10000, 80, 99999, 10000);
+//                        rl_first_2 = new Roller(tv1_2, 10000, 80, 99999, 10000);
                         rl_first_2.run();
                         tv2_2.setText(newResult.getValue());
                         break;
@@ -841,7 +926,7 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
                         if (rl_first_2 != null) {
                             rl_first_2.shutdownThread();
                         }
-                        rl_special_2 = new Roller(tvDb_2, 10000, 80, 99999, 10000);
+//                        rl_special_2 = new Roller(tvDb_2, 10000, 80, 99999, 10000);
                         rl_special_2.run();
                         tv1_2.setText(newResult.getValue());
                         break;
@@ -863,7 +948,7 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
                             if (rl83 != null) {
                                 rl83.shutdownThread();
                             }
-                            rl73 = new Roller(tv7_3, 10000, 80, 999, 100);
+//                            rl73 = new Roller(tv7_3, 10000, 80, 999, 100);
                             rl73.run();
                             tv8_3.setText(newResult.getValue());
                         }
@@ -873,7 +958,7 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
                             if (rl73 != null) {
                                 rl73.shutdownThread();
                             }
-                            rl631 = new Roller(tv6_1_3, 10000, 80, 9999, 1000);
+//                            rl631 = new Roller(tv6_1_3, 10000, 80, 9999, 1000);
                             rl631.run();
                             tv7_3.setText(newResult.getValue());
                         }
@@ -885,7 +970,7 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
                                     if (rl631 != null) {
                                         rl631.shutdownThread();
                                     }
-                                    rl632 = new Roller(tv6_2_3, 10000, 80, 9999, 1000);
+//                                    rl632 = new Roller(tv6_2_3, 10000, 80, 9999, 1000);
                                     rl632.run();
                                     tv6_1_3.setText(newResult.getValue());
                                     break;
@@ -893,7 +978,7 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
                                     if (rl632 != null) {
                                         rl632.shutdownThread();
                                     }
-                                    rl633 = new Roller(tv6_3_3, 10000, 80, 9999, 1000);
+//                                    rl633 = new Roller(tv6_3_3, 10000, 80, 9999, 1000);
                                     rl633.run();
                                     tv6_2_3.setText(newResult.getValue());
                                     break;
@@ -901,7 +986,7 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
                                     if (rl632 != null) {
                                         rl632.shutdownThread();
                                     }
-                                    rl53 = new Roller(tv5_3, 10000, 80, 9999, 1000);
+//                                    rl53 = new Roller(tv5_3, 10000, 80, 9999, 1000);
                                     rl53.run();
                                     tv6_3_3.setText(newResult.getValue());
                                     break;
@@ -913,7 +998,7 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
                         if (rl53 != null) {
                             rl53.shutdownThread();
                         }
-                        rl43 = new Roller(tv4_1_3, 10000, 80, 99999, 10000);
+//                        rl43 = new Roller(tv4_1_3, 10000, 80, 99999, 10000);
                         rl43.run();
                         tv5_3.setText(newResult.getValue());
                         break;
@@ -924,7 +1009,7 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
                                     if (rl43 != null) {
                                         rl43.shutdownThread();
                                     }
-                                    rl432 = new Roller(tv4_2_3, 10000, 80, 99999, 10000);
+//                                    rl432 = new Roller(tv4_2_3, 10000, 80, 99999, 10000);
                                     rl432.run();
                                     tv4_1_3.setText(newResult.getValue());
                                     break;
@@ -932,7 +1017,7 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
                                     if (rl432 != null) {
                                         rl432.shutdownThread();
                                     }
-                                    rl433 = new Roller(tv4_3_2, 10000, 80, 99999, 10000);
+//                                    rl433 = new Roller(tv4_3_2, 10000, 80, 99999, 10000);
                                     rl433.run();
                                     tv4_2_3.setText(newResult.getValue());
                                     break;
@@ -940,16 +1025,16 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
                                     if (rl433 != null) {
                                         rl433.shutdownThread();
                                     }
-                                    rl434 = new Roller(tv4_4_3, 10000, 80, 99999, 10000);
+//                                    rl434 = new Roller(tv4_4_3, 10000, 80, 99999, 10000);
                                     rl434.run();
-                                    tv4_3_2.setText(newResult.getValue());
+                                    tv4_3_3.setText(newResult.getValue());
                                     break;
 
                                 case "3":
                                     if (rl434 != null) {
                                         rl434.shutdownThread();
                                     }
-                                    rl435 = new Roller(tv4_5_3, 10000, 80, 99999, 10000);
+//                                    rl435 = new Roller(tv4_5_3, 10000, 80, 99999, 10000);
                                     rl435.run();
                                     tv4_4_3.setText(newResult.getValue());
                                     break;
@@ -957,7 +1042,7 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
                                     if (rl435 != null) {
                                         rl435.shutdownThread();
                                     }
-                                    rl436 = new Roller(tv4_6_3, 10000, 80, 99999, 10000);
+//                                    rl436 = new Roller(tv4_6_3, 10000, 80, 99999, 10000);
                                     rl436.run();
                                     tv4_5_3.setText(newResult.getValue());
                                     break;
@@ -965,7 +1050,7 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
                                     if (rl436 != null) {
                                         rl436.shutdownThread();
                                     }
-                                    rl437 = new Roller(tv4_7_3, 10000, 80, 99999, 10000);
+//                                    rl437 = new Roller(tv4_7_3, 10000, 80, 99999, 10000);
                                     rl437.run();
                                     tv4_6_3.setText(newResult.getValue());
                                     break;
@@ -973,7 +1058,7 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
                                     if (rl437 != null) {
                                         rl437.shutdownThread();
                                     }
-                                    rl331 = new Roller(tv3_1_3, 10000, 80, 99999, 10000);
+//                                    rl331 = new Roller(tv3_1_3, 10000, 80, 99999, 10000);
                                     rl331.run();
                                     tv4_7_3.setText(newResult.getValue());
                                     break;
@@ -988,7 +1073,7 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
                                     if (rl331 != null) {
                                         rl331.shutdownThread();
                                     }
-                                    rl332 = new Roller(tv3_2_3, 10000, 80, 99999, 10000);
+//                                    rl332 = new Roller(tv3_2_3, 10000, 80, 99999, 10000);
                                     rl332.run();
                                     tv3_1_3.setText(newResult.getValue());
                                     break;
@@ -996,7 +1081,7 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
                                     if (rl332 != null) {
                                         rl332.shutdownThread();
                                     }
-                                    rl_second_3 = new Roller(tv2_3, 10000, 80, 99999, 10000);
+//                                    rl_second_3 = new Roller(tv2_3, 10000, 80, 99999, 10000);
                                     rl_second_3.run();
                                     tv3_2_3.setText(newResult.getValue());
                                     break;
@@ -1007,7 +1092,7 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
                         if (rl_second_3 != null) {
                             rl_second_3.shutdownThread();
                         }
-                        rl_first_3 = new Roller(tv1_3, 10000, 80, 99999, 10000);
+//                        rl_first_3 = new Roller(tv1_3, 10000, 80, 99999, 10000);
                         rl_first_3.run();
                         tv2_3.setText(newResult.getValue());
                         break;
@@ -1015,7 +1100,7 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
                         if (rl_first_3 != null) {
                             rl_first_3.shutdownThread();
                         }
-                        rl_special_3 = new Roller(tvDb_3, 10000, 80, 999999, 100000);
+//                        rl_special_3 = new Roller(tvDb_3, 10000, 80, 999999, 100000);
                         rl_special_3.run();
                         tv1_3.setText(newResult.getValue());
                         break;
@@ -1033,18 +1118,6 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
     @Override
     public void onResume() {
         super.onResume();
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        presenter.disconnectSocket();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        presenter.disconnectSocket();
     }
 
     @Override
@@ -1067,6 +1140,10 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
                                         List<String> six,
                                         List<String> seven,
                                         List<String> eight, BeginResult beginResult) {
+
+
+        checkRandomTable1(special, first, second, third, fourd, five, six, seven, eight);
+
         tvResgion_1.setText(area);
         tvLotoTitle1.setText(area);
 
@@ -1248,6 +1325,96 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
         }
     }
 
+    private void checkRandomTable1(List<String> special, List<String> first, List<String> second, List<String> third, List<String> fourd, List<String> five, List<String> six, List<String> seven, List<String> eight) {
+        if (eight.size() > 0){
+            if (rl81!=null){
+                rl81.shutdownThread();
+            }
+        }
+        if (seven.size() > 0){
+            if (rl71!=null){
+                rl71.shutdownThread();
+            }
+        }
+
+        if (six.size() > 0){
+            if (rl611!=null){
+                rl611.shutdownThread();
+            }
+        } else if (six.size() > 1){
+            if (rl612!=null){
+                rl612.shutdownThread();
+            }
+        } else if (six.size() > 2){
+            if (rl613!=null){
+                rl613.shutdownThread();
+            }
+        }
+
+        if (five.size() > 0){
+            if (rl51!=null){
+                rl51.shutdownThread();
+            }
+        }
+
+        if (fourd.size() > 0){
+            if (rl41!=null){
+                rl41.shutdownThread();
+            }
+        } else if (fourd.size() > 1){
+            if (rl412!=null){
+                rl412.shutdownThread();
+            }
+        } else if (fourd.size() > 2){
+            if (rl413!=null){
+                rl413.shutdownThread();
+            }
+        }else if (fourd.size() > 3){
+            if (rl414!=null){
+                rl414.shutdownThread();
+            }
+        }else if (fourd.size() > 4){
+            if (rl415!=null){
+                rl415.shutdownThread();
+            }
+        }else if (fourd.size() > 5){
+            if (rl416!=null){
+                rl416.shutdownThread();
+            }
+        }else if (fourd.size() > 6){
+            if (rl417!=null){
+                rl417.shutdownThread();
+            }
+        }
+
+        if (third.size() > 0){
+            if (rl311!=null){
+                rl311.shutdownThread();
+            }
+        } else if (third.size() > 1){
+            if (rl312!=null){
+                rl312.shutdownThread();
+            }
+        }
+
+        if (second.size() > 0){
+            if (rl_second_1!=null){
+                rl_second_1.shutdownThread();
+            }
+        }
+
+        if (first.size() > 0){
+            if (rl_first_1!=null){
+                rl_first_1.shutdownThread();
+            }
+        }
+        if (special.size() > 0){
+            if (rl_special_1!=null){
+                rl_special_1.shutdownThread();
+            }
+        }
+    }
+
     private void setResultLotteryTable2(String area, List<String> special,
                                         List<String> first,
                                         List<String> second,
@@ -1257,6 +1424,9 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
                                         List<String> six,
                                         List<String> seven,
                                         List<String> eight, BeginResult beginResult) {
+
+
+        checkRandomTable2(special, first, second, third, fourd, five, six, seven, eight);
 
         tvResgion_2.setText(area);
         tvLotoTitle2.setText(area);
@@ -1436,6 +1606,96 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
             }
         }
     }
+    private void checkRandomTable2(List<String> special, List<String> first, List<String> second, List<String> third, List<String> fourd, List<String> five, List<String> six, List<String> seven, List<String> eight) {
+        if (eight.size() > 0){
+            if (rl82!=null){
+                rl82.shutdownThread();
+            }
+        }
+        if (seven.size() > 0){
+            if (rl72!=null){
+                rl72.shutdownThread();
+            }
+        }
+
+        if (six.size() > 0){
+            if (rl621!=null){
+                rl621.shutdownThread();
+            }
+        } else if (six.size() > 1){
+            if (rl622!=null){
+                rl622.shutdownThread();
+            }
+        } else if (six.size() > 2){
+            if (rl623!=null){
+                rl623.shutdownThread();
+            }
+        }
+
+        if (five.size() > 0){
+            if (rl52!=null){
+                rl52.shutdownThread();
+            }
+        }
+
+        if (fourd.size() > 0){
+            if (rl42!=null){
+                rl42.shutdownThread();
+            }
+        } else if (fourd.size() > 1){
+            if (rl422!=null){
+                rl422.shutdownThread();
+            }
+        } else if (fourd.size() > 2){
+            if (rl423!=null){
+                rl423.shutdownThread();
+            }
+        }else if (fourd.size() > 3){
+            if (rl424!=null){
+                rl424.shutdownThread();
+            }
+        }else if (fourd.size() > 4){
+            if (rl425!=null){
+                rl425.shutdownThread();
+            }
+        }else if (fourd.size() > 5){
+            if (rl426!=null){
+                rl426.shutdownThread();
+            }
+        }else if (fourd.size() > 6){
+            if (rl427!=null){
+                rl427.shutdownThread();
+            }
+        }
+
+        if (third.size() > 0){
+            if (rl321!=null){
+                rl321.shutdownThread();
+            }
+        } else if (third.size() > 1){
+            if (rl322!=null){
+                rl322.shutdownThread();
+            }
+        }
+
+        if (second.size() > 0){
+            if (rl_second_2!=null){
+                rl_second_2.shutdownThread();
+            }
+        }
+
+        if (first.size() > 0){
+            if (rl_first_2!=null){
+                rl_first_2.shutdownThread();
+            }
+        }
+        if (special.size() > 0){
+            if (rl_special_2!=null){
+                rl_special_2.shutdownThread();
+            }
+        }
+    }
+
 
     private void setResultLotteryTable3(String area, List<String> special,
                                         List<String> first,
@@ -1446,6 +1706,8 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
                                         List<String> six,
                                         List<String> seven,
                                         List<String> eight, BeginResult beginResult) {
+        checkRandomTable3(special, first, second, third, fourd, five, six, seven, eight);
+
         tvResgion_3.setText(area);
         tvLotoTitle3.setText(area);
 
@@ -1625,6 +1887,96 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
                     begin_9 += " " + beginResult.getB9().get(i);
                 }
                 tvLoto9_3.setText(begin_9);
+            }
+        }
+    }
+
+    private void checkRandomTable3(List<String> special, List<String> first, List<String> second, List<String> third, List<String> fourd, List<String> five, List<String> six, List<String> seven, List<String> eight) {
+        if (eight.size() > 0){
+            if (rl83!=null){
+                rl83.shutdownThread();
+            }
+        }
+        if (seven.size() > 0){
+            if (rl73!=null){
+                rl73.shutdownThread();
+            }
+        }
+
+        if (six.size() > 0){
+            if (rl631!=null){
+                rl631.shutdownThread();
+            }
+        } else if (six.size() > 1){
+            if (rl632!=null){
+                rl632.shutdownThread();
+            }
+        } else if (six.size() > 2){
+            if (rl633!=null){
+                rl633.shutdownThread();
+            }
+        }
+
+        if (five.size() > 0){
+            if (rl53!=null){
+                rl53.shutdownThread();
+            }
+        }
+
+        if (fourd.size() > 0){
+            if (rl43!=null){
+                rl43.shutdownThread();
+            }
+        } else if (fourd.size() > 1){
+            if (rl432!=null){
+                rl432.shutdownThread();
+            }
+        } else if (fourd.size() > 2){
+            if (rl433!=null){
+                rl433.shutdownThread();
+            }
+        }else if (fourd.size() > 3){
+            if (rl434!=null){
+                rl434.shutdownThread();
+            }
+        }else if (fourd.size() > 4){
+            if (rl435!=null){
+                rl435.shutdownThread();
+            }
+        }else if (fourd.size() > 5){
+            if (rl436!=null){
+                rl436.shutdownThread();
+            }
+        }else if (fourd.size() > 6){
+            if (rl437!=null){
+                rl437.shutdownThread();
+            }
+        }
+
+        if (third.size() > 0){
+            if (rl331!=null){
+                rl331.shutdownThread();
+            }
+        } else if (third.size() > 1){
+            if (rl332!=null){
+                rl332.shutdownThread();
+            }
+        }
+
+        if (second.size() > 0){
+            if (rl_second_3!=null){
+                rl_second_3.shutdownThread();
+            }
+        }
+
+        if (first.size() > 0){
+            if (rl_first_3!=null){
+                rl_first_3.shutdownThread();
+            }
+        }
+        if (special.size() > 0){
+            if (rl_special_3!=null){
+                rl_special_3.shutdownThread();
             }
         }
     }

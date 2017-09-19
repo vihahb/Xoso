@@ -1260,13 +1260,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
         }
     }
 
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        presenter.disconnectSocket();
-    }
-
     @Override
     public void onDestroy() {
         super.onDestroy();

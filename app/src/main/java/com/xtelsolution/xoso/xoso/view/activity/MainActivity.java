@@ -2,14 +2,14 @@ package com.xtelsolution.xoso.xoso.view.activity;
 
 import android.Manifest;
 import android.app.DatePickerDialog;
-import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -21,28 +21,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 
-import com.github.nkzawa.socketio.client.IO;
-import com.github.nkzawa.socketio.client.Socket;
+import com.crashlytics.android.Crashlytics;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.xtelsolution.xoso.R;
 import com.xtelsolution.xoso.sdk.common.Constants;
 import com.xtelsolution.xoso.sdk.utils.PermissionHelper;
 import com.xtelsolution.xoso.xoso.model.entity.DrawerMenu;
-import com.xtelsolution.xoso.xoso.model.entity.MessageEvent;
 import com.xtelsolution.xoso.xoso.presenter.activity.HomePresenter;
 import com.xtelsolution.xoso.xoso.view.activity.inf.IHomeView;
 import com.xtelsolution.xoso.xoso.view.adapter.AdapterMenu;
 import com.xtelsolution.xoso.xoso.view.fragment.FragmentAnalytics;
-import com.xtelsolution.xoso.xoso.view.fragment.FragmentCentralResult;
 import com.xtelsolution.xoso.xoso.view.fragment.FragmentExplore;
 import com.xtelsolution.xoso.xoso.view.fragment.FragmentMore;
-import com.xtelsolution.xoso.xoso.view.fragment.FragmentNorthResult;
 import com.xtelsolution.xoso.xoso.view.fragment.FragmentResult;
-import com.xtelsolution.xoso.xoso.view.fragment.FragmentSouthResult;
+import com.xtelsolution.xoso.xoso.view.widget.LockableViewPager;
 
-import org.greenrobot.eventbus.EventBus;
-
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -56,6 +49,8 @@ public class MainActivity extends BasicActivity implements IHomeView {
     private DrawerLayout drawer;
     private Toolbar toolbar;
     private BottomNavigationViewEx navigationBottom;
+    private LockableViewPager viewPager;
+    private FragmentPagerAdapter pagerAdapter;
     private boolean isResultView = false;
 
 
@@ -78,6 +73,14 @@ public class MainActivity extends BasicActivity implements IHomeView {
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         getData();
+        logUser();
+    }
+
+    private void logUser() {
+        // TODO: Use the current user's information
+        // You can call any combination of these three methods
+        Crashlytics.setUserIdentifier(android.os.Build.MODEL);
+        Crashlytics.setUserName(Build.VERSION_CODES.class.getFields()[android.os.Build.VERSION.SDK_INT].getName());
     }
 
     private void getData() {
@@ -103,10 +106,18 @@ public class MainActivity extends BasicActivity implements IHomeView {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             mAppBarLayout.setElevation(0);
         }
+
+        viewPager = (LockableViewPager) findViewById(R.id.vpMain);
+        pagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager());
+        viewPager.setOffscreenPageLimit(4);
+        viewPager.setSwipeable(false);
+        viewPager.setAdapter(pagerAdapter);
+
         navigationBottom = (BottomNavigationViewEx) findViewById(R.id.bottomTab);
         navigationBottom.enableAnimation(false);
         navigationBottom.enableShiftingMode(false);
         navigationBottom.enableItemShiftingMode(false);
+        navigationBottom.setupWithViewPager(viewPager);
         initBottomNavigationListener();
 
 
@@ -128,22 +139,22 @@ public class MainActivity extends BasicActivity implements IHomeView {
                 switch (item.getItemId()) {
                     case R.id.nav_result:
                         isResultView = true;
-                        replaceFragment(R.id.fr_layout, FragmentResult.newInstance(), "RESULT");
+                        viewPager.setCurrentItem(0);
                         toolbar.setTitle(item.getTitle());
                         break;
                     case R.id.nav_analytics:
                         isResultView = false;
-                        replaceFragment(R.id.fr_layout, FragmentAnalytics.newInstance(), "ANALYTICS");
+                        viewPager.setCurrentItem(1);
                         toolbar.setTitle(item.getTitle());
                         break;
                     case R.id.nav_explore:
                         isResultView = false;
-                        replaceFragment(R.id.fr_layout, FragmentExplore.newInstance(), "EXPLORE");
+                        viewPager.setCurrentItem(2);
                         toolbar.setTitle(item.getTitle());
                         break;
                     case R.id.nav_more:
                         isResultView = false;
-                        replaceFragment(R.id.fr_layout, FragmentMore.newInstance(), "MORE");
+                        viewPager.setCurrentItem(3);
                         toolbar.setTitle(item.getTitle());
                         break;
                 }
@@ -207,15 +218,15 @@ public class MainActivity extends BasicActivity implements IHomeView {
         switch (position) {
             case 2:
                 navigationBottom.setSelectedItemId(R.id.nav_result);
-                replaceFragment(new FragmentNorthResult());
+                ((FragmentResult) pagerAdapter.getItem(0)).selected(0);
                 break;
             case 3:
                 navigationBottom.setSelectedItemId(R.id.nav_result);
-                replaceFragment(new FragmentCentralResult());
+                ((FragmentResult) pagerAdapter.getItem(0)).selected(1);
                 break;
             case 4:
                 navigationBottom.setSelectedItemId(R.id.nav_result);
-                replaceFragment(new FragmentSouthResult());
+                ((FragmentResult) pagerAdapter.getItem(0)).selected(2);
                 break;
             case 6:
                 navigationBottom.setSelectedItemId(R.id.nav_analytics);
@@ -255,5 +266,54 @@ public class MainActivity extends BasicActivity implements IHomeView {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         PermissionHelper.checkResult(grantResults);
+    }
+
+    public static class FragmentPagerAdapter extends android.support.v4.app.FragmentPagerAdapter {
+        private static int NUM_ITEMS = 4;
+
+        List<Fragment> fragmentList;
+
+        public FragmentPagerAdapter(FragmentManager fragmentManager) {
+            super(fragmentManager);
+            fragmentList = new ArrayList<>();
+            fragmentList.add(FragmentResult.newInstance());
+            fragmentList.add(FragmentAnalytics.newInstance());
+            fragmentList.add(FragmentExplore.newInstance());
+            fragmentList.add(FragmentMore.newInstance());
+        }
+
+        // Returns total number of pages
+        @Override
+        public int getCount() {
+            return NUM_ITEMS;
+        }
+
+        // Returns the fragment to display for that page
+        @Override
+        public Fragment getItem(int position) {
+            return fragmentList.get(position);
+        }
+
+        // Returns the page title for the top indicator
+        @Override
+        public CharSequence getPageTitle(int position) {
+            String title = null;
+            switch (position) {
+                case 0:
+                    title = "Kết quả";
+                    break;
+                case 1:
+                    title = "Thống kê";
+                    break;
+                case 2:
+                    title = "Soi cầu";
+                    break;
+                case 3:
+                    title = "Mở rộng";
+                    break;
+            }
+            return title;
+        }
+
     }
 }
