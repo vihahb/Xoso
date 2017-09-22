@@ -7,15 +7,21 @@ package com.xtelsolution.xoso.xoso.model.entity;
 public class MyCalendar {
 
     private String dateLabel;
-    private int dateValue;
+    private String dateValue;
+    private String monthValue;
+    private String monthLabel;
+    private String yearValue;
     private boolean selectPosition = false;
 
     public MyCalendar() {
     }
 
-    public MyCalendar(String dateLabel, int dateValue, boolean selectPosition) {
+    public MyCalendar(String dateLabel, String dateValue, String monthValue, String monthLabel, String yearValue, boolean selectPosition) {
         this.dateLabel = dateLabel;
         this.dateValue = dateValue;
+        this.monthValue = monthValue;
+        this.monthLabel = monthLabel;
+        this.yearValue = yearValue;
         this.selectPosition = selectPosition;
     }
 
@@ -27,12 +33,36 @@ public class MyCalendar {
         this.dateLabel = dateLabel;
     }
 
-    public int getDateValue() {
+    public String getDateValue() {
         return dateValue;
     }
 
-    public void setDateValue(int dateValue) {
+    public void setDateValue(String dateValue) {
         this.dateValue = dateValue;
+    }
+
+    public String getMonthValue() {
+        return monthValue;
+    }
+
+    public void setMonthValue(String monthValue) {
+        this.monthValue = monthValue;
+    }
+
+    public String getMonthLabel() {
+        return monthLabel;
+    }
+
+    public void setMonthLabel(String monthLabel) {
+        this.monthLabel = monthLabel;
+    }
+
+    public String getYearValue() {
+        return yearValue;
+    }
+
+    public void setYearValue(String yearValue) {
+        this.yearValue = yearValue;
     }
 
     public boolean isSelectPosition() {
@@ -47,7 +77,10 @@ public class MyCalendar {
     public String toString() {
         return "MyCalendar{" +
                 "dateLabel='" + dateLabel + '\'' +
-                ", dateValue=" + dateValue +
+                ", dateValue='" + dateValue + '\'' +
+                ", monthValue='" + monthValue + '\'' +
+                ", monthLabel='" + monthLabel + '\'' +
+                ", yearValue='" + yearValue + '\'' +
                 ", selectPosition=" + selectPosition +
                 '}';
     }

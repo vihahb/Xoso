@@ -6,6 +6,7 @@ import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
 import com.xtelsolution.xoso.sdk.callback.Icmd;
+import com.xtelsolution.xoso.sdk.common.SocketSingleton;
 import com.xtelsolution.xoso.sdk.utils.JsonHelper;
 import com.xtelsolution.xoso.sdk.utils.ResponseHandle;
 import com.xtelsolution.xoso.xoso.model.MainModel;
@@ -24,16 +25,7 @@ import java.util.Arrays;
 
 public class FragmentSouthContentPresenter {
 
-    private Socket socket;
-
-    {
-        try {
-            socket = IO.socket("http://124.158.4.190:3000/miennam");
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-            Log.e(TAG, "URISyntaxException: " + e.toString());
-        }
-    }
+    private SocketSingleton socketSingleton;
 
     private String cat_area_1, cat_area_2, cat_area_3;
     private static final String TAG = "FragmentSouthContentP";
@@ -70,7 +62,6 @@ public class FragmentSouthContentPresenter {
                                     view.setTableRegion3(obj.getData().get(2));
                                     break;
                                 case 4:
-                                    view.setTable4Hidden();
                                     view.setTableRegion1(obj.getData().get(0));
                                     view.setTableRegion2(obj.getData().get(1));
                                     view.setTableRegion3(obj.getData().get(2));
@@ -81,21 +72,17 @@ public class FragmentSouthContentPresenter {
 
                         @Override
                         public void onError(Error error) {
-                            view.getResultLotteryError(error.getMessage());
+                            if (error.getMessage()!=null){
+                                view.getResultLotteryError(error.getMessage());
+                            }
                             view.setVisibleTable(false);
                         }
                     });
                     break;
 
                 case 2:
-                    socket.connect();
-                    socket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
-                        @Override
-                        public void call(Object... args) {
-                            Log.e(TAG, "connect success: " + Arrays.toString(args));
-                            socket.emit("get_current_result");
-                        }
-                    });
+                    socketSingleton.getSocket().connect();
+                    socketSingleton.getSocket().on(Socket.EVENT_CONNECT, onConnect);
                     break;
             }
         }
@@ -103,6 +90,10 @@ public class FragmentSouthContentPresenter {
 
     public FragmentSouthContentPresenter(IFragmentSouthContent view) {
         this.view = view;
+        socketSingleton = new SocketSingleton(view.getActivity(), "miennam");
+        socketSingleton.getSocket().on(Socket.EVENT_CONNECT_ERROR, onConnectError);
+        socketSingleton.getSocket().on(Socket.EVENT_CONNECT_TIMEOUT, onConnectError);
+        socketSingleton.getSocket().on(Socket.EVENT_DISCONNECT, onDisconnect);
     }
 
     public void getResultLottery(String date) {
@@ -111,69 +102,100 @@ public class FragmentSouthContentPresenter {
 
     public void connectSocket() {
         icmd.excute(2);
-        listenSocket();
     }
-
-    public void listenSocket() {
-        socket.on("current_result", new Emitter.Listener() {
-            @Override
-            public void call(final Object... args) {
-                if (view.getActivity() != null) {
-                    view.getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Log.e(TAG, "get_current_result: " + args[0].toString());
-                            RESP_Result resp_result = JsonHelper.getObjectNoException(args[0].toString(), RESP_Result.class);
-                            Log.e(TAG, "Helper: " + JsonHelper.getObjectNoException(resp_result.toString(), RESP_Result.class));
-                            switch (resp_result.getData().size()) {
-                                case 1:
-                                    view.random(1);
-                                    cat_area_1 = String.valueOf(resp_result.getData().get(0).getCat_id());
-                                    break;
-                                case 2:
-                                    view.random(2);
-                                    cat_area_1 = String.valueOf(resp_result.getData().get(0).getCat_id());
-                                    cat_area_2 = String.valueOf(resp_result.getData().get(1).getCat_id());
-                                    break;
-                                case 3:
-                                    view.random(3);
-                                    cat_area_1 = String.valueOf(resp_result.getData().get(0).getCat_id());
-                                    cat_area_2 = String.valueOf(resp_result.getData().get(1).getCat_id());
-                                    cat_area_3 = String.valueOf(resp_result.getData().get(2).getCat_id());
-                                    break;
-                            }
-//                            view.setDataSocket(resp_result);
-                        }
-                    });
-                }
-            }
-        });
-
-        socket.on("new_result", new Emitter.Listener() {
-            @Override
-            public void call(final Object... args) {
-                if (view.getActivity() != null) {
-                    view.getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            RESP_NewResult newResult = JsonHelper.getObjectNoException(args[0].toString(), RESP_NewResult.class);
-                            Log.e(TAG, "new_result: " + Arrays.toString(args));
-                            if (newResult.getCat_id().equals(cat_area_1)) {
-                                view.setNewResult(newResult, 1);
-                            } else if (newResult.getCat_id().equals(cat_area_2)) {
-                                view.setNewResult(newResult, 2);
-                            } else if (newResult.getCat_id().equals(cat_area_3)) {
-                                view.setNewResult(newResult, 3);
-                            }
-                        }
-                    });
-                }
-            }
-        });
+    public void checkSocket() {
+        if (socketSingleton.getSocket().connected()) {
+            socketSingleton.getSocket().disconnect();
+        }
     }
 
     public void disconnectSocket() {
-        socket.disconnect();
+        socketSingleton.getSocket().disconnect();
     }
+
+    private Emitter.Listener onConnectError = new Emitter.Listener() {
+        @Override
+        public void call(Object... args) {
+            Log.e(TAG, "Socket connect error");
+        }
+    };
+
+    private Emitter.Listener onDisconnect = new Emitter.Listener() {
+        @Override
+        public void call(Object... args) {
+            Log.d(TAG, "onDisconnect");
+        }
+    };
+
+    private Emitter.Listener onConnect = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            if (view.getActivity() != null) {
+                view.getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.e(TAG, "connect success: " + Arrays.toString(args));
+                        socketSingleton.getSocket().emit("get_current_result");
+                        socketSingleton.getSocket().on("current_result", new Emitter.Listener() {
+                            @Override
+                            public void call(final Object... args) {
+                                if (view.getActivity() != null) {
+                                    view.getActivity().runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Log.e(TAG, "get_current_result: " + args[0].toString());
+                                            RESP_Result resp_result = JsonHelper.getObjectNoException(args[0].toString(), RESP_Result.class);
+                                            Log.e(TAG, "Helper: " + resp_result.toString());
+                                            switch (resp_result.getData().size()) {
+                                                case 1:
+                                                    view.random(1);
+                                                    cat_area_1 = String.valueOf(resp_result.getData().get(0).getCat_id());
+                                                    break;
+                                                case 2:
+                                                    view.random(2);
+                                                    cat_area_1 = String.valueOf(resp_result.getData().get(0).getCat_id());
+                                                    cat_area_2 = String.valueOf(resp_result.getData().get(1).getCat_id());
+                                                    break;
+                                                case 3:
+                                                    view.random(3);
+                                                    cat_area_1 = String.valueOf(resp_result.getData().get(0).getCat_id());
+                                                    cat_area_2 = String.valueOf(resp_result.getData().get(1).getCat_id());
+                                                    cat_area_3 = String.valueOf(resp_result.getData().get(2).getCat_id());
+                                                    break;
+                                            }
+                                            view.setDataSocket(resp_result);
+                                        }
+                                    });
+                                }
+                            }
+                        });
+
+                        socketSingleton.getSocket().on("new_result", new Emitter.Listener() {
+                            @Override
+                            public void call(final Object... args) {
+                                if (view.getActivity() != null) {
+                                    view.getActivity().runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            RESP_NewResult newResult = JsonHelper.getObjectNoException(args[0].toString(), RESP_NewResult.class);
+                                            Log.e(TAG, "new_result: " + Arrays.toString(args));
+                                            if (newResult.getCat_id().equals(cat_area_1)) {
+                                                view.setNewResult(newResult, 1);
+                                            } else if (newResult.getCat_id().equals(cat_area_2)) {
+                                                view.setNewResult(newResult, 2);
+                                            } else if (newResult.getCat_id().equals(cat_area_3)) {
+                                                view.setNewResult(newResult, 3);
+                                            }
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+        }
+    };
+
 
 }

@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ln_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rcl_calendar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <android.support.v4.view.ViewPager
         android:id="@+id/vpPager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <android.support.v4.view.PagerTabStrip
-            android:id="@+id/pager_header"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp" />
-    </android.support.v4.view.ViewPager>
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@drawable/bolder_table"/>
 </LinearLayout>

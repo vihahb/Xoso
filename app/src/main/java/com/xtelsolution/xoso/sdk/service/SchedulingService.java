@@ -25,10 +25,26 @@ public class SchedulingService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        /**
+         * Notification North area*/
+        AlarmUtils.getInstance().setAlarmManagerNorth(1);
+        AlarmUtils.getInstance().setAlarmManagerNorth(2);
+        AlarmUtils.getInstance().setAlarmManagerNorth(3);
+//        if (TimeUtils.checkTimeInMilisecondNorth(14, 0, 15, 40)){
+//
+//        } else {
+//            AlarmUtils.getInstance().setAlarmManagerNorth(true, 1);
+//        }
+
+        /**
+         * Notification Central area*/
         if (TimeUtils.checkTimeInMilisecondNorth(15, 0, 15, 40)){
-            AlarmUtils.getInstance().setAlarmManagerNorth(true, false);
-        } else {
-            AlarmUtils.getInstance().setAlarmManagerNorth(true, true);
+
+        }
+
+        /**
+         * Notification South area*/
+        if (TimeUtils.checkTimeInMilisecondNorth(15, 0, 15, 40)){
         }
     }
 

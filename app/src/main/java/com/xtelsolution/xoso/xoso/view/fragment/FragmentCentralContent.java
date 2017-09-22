@@ -1,6 +1,5 @@
 package com.xtelsolution.xoso.xoso.view.fragment;
 
-import android.content.Context;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,10 +13,7 @@ import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
-import com.test.tudou.library.model.CalendarDay;
 import com.xtelsolution.xoso.R;
-import com.xtelsolution.xoso.sdk.common.Constants;
-import com.xtelsolution.xoso.sdk.utils.SharedUtils;
 import com.xtelsolution.xoso.sdk.utils.TimeUtils;
 import com.xtelsolution.xoso.xoso.model.entity.BeginResult;
 import com.xtelsolution.xoso.xoso.model.entity.ResultLottery;
@@ -26,9 +22,7 @@ import com.xtelsolution.xoso.xoso.model.respond.RESP_Result;
 import com.xtelsolution.xoso.xoso.presenter.fragment.FragmentCentralContentPresenter;
 import com.xtelsolution.xoso.xoso.view.fragment.inf.IFragmentCentralContent;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Random;
 
 /**

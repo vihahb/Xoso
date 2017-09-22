@@ -21,27 +21,22 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-
-
         Intent intentLive = new Intent(context, MainActivity.class);
         String content_notify ="";
-        switch (intent.getIntExtra(Constants.AREA_NOTIFY, 1)){
-            case 1:
-                intentLive.putExtra(Constants.START_LIVE, 1);
-                content_notify = "Đã đến giờ quay giải miền Bắc";
-                break;
-            case 2:
-                intentLive.putExtra(Constants.START_LIVE, 2);
-                content_notify = "Đã đến giờ quay giải miền Trung";
-                break;
-            case 3:
-                intentLive.putExtra(Constants.START_LIVE, 3);
-                content_notify = "Đã đến giờ quay giải miền Nam";
-                break;
+        int notify_id_value = intent.getIntExtra(Constants.NOTIFICATION_ID, 1);
+
+        if (notify_id_value == 1){
+            intentLive.putExtra(Constants.START_LIVE, 1);
+            content_notify = "Đã đến giờ quay giải miền Bắc";
+        } else if (notify_id_value == 2){
+            intentLive.putExtra(Constants.START_LIVE, 2);
+            content_notify = "Đã đến giờ quay giải miền Trung";
+        } else if (notify_id_value == 3){
+            intentLive.putExtra(Constants.START_LIVE, 3);
+            content_notify = "Đã đến giờ quay giải miền Nam";
         }
+
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intentLive, PendingIntent.FLAG_UPDATE_CURRENT);
-
-
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
         builder.setContentTitle("Trực tiếp");

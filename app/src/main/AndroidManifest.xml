@@ -31,13 +31,20 @@
         <activity
             android:name=".xoso.presenter.activity.RandomLotteryActivity"
             android:label="@string/title_activity_random_lottery"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
 
         <receiver android:name=".sdk.receiver.AlarmReceiver" />
+
         <service android:name=".sdk.service.SchedulingService" />
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="5765ba05cf4f36a9301d3a8eb9fe7c9e53ecb745" />
+
+        <activity
+            android:name=".xoso.view.activity.TestActivity"
+            android:label="@string/title_activity_test"
+            android:theme="@style/AppTheme"/>
     </application>
 
 </manifest>

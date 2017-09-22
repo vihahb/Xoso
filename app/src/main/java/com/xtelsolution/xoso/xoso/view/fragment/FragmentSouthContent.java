@@ -3,6 +3,7 @@ package com.xtelsolution.xoso.xoso.view.fragment;
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -13,7 +14,6 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.xtelsolution.xoso.R;
-import com.xtelsolution.xoso.sdk.common.Constants;
 import com.xtelsolution.xoso.sdk.utils.TimeUtils;
 import com.xtelsolution.xoso.xoso.model.entity.BeginResult;
 import com.xtelsolution.xoso.xoso.model.entity.ResultLottery;
@@ -37,7 +37,7 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
 
     private TextView tvContent, tv_title;
 
-    private ScrollView scroll_central;
+    private ScrollView scroll_south;
 
     private TableLayout table_1, table_2, table_3, table_4;
     /**
@@ -88,9 +88,9 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
             tvLoto4_4, tvLoto5_4, tvLoto6_4, tvLoto7_4, tvLoto8_4, tvLoto9_4;
 
 
-    private List<String> eight_list_1, sevent_list_1, sixth_list_1, fiveth_list_1, fourth_list_1, thrid_list_1, second_list_1, first_list_1, special_list_1;
-    private List<String> eight_list_2, sevent_list_2, sixth_list_2, fiveth_list_2, fourth_list_2, thrid_list_2, second_list_2, first_list_2, special_list_2;
-    private List<String> eight_list_3, sevent_list_3, sixth_list_3, fiveth_list_3, fourth_list_3, thrid_list_3, second_list_3, first_list_3, special_list_3;
+//    private List<String> eight_list_1, sevent_list_1, sixth_list_1, fiveth_list_1, fourth_list_1, thrid_list_1, second_list_1, first_list_1, special_list_1;
+//    private List<String> eight_list_2, sevent_list_2, sixth_list_2, fiveth_list_2, fourth_list_2, thrid_list_2, second_list_2, first_list_2, special_list_2;
+//    private List<String> eight_list_3, sevent_list_3, sixth_list_3, fiveth_list_3, fourth_list_3, thrid_list_3, second_list_3, first_list_3, special_list_3;
 
     long millis;
 
@@ -126,6 +126,7 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
 
     private static final String KEY_DATE = "date";
     private MediaPlayer player;
+    private boolean toDay;
 
     public static FragmentSouthContent newInstance(long date) {
         FragmentSouthContent fragmentFirst = new FragmentSouthContent();
@@ -138,53 +139,54 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRetainInstance(true);
 
         millis = getArguments().getLong(KEY_DATE);
-        this.isToday = getArguments().getBoolean(Constants.IS_TO_DAY);
-
         if (millis > 0) {
             final Context context = getActivity();
-            if (context != null) {
-                getDateTime = TimeUtils.getFormattedDate(context, millis);
-                return;
-            }
-        } else
-            getDateTime = "";
+            getDateTime = TimeUtils.getFormattedDate(context, millis);
+            String todays = TimeUtils.getToday();
+
+            toDay = todays.trim().equals(getDateTime.trim());
+        }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        presenter = new FragmentSouthContentPresenter(this);
         return inflater.inflate(R.layout.fragment_south_content, container, false);
     }
 
     @Override
     public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        player = MediaPlayer.create(getContext(), Settings.System.DEFAULT_NOTIFICATION_URI);
-        scroll_central = view.findViewById(R.id.scroll_central);
+        presenter = new FragmentSouthContentPresenter(this);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                player = MediaPlayer.create(getContext(), Settings.System.DEFAULT_NOTIFICATION_URI);
+                scroll_south = view.findViewById(R.id.scroll_south);
 
-        tvContent = view.findViewById(R.id.tvContent);
-        tv_title = view.findViewById(R.id.tv_title);
-        tv_title.setText("kết quả xổ số miền Nam");
+                tvContent = view.findViewById(R.id.tvContent);
+                tv_title = view.findViewById(R.id.tv_title);
+                tv_title.setText("kết quả xổ số miền Nam");
 
-        initTable1(view);
-        initTable2(view);
-        initTable3(view);
-        initTable4(view);
+                initTable1(view);
+                initTable2(view);
+                initTable3(view);
+                initTable4(view);
+                initRandomRolling();
 
-//        presenter.getResultLottery(getDateTime);
-//        if (isToday) {
-            presenter.connectSocket();
-//        } else {
-//
-//        }
-//        presenter.listenSocket();
+                if (toDay) {
+                    presenter.connectSocket();
+                } else {
+                    presenter.getResultLottery(getDateTime);
+                }
+            }
+        }, 100);
     }
 
     private void initTable1(View view) {
-        table_1 = view.findViewById(R.id.central_region_1);
+        table_1 = view.findViewById(R.id.south_region_1);
         tvResgion_1 = view.findViewById(R.id.tvRegionTitle1);
         tv8_1 = view.findViewById(R.id.tv8_1);
         tv7_1 = view.findViewById(R.id.tv7_1);
@@ -219,7 +221,7 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
     }
 
     private void initTable2(View view) {
-        table_2 = view.findViewById(R.id.central_region_2);
+        table_2 = view.findViewById(R.id.south_region_2);
         tvResgion_2 = view.findViewById(R.id.tvRegionTitle2);
         tv8_2 = view.findViewById(R.id.tv8_2);
         tv7_2 = view.findViewById(R.id.tv7_2);
@@ -254,7 +256,7 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
     }
 
     private void initTable3(View view) {
-        table_3 = view.findViewById(R.id.central_region_3);
+        table_3 = view.findViewById(R.id.south_region_3);
         tvResgion_3 = view.findViewById(R.id.tvRegionTitle3);
         tv8_3 = view.findViewById(R.id.tv8_3);
         tv7_3 = view.findViewById(R.id.tv7_3);
@@ -289,7 +291,7 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
     }
 
     private void initTable4(View view) {
-        table_4 = view.findViewById(R.id.central_region_4);
+        table_4 = view.findViewById(R.id.south_region_4);
         tvResgion_4 = view.findViewById(R.id.tvRegionTitle4);
         tv8_4 = view.findViewById(R.id.tv8_4);
         tv7_4 = view.findViewById(R.id.tv7_4);
@@ -323,6 +325,513 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
         tvLoto9_4 = view.findViewById(R.id.tvLoto9_4);
     }
 
+    private void initRandomRolling() {
+        /**
+         * 8
+         * Random number table all*/
+        if (rl81 == null) {
+            rl81 = new Roller(tv8_1, 100000, 80, 99, 10);
+        }
+        rl82 = new Roller(tv8_2, 100000, 80, 99, 10);
+        rl83 = new Roller(tv8_3, 100000, 80, 99, 10);
+        rl84 = new Roller(tv8_4, 100000, 80, 99, 10);
+
+
+        /**
+         * 7
+         * Random number table all*/
+        rl71 = new Roller(tv7_1, 10000, 80, 999, 100);
+        rl72 = new Roller(tv7_2, 10000, 80, 999, 100);
+        rl73 = new Roller(tv7_3, 10000, 80, 999, 100);
+        rl74 = new Roller(tv7_4, 10000, 80, 999, 100);
+
+        /**
+         * 6
+         * Random number table 1*/
+        rl611 = new Roller(tv6_1, 10000, 80, 9999, 1000);
+        rl612 = new Roller(tv6_2, 10000, 80, 9999, 1000);
+        rl613 = new Roller(tv6_3, 10000, 80, 9999, 1000);
+
+
+        /**
+         * 6
+         * Random number table 2*/
+        rl621 = new Roller(tv6_1_2, 10000, 80, 9999, 1000);
+        rl622 = new Roller(tv6_2_2, 10000, 80, 9999, 1000);
+        rl623 = new Roller(tv6_3_2, 10000, 80, 9999, 1000);
+
+
+        /**
+         * 6
+         * Random number table 3*/
+        rl631 = new Roller(tv6_1_3, 10000, 80, 9999, 1000);
+        rl632 = new Roller(tv6_2_3, 10000, 80, 9999, 1000);
+        rl633 = new Roller(tv6_3_3, 10000, 80, 9999, 1000);
+
+        /**
+         * 6
+         * Random number table 4*/
+        rl641 = new Roller(tv6_1_4, 10000, 80, 9999, 1000);
+        rl642 = new Roller(tv6_2_4, 10000, 80, 9999, 1000);
+        rl643 = new Roller(tv6_3_4, 10000, 80, 9999, 1000);
+
+        /**
+         * 5
+         * Random number table all*/
+        rl51 = new Roller(tv5_1, 10000, 80, 9999, 1000);
+        rl52 = new Roller(tv5_2, 10000, 80, 9999, 1000);
+        rl53 = new Roller(tv5_3, 10000, 80, 9999, 1000);
+        rl54 = new Roller(tv5_4, 10000, 80, 9999, 1000);
+
+        /**
+         * 4
+         * Random number table 1*/
+        rl41 = new Roller(tv4_1, 10000, 80, 99999, 10000);
+        rl412 = new Roller(tv4_2, 10000, 80, 99999, 10000);
+        rl413 = new Roller(tv4_3, 10000, 80, 99999, 10000);
+        rl414 = new Roller(tv4_4, 10000, 80, 99999, 10000);
+        rl415 = new Roller(tv4_5, 10000, 80, 99999, 10000);
+        rl416 = new Roller(tv4_6, 10000, 80, 99999, 10000);
+        rl417 = new Roller(tv4_7, 10000, 80, 99999, 10000);
+
+        /**
+         * 4
+         * Random number table 2*/
+        rl42 = new Roller(tv4_1_2, 10000, 80, 99999, 10000);
+        rl422 = new Roller(tv4_2_2, 10000, 80, 99999, 10000);
+        rl423 = new Roller(tv4_3_2, 10000, 80, 99999, 10000);
+        rl424 = new Roller(tv4_4_2, 10000, 80, 99999, 10000);
+        rl425 = new Roller(tv4_5_2, 10000, 80, 99999, 10000);
+        rl426 = new Roller(tv4_6_2, 10000, 80, 99999, 10000);
+        rl427 = new Roller(tv4_7_2, 10000, 80, 99999, 10000);
+
+        /**
+         * 4
+         * Random number table 3*/
+        rl43 = new Roller(tv4_1_3, 10000, 80, 99999, 10000);
+        rl432 = new Roller(tv4_2_3, 10000, 80, 99999, 10000);
+        rl433 = new Roller(tv4_3_3, 10000, 80, 99999, 10000);
+        rl434 = new Roller(tv4_4_3, 10000, 80, 99999, 10000);
+        rl435 = new Roller(tv4_5_3, 10000, 80, 99999, 10000);
+        rl436 = new Roller(tv4_6_3, 10000, 80, 99999, 10000);
+        rl437 = new Roller(tv4_7_3, 10000, 80, 99999, 10000);
+
+        /**
+         * 4
+         * Random number table 4*/
+        rl44 = new Roller(tv4_1_4, 10000, 80, 99999, 10000);
+        rl442 = new Roller(tv4_2_4, 10000, 80, 99999, 10000);
+        rl443 = new Roller(tv4_3_4, 10000, 80, 99999, 10000);
+        rl444 = new Roller(tv4_4_4, 10000, 80, 99999, 10000);
+        rl445 = new Roller(tv4_5_4, 10000, 80, 99999, 10000);
+        rl446 = new Roller(tv4_6_4, 10000, 80, 99999, 10000);
+        rl447 = new Roller(tv4_7_4, 10000, 80, 99999, 10000);
+
+        /**
+         * 3
+         * Random number table 1*/
+        rl311 = new Roller(tv3_1, 10000, 80, 99999, 10000);
+        rl312 = new Roller(tv3_2, 10000, 80, 99999, 10000);
+
+        /**
+         * 3
+         * Random number table 2*/
+        rl321 = new Roller(tv3_1_2, 10000, 80, 99999, 10000);
+        rl322 = new Roller(tv3_2_2, 10000, 80, 99999, 10000);
+
+        /**
+         * 3
+         * Random number table 3*/
+        rl331 = new Roller(tv3_1_3, 10000, 80, 99999, 10000);
+        rl332 = new Roller(tv3_2_3, 10000, 80, 99999, 10000);
+
+        /**
+         * 3
+         * Random number table 4*/
+        rl341 = new Roller(tv3_1_4, 10000, 80, 99999, 10000);
+        rl342 = new Roller(tv3_2_4, 10000, 80, 99999, 10000);
+
+        /**
+         * 2
+         * Random number table all*/
+        rl_second_1 = new Roller(tv2_1, 10000, 80, 99999, 10000);
+        rl_second_2 = new Roller(tv2_2, 10000, 80, 99999, 10000);
+        rl_second_3 = new Roller(tv2_3, 10000, 80, 99999, 10000);
+        rl_second_4 = new Roller(tv2_4, 10000, 80, 99999, 10000);
+
+        /**
+         * 1
+         * Random number table all*/
+        rl_first_1 = new Roller(tv1_1, 10000, 80, 99999, 10000);
+        rl_first_2 = new Roller(tv1_2, 10000, 80, 99999, 10000);
+        rl_first_3 = new Roller(tv1_3, 10000, 80, 99999, 10000);
+        rl_first_4 = new Roller(tv1_4, 10000, 80, 99999, 10000);
+
+        /**
+         * DB
+         * Random number table all*/
+        rl_special_1 = new Roller(tvDb, 10000, 80, 99999, 10000);
+        rl_special_2 = new Roller(tvDb_2, 10000, 80, 99999, 10000);
+        rl_special_3 = new Roller(tvDb_3, 10000, 80, 99999, 10000);
+        rl_special_4 = new Roller(tvDb_4, 10000, 80, 99999, 10000);
+    }
+
+    private void checkRandomTable1(List<String> special, List<String> first, List<String> second, List<String> third, List<String> fourd, List<String> five, List<String> six, List<String> seven, List<String> eight) {
+        if (eight.size() > 0){
+            if (rl81!=null){
+                rl81.shutdownThread();
+            }
+        }
+        if (seven.size() > 0){
+            if (rl71!=null){
+                rl71.shutdownThread();
+            }
+        }
+
+        if (six.size() > 0){
+            if (rl611!=null){
+                rl611.shutdownThread();
+            }
+        } else if (six.size() > 1){
+            if (rl612!=null){
+                rl612.shutdownThread();
+            }
+        } else if (six.size() > 2){
+            if (rl613!=null){
+                rl613.shutdownThread();
+            }
+        }
+
+        if (five.size() > 0){
+            if (rl51!=null){
+                rl51.shutdownThread();
+            }
+        }
+
+        if (fourd.size() > 0){
+            if (rl41!=null){
+                rl41.shutdownThread();
+            }
+        } else if (fourd.size() > 1){
+            if (rl412!=null){
+                rl412.shutdownThread();
+            }
+        } else if (fourd.size() > 2){
+            if (rl413!=null){
+                rl413.shutdownThread();
+            }
+        }else if (fourd.size() > 3){
+            if (rl414!=null){
+                rl414.shutdownThread();
+            }
+        }else if (fourd.size() > 4){
+            if (rl415!=null){
+                rl415.shutdownThread();
+            }
+        }else if (fourd.size() > 5){
+            if (rl416!=null){
+                rl416.shutdownThread();
+            }
+        }else if (fourd.size() > 6){
+            if (rl417!=null){
+                rl417.shutdownThread();
+            }
+        }
+
+        if (third.size() > 0){
+            if (rl311!=null){
+                rl311.shutdownThread();
+            }
+        } else if (third.size() > 1){
+            if (rl312!=null){
+                rl312.shutdownThread();
+            }
+        }
+
+        if (second.size() > 0){
+            if (rl_second_1!=null){
+                rl_second_1.shutdownThread();
+            }
+        }
+
+        if (first.size() > 0){
+            if (rl_first_1!=null){
+                rl_first_1.shutdownThread();
+            }
+        }
+        if (special.size() > 0){
+            if (rl_special_1!=null){
+                rl_special_1.shutdownThread();
+            }
+        }
+    }
+    private void checkRandomTable2(List<String> special, List<String> first, List<String> second, List<String> third, List<String> fourd, List<String> five, List<String> six, List<String> seven, List<String> eight) {
+        if (eight.size() > 0){
+            if (rl82!=null){
+                rl82.shutdownThread();
+            }
+        }
+        if (seven.size() > 0){
+            if (rl72!=null){
+                rl72.shutdownThread();
+            }
+        }
+
+        if (six.size() > 0){
+            if (rl621!=null){
+                rl621.shutdownThread();
+            }
+        } else if (six.size() > 1){
+            if (rl622!=null){
+                rl622.shutdownThread();
+            }
+        } else if (six.size() > 2){
+            if (rl623!=null){
+                rl623.shutdownThread();
+            }
+        }
+
+        if (five.size() > 0){
+            if (rl52!=null){
+                rl52.shutdownThread();
+            }
+        }
+
+        if (fourd.size() > 0){
+            if (rl42!=null){
+                rl42.shutdownThread();
+            }
+        } else if (fourd.size() > 1){
+            if (rl422!=null){
+                rl422.shutdownThread();
+            }
+        } else if (fourd.size() > 2){
+            if (rl423!=null){
+                rl423.shutdownThread();
+            }
+        }else if (fourd.size() > 3){
+            if (rl424!=null){
+                rl424.shutdownThread();
+            }
+        }else if (fourd.size() > 4){
+            if (rl425!=null){
+                rl425.shutdownThread();
+            }
+        }else if (fourd.size() > 5){
+            if (rl426!=null){
+                rl426.shutdownThread();
+            }
+        }else if (fourd.size() > 6){
+            if (rl427!=null){
+                rl427.shutdownThread();
+            }
+        }
+
+        if (third.size() > 0){
+            if (rl321!=null){
+                rl321.shutdownThread();
+            }
+        } else if (third.size() > 1){
+            if (rl322!=null){
+                rl322.shutdownThread();
+            }
+        }
+
+        if (second.size() > 0){
+            if (rl_second_2!=null){
+                rl_second_2.shutdownThread();
+            }
+        }
+
+        if (first.size() > 0){
+            if (rl_first_2!=null){
+                rl_first_2.shutdownThread();
+            }
+        }
+        if (special.size() > 0){
+            if (rl_special_2!=null){
+                rl_special_2.shutdownThread();
+            }
+        }
+    }
+    private void checkRandomTable3(List<String> special, List<String> first, List<String> second, List<String> third, List<String> fourd, List<String> five, List<String> six, List<String> seven, List<String> eight) {
+        if (eight.size() > 0){
+            if (rl83!=null){
+                rl83.shutdownThread();
+            }
+        }
+        if (seven.size() > 0){
+            if (rl73!=null){
+                rl73.shutdownThread();
+            }
+        }
+
+        if (six.size() > 0){
+            if (rl631!=null){
+                rl631.shutdownThread();
+            }
+        } else if (six.size() > 1){
+            if (rl632!=null){
+                rl632.shutdownThread();
+            }
+        } else if (six.size() > 2){
+            if (rl633!=null){
+                rl633.shutdownThread();
+            }
+        }
+
+        if (five.size() > 0){
+            if (rl53!=null){
+                rl53.shutdownThread();
+            }
+        }
+
+        if (fourd.size() > 0){
+            if (rl43!=null){
+                rl43.shutdownThread();
+            }
+        } else if (fourd.size() > 1){
+            if (rl432!=null){
+                rl432.shutdownThread();
+            }
+        } else if (fourd.size() > 2){
+            if (rl433!=null){
+                rl433.shutdownThread();
+            }
+        }else if (fourd.size() > 3){
+            if (rl434!=null){
+                rl434.shutdownThread();
+            }
+        }else if (fourd.size() > 4){
+            if (rl435!=null){
+                rl435.shutdownThread();
+            }
+        }else if (fourd.size() > 5){
+            if (rl436!=null){
+                rl436.shutdownThread();
+            }
+        }else if (fourd.size() > 6){
+            if (rl437!=null){
+                rl437.shutdownThread();
+            }
+        }
+
+        if (third.size() > 0){
+            if (rl331!=null){
+                rl331.shutdownThread();
+            }
+        } else if (third.size() > 1){
+            if (rl332!=null){
+                rl332.shutdownThread();
+            }
+        }
+
+        if (second.size() > 0){
+            if (rl_second_3!=null){
+                rl_second_3.shutdownThread();
+            }
+        }
+
+        if (first.size() > 0){
+            if (rl_first_3!=null){
+                rl_first_3.shutdownThread();
+            }
+        }
+        if (special.size() > 0){
+            if (rl_special_3!=null){
+                rl_special_3.shutdownThread();
+            }
+        }
+    }
+    private void checkRandomTable4(List<String> special, List<String> first, List<String> second, List<String> third, List<String> fourd, List<String> five, List<String> six, List<String> seven, List<String> eight) {
+        if (eight.size() > 0){
+            if (rl84!=null){
+                rl84.shutdownThread();
+            }
+        }
+        if (seven.size() > 0){
+            if (rl74!=null){
+                rl74.shutdownThread();
+            }
+        }
+
+        if (six.size() > 0){
+            if (rl641!=null){
+                rl641.shutdownThread();
+            }
+        } else if (six.size() > 1){
+            if (rl642!=null){
+                rl642.shutdownThread();
+            }
+        } else if (six.size() > 2){
+            if (rl643!=null){
+                rl643.shutdownThread();
+            }
+        }
+
+        if (five.size() > 0){
+            if (rl43!=null){
+                rl43.shutdownThread();
+            }
+        }
+
+        if (fourd.size() > 0){
+            if (rl44!=null){
+                rl44.shutdownThread();
+            }
+        } else if (fourd.size() > 1){
+            if (rl442!=null){
+                rl442.shutdownThread();
+            }
+        } else if (fourd.size() > 2){
+            if (rl443!=null){
+                rl443.shutdownThread();
+            }
+        }else if (fourd.size() > 3){
+            if (rl444!=null){
+                rl444.shutdownThread();
+            }
+        }else if (fourd.size() > 4){
+            if (rl445!=null){
+                rl445.shutdownThread();
+            }
+        }else if (fourd.size() > 5){
+            if (rl446!=null){
+                rl446.shutdownThread();
+            }
+        }else if (fourd.size() > 6){
+            if (rl447!=null){
+                rl447.shutdownThread();
+            }
+        }
+
+        if (third.size() > 0){
+            if (rl341!=null){
+                rl341.shutdownThread();
+            }
+        } else if (third.size() > 1){
+            if (rl342!=null){
+                rl342.shutdownThread();
+            }
+        }
+
+        if (second.size() > 0){
+            if (rl_second_4!=null){
+                rl_second_4.shutdownThread();
+            }
+        }
+
+        if (first.size() > 0){
+            if (rl_first_4!=null){
+                rl_first_4.shutdownThread();
+            }
+        }
+        if (special.size() > 0){
+            if (rl_special_4!=null){
+                rl_special_4.shutdownThread();
+            }
+        }
+    }
     @Override
     public void setDataSocket(RESP_Result resp_result) {
         switch (resp_result.getData().size()) {
@@ -370,6 +879,7 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                 setTable3Hidden();
                 break;
             case 3:
+                setTable4Hidden();
                 setResultLotteryTable1(
                         resp_result.getData().get(0).getArea(),
                         resp_result.getData().get(0).getRes_special(),
@@ -511,9 +1021,9 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
     @Override
     public void setVisibleTable(boolean isVisible) {
         if (isVisible) {
-            scroll_central.setVisibility(View.VISIBLE);
+            scroll_south.setVisibility(View.VISIBLE);
         } else {
-            scroll_central.setVisibility(View.GONE);
+            scroll_south.setVisibility(View.GONE);
         }
     }
 
@@ -570,7 +1080,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                             if (rl81 != null) {
                                 rl81.shutdownThread();
                             }
-                            rl71 = new Roller(tv7_1, 10000, 80, 999, 100);
                             rl71.run();
                             tv8_1.setText(newResult.getValue());
                         }
@@ -580,7 +1089,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                             if (rl71 != null) {
                                 rl71.shutdownThread();
                             }
-                            rl611 = new Roller(tv6_1, 10000, 80, 9999, 1000);
                             rl611.run();
                             tv7_1.setText(newResult.getValue());
                         }
@@ -592,7 +1100,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                                     if (rl611 != null) {
                                         rl611.shutdownThread();
                                     }
-                                    rl612 = new Roller(tv6_2, 10000, 80, 9999, 1000);
                                     rl612.run();
                                     tv6_1.setText(newResult.getValue());
                                     break;
@@ -600,7 +1107,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                                     if (rl612 != null) {
                                         rl612.shutdownThread();
                                     }
-                                    rl613 = new Roller(tv6_3, 10000, 80, 9999, 1000);
                                     rl613.run();
                                     tv6_2.setText(newResult.getValue());
                                     break;
@@ -608,7 +1114,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                                     if (rl613 != null) {
                                         rl613.shutdownThread();
                                     }
-                                    rl51 = new Roller(tv5_1, 10000, 80, 9999, 1000);
                                     rl51.run();
                                     tv6_3.setText(newResult.getValue());
                                     break;
@@ -620,7 +1125,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                         if (rl51 != null) {
                             rl51.shutdownThread();
                         }
-                        rl41 = new Roller(tv4_1, 10000, 80, 99999, 10000);
                         rl41.run();
                         tv5_1.setText(newResult.getValue());
                         break;
@@ -631,7 +1135,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                                     if (rl41 != null) {
                                         rl41.shutdownThread();
                                     }
-                                    rl412 = new Roller(tv4_2, 10000, 80, 99999, 10000);
                                     rl412.run();
                                     tv4_1.setText(newResult.getValue());
                                     break;
@@ -639,7 +1142,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                                     if (rl412 != null) {
                                         rl412.shutdownThread();
                                     }
-                                    rl413 = new Roller(tv4_3, 10000, 80, 99999, 10000);
                                     rl413.run();
                                     tv4_2.setText(newResult.getValue());
                                     break;
@@ -647,7 +1149,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                                     if (rl413 != null) {
                                         rl413.shutdownThread();
                                     }
-                                    rl414 = new Roller(tv4_4, 10000, 80, 99999, 10000);
                                     rl414.run();
                                     tv4_3.setText(newResult.getValue());
                                     break;
@@ -656,7 +1157,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                                     if (rl414 != null) {
                                         rl414.shutdownThread();
                                     }
-                                    rl415 = new Roller(tv4_5, 10000, 80, 99999, 10000);
                                     rl415.run();
                                     tv4_4.setText(newResult.getValue());
                                     break;
@@ -664,7 +1164,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                                     if (rl415 != null) {
                                         rl415.shutdownThread();
                                     }
-                                    rl416 = new Roller(tv4_6, 10000, 80, 99999, 10000);
                                     rl416.run();
                                     tv4_5.setText(newResult.getValue());
                                     break;
@@ -672,7 +1171,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                                     if (rl416 != null) {
                                         rl416.shutdownThread();
                                     }
-                                    rl417 = new Roller(tv4_7, 10000, 80, 99999, 10000);
                                     rl417.run();
                                     tv4_6.setText(newResult.getValue());
                                     break;
@@ -680,7 +1178,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                                     if (rl417 != null) {
                                         rl417.shutdownThread();
                                     }
-                                    rl311 = new Roller(tv3_1, 10000, 80, 99999, 10000);
                                     rl311.run();
                                     tv4_7.setText(newResult.getValue());
                                     break;
@@ -695,17 +1192,15 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                                     if (rl311 != null) {
                                         rl311.shutdownThread();
                                     }
-                                    rl312 = new Roller(tv3_2, 10000, 80, 99999, 10000);
                                     rl312.run();
-                                    tv6_1.setText(newResult.getValue());
+                                    tv3_1.setText(newResult.getValue());
                                     break;
                                 case "1":
                                     if (rl312 != null) {
                                         rl312.shutdownThread();
                                     }
-                                    rl_second_1 = new Roller(tv2_1, 10000, 80, 99999, 10000);
                                     rl_second_1.run();
-                                    tv2_1.setText(newResult.getValue());
+                                    tv3_2.setText(newResult.getValue());
                                     break;
                             }
                         }
@@ -714,15 +1209,13 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                         if (rl_second_1 != null) {
                             rl_second_1.shutdownThread();
                         }
-                        rl_first_1 = new Roller(tv1_1, 10000, 80, 99999, 10000);
                         rl_first_1.run();
-                        tv1_1.setText(newResult.getValue());
+                        tv2_1.setText(newResult.getValue());
                         break;
                     case "res_first":
                         if (rl_first_1 != null) {
                             rl_first_1.shutdownThread();
                         }
-                        rl_special_1 = new Roller(tvDb, 10000, 80, 99999, 10000);
                         rl_special_1.run();
                         tv1_1.setText(newResult.getValue());
                         break;
@@ -744,7 +1237,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                             if (rl82 != null) {
                                 rl82.shutdownThread();
                             }
-                            rl72 = new Roller(tv7_2, 10000, 80, 999, 100);
                             rl72.run();
                             tv8_2.setText(newResult.getValue());
                         }
@@ -754,7 +1246,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                             if (rl72 != null) {
                                 rl72.shutdownThread();
                             }
-                            rl621 = new Roller(tv6_1_2, 10000, 80, 9999, 1000);
                             rl621.run();
                             tv7_2.setText(newResult.getValue());
                         }
@@ -766,7 +1257,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                                     if (rl621 != null) {
                                         rl621.shutdownThread();
                                     }
-                                    rl622 = new Roller(tv6_2_2, 10000, 80, 9999, 1000);
                                     rl622.run();
                                     tv6_1_2.setText(newResult.getValue());
                                     break;
@@ -774,7 +1264,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                                     if (rl622 != null) {
                                         rl622.shutdownThread();
                                     }
-                                    rl623 = new Roller(tv6_3_2, 10000, 80, 9999, 1000);
                                     rl623.run();
                                     tv6_2_2.setText(newResult.getValue());
                                     break;
@@ -782,7 +1271,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                                     if (rl623 != null) {
                                         rl623.shutdownThread();
                                     }
-                                    rl52 = new Roller(tv5_2, 10000, 80, 9999, 1000);
                                     rl52.run();
                                     tv6_3_2.setText(newResult.getValue());
                                     break;
@@ -794,7 +1282,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                         if (rl52 != null) {
                             rl52.shutdownThread();
                         }
-                        rl42 = new Roller(tv4_2, 10000, 80, 99999, 10000);
                         rl42.run();
                         tv5_2.setText(newResult.getValue());
                         break;
@@ -805,15 +1292,13 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                                     if (rl42 != null) {
                                         rl42.shutdownThread();
                                     }
-                                    rl422 = new Roller(tv4_2_2, 10000, 80, 99999, 10000);
                                     rl422.run();
-                                    tv4_2.setText(newResult.getValue());
+                                    tv4_1_2.setText(newResult.getValue());
                                     break;
                                 case "1":
                                     if (rl422 != null) {
                                         rl422.shutdownThread();
                                     }
-                                    rl423 = new Roller(tv4_3_2, 10000, 80, 99999, 10000);
                                     rl423.run();
                                     tv4_2_2.setText(newResult.getValue());
                                     break;
@@ -821,7 +1306,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                                     if (rl423 != null) {
                                         rl423.shutdownThread();
                                     }
-                                    rl424 = new Roller(tv4_4_2, 10000, 80, 99999, 10000);
                                     rl424.run();
                                     tv4_3_2.setText(newResult.getValue());
                                     break;
@@ -830,7 +1314,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                                     if (rl424 != null) {
                                         rl424.shutdownThread();
                                     }
-                                    rl425 = new Roller(tv4_5_2, 10000, 80, 99999, 10000);
                                     rl425.run();
                                     tv4_4_2.setText(newResult.getValue());
                                     break;
@@ -838,7 +1321,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                                     if (rl425 != null) {
                                         rl425.shutdownThread();
                                     }
-                                    rl426 = new Roller(tv4_6_2, 10000, 80, 99999, 10000);
                                     rl426.run();
                                     tv4_5_2.setText(newResult.getValue());
                                     break;
@@ -846,7 +1328,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                                     if (rl426 != null) {
                                         rl426.shutdownThread();
                                     }
-                                    rl427 = new Roller(tv4_7_2, 10000, 80, 99999, 10000);
                                     rl427.run();
                                     tv4_6_2.setText(newResult.getValue());
                                     break;
@@ -854,7 +1335,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                                     if (rl427 != null) {
                                         rl427.shutdownThread();
                                     }
-                                    rl321 = new Roller(tv3_1_2, 10000, 80, 99999, 10000);
                                     rl321.run();
                                     tv4_7_2.setText(newResult.getValue());
                                     break;
@@ -869,7 +1349,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                                     if (rl321 != null) {
                                         rl321.shutdownThread();
                                     }
-                                    rl322 = new Roller(tv3_2_2, 10000, 80, 99999, 10000);
                                     rl322.run();
                                     tv3_1_2.setText(newResult.getValue());
                                     break;
@@ -877,7 +1356,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                                     if (rl322 != null) {
                                         rl322.shutdownThread();
                                     }
-                                    rl_second_2 = new Roller(tv2_2, 10000, 80, 99999, 10000);
                                     rl_second_2.run();
                                     tv3_2_2.setText(newResult.getValue());
                                     break;
@@ -888,7 +1366,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                         if (rl_second_2 != null) {
                             rl_second_2.shutdownThread();
                         }
-                        rl_first_2 = new Roller(tv1_2, 10000, 80, 99999, 10000);
                         rl_first_2.run();
                         tv2_2.setText(newResult.getValue());
                         break;
@@ -896,7 +1373,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                         if (rl_first_2 != null) {
                             rl_first_2.shutdownThread();
                         }
-                        rl_special_2 = new Roller(tvDb_2, 10000, 80, 99999, 10000);
                         rl_special_2.run();
                         tv1_2.setText(newResult.getValue());
                         break;
@@ -918,7 +1394,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                             if (rl83 != null) {
                                 rl83.shutdownThread();
                             }
-                            rl73 = new Roller(tv7_3, 10000, 80, 999, 100);
                             rl73.run();
                             tv8_3.setText(newResult.getValue());
                         }
@@ -928,7 +1403,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                             if (rl73 != null) {
                                 rl73.shutdownThread();
                             }
-                            rl631 = new Roller(tv6_1_3, 10000, 80, 9999, 1000);
                             rl631.run();
                             tv7_3.setText(newResult.getValue());
                         }
@@ -940,7 +1414,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                                     if (rl631 != null) {
                                         rl631.shutdownThread();
                                     }
-                                    rl632 = new Roller(tv6_2_3, 10000, 80, 9999, 1000);
                                     rl632.run();
                                     tv6_1_3.setText(newResult.getValue());
                                     break;
@@ -948,15 +1421,13 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                                     if (rl632 != null) {
                                         rl632.shutdownThread();
                                     }
-                                    rl633 = new Roller(tv6_3_3, 10000, 80, 9999, 1000);
                                     rl633.run();
                                     tv6_2_3.setText(newResult.getValue());
                                     break;
                                 case "2":
-                                    if (rl632 != null) {
-                                        rl632.shutdownThread();
+                                    if (rl633 != null) {
+                                        rl633.shutdownThread();
                                     }
-                                    rl53 = new Roller(tv5_3, 10000, 80, 9999, 1000);
                                     rl53.run();
                                     tv6_3_3.setText(newResult.getValue());
                                     break;
@@ -968,7 +1439,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                         if (rl53 != null) {
                             rl53.shutdownThread();
                         }
-                        rl43 = new Roller(tv4_1_3, 10000, 80, 99999, 10000);
                         rl43.run();
                         tv5_3.setText(newResult.getValue());
                         break;
@@ -979,7 +1449,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                                     if (rl43 != null) {
                                         rl43.shutdownThread();
                                     }
-                                    rl432 = new Roller(tv4_2_3, 10000, 80, 99999, 10000);
                                     rl432.run();
                                     tv4_1_3.setText(newResult.getValue());
                                     break;
@@ -987,7 +1456,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                                     if (rl432 != null) {
                                         rl432.shutdownThread();
                                     }
-                                    rl433 = new Roller(tv4_3_2, 10000, 80, 99999, 10000);
                                     rl433.run();
                                     tv4_2_3.setText(newResult.getValue());
                                     break;
@@ -995,16 +1463,14 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                                     if (rl433 != null) {
                                         rl433.shutdownThread();
                                     }
-                                    rl434 = new Roller(tv4_4_3, 10000, 80, 99999, 10000);
                                     rl434.run();
-                                    tv4_3_2.setText(newResult.getValue());
+                                    tv4_3_3.setText(newResult.getValue());
                                     break;
 
                                 case "3":
                                     if (rl434 != null) {
                                         rl434.shutdownThread();
                                     }
-                                    rl435 = new Roller(tv4_5_3, 10000, 80, 99999, 10000);
                                     rl435.run();
                                     tv4_4_3.setText(newResult.getValue());
                                     break;
@@ -1012,7 +1478,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                                     if (rl435 != null) {
                                         rl435.shutdownThread();
                                     }
-                                    rl436 = new Roller(tv4_6_3, 10000, 80, 99999, 10000);
                                     rl436.run();
                                     tv4_5_3.setText(newResult.getValue());
                                     break;
@@ -1020,7 +1485,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                                     if (rl436 != null) {
                                         rl436.shutdownThread();
                                     }
-                                    rl437 = new Roller(tv4_7_3, 10000, 80, 99999, 10000);
                                     rl437.run();
                                     tv4_6_3.setText(newResult.getValue());
                                     break;
@@ -1028,7 +1492,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                                     if (rl437 != null) {
                                         rl437.shutdownThread();
                                     }
-                                    rl331 = new Roller(tv3_1_3, 10000, 80, 99999, 10000);
                                     rl331.run();
                                     tv4_7_3.setText(newResult.getValue());
                                     break;
@@ -1043,7 +1506,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                                     if (rl331 != null) {
                                         rl331.shutdownThread();
                                     }
-                                    rl332 = new Roller(tv3_2_3, 10000, 80, 99999, 10000);
                                     rl332.run();
                                     tv3_1_3.setText(newResult.getValue());
                                     break;
@@ -1051,7 +1513,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                                     if (rl332 != null) {
                                         rl332.shutdownThread();
                                     }
-                                    rl_second_3 = new Roller(tv2_3, 10000, 80, 99999, 10000);
                                     rl_second_3.run();
                                     tv3_2_3.setText(newResult.getValue());
                                     break;
@@ -1062,7 +1523,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                         if (rl_second_3 != null) {
                             rl_second_3.shutdownThread();
                         }
-                        rl_first_3 = new Roller(tv1_3, 10000, 80, 99999, 10000);
                         rl_first_3.run();
                         tv2_3.setText(newResult.getValue());
                         break;
@@ -1070,7 +1530,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                         if (rl_first_3 != null) {
                             rl_first_3.shutdownThread();
                         }
-                        rl_special_3 = new Roller(tvDb_3, 10000, 80, 999999, 100000);
                         rl_special_3.run();
                         tv1_3.setText(newResult.getValue());
                         break;
@@ -1093,7 +1552,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                             if (rl84 != null) {
                                 rl84.shutdownThread();
                             }
-                            rl74 = new Roller(tv7_4, 10000, 80, 999, 100);
                             rl74.run();
                             tv8_4.setText(newResult.getValue());
                         }
@@ -1103,7 +1561,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                             if (rl74 != null) {
                                 rl74.shutdownThread();
                             }
-                            rl641 = new Roller(tv6_1_4, 10000, 80, 9999, 1000);
                             rl641.run();
                             tv7_4.setText(newResult.getValue());
                         }
@@ -1115,7 +1572,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                                     if (rl641 != null) {
                                         rl641.shutdownThread();
                                     }
-                                    rl642 = new Roller(tv6_2_4, 10000, 80, 9999, 1000);
                                     rl642.run();
                                     tv6_1_4.setText(newResult.getValue());
                                     break;
@@ -1123,7 +1579,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                                     if (rl642 != null) {
                                         rl642.shutdownThread();
                                     }
-                                    rl643 = new Roller(tv6_3_4, 10000, 80, 9999, 1000);
                                     rl643.run();
                                     tv6_2_4.setText(newResult.getValue());
                                     break;
@@ -1131,7 +1586,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                                     if (rl642 != null) {
                                         rl642.shutdownThread();
                                     }
-                                    rl54 = new Roller(tv5_4, 10000, 80, 9999, 1000);
                                     rl54.run();
                                     tv6_3_4.setText(newResult.getValue());
                                     break;
@@ -1143,7 +1597,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                         if (rl54 != null) {
                             rl54.shutdownThread();
                         }
-                        rl44 = new Roller(tv4_1_4, 10000, 80, 99999, 10000);
                         rl44.run();
                         tv5_4.setText(newResult.getValue());
                         break;
@@ -1154,7 +1607,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                                     if (rl44 != null) {
                                         rl44.shutdownThread();
                                     }
-                                    rl442 = new Roller(tv4_2_4, 10000, 80, 99999, 10000);
                                     rl442.run();
                                     tv4_1_4.setText(newResult.getValue());
                                     break;
@@ -1162,7 +1614,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                                     if (rl442 != null) {
                                         rl442.shutdownThread();
                                     }
-                                    rl443 = new Roller(tv4_3_4, 10000, 80, 99999, 10000);
                                     rl443.run();
                                     tv4_2_4.setText(newResult.getValue());
                                     break;
@@ -1170,7 +1621,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                                     if (rl443 != null) {
                                         rl443.shutdownThread();
                                     }
-                                    rl444 = new Roller(tv4_4_4, 10000, 80, 99999, 10000);
                                     rl444.run();
                                     tv4_3_4.setText(newResult.getValue());
                                     break;
@@ -1179,7 +1629,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                                     if (rl444 != null) {
                                         rl444.shutdownThread();
                                     }
-                                    rl445 = new Roller(tv4_5_4, 10000, 80, 99999, 10000);
                                     rl445.run();
                                     tv4_4_4.setText(newResult.getValue());
                                     break;
@@ -1187,7 +1636,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                                     if (rl445 != null) {
                                         rl445.shutdownThread();
                                     }
-                                    rl446 = new Roller(tv4_6_4, 10000, 80, 99999, 10000);
                                     rl446.run();
                                     tv4_5_4.setText(newResult.getValue());
                                     break;
@@ -1195,7 +1643,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                                     if (rl446 != null) {
                                         rl446.shutdownThread();
                                     }
-                                    rl447 = new Roller(tv4_7_4, 10000, 80, 99999, 10000);
                                     rl447.run();
                                     tv4_6_4.setText(newResult.getValue());
                                     break;
@@ -1203,7 +1650,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                                     if (rl447 != null) {
                                         rl447.shutdownThread();
                                     }
-                                    rl341 = new Roller(tv3_1_4, 10000, 80, 99999, 10000);
                                     rl341.run();
                                     tv4_7_4.setText(newResult.getValue());
                                     break;
@@ -1218,7 +1664,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                                     if (rl341 != null) {
                                         rl341.shutdownThread();
                                     }
-                                    rl342 = new Roller(tv3_2_4, 10000, 80, 99999, 10000);
                                     rl342.run();
                                     tv3_1_4.setText(newResult.getValue());
                                     break;
@@ -1226,7 +1671,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                                     if (rl342 != null) {
                                         rl342.shutdownThread();
                                     }
-                                    rl_second_4 = new Roller(tv2_4, 10000, 80, 99999, 10000);
                                     rl_second_4.run();
                                     tv3_2_4.setText(newResult.getValue());
                                     break;
@@ -1237,7 +1681,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                         if (rl_second_4 != null) {
                             rl_second_4.shutdownThread();
                         }
-                        rl_first_4 = new Roller(tv1_4, 10000, 80, 99999, 10000);
                         rl_first_4.run();
                         tv2_4.setText(newResult.getValue());
                         break;
@@ -1245,7 +1688,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                         if (rl_first_4 != null) {
                             rl_first_4.shutdownThread();
                         }
-                        rl_special_4 = new Roller(tvDb_4, 10000, 80, 999999, 100000);
                         rl_special_4.run();
                         tv1_4.setText(newResult.getValue());
                         break;
@@ -1280,49 +1722,107 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                                         List<String> six,
                                         List<String> seven,
                                         List<String> eight, BeginResult beginResult) {
+
+
+        checkRandomTable1(special, first, second, third, fourd, five, six, seven, eight);
+
         tvResgion_1.setText(area);
         tvLotoTitle1.setText(area);
 
         if (special.size() > 0)
-        tvDb.setText(special.get(0));
+            tvDb.setText(special.get(0));
 
         if (eight.size() > 0)
-        tv8_1.setText(eight.get(0));
+            tv8_1.setText(eight.get(0));
 
         if (seven.size() > 0)
-        tv7_1.setText(seven.get(0));
+            tv7_1.setText(seven.get(0));
 
-        if (six.size() > 0) {
-            tv6_1.setText(six.get(0));
-            tv6_2.setText(six.get(1));
-            tv6_3.setText(six.get(2));
+        switch (six.size()) {
+            case 1:
+                tv6_1.setText(six.get(0));
+                break;
+            case 2:
+                tv6_1.setText(six.get(0));
+                tv6_2.setText(six.get(1));
+                break;
+            case 3:
+                tv6_1.setText(six.get(0));
+                tv6_2.setText(six.get(1));
+                tv6_3.setText(six.get(2));
+                break;
         }
 
         if (five.size() > 0)
-        tv5_1.setText(five.get(0));
+            tv5_1.setText(five.get(0));
 
         if (fourd.size() > 0) {
-            tv4_1.setText(fourd.get(0));
-            tv4_2.setText(fourd.get(1));
-            tv4_3.setText(fourd.get(2));
-            tv4_4.setText(fourd.get(3));
-            tv4_5.setText(fourd.get(4));
-            tv4_6.setText(fourd.get(5));
-            tv4_7.setText(fourd.get(6));
+
+            switch (fourd.size()) {
+                case 1:
+                    tv4_1.setText(fourd.get(0));
+                    break;
+                case 2:
+                    tv4_1.setText(fourd.get(0));
+                    tv4_2.setText(fourd.get(1));
+                    break;
+                case 3:
+                    tv4_1.setText(fourd.get(0));
+                    tv4_2.setText(fourd.get(1));
+                    tv4_3.setText(fourd.get(2));
+                    break;
+                case 4:
+                    tv4_1.setText(fourd.get(0));
+                    tv4_2.setText(fourd.get(1));
+                    tv4_3.setText(fourd.get(2));
+                    tv4_4.setText(fourd.get(3));
+                    break;
+                case 5:
+                    tv4_1.setText(fourd.get(0));
+                    tv4_2.setText(fourd.get(1));
+                    tv4_3.setText(fourd.get(2));
+                    tv4_4.setText(fourd.get(3));
+                    tv4_5.setText(fourd.get(4));
+                    break;
+                case 6:
+                    tv4_1.setText(fourd.get(0));
+                    tv4_2.setText(fourd.get(1));
+                    tv4_3.setText(fourd.get(2));
+                    tv4_4.setText(fourd.get(3));
+                    tv4_5.setText(fourd.get(4));
+                    tv4_6.setText(fourd.get(5));
+                    break;
+                case 7:
+                    tv4_1.setText(fourd.get(0));
+                    tv4_2.setText(fourd.get(1));
+                    tv4_3.setText(fourd.get(2));
+                    tv4_4.setText(fourd.get(3));
+                    tv4_5.setText(fourd.get(4));
+                    tv4_6.setText(fourd.get(5));
+                    tv4_7.setText(fourd.get(6));
+                    break;
+            }
         }
 
         if (third.size() > 0) {
-            tv3_1.setText(third.get(0));
-            tv3_2.setText(third.get(1));
+            switch (third.size()) {
+                case 1:
+                    tv3_1.setText(third.get(0));
+                    break;
+                case 2:
+                    tv3_1.setText(third.get(0));
+                    tv3_2.setText(third.get(1));
+                    break;
+            }
         }
         if (second.size() > 0)
-        tv2_1.setText(second.get(0));
-
+            tv2_1.setText(second.get(0));
         if (first.size() > 0)
-        tv1_1.setText(first.get(0));
+            tv1_1.setText(first.get(0));
         /**
          * Dau loto*/
-        if (beginResult != null){
+
+        if (beginResult != null) {
             if (beginResult.getB0().size() > 0) {
                 String begin_0 = "";
                 for (int i = 0; i < beginResult.getB0().size(); i++) {
@@ -1403,8 +1903,8 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                 }
                 tvLoto9_1.setText(begin_9);
             }
-        }
 
+        }
     }
 
     private void setResultLotteryTable2(String area, List<String> special,
@@ -1416,51 +1916,106 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                                         List<String> six,
                                         List<String> seven,
                                         List<String> eight, BeginResult beginResult) {
+
+
+        checkRandomTable2(special, first, second, third, fourd, five, six, seven, eight);
+
         tvResgion_2.setText(area);
         tvLotoTitle2.setText(area);
 
-        if (special.size() > 0) {
+        if (special.size() > 0)
             tvDb_2.setText(special.get(0));
-        }
 
         if (eight.size() > 0)
-        tv8_2.setText(eight.get(0));
+            tv8_2.setText(eight.get(0));
 
         if (seven.size() > 0)
-        tv7_2.setText(seven.get(0));
+            tv7_2.setText(seven.get(0));
 
         if (six.size() > 0) {
-            tv6_1_2.setText(six.get(0));
-            tv6_2_2.setText(six.get(1));
-            tv6_3_2.setText(six.get(2));
+            switch (six.size()) {
+                case 1:
+                    tv6_1_2.setText(six.get(0));
+                    break;
+                case 2:
+                    tv6_1_2.setText(six.get(0));
+                    tv6_2_2.setText(six.get(1));
+                    break;
+                case 3:
+                    tv6_1_2.setText(six.get(0));
+                    tv6_2_2.setText(six.get(1));
+                    tv6_3_2.setText(six.get(2));
+                    break;
+            }
         }
 
         if (five.size() > 0)
-        tv5_2.setText(five.get(0));
-
+            tv5_2.setText(five.get(0));
         if (fourd.size() > 0) {
-            tv4_1_2.setText(fourd.get(0));
-            tv4_2_2.setText(fourd.get(1));
-            tv4_3_2.setText(fourd.get(2));
-            tv4_4_2.setText(fourd.get(3));
-            tv4_5_2.setText(fourd.get(4));
-            tv4_6_2.setText(fourd.get(5));
-            tv4_7_2.setText(fourd.get(6));
+            switch (fourd.size()) {
+                case 1:
+                    tv4_1_2.setText(fourd.get(0));
+                    break;
+                case 2:
+                    tv4_1_2.setText(fourd.get(0));
+                    tv4_2_2.setText(fourd.get(1));
+                    break;
+                case 3:
+                    tv4_1_2.setText(fourd.get(0));
+                    tv4_2_2.setText(fourd.get(1));
+                    tv4_3_2.setText(fourd.get(2));
+                    break;
+                case 4:
+                    tv4_1_2.setText(fourd.get(0));
+                    tv4_2_2.setText(fourd.get(1));
+                    tv4_3_2.setText(fourd.get(2));
+                    tv4_4_2.setText(fourd.get(3));
+                    break;
+                case 5:
+                    tv4_1_2.setText(fourd.get(0));
+                    tv4_2_2.setText(fourd.get(1));
+                    tv4_3_2.setText(fourd.get(2));
+                    tv4_4_2.setText(fourd.get(3));
+                    tv4_5_2.setText(fourd.get(4));
+                    break;
+                case 6:
+                    tv4_1_2.setText(fourd.get(0));
+                    tv4_2_2.setText(fourd.get(1));
+                    tv4_3_2.setText(fourd.get(2));
+                    tv4_4_2.setText(fourd.get(3));
+                    tv4_5_2.setText(fourd.get(4));
+                    tv4_6_2.setText(fourd.get(5));
+                    break;
+                case 7:
+                    tv4_1_2.setText(fourd.get(0));
+                    tv4_2_2.setText(fourd.get(1));
+                    tv4_3_2.setText(fourd.get(2));
+                    tv4_4_2.setText(fourd.get(3));
+                    tv4_5_2.setText(fourd.get(4));
+                    tv4_6_2.setText(fourd.get(5));
+                    tv4_7_2.setText(fourd.get(6));
+                    break;
+            }
         }
 
         if (third.size() > 0) {
-            tv3_1_2.setText(third.get(0));
-            tv3_2_2.setText(third.get(1));
+            switch (third.size()) {
+                case 1:
+                    tv3_1_2.setText(third.get(0));
+                    break;
+                case 2:
+                    tv3_1_2.setText(third.get(0));
+                    tv3_2_2.setText(third.get(1));
+                    break;
+            }
         }
-
         if (second.size() > 0)
-        tv2_2.setText(second.get(0));
-
+            tv2_2.setText(second.get(0));
         if (first.size() > 0)
-        tv1_2.setText(first.get(0));
+            tv1_2.setText(first.get(0));
         /**
          * Dau loto*/
-        if (beginResult != null){
+        if (beginResult != null) {
             if (beginResult.getB0().size() > 0) {
                 String begin_0 = "";
                 for (int i = 0; i < beginResult.getB0().size(); i++) {
@@ -1542,7 +2097,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                 tvLoto9_2.setText(begin_9);
             }
         }
-
     }
 
     private void setResultLotteryTable3(String area, List<String> special,
@@ -1554,50 +2108,108 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                                         List<String> six,
                                         List<String> seven,
                                         List<String> eight, BeginResult beginResult) {
+        checkRandomTable3(special, first, second, third, fourd, five, six, seven, eight);
+
         tvResgion_3.setText(area);
         tvLotoTitle3.setText(area);
 
         if (special.size() > 0)
-        tvDb_3.setText(special.get(0));
+            tvDb_3.setText(special.get(0));
 
         if (eight.size() > 0)
-        tv8_3.setText(eight.get(0));
-
+            tv8_3.setText(eight.get(0));
         if (seven.size() > 0)
-        tv7_3.setText(seven.get(0));
+            tv7_3.setText(seven.get(0));
 
         if (six.size() > 0) {
-            tv6_1_3.setText(six.get(0));
-            tv6_2_3.setText(six.get(1));
-            tv6_3_3.setText(six.get(2));
+            switch (six.size()) {
+                case 1:
+                    tv6_1_3.setText(six.get(0));
+                    break;
+                case 2:
+                    tv6_1_3.setText(six.get(0));
+                    tv6_2_3.setText(six.get(1));
+                    break;
+                case 3:
+                    tv6_1_3.setText(six.get(0));
+                    tv6_2_3.setText(six.get(1));
+                    tv6_3_3.setText(six.get(2));
+                    break;
+            }
         }
 
         if (five.size() > 0)
-        tv5_3.setText(five.get(0));
+            tv5_3.setText(five.get(0));
 
         if (fourd.size() > 0) {
-            tv4_1_3.setText(fourd.get(0));
-            tv4_2_3.setText(fourd.get(1));
-            tv4_3_3.setText(fourd.get(2));
-            tv4_4_3.setText(fourd.get(3));
-            tv4_5_3.setText(fourd.get(4));
-            tv4_6_3.setText(fourd.get(5));
-            tv4_7_3.setText(fourd.get(6));
+            switch (fourd.size()) {
+                case 1:
+                    tv4_1_3.setText(fourd.get(0));
+                    break;
+                case 2:
+                    tv4_1_3.setText(fourd.get(0));
+                    tv4_2_3.setText(fourd.get(1));
+                    break;
+                case 3:
+                    tv4_1_3.setText(fourd.get(0));
+                    tv4_2_3.setText(fourd.get(1));
+                    tv4_3_3.setText(fourd.get(2));
+                    break;
+                case 4:
+                    tv4_1_3.setText(fourd.get(0));
+                    tv4_2_3.setText(fourd.get(1));
+                    tv4_3_3.setText(fourd.get(2));
+                    tv4_4_3.setText(fourd.get(3));
+                    break;
+                case 5:
+                    tv4_1_3.setText(fourd.get(0));
+                    tv4_2_3.setText(fourd.get(1));
+                    tv4_3_3.setText(fourd.get(2));
+                    tv4_4_3.setText(fourd.get(3));
+                    tv4_5_3.setText(fourd.get(4));
+                    break;
+                case 6:
+                    tv4_1_3.setText(fourd.get(0));
+                    tv4_2_3.setText(fourd.get(1));
+                    tv4_3_3.setText(fourd.get(2));
+                    tv4_4_3.setText(fourd.get(3));
+                    tv4_5_3.setText(fourd.get(4));
+                    tv4_6_3.setText(fourd.get(5));
+                    break;
+                case 7:
+                    tv4_1_3.setText(fourd.get(0));
+                    tv4_2_3.setText(fourd.get(1));
+                    tv4_3_3.setText(fourd.get(2));
+                    tv4_4_3.setText(fourd.get(3));
+                    tv4_5_3.setText(fourd.get(4));
+                    tv4_6_3.setText(fourd.get(5));
+                    tv4_7_3.setText(fourd.get(6));
+                    break;
+
+            }
         }
 
         if (third.size() > 0) {
-            tv3_1_3.setText(third.get(0));
-            tv3_2_3.setText(third.get(1));
+            switch (third.size()) {
+                case 1:
+                    tv3_1_3.setText(third.get(0));
+                    break;
+                case 2:
+                    tv3_1_3.setText(third.get(0));
+                    tv3_2_3.setText(third.get(1));
+                    break;
+            }
         }
+
         if (second.size() > 0)
-        tv2_3.setText(second.get(0));
+            tv2_3.setText(second.get(0));
 
         if (first.size() > 0)
-        tv1_3.setText(first.get(0));
+            tv1_3.setText(first.get(0));
         /**
          * Dau loto*/
 
-        if (beginResult != null){
+        if (beginResult != null) {
             if (beginResult.getB0().size() > 0) {
                 String begin_0 = "";
                 for (int i = 0; i < beginResult.getB0().size(); i++) {
@@ -1681,6 +2293,7 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
         }
     }
 
+
     private void setResultLotteryTable4(String area, List<String> special,
                                         List<String> first,
                                         List<String> second,
@@ -1690,6 +2303,8 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                                         List<String> six,
                                         List<String> seven,
                                         List<String> eight, BeginResult beginResult) {
+        checkRandomTable4(special, first, second, third, fourd, five, six, seven, eight);
+
         tvResgion_4.setText(area);
         tvLotoTitle4.setText(area);
 
@@ -1703,27 +2318,83 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
         tv7_4.setText(seven.get(0));
 
         if (six.size() > 0) {
-            tv6_1_4.setText(six.get(0));
-            tv6_2_4.setText(six.get(1));
-            tv6_3_4.setText(six.get(2));
+            switch (six.size()) {
+                case 1:
+                    tv6_1_4.setText(six.get(0));
+                    break;
+                case 2:
+                    tv6_1_4.setText(six.get(0));
+                    tv6_2_4.setText(six.get(1));
+                    break;
+                case 3:
+                    tv6_1_4.setText(six.get(0));
+                    tv6_2_4.setText(six.get(1));
+                    tv6_3_4.setText(six.get(2));
+                    break;
+            }
         }
 
         if (five.size() > 0)
         tv5_4.setText(five.get(0));
 
         if (fourd.size() > 0) {
-            tv4_1_4.setText(fourd.get(0));
-            tv4_2_4.setText(fourd.get(1));
-            tv4_3_4.setText(fourd.get(2));
-            tv4_4_4.setText(fourd.get(3));
-            tv4_5_4.setText(fourd.get(4));
-            tv4_6_4.setText(fourd.get(5));
-            tv4_7_4.setText(fourd.get(6));
+            switch (fourd.size()) {
+                case 1:
+                    tv4_1_4.setText(fourd.get(0));
+                    break;
+                case 2:
+                    tv4_1_4.setText(fourd.get(0));
+                    tv4_2_4.setText(fourd.get(1));
+                    break;
+                case 3:
+                    tv4_1_4.setText(fourd.get(0));
+                    tv4_2_4.setText(fourd.get(1));
+                    tv4_3_4.setText(fourd.get(2));
+                    break;
+                case 4:
+                    tv4_1_4.setText(fourd.get(0));
+                    tv4_2_4.setText(fourd.get(1));
+                    tv4_3_4.setText(fourd.get(2));
+                    tv4_4_4.setText(fourd.get(3));
+                    break;
+                case 5:
+                    tv4_1_4.setText(fourd.get(0));
+                    tv4_2_4.setText(fourd.get(1));
+                    tv4_3_4.setText(fourd.get(2));
+                    tv4_4_4.setText(fourd.get(3));
+                    tv4_5_4.setText(fourd.get(4));
+                    break;
+                case 6:
+                    tv4_1_4.setText(fourd.get(0));
+                    tv4_2_4.setText(fourd.get(1));
+                    tv4_3_4.setText(fourd.get(2));
+                    tv4_4_4.setText(fourd.get(3));
+                    tv4_5_4.setText(fourd.get(4));
+                    tv4_6_4.setText(fourd.get(5));
+                    break;
+                case 7:
+                    tv4_1_4.setText(fourd.get(0));
+                    tv4_2_4.setText(fourd.get(1));
+                    tv4_3_4.setText(fourd.get(2));
+                    tv4_4_4.setText(fourd.get(3));
+                    tv4_5_4.setText(fourd.get(4));
+                    tv4_6_4.setText(fourd.get(5));
+                    tv4_7_4.setText(fourd.get(6));
+                    break;
+
+            }
         }
 
         if (third.size() > 0) {
-            tv3_1_4.setText(third.get(0));
-            tv3_2_4.setText(third.get(1));
+            switch (third.size()) {
+                case 1:
+                    tv3_1_4.setText(third.get(0));
+                    break;
+                case 2:
+                    tv3_1_4.setText(third.get(0));
+                    tv3_2_4.setText(third.get(1));
+                    break;
+            }
         }
 
         if (second.size() > 0)

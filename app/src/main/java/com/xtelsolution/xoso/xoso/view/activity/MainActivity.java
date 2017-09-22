@@ -1,21 +1,30 @@
 package com.xtelsolution.xoso.xoso.view.activity;
 
 import android.Manifest;
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,18 +38,20 @@ import com.xtelsolution.xoso.sdk.utils.PermissionHelper;
 import com.xtelsolution.xoso.xoso.model.entity.DrawerMenu;
 import com.xtelsolution.xoso.xoso.presenter.activity.HomePresenter;
 import com.xtelsolution.xoso.xoso.view.activity.inf.IHomeView;
+import com.xtelsolution.xoso.xoso.view.activity.inf.onDateSelectListener;
 import com.xtelsolution.xoso.xoso.view.adapter.AdapterMenu;
 import com.xtelsolution.xoso.xoso.view.fragment.FragmentAnalytics;
 import com.xtelsolution.xoso.xoso.view.fragment.FragmentExplore;
 import com.xtelsolution.xoso.xoso.view.fragment.FragmentMore;
 import com.xtelsolution.xoso.xoso.view.fragment.FragmentResult;
+import com.xtelsolution.xoso.xoso.view.fragment.inf.OnCompleteListener;
 import com.xtelsolution.xoso.xoso.view.widget.LockableViewPager;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class MainActivity extends BasicActivity implements IHomeView {
+public class MainActivity extends BasicActivity implements IHomeView, OnCompleteListener, onDateSelectListener {
 
     private List<DrawerMenu> menuList;
     private RecyclerView rcl_menu;
@@ -65,6 +76,7 @@ public class MainActivity extends BasicActivity implements IHomeView {
         }
 
         presenter = new HomePresenter(this);
+        createNotification();
         initWidget();
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -72,7 +84,6 @@ public class MainActivity extends BasicActivity implements IHomeView {
         drawer.setDrawerListener(toggle);
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        getData();
         logUser();
     }
 
@@ -86,16 +97,15 @@ public class MainActivity extends BasicActivity implements IHomeView {
     private void getData() {
         int live_area = getIntent().getIntExtra(Constants.START_LIVE, -1);
         if (live_area != -1) {
-            FragmentResult result = (FragmentResult) getSupportFragmentManager().findFragmentByTag("RESULT");
             switch (live_area) {
                 case 1:
-                    result.setLiveFragment(1);
+                    ((FragmentResult) pagerAdapter.getItem(0)).setLive(0);
                     break;
                 case 2:
-                    result.setLiveFragment(2);
+                    ((FragmentResult) pagerAdapter.getItem(0)).setLive(1);
                     break;
                 case 3:
-                    result.setLiveFragment(3);
+                    ((FragmentResult) pagerAdapter.getItem(0)).setLive(2);
                     break;
             }
         }
@@ -197,8 +207,10 @@ public class MainActivity extends BasicActivity implements IHomeView {
             Calendar calendar = Calendar.getInstance();
             DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
                 @Override
-                public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-
+                public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                    Log.e("onDate Set", "onDateSet: " + year + " - " + month + " - " + day);
+                    String date_set = year + "-" + (month + 1) + "-" + day;
+                    onDateSelect(date_set);
                 }
             }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
             datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
@@ -268,8 +280,17 @@ public class MainActivity extends BasicActivity implements IHomeView {
         PermissionHelper.checkResult(grantResults);
     }
 
+    @Override
+    public void onComplete() {
+        getData();
+    }
+
+    @Override
+    public void onDateSelect(String date) {
+        ((FragmentResult) pagerAdapter.getItem(0)).queryDate(date);
+    }
+
     public static class FragmentPagerAdapter extends android.support.v4.app.FragmentPagerAdapter {
-        private static int NUM_ITEMS = 4;
 
         List<Fragment> fragmentList;
 
@@ -285,7 +306,7 @@ public class MainActivity extends BasicActivity implements IHomeView {
         // Returns total number of pages
         @Override
         public int getCount() {
-            return NUM_ITEMS;
+            return fragmentList.size();
         }
 
         // Returns the fragment to display for that page
@@ -314,6 +335,22 @@ public class MainActivity extends BasicActivity implements IHomeView {
             }
             return title;
         }
+    }
 
+    private void createNotification() {
+        Intent intentLive = new Intent(this, MainActivity.class);
+        intentLive.putExtra(Constants.START_LIVE, 3);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intentLive, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+        builder.setContentTitle("Trực tiếp");
+        builder.setContentText("Test notification");
+        builder.setSound(Settings.System.DEFAULT_NOTIFICATION_URI);
+        builder.setDefaults(Notification.DEFAULT_SOUND);
+        builder.setSmallIcon(R.mipmap.ic_nav_north);
+        builder.setContentIntent(pendingIntent);
+
+        NotificationManager notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(11, builder.build());
     }
 }

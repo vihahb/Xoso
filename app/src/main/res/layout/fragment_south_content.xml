@@ -18,11 +18,10 @@
             android:text="Chưa có kết quả" />
 
         <ScrollView
-            android:id="@+id/scroll_central"
+            android:id="@+id/scroll_south"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:visibility="gone"
             android:fillViewport="true">
 
             <LinearLayout
@@ -83,6 +82,7 @@
 
                         <!-- Row giai 7 -->
                         <TableRow
+                            android:background="@drawable/bolder_with_background"
                             android:id="@+id/tableRowSeven"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
@@ -115,6 +115,7 @@
 
                         <!--Row giai 5-->
                         <TableRow
+                            android:background="@drawable/bolder_with_background"
                             android:id="@+id/tableRowFive"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
@@ -146,6 +147,7 @@
 
                         <!--Row giai ba-->
                         <TableRow
+                            android:background="@drawable/bolder_with_background"
                             android:id="@+id/tableRowThird"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
@@ -179,6 +181,7 @@
 
                         <!--Row giai nhat-->
                         <TableRow
+                            android:background="@drawable/bolder_with_background"
                             android:id="@+id/tableRowFirst"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
@@ -212,7 +215,7 @@
 
                     <!--Table region 1-->
                     <TableLayout
-                        android:id="@+id/central_region_1"
+                        android:id="@+id/south_region_1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:background="@drawable/bolder_table"
@@ -248,7 +251,7 @@
                             android:id="@+id/tableRowSevenVl1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/bolder_table">
+                            android:background="@drawable/bolder_with_background">
 
                             <TextView
                                 android:id="@+id/tv7_1"
@@ -322,7 +325,7 @@
                             android:id="@+id/tableRowFiveVl1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/bolder_table"
+                            android:background="@drawable/bolder_with_background"
                             android:gravity="center">
 
                             <TextView
@@ -455,7 +458,7 @@
                             android:id="@+id/tableRowThirdVl1"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="@drawable/bolder_table">
+                            android:background="@drawable/bolder_with_background">
 
                             <TableLayout android:layout_weight="1">
 
@@ -500,12 +503,13 @@
 
                             <TextView
                                 android:id="@+id/tv2_1"
-                                android:layout_width="match_parent"
+                                android:layout_width="0dp"
                                 android:layout_height="@dimen/size_36"
+                                android:layout_weight="1"
                                 android:gravity="center"
-                                android:textStyle="bold"
                                 android:textColor="#000000"
-                                android:textSize="@dimen/font_16" />
+                                android:textSize="@dimen/font_16"
+                                android:textStyle="bold" />
                         </TableRow>
 
                         <!--Row giai nhat-->
@@ -513,13 +517,15 @@
                             android:id="@+id/tableRowFirstVl1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/bolder_table"
-                            android:gravity="center">
+                            android:background="@drawable/bolder_with_background"
+                            android:gravity="center"
+                            android:weightSum="1">
 
                             <TextView
                                 android:id="@+id/tv1"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/size_36"
+                                android:layout_weight="1"
                                 android:gravity="center"
                                 android:textStyle="bold"
                                 android:textColor="#000000"
@@ -538,6 +544,7 @@
                             <TextView
                                 android:id="@+id/tvDb"
                                 android:layout_width="match_parent"
+                                android:layout_weight="1"
                                 android:layout_height="@dimen/size_36"
                                 android:gravity="center"
                                 android:textStyle="bold"
@@ -548,7 +555,7 @@
 
                     <!--Table region 2-->
                     <TableLayout
-                        android:id="@+id/central_region_2"
+                        android:id="@+id/south_region_2"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1">
@@ -585,7 +592,7 @@
                             android:id="@+id/tableRowSevenVl2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/bolder_table">
+                            android:background="@drawable/bolder_with_background">
 
                             <TextView
                                 android:id="@+id/tv7_2"
@@ -659,7 +666,7 @@
                             android:id="@+id/tableRowFiveVl2"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="@drawable/bolder_table"
+                            android:background="@drawable/bolder_with_background"
                             android:gravity="center">
 
                             <TextView
@@ -793,7 +800,7 @@
                             android:id="@+id/tableRowThirdVl2"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="@drawable/bolder_table">
+                            android:background="@drawable/bolder_with_background">
 
                             <TableLayout android:layout_weight="1">
 
@@ -851,13 +858,15 @@
                             android:id="@+id/tableRowFirstVl2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/bolder_table"
-                            android:gravity="center">
+                            android:background="@drawable/bolder_with_background"
+                            android:gravity="center"
+                            android:weightSum="1">
 
                             <TextView
                                 android:id="@+id/tv1_2"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/size_36"
+                                android:layout_weight="1"
                                 android:gravity="center"
                                 android:textStyle="bold"
                                 android:textColor="#000000"
@@ -875,6 +884,7 @@
 
                             <TextView
                                 android:id="@+id/tvDb_2"
+                                android:layout_weight="1"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/size_36"
                                 android:gravity="center"
@@ -886,7 +896,7 @@
 
                     <!--Table region 3-->
                     <TableLayout
-                        android:id="@+id/central_region_3"
+                        android:id="@+id/south_region_3"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1">
@@ -922,7 +932,7 @@
                             android:id="@+id/tableRowSevenVl3"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/bolder_table">
+                            android:background="@drawable/bolder_with_background">
 
                             <TextView
                                 android:id="@+id/tv7_3"
@@ -998,7 +1008,7 @@
                             android:id="@+id/tableRowFiveVl3"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/bolder_table"
+                            android:background="@drawable/bolder_with_background"
                             android:gravity="center">
 
                             <TextView
@@ -1132,7 +1142,7 @@
                             android:id="@+id/tableRowThirdVl3"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="@drawable/bolder_table">
+                            android:background="@drawable/bolder_with_background">
 
                             <TableLayout android:layout_weight="1">
 
@@ -1190,7 +1200,7 @@
                             android:id="@+id/tableRowFirstVl3"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/bolder_table"
+                            android:background="@drawable/bolder_with_background"
                             android:gravity="center">
 
                             <TextView
@@ -1215,6 +1225,7 @@
                             <TextView
                                 android:id="@+id/tvDb_3"
                                 android:layout_width="match_parent"
+                                android:layout_weight="1"
                                 android:layout_height="@dimen/size_36"
                                 android:gravity="center"
                                 android:textStyle="bold"
@@ -1225,7 +1236,7 @@
 
                     <!--Table region 4-->
                     <TableLayout
-                        android:id="@+id/central_region_4"
+                        android:id="@+id/south_region_4"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1">
@@ -1258,6 +1269,7 @@
 
                         <!-- Row giai 7 -->
                         <TableRow
+                            android:background="@drawable/bolder_with_background"
                             android:id="@+id/tableRowSevenVl4"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
@@ -1335,7 +1347,7 @@
                             android:id="@+id/tableRowFiveVl4"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/bolder_table"
+                            android:background="@drawable/bolder_with_background"
                             android:gravity="center">
 
                             <TextView
@@ -1469,7 +1481,7 @@
                             android:id="@+id/tableRowThirdVl4"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="@drawable/bolder_table">
+                            android:background="@drawable/bolder_with_background">
 
                             <TableLayout android:layout_weight="1">
 
@@ -1527,7 +1539,7 @@
                             android:id="@+id/tableRowFirstVl4"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/bolder_table"
+                            android:background="@drawable/bolder_with_background"
                             android:gravity="center">
 
                             <TextView

@@ -38,23 +38,24 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:26.0.0-alpha1'
-    compile 'com.android.support:design:26.0.0-alpha1'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.github.ittianyu:BottomNavigationViewEx:1.2.1'
-    compile 'com.google.code.gson:gson:2.7'
-    compile 'com.squareup.okhttp3:okhttp:3.7.0'
-    compile 'com.github.todou:calendarpager:1+'
-    testCompile 'junit:junit:4.12'
-    compile ('com.github.nkzawa:socket.io-client:0.4.1'){
+    compile('com.github.nkzawa:socket.io-client:0.4.1') {
         exclude group: 'org.json', module: 'json'
     }
 
-    compile ('io.socket:engine.io-client:1.0.0') {
+    compile('io.socket:engine.io-client:1.0.0') {
         // excluding org.json which is provided by Android
         exclude group: 'org.json', module: 'json'
     }
     compile('com.crashlytics.sdk.android:crashlytics:2.6.8@aar') {
         transitive = true;
     }
+    compile 'com.android.support:appcompat-v7:26.0.0-alpha1'
+    compile 'com.android.support:design:26.0.0-alpha1'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.github.ittianyu:BottomNavigationViewEx:1.2.1'
+    compile 'com.google.code.gson:gson:2.7'
+    compile 'com.squareup.okhttp3:okhttp:3.7.0'
+    compile 'com.wefika:collapse-calendar-view:0.1.0'
+    compile 'noman.weekcalendar:weekcalendar:1.0.6'
+    testCompile 'junit:junit:4.12'
 }

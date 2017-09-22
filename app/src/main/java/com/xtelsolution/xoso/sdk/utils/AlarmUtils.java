@@ -28,26 +28,49 @@ public class AlarmUtils {
         return ourInstance;
     }
 
-    public static void setAlarmManagerNorth(boolean isNorth, boolean less5HourToday) {
-        if (isNorth) {
+    public static void setAlarmManagerNorth(int area_type) {
 
+        if (area_type == 1) {
             Calendar calendar = Calendar.getInstance();
-            calendar.set(Calendar.HOUR_OF_DAY, 15);
-            calendar.set(Calendar.MINUTE, 40);
+            calendar.set(Calendar.HOUR_OF_DAY, 14);
+            calendar.set(Calendar.MINUTE, 0);
 
             Intent notificationNorth = new Intent(context, AlarmReceiver.class);
             notificationNorth.putExtra(Constants.NOTIFICATION_ID, 1);
-            notificationNorth.putExtra(Constants.AREA_NOTIFY, 1);
+            notificationNorth.putExtra(Constants.AREA_NOTIFY, area_type);
             PendingIntent northPendingIntent = PendingIntent.getBroadcast(context, 0, notificationNorth, PendingIntent.FLAG_UPDATE_CURRENT);
 
             AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-            if (less5HourToday) {
-                alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), northPendingIntent);
-            } else {
-                alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis() + Constants.MILIS_OF_24H, northPendingIntent);
-            }
+            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, northPendingIntent);
         }
-//        alarmManager.set(AlarmManager.RTC_WAKEUP, );
+
+        if (area_type == 2){
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.HOUR_OF_DAY, 14);
+            calendar.set(Calendar.MINUTE, 3);
+
+            Intent notificationNorth = new Intent(context, AlarmReceiver.class);
+            notificationNorth.putExtra(Constants.NOTIFICATION_ID, 2);
+            notificationNorth.putExtra(Constants.AREA_NOTIFY, area_type);
+            PendingIntent northPendingIntent = PendingIntent.getBroadcast(context, 0, notificationNorth, PendingIntent.FLAG_UPDATE_CURRENT);
+
+            AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, northPendingIntent);
+        }
+
+        if (area_type == 3){
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.HOUR_OF_DAY, 14);
+            calendar.set(Calendar.MINUTE, 5);
+
+            Intent notificationNorth = new Intent(context, AlarmReceiver.class);
+            notificationNorth.putExtra(Constants.NOTIFICATION_ID, 3);
+            notificationNorth.putExtra(Constants.AREA_NOTIFY, area_type);
+            PendingIntent northPendingIntent = PendingIntent.getBroadcast(context, 0, notificationNorth, PendingIntent.FLAG_UPDATE_CURRENT);
+
+            AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, northPendingIntent);
+        }
     }
 
 }

@@ -39,6 +39,7 @@ import java.util.Random;
 public class FragmentNorthContent extends BasicFragment implements IFragmentNorthContentView {
 
     private static final String TAG = "FragmentNorthContent";
+    private String NORTH_NOTIFY = "northnotify";
 
     private FragmentNorthContentPresenter presenter;
 

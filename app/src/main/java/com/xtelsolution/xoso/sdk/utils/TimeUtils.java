@@ -40,6 +40,9 @@ public class TimeUtils {
      */
     public static int getPositionForDay(Calendar day) {
         if (day != null) {
+            Log.e(TAG, "Day from position: " + getDayForPosition((int) ((day.getTimeInMillis() - FIRST_DAY_OF_TIME.getTimeInMillis())
+                    / 86400000  //(24 * 60 * 60 * 1000)
+            )));
             return (int) ((day.getTimeInMillis() - FIRST_DAY_OF_TIME.getTimeInMillis())
                     / 86400000  //(24 * 60 * 60 * 1000)
             );
@@ -85,21 +88,24 @@ public class TimeUtils {
         return simpleDateFormat.format(new Date(date));
     }
 
-    public static String getTitleTime(Long milliseconds){
-            if (milliseconds == null)
-                return null;
+    public static String getTitleTime(Context context, Long milliseconds){
+        final String defaultPattern = "dd-MM-yyyy";
 
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTimeInMillis((milliseconds * 1000));
+        String pattern = null;
+        if (context != null) {
+            pattern = context.getString(R.string.date_format_title);
+        }
+        if (pattern == null) {
+            pattern = defaultPattern;
+        }
+        SimpleDateFormat simpleDateFormat = null;
+        try {
+            simpleDateFormat = new SimpleDateFormat(pattern);
+        } catch (IllegalArgumentException e) {
+            simpleDateFormat = new SimpleDateFormat(defaultPattern);
+        }
 
-            int mYear = calendar.get(Calendar.YEAR);
-            int mMonth = calendar.get(Calendar.MONTH) + 1;
-            int mDay = calendar.get(Calendar.DAY_OF_MONTH);
-
-            String day = (mDay < 10) ? ("0" + mDay) : String.valueOf(mDay);
-            String month = (mMonth < 10) ? ("0" + mMonth) : String.valueOf(mMonth);
-
-            return (day + "/" + month + "/" + mYear);
+        return simpleDateFormat.format(new Date(milliseconds));
     }
 
     public static String getToday() {

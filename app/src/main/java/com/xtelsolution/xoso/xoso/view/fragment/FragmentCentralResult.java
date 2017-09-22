@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,7 +17,10 @@ import com.xtelsolution.xoso.sdk.utils.TimeUtils;
 import com.xtelsolution.xoso.xoso.view.adapter.CachingFragmentStatePagerAdapter;
 import com.xtelsolution.xoso.xoso.view.widget.PageTransformer;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by vivhp on 9/7/2017.
@@ -26,6 +30,9 @@ public class FragmentCentralResult extends BasicFragment {
     private static final String TAG = "FragmentCentralResult";
     private MyPagerAdapter adapterViewPager;
     private static Context mContext;
+    private PagerTabStrip pagerTabStrip;
+    private ViewPager vpPager;
+
     public static FragmentCentralResult newInstance() {
         FragmentCentralResult fragment = new FragmentCentralResult();
         return fragment;
@@ -50,7 +57,11 @@ public class FragmentCentralResult extends BasicFragment {
 
     private void initView(View view) {
         mContext = getContext();
-        final ViewPager vpPager = view.findViewById(R.id.vpPager);
+        pagerTabStrip = view.findViewById(R.id.pager_header);
+        pagerTabStrip.setDrawFullUnderline(false);
+        pagerTabStrip.setTabIndicatorColor(getContext().getResources().getColor(R.color.blue));
+        pagerTabStrip.setTextColor(getContext().getResources().getColor(R.color.colorPrimary));
+        vpPager = view.findViewById(R.id.vpPager);
         adapterViewPager = new MyPagerAdapter(getChildFragmentManager());
         vpPager.setPageTransformer(false, new PageTransformer());
         vpPager.setAdapter(adapterViewPager);
@@ -82,6 +93,20 @@ public class FragmentCentralResult extends BasicFragment {
     private void cleanupResources() {
     }
 
+    public void queryResult(String date) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date queryDate = null;
+        try {
+            queryDate = format.parse(date);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(queryDate);
+            vpPager.setCurrentItem(TimeUtils.getPositionForDay(calendar));
+        } catch (ParseException e) {
+            e.printStackTrace();
+            Log.e(TAG, "queryResult: " + e.toString());
+        }
+    }
+
     public static class MyPagerAdapter extends CachingFragmentStatePagerAdapter {
 
         private Calendar cal;
@@ -110,7 +135,7 @@ public class FragmentCentralResult extends BasicFragment {
         @Override
         public CharSequence getPageTitle(int position) {
             Calendar cal = TimeUtils.getDayForPosition(position);
-            return TimeUtils.getFormattedDate(mContext,cal.getTimeInMillis());
+            return TimeUtils.getTitleTime(mContext,cal.getTimeInMillis());
         }
     }
 }

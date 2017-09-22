@@ -12,6 +12,7 @@
     <string name="message_can_not_request">Không thể kết nối</string>
     <string name="error_try_again">Có lỗi. Vui lòng thử lại!</string>
     <string name="date_format">yyyy-MM-dd</string>
+    <string name="date_format_title">dd-MM-yyyy</string>
     <string name="title_activity_dream">Sổ mơ</string>
     <string name="input_dream">Nhập giấc mơ</string>
     <string name="title_activity_random_lottery">Quay Thử</string>
@@ -19,4 +20,5 @@
     <string name="column_end">Đuôi</string>
     <string name="column_begin">Đầu</string>
     <string name="title_loto">Lô tô</string>
+    <string name="title_activity_test">TestActivity</string>
 </resources>
