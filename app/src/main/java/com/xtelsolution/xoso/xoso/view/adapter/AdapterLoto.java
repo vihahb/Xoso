@@ -36,7 +36,10 @@ public class AdapterLoto extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if (holder instanceof ViewHolder){
             String loto_value = lotoList.get(position);
             ViewHolder viewHolder = (ViewHolder) holder;
-            ((ViewHolder) holder).tv_loto.setText(loto_value);
+            viewHolder.tv_loto.setText(loto_value);
+            if (position == 0){
+                viewHolder.tv_loto.setTextColor(context.getResources().getColor(R.color.colorPrimary));
+            }
         }
     }
 

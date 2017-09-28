@@ -1,5 +1,7 @@
 package com.xtelsolution.xoso.xoso.view.fragment;
 
+import android.content.Context;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,11 +11,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.xtelsolution.xoso.R;
+import com.xtelsolution.xoso.sdk.utils.CalendarUtils;
+import com.xtelsolution.xoso.sdk.utils.NetworkUtils;
 import com.xtelsolution.xoso.sdk.utils.TimeUtils;
 import com.xtelsolution.xoso.xoso.model.entity.BeginResult;
 import com.xtelsolution.xoso.xoso.model.entity.ResultLottery;
@@ -22,6 +27,7 @@ import com.xtelsolution.xoso.xoso.model.respond.RESP_Result;
 import com.xtelsolution.xoso.xoso.presenter.fragment.FragmentCentralContentPresenter;
 import com.xtelsolution.xoso.xoso.view.fragment.inf.IFragmentCentralContent;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
@@ -44,6 +50,8 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
     private ScrollView scroll_central;
 
     private TableLayout table_1, table_2, table_3;
+    private TextView tv_title;
+    private ImageView img_mute;
     /**
      * Value table result lottery
      */
@@ -112,7 +120,7 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
 
     private MediaPlayer player;
 
-    private boolean toDay;
+    private boolean toDay, mute = false;
 
     public static FragmentCentralContent newInstance(long date) {
         FragmentCentralContent fragmentFirst = new FragmentCentralContent();
@@ -125,39 +133,15 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initListBeginEnd();
-    }
+        millis = getArguments().getLong(KEY_DATE);
+        player = MediaPlayer.create(getContext(), Settings.System.DEFAULT_NOTIFICATION_URI);
+        if (millis > 0) {
+            getDateTime = TimeUtils.getFormattedDate(getActivity(), millis);
+            String todays = TimeUtils.getToday();
 
-    private void initListBeginEnd() {
-//        eight_list_1 = new ArrayList<>();
-//        sevent_list_1 = new ArrayList<>();
-//        sixth_list_1 = new ArrayList<>();
-//        fiveth_list_1 = new ArrayList<>();
-//        fourth_list_1 = new ArrayList<>();
-//        thrid_list_1 = new ArrayList<>();
-//        second_list_1 = new ArrayList<>();
-//        first_list_1 = new ArrayList<>();
-//        special_list_1 = new ArrayList<>();
-//
-//        eight_list_2 = new ArrayList<>();
-//        sevent_list_2 = new ArrayList<>();
-//        sixth_list_2 = new ArrayList<>();
-//        fiveth_list_2 = new ArrayList<>();
-//        fourth_list_2 = new ArrayList<>();
-//        thrid_list_2 = new ArrayList<>();
-//        second_list_2 = new ArrayList<>();
-//        first_list_2 = new ArrayList<>();
-//        special_list_2 = new ArrayList<>();
-//
-//        eight_list_3 = new ArrayList<>();
-//        sevent_list_3 = new ArrayList<>();
-//        sixth_list_3 = new ArrayList<>();
-//        fiveth_list_3 = new ArrayList<>();
-//        fourth_list_3 = new ArrayList<>();
-//        thrid_list_3 = new ArrayList<>();
-//        second_list_3 = new ArrayList<>();
-//        first_list_3 = new ArrayList<>();
-//        special_list_3 = new ArrayList<>();
+            toDay = todays.trim().equals(getDateTime.trim());
+            Log.e(TAG, "onViewCreated: " + todays + " " + getDateTime);
+        }
     }
 
     @Override
@@ -171,38 +155,63 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                player = MediaPlayer.create(getContext(), Settings.System.DEFAULT_NOTIFICATION_URI);
                 initView(view);
                 presenter = new FragmentCentralContentPresenter(FragmentCentralContent.this);
 
-                millis = getArguments().getLong(KEY_DATE);
-
-                if (millis > 0) {
-                    getDateTime = TimeUtils.getFormattedDate(getActivity(), millis);
-                    String todays = TimeUtils.getToday();
-
-                    toDay = todays.trim().equals(getDateTime.trim());
-                    Log.e(TAG, "onViewCreated: " + todays + " " + getDateTime);
-                }
                 Log.e(TAG, "onViewCreated: " + toDay);
-                if (toDay && TimeUtils.checkTimeInMilisecondNorth(17, 12, 17, 45)) {
-                        presenter.connectSocket();
+                if (toDay && TimeUtils.checkTimeInMilisecondNorth(17, 10, 17, 45)) {
+                    presenter.connectSocket();
                 } else {
                     presenter.checkSocket();
                     presenter.getResultLottery(getDateTime);
                 }
             }
-        },100);
+        }, 100);
     }
+
 
     private void initView(View view) {
         scroll_central = view.findViewById(R.id.scroll_central_content);
         tvContent = view.findViewById(R.id.tvContent);
+        tv_title = view.findViewById(R.id.tv_title);
+        img_mute = view.findViewById(R.id.img_mute);
+        getTitle();
+        setMute();
         initTable1(view);
         initTable2(view);
         initTable3(view);
 
         initRandomRolling();
+    }
+
+    private void getTitle() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(millis);
+        String date_label = CalendarUtils.getDayName(calendar);
+        tv_title.setText(date_label + ", ngày " + calendar.get(Calendar.DAY_OF_MONTH) + " tháng " + (calendar.get(Calendar.MONTH) + 1) + " năm " + calendar.get(Calendar.YEAR));
+    }
+
+    private void setMute() {
+        if (toDay) {
+            img_mute.setVisibility(View.VISIBLE);
+        } else {
+            img_mute.setVisibility(View.GONE);
+        }
+        final AudioManager audioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
+        img_mute.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!mute) {
+                    mute = true;
+                    img_mute.setImageResource(R.mipmap.ic_mute_on);
+                    audioManager.setStreamMute(AudioManager.STREAM_MUSIC, true);
+                } else {
+                    mute = false;
+                    img_mute.setImageResource(R.mipmap.ic_mute);
+                    audioManager.setStreamMute(AudioManager.STREAM_MUSIC, false);
+                }
+            }
+        });
     }
 
     private void initTable1(View view) {
@@ -312,7 +321,7 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
 
     @Override
     public void setDataSocket(RESP_Result resp_result) {
-        Log.e(TAG, "setDataSocket: "+toDay );
+        Log.e(TAG, "setDataSocket: " + toDay);
         switch (resp_result.getData().size()) {
             case 1:
                 Log.e(TAG, "swith case result size()" + resp_result.getData().size());
@@ -772,8 +781,8 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
                             if (rl82 != null) {
                                 rl82.shutdownThread();
                             }
-                            if (rl72!=null)
-                            rl72.run();
+                            if (rl72 != null)
+                                rl72.run();
                             tv8_2.setText(newResult.getValue());
                         }
                         break;
@@ -1115,14 +1124,23 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.disconnectSocket();
+        if (player != null) {
+            player.release();
+        }
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
-        presenter.disconnectSocket();
         destroyView();
     }
 
     private void destroyView() {
-        player.stop();
+        if (player != null)
+            player.stop();
     }
 
     private void setResultLotteryTable1(String area, List<String> special,
@@ -1235,10 +1253,14 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
          * Dau loto*/
 
         if (beginResult != null) {
+
             if (beginResult.getB0().size() > 0) {
                 String begin_0 = "";
                 for (int i = 0; i < beginResult.getB0().size(); i++) {
-                    begin_0 += " " + beginResult.getB0().get(i);
+                    begin_0 += beginResult.getB0().get(i) + " - ";
+                }
+                if (begin_0.length()>0){
+                    begin_0 = begin_0.substring(0, begin_0.length() - 3);
                 }
                 tvLoto0_1.setText(begin_0);
             }
@@ -1247,7 +1269,10 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
             if (beginResult.getB1().size() > 0) {
                 String begin_1 = "";
                 for (int i = 0; i < beginResult.getB1().size(); i++) {
-                    begin_1 += " " + beginResult.getB1().get(i);
+                    begin_1 += beginResult.getB1().get(i) + " - ";
+                }
+                if (begin_1.length()>0){
+                    begin_1 = begin_1.substring(0, begin_1.length() - 3);
                 }
                 tvLoto1_1.setText(begin_1);
             }
@@ -1255,7 +1280,10 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
             if (beginResult.getB2().size() > 0) {
                 String begin_2 = "";
                 for (int i = 0; i < beginResult.getB2().size(); i++) {
-                    begin_2 += " " + beginResult.getB2().get(i);
+                    begin_2 += beginResult.getB2().get(i) + " - ";
+                }
+                if (begin_2.length()>0){
+                    begin_2 = begin_2.substring(0, begin_2.length() - 3);
                 }
                 tvLoto2_1.setText(begin_2);
             }
@@ -1263,7 +1291,10 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
             if (beginResult.getB3().size() > 0) {
                 String begin_3 = "";
                 for (int i = 0; i < beginResult.getB3().size(); i++) {
-                    begin_3 += " " + beginResult.getB3().get(i);
+                    begin_3 += beginResult.getB3().get(i) + " - ";
+                }
+                if (begin_3.length()>0){
+                    begin_3 = begin_3.substring(0, begin_3.length() - 3);
                 }
                 tvLoto3_1.setText(begin_3);
             }
@@ -1271,15 +1302,22 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
             if (beginResult.getB4().size() > 0) {
                 String begin_4 = "";
                 for (int i = 0; i < beginResult.getB4().size(); i++) {
-                    begin_4 += " " + beginResult.getB4().get(i);
+                    begin_4 += beginResult.getB4().get(i) + " - ";
                 }
+                if (begin_4.length()>0){
+                    begin_4 = begin_4.substring(0, begin_4.length() - 3);
+                }
+
                 tvLoto4_1.setText(begin_4);
             }
 
             if (beginResult.getB5().size() > 0) {
                 String begin_5 = "";
                 for (int i = 0; i < beginResult.getB5().size(); i++) {
-                    begin_5 += " " + beginResult.getB5().get(i);
+                    begin_5 += beginResult.getB5().get(i) + " - ";
+                }
+                if (begin_5.length()>0){
+                    begin_5 = begin_5.substring(0, begin_5.length() - 3);
                 }
                 tvLoto5_1.setText(begin_5);
             }
@@ -1287,7 +1325,10 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
             if (beginResult.getB6().size() > 0) {
                 String begin_6 = "";
                 for (int i = 0; i < beginResult.getB6().size(); i++) {
-                    begin_6 += " " + beginResult.getB6().get(i);
+                    begin_6 += beginResult.getB6().get(i) + " - ";
+                }
+                if (begin_6.length()>0){
+                    begin_6 = begin_6.substring(0, begin_6.length() - 3);
                 }
                 tvLoto6_1.setText(begin_6);
             }
@@ -1295,23 +1336,34 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
             if (beginResult.getB7().size() > 0) {
                 String begin_7 = "";
                 for (int i = 0; i < beginResult.getB7().size(); i++) {
-                    begin_7 += " " + beginResult.getB7().get(i);
+                    begin_7 += beginResult.getB7().get(i) + " - ";
                 }
+                if (begin_7.length()>0){
+                    begin_7 = begin_7.substring(0, begin_7.length() - 3);
+                }
+
                 tvLoto7_1.setText(begin_7);
             }
 
             if (beginResult.getB8().size() > 0) {
                 String begin_8 = "";
                 for (int i = 0; i < beginResult.getB8().size(); i++) {
-                    begin_8 += " " + beginResult.getB8().get(i);
+                    begin_8 += beginResult.getB8().get(i) + " - ";
                 }
+                if (begin_8.length()>0){
+                    begin_8 = begin_8.substring(0, begin_8.length() - 3);
+                }
+
                 tvLoto8_1.setText(begin_8);
             }
 
             if (beginResult.getB9().size() > 0) {
                 String begin_9 = "";
                 for (int i = 0; i < beginResult.getB9().size(); i++) {
-                    begin_9 += " " + beginResult.getB9().get(i);
+                    begin_9 += beginResult.getB9().get(i) + " - ";
+                }
+                if (begin_9.length()>0){
+                    begin_9 = begin_9.substring(0, begin_9.length() - 3);
                 }
                 tvLoto9_1.setText(begin_9);
             }
@@ -1320,90 +1372,90 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
     }
 
     private void checkRandomTable1(List<String> special, List<String> first, List<String> second, List<String> third, List<String> fourd, List<String> five, List<String> six, List<String> seven, List<String> eight) {
-        if (eight.size() > 0){
-            if (rl81!=null){
+        if (eight.size() > 0) {
+            if (rl81 != null) {
                 rl81.shutdownThread();
             }
         }
-        if (seven.size() > 0){
-            if (rl71!=null){
+        if (seven.size() > 0) {
+            if (rl71 != null) {
                 rl71.shutdownThread();
             }
         }
 
-        if (six.size() > 0){
-            if (rl611!=null){
+        if (six.size() > 0) {
+            if (rl611 != null) {
                 rl611.shutdownThread();
             }
-        } else if (six.size() > 1){
-            if (rl612!=null){
+        } else if (six.size() > 1) {
+            if (rl612 != null) {
                 rl612.shutdownThread();
             }
-        } else if (six.size() > 2){
-            if (rl613!=null){
+        } else if (six.size() > 2) {
+            if (rl613 != null) {
                 rl613.shutdownThread();
             }
         }
 
-        if (five.size() > 0){
-            if (rl51!=null){
+        if (five.size() > 0) {
+            if (rl51 != null) {
                 rl51.shutdownThread();
             }
         }
 
-        if (fourd.size() > 0){
-            if (rl41!=null){
+        if (fourd.size() > 0) {
+            if (rl41 != null) {
                 rl41.shutdownThread();
             }
-        } else if (fourd.size() > 1){
-            if (rl412!=null){
+        } else if (fourd.size() > 1) {
+            if (rl412 != null) {
                 rl412.shutdownThread();
             }
-        } else if (fourd.size() > 2){
-            if (rl413!=null){
+        } else if (fourd.size() > 2) {
+            if (rl413 != null) {
                 rl413.shutdownThread();
             }
-        }else if (fourd.size() > 3){
-            if (rl414!=null){
+        } else if (fourd.size() > 3) {
+            if (rl414 != null) {
                 rl414.shutdownThread();
             }
-        }else if (fourd.size() > 4){
-            if (rl415!=null){
+        } else if (fourd.size() > 4) {
+            if (rl415 != null) {
                 rl415.shutdownThread();
             }
-        }else if (fourd.size() > 5){
-            if (rl416!=null){
+        } else if (fourd.size() > 5) {
+            if (rl416 != null) {
                 rl416.shutdownThread();
             }
-        }else if (fourd.size() > 6){
-            if (rl417!=null){
+        } else if (fourd.size() > 6) {
+            if (rl417 != null) {
                 rl417.shutdownThread();
             }
         }
 
-        if (third.size() > 0){
-            if (rl311!=null){
+        if (third.size() > 0) {
+            if (rl311 != null) {
                 rl311.shutdownThread();
             }
-        } else if (third.size() > 1){
-            if (rl312!=null){
+        } else if (third.size() > 1) {
+            if (rl312 != null) {
                 rl312.shutdownThread();
             }
         }
 
-        if (second.size() > 0){
-            if (rl_second_1!=null){
+        if (second.size() > 0) {
+            if (rl_second_1 != null) {
                 rl_second_1.shutdownThread();
             }
         }
 
-        if (first.size() > 0){
-            if (rl_first_1!=null){
+        if (first.size() > 0) {
+            if (rl_first_1 != null) {
                 rl_first_1.shutdownThread();
             }
         }
-        if (special.size() > 0){
-            if (rl_special_1!=null){
+        if (special.size() > 0) {
+            if (rl_special_1 != null) {
                 rl_special_1.shutdownThread();
             }
         }
@@ -1521,7 +1573,10 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
             if (beginResult.getB0().size() > 0) {
                 String begin_0 = "";
                 for (int i = 0; i < beginResult.getB0().size(); i++) {
-                    begin_0 += " " + beginResult.getB0().get(i);
+                    begin_0 += beginResult.getB0().get(i) + " - ";
+                }
+                if (begin_0.length()>0){
+                    begin_0 = begin_0.substring(0, begin_0.length() - 3);
                 }
                 tvLoto0_2.setText(begin_0);
             }
@@ -1530,7 +1585,10 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
             if (beginResult.getB1().size() > 0) {
                 String begin_1 = "";
                 for (int i = 0; i < beginResult.getB1().size(); i++) {
-                    begin_1 += " " + beginResult.getB1().get(i);
+                    begin_1 += beginResult.getB1().get(i) + " - ";
+                }
+                if (begin_1.length()>0){
+                    begin_1 = begin_1.substring(0, begin_1.length() - 3);
                 }
                 tvLoto1_2.setText(begin_1);
             }
@@ -1538,7 +1596,10 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
             if (beginResult.getB2().size() > 0) {
                 String begin_2 = "";
                 for (int i = 0; i < beginResult.getB2().size(); i++) {
-                    begin_2 += " " + beginResult.getB2().get(i);
+                    begin_2 += beginResult.getB2().get(i) + " - ";
+                }
+                if (begin_2.length()>0){
+                    begin_2 = begin_2.substring(0, begin_2.length() - 3);
                 }
                 tvLoto2_2.setText(begin_2);
             }
@@ -1546,7 +1607,10 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
             if (beginResult.getB3().size() > 0) {
                 String begin_3 = "";
                 for (int i = 0; i < beginResult.getB3().size(); i++) {
-                    begin_3 += " " + beginResult.getB3().get(i);
+                    begin_3 += beginResult.getB3().get(i) + " - ";
+                }
+                if (begin_3.length()>0){
+                    begin_3 = begin_3.substring(0, begin_3.length() - 3);
                 }
                 tvLoto3_2.setText(begin_3);
             }
@@ -1554,7 +1618,10 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
             if (beginResult.getB4().size() > 0) {
                 String begin_4 = "";
                 for (int i = 0; i < beginResult.getB4().size(); i++) {
-                    begin_4 += " " + beginResult.getB4().get(i);
+                    begin_4 += beginResult.getB4().get(i) + " - ";
+                }
+                if (begin_4.length()>0){
+                    begin_4 = begin_4.substring(0, begin_4.length() - 3);
                 }
                 tvLoto4_2.setText(begin_4);
             }
@@ -1562,7 +1629,10 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
             if (beginResult.getB5().size() > 0) {
                 String begin_5 = "";
                 for (int i = 0; i < beginResult.getB5().size(); i++) {
-                    begin_5 += " " + beginResult.getB5().get(i);
+                    begin_5 += beginResult.getB5().get(i) + " - ";
+                }
+                if (begin_5.length()>0){
+                    begin_5 = begin_5.substring(0, begin_5.length() - 3);
                 }
                 tvLoto5_2.setText(begin_5);
             }
@@ -1570,7 +1640,10 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
             if (beginResult.getB6().size() > 0) {
                 String begin_6 = "";
                 for (int i = 0; i < beginResult.getB6().size(); i++) {
-                    begin_6 += " " + beginResult.getB6().get(i);
+                    begin_6 += beginResult.getB6().get(i) + " - ";
+                }
+                if (begin_6.length()>0){
+                    begin_6 = begin_6.substring(0, begin_6.length() - 3);
                 }
                 tvLoto6_2.setText(begin_6);
             }
@@ -1578,7 +1651,10 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
             if (beginResult.getB7().size() > 0) {
                 String begin_7 = "";
                 for (int i = 0; i < beginResult.getB7().size(); i++) {
-                    begin_7 += " " + beginResult.getB7().get(i);
+                    begin_7 += beginResult.getB7().get(i) + " - ";
+                }
+                if (begin_7.length()>0){
+                    begin_7 = begin_7.substring(0, begin_7.length() - 3);
                 }
                 tvLoto7_2.setText(begin_7);
             }
@@ -1586,105 +1662,113 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
             if (beginResult.getB8().size() > 0) {
                 String begin_8 = "";
                 for (int i = 0; i < beginResult.getB8().size(); i++) {
-                    begin_8 += " " + beginResult.getB8().get(i);
+                    begin_8 += beginResult.getB8().get(i) + " - ";
                 }
+                if (begin_8.length()>0){
+                    begin_8 = begin_8.substring(0, begin_8.length() - 3);
+                }
+
                 tvLoto8_2.setText(begin_8);
             }
 
             if (beginResult.getB9().size() > 0) {
                 String begin_9 = "";
                 for (int i = 0; i < beginResult.getB9().size(); i++) {
-                    begin_9 += " " + beginResult.getB9().get(i);
+                    begin_9 += beginResult.getB9().get(i) + " - ";
+                }
+                if (begin_9.length()>0){
+                    begin_9 = begin_9.substring(0, begin_9.length() - 3);
                 }
                 tvLoto9_2.setText(begin_9);
             }
         }
     }
+
     private void checkRandomTable2(List<String> special, List<String> first, List<String> second, List<String> third, List<String> fourd, List<String> five, List<String> six, List<String> seven, List<String> eight) {
-        if (eight.size() > 0){
-            if (rl82!=null){
+        if (eight.size() > 0) {
+            if (rl82 != null) {
                 rl82.shutdownThread();
             }
         }
-        if (seven.size() > 0){
-            if (rl72!=null){
+        if (seven.size() > 0) {
+            if (rl72 != null) {
                 rl72.shutdownThread();
             }
         }
 
-        if (six.size() > 0){
-            if (rl621!=null){
+        if (six.size() > 0) {
+            if (rl621 != null) {
                 rl621.shutdownThread();
             }
-        } else if (six.size() > 1){
-            if (rl622!=null){
+        } else if (six.size() > 1) {
+            if (rl622 != null) {
                 rl622.shutdownThread();
             }
-        } else if (six.size() > 2){
-            if (rl623!=null){
+        } else if (six.size() > 2) {
+            if (rl623 != null) {
                 rl623.shutdownThread();
             }
         }
 
-        if (five.size() > 0){
-            if (rl52!=null){
+        if (five.size() > 0) {
+            if (rl52 != null) {
                 rl52.shutdownThread();
             }
         }
 
-        if (fourd.size() > 0){
-            if (rl42!=null){
+        if (fourd.size() > 0) {
+            if (rl42 != null) {
                 rl42.shutdownThread();
             }
-        } else if (fourd.size() > 1){
-            if (rl422!=null){
+        } else if (fourd.size() > 1) {
+            if (rl422 != null) {
                 rl422.shutdownThread();
             }
-        } else if (fourd.size() > 2){
-            if (rl423!=null){
+        } else if (fourd.size() > 2) {
+            if (rl423 != null) {
                 rl423.shutdownThread();
             }
-        }else if (fourd.size() > 3){
-            if (rl424!=null){
+        } else if (fourd.size() > 3) {
+            if (rl424 != null) {
                 rl424.shutdownThread();
             }
-        }else if (fourd.size() > 4){
-            if (rl425!=null){
+        } else if (fourd.size() > 4) {
+            if (rl425 != null) {
                 rl425.shutdownThread();
             }
-        }else if (fourd.size() > 5){
-            if (rl426!=null){
+        } else if (fourd.size() > 5) {
+            if (rl426 != null) {
                 rl426.shutdownThread();
             }
-        }else if (fourd.size() > 6){
-            if (rl427!=null){
+        } else if (fourd.size() > 6) {
+            if (rl427 != null) {
                 rl427.shutdownThread();
             }
         }
 
-        if (third.size() > 0){
-            if (rl321!=null){
+        if (third.size() > 0) {
+            if (rl321 != null) {
                 rl321.shutdownThread();
             }
-        } else if (third.size() > 1){
-            if (rl322!=null){
+        } else if (third.size() > 1) {
+            if (rl322 != null) {
                 rl322.shutdownThread();
             }
         }
 
-        if (second.size() > 0){
-            if (rl_second_2!=null){
+        if (second.size() > 0) {
+            if (rl_second_2 != null) {
                 rl_second_2.shutdownThread();
             }
         }
 
-        if (first.size() > 0){
-            if (rl_first_2!=null){
+        if (first.size() > 0) {
+            if (rl_first_2 != null) {
                 rl_first_2.shutdownThread();
             }
         }
-        if (special.size() > 0){
-            if (rl_special_2!=null){
+        if (special.size() > 0) {
+            if (rl_special_2 != null) {
                 rl_special_2.shutdownThread();
             }
         }
@@ -1805,7 +1889,10 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
             if (beginResult.getB0().size() > 0) {
                 String begin_0 = "";
                 for (int i = 0; i < beginResult.getB0().size(); i++) {
-                    begin_0 += " " + beginResult.getB0().get(i);
+                    begin_0 += beginResult.getB0().get(i) + " - ";
+                }
+                if (begin_0.length()>0){
+                    begin_0 = begin_0.substring(0, begin_0.length() - 3);
                 }
                 tvLoto0_3.setText(begin_0);
             }
@@ -1814,7 +1901,10 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
             if (beginResult.getB1().size() > 0) {
                 String begin_1 = "";
                 for (int i = 0; i < beginResult.getB1().size(); i++) {
-                    begin_1 += " " + beginResult.getB1().get(i);
+                    begin_1 += beginResult.getB1().get(i) + " - ";
+                }
+                if (begin_1.length()>0){
+                    begin_1 = begin_1.substring(0, begin_1.length() - 3);
                 }
                 tvLoto1_3.setText(begin_1);
             }
@@ -1822,7 +1912,10 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
             if (beginResult.getB2().size() > 0) {
                 String begin_2 = "";
                 for (int i = 0; i < beginResult.getB2().size(); i++) {
-                    begin_2 += " " + beginResult.getB2().get(i);
+                    begin_2 += beginResult.getB2().get(i) + " - ";
+                }
+                if (begin_2.length()>0){
+                    begin_2 = begin_2.substring(0, begin_2.length() - 3);
                 }
                 tvLoto2_3.setText(begin_2);
             }
@@ -1830,7 +1923,10 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
             if (beginResult.getB3().size() > 0) {
                 String begin_3 = "";
                 for (int i = 0; i < beginResult.getB3().size(); i++) {
-                    begin_3 += " " + beginResult.getB3().get(i);
+                    begin_3 += beginResult.getB3().get(i) + " - ";
+                }
+                if (begin_3.length()>0){
+                    begin_3 = begin_3.substring(0, begin_3.length() - 3);
                 }
                 tvLoto3_3.setText(begin_3);
             }
@@ -1838,7 +1934,10 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
             if (beginResult.getB4().size() > 0) {
                 String begin_4 = "";
                 for (int i = 0; i < beginResult.getB4().size(); i++) {
-                    begin_4 += " " + beginResult.getB4().get(i);
+                    begin_4 += beginResult.getB4().get(i) + " - ";
+                }
+                if (begin_4.length()>0){
+                    begin_4 = begin_4.substring(0, begin_4.length() - 3);
                 }
                 tvLoto4_3.setText(begin_4);
             }
@@ -1846,7 +1945,10 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
             if (beginResult.getB5().size() > 0) {
                 String begin_5 = "";
                 for (int i = 0; i < beginResult.getB5().size(); i++) {
-                    begin_5 += " " + beginResult.getB5().get(i);
+                    begin_5 += beginResult.getB5().get(i) + " - ";
+                }
+                if (begin_5.length()>0){
+                    begin_5 = begin_5.substring(0, begin_5.length() - 3);
                 }
                 tvLoto5_3.setText(begin_5);
             }
@@ -1854,7 +1956,10 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
             if (beginResult.getB6().size() > 0) {
                 String begin_6 = "";
                 for (int i = 0; i < beginResult.getB6().size(); i++) {
-                    begin_6 += " " + beginResult.getB6().get(i);
+                    begin_6 += beginResult.getB6().get(i) + " - ";
+                }
+                if (begin_6.length()>0){
+                    begin_6 = begin_6.substring(0, begin_6.length() - 3);
                 }
                 tvLoto6_3.setText(begin_6);
             }
@@ -1862,7 +1967,10 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
             if (beginResult.getB7().size() > 0) {
                 String begin_7 = "";
                 for (int i = 0; i < beginResult.getB7().size(); i++) {
-                    begin_7 += " " + beginResult.getB7().get(i);
+                    begin_7 += beginResult.getB7().get(i) + " - ";
+                }
+                if (begin_7.length()>0){
+                    begin_7 = begin_7.substring(0, begin_7.length() - 3);
                 }
                 tvLoto7_3.setText(begin_7);
             }
@@ -1870,7 +1978,10 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
             if (beginResult.getB8().size() > 0) {
                 String begin_8 = "";
                 for (int i = 0; i < beginResult.getB8().size(); i++) {
-                    begin_8 += " " + beginResult.getB8().get(i);
+                    begin_8 += beginResult.getB8().get(i) + " - ";
+                }
+                if (begin_8.length()>0){
+                    begin_8 = begin_8.substring(0, begin_8.length() - 3);
                 }
                 tvLoto8_3.setText(begin_8);
             }
@@ -1878,7 +1989,10 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
             if (beginResult.getB9().size() > 0) {
                 String begin_9 = "";
                 for (int i = 0; i < beginResult.getB9().size(); i++) {
-                    begin_9 += " " + beginResult.getB9().get(i);
+                    begin_9 += beginResult.getB9().get(i) + " - ";
+                }
+                if (begin_9.length()>0){
+                    begin_9 = begin_9.substring(0, begin_9.length() - 3);
                 }
                 tvLoto9_3.setText(begin_9);
             }
@@ -1886,90 +2000,90 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
     }
 
     private void checkRandomTable3(List<String> special, List<String> first, List<String> second, List<String> third, List<String> fourd, List<String> five, List<String> six, List<String> seven, List<String> eight) {
-        if (eight.size() > 0){
-            if (rl83!=null){
+        if (eight.size() > 0) {
+            if (rl83 != null) {
                 rl83.shutdownThread();
             }
         }
-        if (seven.size() > 0){
-            if (rl73!=null){
+        if (seven.size() > 0) {
+            if (rl73 != null) {
                 rl73.shutdownThread();
             }
         }
 
-        if (six.size() > 0){
-            if (rl631!=null){
+        if (six.size() > 0) {
+            if (rl631 != null) {
                 rl631.shutdownThread();
             }
-        } else if (six.size() > 1){
-            if (rl632!=null){
+        } else if (six.size() > 1) {
+            if (rl632 != null) {
                 rl632.shutdownThread();
             }
-        } else if (six.size() > 2){
-            if (rl633!=null){
+        } else if (six.size() > 2) {
+            if (rl633 != null) {
                 rl633.shutdownThread();
             }
         }
 
-        if (five.size() > 0){
-            if (rl53!=null){
+        if (five.size() > 0) {
+            if (rl53 != null) {
                 rl53.shutdownThread();
             }
         }
 
-        if (fourd.size() > 0){
-            if (rl43!=null){
+        if (fourd.size() > 0) {
+            if (rl43 != null) {
                 rl43.shutdownThread();
             }
-        } else if (fourd.size() > 1){
-            if (rl432!=null){
+        } else if (fourd.size() > 1) {
+            if (rl432 != null) {
                 rl432.shutdownThread();
             }
-        } else if (fourd.size() > 2){
-            if (rl433!=null){
+        } else if (fourd.size() > 2) {
+            if (rl433 != null) {
                 rl433.shutdownThread();
             }
-        }else if (fourd.size() > 3){
-            if (rl434!=null){
+        } else if (fourd.size() > 3) {
+            if (rl434 != null) {
                 rl434.shutdownThread();
             }
-        }else if (fourd.size() > 4){
-            if (rl435!=null){
+        } else if (fourd.size() > 4) {
+            if (rl435 != null) {
                 rl435.shutdownThread();
             }
-        }else if (fourd.size() > 5){
-            if (rl436!=null){
+        } else if (fourd.size() > 5) {
+            if (rl436 != null) {
                 rl436.shutdownThread();
             }
-        }else if (fourd.size() > 6){
-            if (rl437!=null){
+        } else if (fourd.size() > 6) {
+            if (rl437 != null) {
                 rl437.shutdownThread();
             }
         }
 
-        if (third.size() > 0){
-            if (rl331!=null){
+        if (third.size() > 0) {
+            if (rl331 != null) {
                 rl331.shutdownThread();
             }
-        } else if (third.size() > 1){
-            if (rl332!=null){
+        } else if (third.size() > 1) {
+            if (rl332 != null) {
                 rl332.shutdownThread();
             }
         }
 
-        if (second.size() > 0){
-            if (rl_second_3!=null){
+        if (second.size() > 0) {
+            if (rl_second_3 != null) {
                 rl_second_3.shutdownThread();
             }
         }
 
-        if (first.size() > 0){
-            if (rl_first_3!=null){
+        if (first.size() > 0) {
+            if (rl_first_3 != null) {
                 rl_first_3.shutdownThread();
             }
         }
-        if (special.size() > 0){
-            if (rl_special_3!=null){
+        if (special.size() > 0) {
+            if (rl_special_3 != null) {
                 rl_special_3.shutdownThread();
             }
         }
@@ -1979,6 +2093,7 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
     public void getResultLotteryError(String error) {
         tvContent.setText(error);
         tvContent.setVisibility(View.VISIBLE);
+        setVisibleTable(false);
     }
 
     @Override

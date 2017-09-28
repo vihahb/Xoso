@@ -5,10 +5,10 @@
     android:layout_height="wrap_content"
     android:padding="5dp"
     android:gravity="center"
-    android:foreground="?android:attr/selectableItemBackground">
+    android:foreground="?android:attr/selectableItemBackground"
+    tools:ignore="UseCompoundDrawables">
 
     <ImageView
-        android:src="@mipmap/ic_nav_central"
         android:id="@+id/item_image"
         android:layout_width="@dimen/size_48"
         android:layout_height="@dimen/size_48"
@@ -21,6 +21,5 @@
         android:layout_marginTop="@dimen/size_8"
         android:textSize="@dimen/font_14"
         android:gravity="top|center_horizontal"
-        android:lines="1"
-        android:text="Chu kỳ loto"/>
+        android:lines="1" />
 </LinearLayout>

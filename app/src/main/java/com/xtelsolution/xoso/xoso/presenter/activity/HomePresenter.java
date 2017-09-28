@@ -1,13 +1,12 @@
 package com.xtelsolution.xoso.xoso.presenter.activity;
 
-import android.content.Intent;
 import android.util.Log;
 
 import com.xtelsolution.xoso.R;
 import com.xtelsolution.xoso.sdk.callback.Icmd;
 import com.xtelsolution.xoso.sdk.callback.RealmListener;
 import com.xtelsolution.xoso.sdk.common.Constants;
-import com.xtelsolution.xoso.sdk.service.SchedulingService;
+import com.xtelsolution.xoso.sdk.utils.AlarmUtils;
 import com.xtelsolution.xoso.sdk.utils.DatabaseHelper;
 import com.xtelsolution.xoso.sdk.utils.NetworkUtils;
 import com.xtelsolution.xoso.sdk.utils.ResponseHandle;
@@ -73,7 +72,7 @@ public class HomePresenter {
     }
     public void initDrawerMenu(){
         List<DrawerMenu> menus = new ArrayList<>();
-        menus.add(0, new DrawerMenu(0, "Xoso.la", R.mipmap.ic_launcher_round, null));
+        menus.add(0, new DrawerMenu(0, "Xoso.la", R.mipmap.ic_launcher, null));
         menus.add(1, new DrawerMenu(1, "Kết quả", -1, null));
         menus.add(2, new DrawerMenu(2, "Miền Bắc", R.mipmap.ic_nav_north, "18:15"));
         menus.add(3, new DrawerMenu(2, "Miền Trung", R.mipmap.ic_nav_central, "17:15"));
@@ -96,16 +95,6 @@ public class HomePresenter {
             if (!SharedUtils.getInstance().getBooleanValue(Constants.DREAM_FLAG)){
                 icmd.excute(1);
             }
-        }
-    }
-
-    public void startService(boolean flag){
-        if (flag){
-            Intent intent = new Intent(view.getActivity(), SchedulingService.class);
-            view.getActivity().startService(intent);
-        } else {
-            Intent intent = new Intent(view.getActivity(), SchedulingService.class);
-            view.getActivity().stopService(intent);
         }
     }
 }

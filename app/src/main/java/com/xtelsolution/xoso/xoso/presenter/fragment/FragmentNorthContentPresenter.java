@@ -5,8 +5,10 @@ import android.util.Log;
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
+import com.xtelsolution.xoso.R;
 import com.xtelsolution.xoso.sdk.callback.Icmd;
 import com.xtelsolution.xoso.sdk.utils.JsonHelper;
+import com.xtelsolution.xoso.sdk.utils.NetworkUtils;
 import com.xtelsolution.xoso.sdk.utils.ResponseHandle;
 import com.xtelsolution.xoso.xoso.model.MainModel;
 import com.xtelsolution.xoso.xoso.model.entity.Error;
@@ -47,7 +49,7 @@ public class FragmentNorthContentPresenter {
                     String date_time = (String) params[1];
                     MainModel.getInstance().getLottery(date_time, new ResponseHandle<RESP_GetLottery>(RESP_GetLottery.class) {
                         @Override
-                        public void onSuccess(RESP_GetLottery obj) {
+                        public void onSuccess(final RESP_GetLottery obj) {
                             Log.e(TAG, "onSuccess: obj " + JsonHelper.toJson(obj));
                             view.getResultLotterySuccess(obj.getData().get(0));
                         }
@@ -74,13 +76,18 @@ public class FragmentNorthContentPresenter {
         socket.connect();
         view.cleaOldData();
         listenSocketEvent();
+//        if (NetworkUtils.getInstance().isOnline(view.getActivity().getApplicationContext())){
+//3
+//        } else {
+//            view.getResultLotteryError(view.getActivity().getString(R.string.err_network));
+//        }
     }
 
     private void listenSocketEvent() {
         socket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
             @Override
             public void call(final Object... args) {
-                if (view.getActivity() !=null){
+                if (view.getActivity() != null) {
                     view.getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -93,14 +100,11 @@ public class FragmentNorthContentPresenter {
                                         view.getActivity().runOnUiThread(new Runnable() {
                                             @Override
                                             public void run() {
-                                                if (args[0]!=null) {
+                                                if (args[0] != null) {
                                                     Log.e(TAG, "get_current_result: " + args[0].toString());
                                                     RESP_Result resp_result = JsonHelper.getObjectNoException(args[0].toString(), RESP_Result.class);
-                                                    if (resp_result.getMessage()!=null){
-                                                    } else {
-                                                        Log.e(TAG, "Helper: " + resp_result.toString());
-                                                        view.setDataSocket(resp_result);
-                                                    }
+                                                    Log.e(TAG, "Helper: " + resp_result.toString());
+                                                    view.setDataSocket(resp_result);
                                                 }
                                             }
                                         });
@@ -131,7 +135,7 @@ public class FragmentNorthContentPresenter {
     }
 
     public void disconnectSocket() {
-        if (socket!=null){
+        if (socket != null) {
             socket.disconnect();
         }
     }

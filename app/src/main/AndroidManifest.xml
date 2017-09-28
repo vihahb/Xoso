@@ -3,27 +3,33 @@
     package="com.xtelsolution.xoso">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.alarm.permission.SET_ALARM" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission
+        android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <application
+        android:hardwareAccelerated="true"
         android:name=".xoso.ProjectApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".xoso.view.activity.MainActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme">
+            android:name=".xoso.view.activity.SplashActivity"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".xoso.view.activity.MainActivity"
+            android:label="@string/result_value"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".xoso.view.activity.DreamActivity"
             android:label="@string/title_activity_dream"
@@ -44,7 +50,13 @@
         <activity
             android:name=".xoso.view.activity.TestActivity"
             android:label="@string/title_activity_test"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
+        <receiver android:name=".sdk.receiver.BootReceiver">
+            <intent-filter>
+                <action
+                    android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

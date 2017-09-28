@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -65,34 +66,21 @@ public class FragmentSouthResult extends BasicFragment {
         pagerTabStrip.setTextColor(getContext().getResources().getColor(R.color.colorPrimary));
         vpPager = view.findViewById(R.id.vpPager);
         adapterViewPager = new MyPagerAdapter(getChildFragmentManager());
-        vpPager.setPageTransformer(false, new PageTransformer());
+//        vpPager.setPageTransformer(false, new PageTransformer());
         vpPager.setAdapter(adapterViewPager);
         // set pager to current date
-        // set pager to current date
-        if (TimeUtils.checkTimeInMilisecondNorth(17, 12, 23, 58)){
+        if (TimeUtils.checkTimeInMilisecondNorth(16, 12, 23, 58)){
             vpPager.setCurrentItem(TimeUtils.getPositionForDay(Calendar.getInstance()));
         }else {
             vpPager.setCurrentItem(TimeUtils.getPositionForDay(Calendar.getInstance())-1);
         }
     }
 
-    public void queryResult(String date) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        Date queryDate = null;
-        try {
-            queryDate = format.parse(date);
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(queryDate);
+    public void queryResult(Calendar calendar) {
             vpPager.setCurrentItem(TimeUtils.getPositionForDay(calendar));
-        } catch (ParseException e) {
-            e.printStackTrace();
-            Log.e(TAG, "queryResult: " + e.toString());
-        }
     }
 
-    public static class MyPagerAdapter extends CachingFragmentStatePagerAdapter {
-
-        private Calendar cal;
+    public static class MyPagerAdapter extends FragmentStatePagerAdapter {
 
         public MyPagerAdapter(FragmentManager fragmentManager) {
             super(fragmentManager);

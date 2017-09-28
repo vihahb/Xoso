@@ -22,58 +22,58 @@ public abstract class BasicFragment extends IFragment implements BasicView {
 
     private Toast toast;
 
-    /*
-    * Khởi tạo fragment vào 1 view layout (FrameLayout)
-    * */
-    public void replaceFragment(int id, Fragment fragment, String tag) {
-
-        if (getChildFragmentManager().findFragmentByTag(tag) == null) {
-            FragmentTransaction fragmentTransaction =getChildFragmentManager().beginTransaction();
-            fragmentTransaction.replace(id, fragment, tag);
-            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-            fragmentTransaction.commit();
-        }
-    }
-
-    public void replaceFragment(int frame_layout, Fragment fragment){
-        FragmentManager manager = getChildFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-        //Khi được goi, fragment truyền vào sẽ thay thế vào vị trí FrameLayout trong Activity chính
-        transaction.replace(frame_layout, fragment);
-        transaction.commit();
-    }
-
-    /*
-   * Hiển thị log
-   * */
-    public void debug(String message) {
-        Log.e(this.getClass().getSimpleName(), message);
-    }
+//    /*
+//    * Khởi tạo fragment vào 1 view layout (FrameLayout)
+//    * */
+//    public void replaceFragment(int id, Fragment fragment, String tag) {
+//
+//        if (getChildFragmentManager().findFragmentByTag(tag) == null) {
+//            FragmentTransaction fragmentTransaction =getChildFragmentManager().beginTransaction();
+//            fragmentTransaction.replace(id, fragment, tag);
+//            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+//            fragmentTransaction.commit();
+//        }
+//    }
+//
+//    public void replaceFragment(int frame_layout, Fragment fragment){
+//        FragmentManager manager = getChildFragmentManager();
+//        FragmentTransaction transaction = manager.beginTransaction();
+//        //Khi được goi, fragment truyền vào sẽ thay thế vào vị trí FrameLayout trong Activity chính
+//        transaction.replace(frame_layout, fragment);
+//        transaction.commit();
+//    }
 
     /*
-    * Hiển thị thông báo snackbar 2s
-    * */
-    public void showShortSnackBar(View view, String message) {
-        Snackbar.make(view, message, Snackbar.LENGTH_SHORT).show();
-    }
-
-    /*
-    * Hiển thị thông báo snackbar 3.5s
-    * */
-    public void showLongSnackBar(View view, String message) {
-        Snackbar.make(view, message, Snackbar.LENGTH_LONG).show();
-    }
-
-    /*
-    * Hiển thị thông báo 3.5s
-    * */
-    public void showLongToast(String message) {
-        if (toast != null)
-            toast.cancel();
-
-        toast = Toast.makeText(getContext(), message, Toast.LENGTH_LONG);
-        toast.show();
-    }
+//   * Hiển thị log
+//   * */
+//    public void debug(String message) {
+//        Log.e(this.getClass().getSimpleName(), message);
+//    }
+//
+//    /*
+//    * Hiển thị thông báo snackbar 2s
+//    * */
+//    public void showShortSnackBar(View view, String message) {
+//        Snackbar.make(view, message, Snackbar.LENGTH_SHORT).show();
+//    }
+//
+//    /*
+//    * Hiển thị thông báo snackbar 3.5s
+//    * */
+//    public void showLongSnackBar(View view, String message) {
+//        Snackbar.make(view, message, Snackbar.LENGTH_LONG).show();
+//    }
+//
+//    /*
+//    * Hiển thị thông báo 3.5s
+//    * */
+//    public void showLongToast(String message) {
+//        if (toast != null)
+//            toast.cancel();
+//
+//        toast = Toast.makeText(getContext(), message, Toast.LENGTH_LONG);
+//        toast.show();
+//    }
 
     /*
     * Hiển thị thông báo 2s
@@ -126,11 +126,11 @@ public abstract class BasicFragment extends IFragment implements BasicView {
         startActivityForResult(intent, requestCode);
     }
 
-    public void startActivityForResult2(Class clazz, String key, Object object, int requestCode) {
-        Intent intent = new Intent(getActivity(), clazz);
-        intent.putExtra(key, (Serializable) object);
-        getActivity().startActivityForResult(intent, requestCode);
-    }
+//    public void startActivityForResult2(Class clazz, String key, Object object, int requestCode) {
+//        Intent intent = new Intent(getActivity(), clazz);
+//        intent.putExtra(key, (Serializable) object);
+//        getActivity().startActivityForResult(intent, requestCode);
+//    }
 
     @Override
     public void onNoNetwork() {

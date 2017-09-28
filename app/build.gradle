@@ -55,7 +55,7 @@ dependencies {
     compile 'com.github.ittianyu:BottomNavigationViewEx:1.2.1'
     compile 'com.google.code.gson:gson:2.7'
     compile 'com.squareup.okhttp3:okhttp:3.7.0'
-    compile 'com.wefika:collapse-calendar-view:0.1.0'
-    compile 'noman.weekcalendar:weekcalendar:1.0.6'
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.4'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
     testCompile 'junit:junit:4.12'
 }

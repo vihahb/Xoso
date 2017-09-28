@@ -4,9 +4,11 @@ import android.util.Log;
 
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.Socket;
+import com.xtelsolution.xoso.R;
 import com.xtelsolution.xoso.sdk.callback.Icmd;
 import com.xtelsolution.xoso.sdk.common.SocketSingleton;
 import com.xtelsolution.xoso.sdk.utils.JsonHelper;
+import com.xtelsolution.xoso.sdk.utils.NetworkUtils;
 import com.xtelsolution.xoso.sdk.utils.ResponseHandle;
 import com.xtelsolution.xoso.xoso.model.MainModel;
 import com.xtelsolution.xoso.xoso.model.entity.Error;
@@ -22,20 +24,6 @@ import java.util.Arrays;
  */
 
 public class FragmentCentralContentPresenter {
-
-//    private Socket socket;
-//
-//    {
-//        try {
-//            IO.Options opts = new IO.Options();
-//            opts.forceNew = true;
-//            opts.reconnection = true;
-//            socket = IO.socket("http://124.158.4.190:3000/mientrung", opts);
-//        } catch (URISyntaxException e) {
-//            e.printStackTrace();
-//            Log.e(TAG, "URISyntaxException: " + e.toString());
-//        }
-//    }
 
     private SocketSingleton socketSingleton;
 
@@ -83,8 +71,15 @@ public class FragmentCentralContentPresenter {
                     break;
 
                 case 2:
-                    socketSingleton.getSocket().connect();
-                    socketSingleton.getSocket().on(Socket.EVENT_CONNECT, onConnect);
+                    if (view.getActivity()!=null){
+                        view.getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                socketSingleton.getSocket().connect();
+                                socketSingleton.getSocket().on(Socket.EVENT_CONNECT, onConnect);
+                            }
+                        });
+                    }
                     break;
             }
         }
@@ -100,12 +95,17 @@ public class FragmentCentralContentPresenter {
     }
 
     public void getResultLottery(String date) {
+
         icmd.excute(1, date);
     }
 
 
     public void connectSocket() {
         icmd.excute(2);
+//        if (NetworkUtils.getInstance().isOnline(view.getActivity().getApplicationContext())){
+//        } else {
+//            view.getResultLotteryError(view.getActivity().getString(R.string.err_network));
+//        }
     }
 
     public void checkSocket() {

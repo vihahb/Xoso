@@ -10,11 +10,11 @@ import com.xtelsolution.xoso.sdk.callback.DialogListener;
  */
 
 public interface BasicView {
-    void showShortSnackBar(View view, String message);
-
-    void showLongSnackBar(View view, String message);
-
-    void showLongToast(String message);
+//    void showShortSnackBar(View view, String message);
+//
+//    void showLongSnackBar(View view, String message);
+//
+//    void showLongToast(String message);
 
     void showShortToast(String message);
 

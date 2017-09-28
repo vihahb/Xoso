@@ -1,0 +1,455 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/size_8"
+    android:layout_marginRight="@dimen/size_8"
+    android:orientation="horizontal"
+    android:baselineAligned="false"
+    tools:showIn="@layout/fragment_south_content">
+
+    <TableLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/size_4"
+        android:layout_weight="1"
+        android:background="@drawable/bolder_table">
+
+        <TableRow
+            android:id="@+id/tableRowTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="4.5">
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:background="@drawable/bolder_table"
+                android:gravity="center"
+                android:text="Đầu"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/font_14"
+                android:textStyle="bold" />
+
+            <TextView
+                style="@style/TextTitleStyle_LotoSouth"
+                android:id="@+id/tvLotoTitle1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <TextView
+                style="@style/TextTitleStyle_LotoSouth"
+                android:id="@+id/tvLotoTitle2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvLotoTitle3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                style="@style/TextTitleStyle_LotoSouth"/>
+
+            <TextView
+                android:id="@+id/tvLotoTitle4"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                style="@style/TextTitleStyle_LotoSouth"/>
+        </TableRow>
+
+        <!--dau 0-->
+        <TableRow
+            android:id="@+id/tableRow0"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="4.5">
+
+            <TextView
+                android:id="@+id/tvTitle0"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="0"
+                style="@style/TextLotoSouth"/>
+
+            <TextView
+                style="@style/TextLotoValueResult"
+                android:id="@+id/tvLoto0_1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:id="@+id/tvLoto0_2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                style="@style/TextLotoValueResult" />
+
+            <TextView
+                android:id="@+id/tvLoto0_3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                style="@style/TextLotoValueResult" />
+
+            <TextView
+                android:id="@+id/tvLoto0_4"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                style="@style/TextLotoValueResult"/>
+        </TableRow>
+
+        <!--dau 1-->
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="4.5">
+
+            <TextView
+                android:id="@+id/tvTitle1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="1"
+                style="@style/TextLotoSouth"/>
+
+            <TextView
+                android:id="@+id/tvLoto1_1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                style="@style/TextLotoValueResult"/>
+
+            <TextView
+                android:id="@+id/tvLoto1_2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                style="@style/TextLotoValueResult"/>
+
+            <TextView
+                android:id="@+id/tvLoto1_3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                style="@style/TextLotoValueResult"/>
+
+            <TextView
+                android:id="@+id/tvLoto1_4"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                style="@style/TextLotoValueResult"/>
+        </TableRow>
+
+        <!--dau 2-->
+        <TableRow
+            android:id="@+id/tableRow2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="4.5">
+
+            <TextView
+                android:id="@+id/tv2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="2"
+                style="@style/TextLotoSouth"/>
+
+            <TextView
+                android:id="@+id/tvLoto2_1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                style="@style/TextLotoValueResult"/>
+
+            <TextView
+                android:id="@+id/tvLoto2_2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                style="@style/TextLotoValueResult" />
+
+            <TextView
+                android:id="@+id/tvLoto2_3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                style="@style/TextLotoValueResult"/>
+
+            <TextView
+                android:id="@+id/tvLoto2_4"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                style="@style/TextLotoValueResult"/>
+        </TableRow>
+
+        <!--dau 3-->
+        <TableRow
+            android:id="@+id/tableRow3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="4.5">
+
+            <TextView
+                android:id="@+id/tv3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="3"
+                style="@style/TextLotoSouth"/>
+
+            <TextView
+                android:id="@+id/tvLoto3_1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                style="@style/TextLotoValueResult"/>
+
+            <TextView
+                android:id="@+id/tvLoto3_2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                style="@style/TextLotoValueResult"/>
+
+            <TextView
+                android:id="@+id/tvLoto3_3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                style="@style/TextLotoValueResult"/>
+
+            <TextView
+                android:id="@+id/tvLoto3_4"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                style="@style/TextLotoValueResult"/>
+        </TableRow>
+
+        <!--dau 4-->
+        <TableRow
+            android:id="@+id/tableRow4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="4.5">
+
+            <TextView
+                android:id="@+id/tv4"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="4"
+                style="@style/TextLotoSouth"/>
+
+            <TextView
+                android:id="@+id/tvLoto4_1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                style="@style/TextLotoValueResult"/>
+
+            <TextView
+                android:id="@+id/tvLoto4_2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                style="@style/TextLotoValueResult"/>
+
+            <TextView
+                android:id="@+id/tvLoto4_3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                style="@style/TextLotoValueResult"/>
+
+            <TextView
+                android:id="@+id/tvLoto4_4"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                style="@style/TextLotoValueResult" />
+        </TableRow>
+
+        <!--dau 5-->
+        <TableRow
+            android:id="@+id/tableRow5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="4.5">
+
+            <TextView
+                android:id="@+id/tv5"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="5"
+                style="@style/TextLotoSouth" />
+
+            <TextView
+                android:id="@+id/tvLoto5_1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                style="@style/TextLotoValueResult" />
+
+            <TextView
+                android:id="@+id/tvLoto5_2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                style="@style/TextLotoValueResult" />
+
+            <TextView
+                android:id="@+id/tvLoto5_3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                style="@style/TextLotoValueResult" />
+
+            <TextView
+                android:id="@+id/tvLoto5_4"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                style="@style/TextLotoValueResult" />
+        </TableRow>
+
+        <!--dau 6-->
+        <TableRow
+            android:id="@+id/tableRow6"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="4.5">
+
+            <TextView
+                android:id="@+id/tv6"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="6"
+                style="@style/TextLotoSouth" />
+
+            <TextView
+                android:id="@+id/tvLoto6_1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                style="@style/TextLotoValueResult" />
+
+            <TextView
+                android:id="@+id/tvLoto6_2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                style="@style/TextLotoValueResult" />
+
+            <TextView
+                android:id="@+id/tvLoto6_3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                style="@style/TextLotoValueResult"/>
+
+            <TextView
+                android:id="@+id/tvLoto6_4"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                style="@style/TextLotoValueResult"/>
+        </TableRow>
+
+        <!--dau 7-->
+        <TableRow
+            android:id="@+id/tableRow7"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="4.5">
+
+            <TextView
+                android:id="@+id/tv7"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="7"
+                style="@style/TextLotoSouth"/>
+
+            <TextView
+                android:id="@+id/tvLoto7_1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                style="@style/TextLotoValueResult"/>
+
+            <TextView
+                android:id="@+id/tvLoto7_2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                style="@style/TextLotoValueResult"/>
+
+            <TextView
+                android:id="@+id/tvLoto7_3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                style="@style/TextLotoValueResult"/>
+
+            <TextView
+                android:id="@+id/tvLoto7_4"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                style="@style/TextLotoValueResult"/>
+        </TableRow>
+
+        <!--dau 8-->
+        <TableRow
+            android:id="@+id/tableRow8"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="4.5">
+
+            <TextView
+                android:id="@+id/tv8"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="8"
+                style="@style/TextLotoSouth"/>
+
+            <TextView
+                android:id="@+id/tvLoto8_1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                style="@style/TextLotoValueResult"/>
+
+            <TextView
+                android:id="@+id/tvLoto8_2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                style="@style/TextLotoValueResult"/>
+
+            <TextView
+                android:id="@+id/tvLoto8_3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                style="@style/TextLotoValueResult"/>
+
+            <TextView
+                android:id="@+id/tvLoto8_4"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                style="@style/TextLotoValueResult"/>
+        </TableRow>
+
+        <!--dau 9-->
+        <TableRow
+            android:id="@+id/tableRow9"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="4.5">
+
+            <TextView
+                android:id="@+id/tv9"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="9"
+                style="@style/TextLotoSouth"/>
+
+            <TextView
+                android:id="@+id/tvLoto9_1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                style="@style/TextLotoValueResult"/>
+
+            <TextView
+                android:id="@+id/tvLoto9_2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                style="@style/TextLotoValueResult"/>
+
+            <TextView
+                android:id="@+id/tvLoto9_3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                style="@style/TextLotoValueResult"/>
+
+            <TextView
+                android:id="@+id/tvLoto9_4"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                style="@style/TextLotoValueResult"/>
+        </TableRow>
+
+    </TableLayout>
+</LinearLayout>

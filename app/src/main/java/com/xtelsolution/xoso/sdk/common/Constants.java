@@ -13,6 +13,9 @@ public class Constants {
     public static final String NOTIFICATION = "notification";
     public static final String AREA_NOTIFY = "area_notify";
     public static final String GET_FULL_VALUE = "get_full_value";
+    public static final String FLAG_NOTRTH = "flag_notify";
+    public static final String FLAG_CENTRAL = "flag_central";
+    public static final String FLAG_SOUTH = "flag_south";
 
 
     public static String SHARED_NAME = "xoso_pref";

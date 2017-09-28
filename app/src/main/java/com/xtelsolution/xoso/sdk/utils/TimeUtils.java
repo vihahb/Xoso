@@ -20,10 +20,10 @@ public class TimeUtils {
 
     static {
         FIRST_DAY_OF_TIME = Calendar.getInstance();
-        FIRST_DAY_OF_TIME.set(1900, Calendar.JANUARY, 1);
+        FIRST_DAY_OF_TIME.set(2001, Calendar.JANUARY, 1);
         LAST_DAY_OF_TIME = Calendar.getInstance();
-        LAST_DAY_OF_TIME.set(2100, Calendar.DECEMBER, 31);
-        DAYS_OF_TIME = (int) ((LAST_DAY_OF_TIME.getTimeInMillis() - FIRST_DAY_OF_TIME.getTimeInMillis()) / (24 * 60 * 60 * 1000)); //73413;
+        DAYS_OF_TIME = (int) ((LAST_DAY_OF_TIME.getTimeInMillis() - FIRST_DAY_OF_TIME.getTimeInMillis()) / (24 * 60 * 60 * 1000)) + 1; //73413;
+        Log.e(TAG, "static initializer Time Utils: " + LAST_DAY_OF_TIME.get(Calendar.YEAR) + " - " + LAST_DAY_OF_TIME.get(Calendar.MONTH) + " - " + LAST_DAY_OF_TIME.get(Calendar.DAY_OF_MONTH));
     }
 
 //    public String getYesterday() {

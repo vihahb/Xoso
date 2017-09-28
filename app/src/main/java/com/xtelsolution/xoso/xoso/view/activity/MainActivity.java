@@ -1,30 +1,26 @@
 package com.xtelsolution.xoso.xoso.view.activity;
 
 import android.Manifest;
-import android.app.AlarmManager;
 import android.app.DatePickerDialog;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,6 +30,7 @@ import com.crashlytics.android.Crashlytics;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.xtelsolution.xoso.R;
 import com.xtelsolution.xoso.sdk.common.Constants;
+import com.xtelsolution.xoso.sdk.service.SchedulingService;
 import com.xtelsolution.xoso.sdk.utils.PermissionHelper;
 import com.xtelsolution.xoso.xoso.model.entity.DrawerMenu;
 import com.xtelsolution.xoso.xoso.presenter.activity.HomePresenter;
@@ -71,16 +68,26 @@ public class MainActivity extends BasicActivity implements IHomeView, OnComplete
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setTitle("Kết quả miền Bắc");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             PermissionHelper.checkOnlyPermission(Manifest.permission.READ_EXTERNAL_STORAGE, this, 99);
         }
 
         presenter = new HomePresenter(this);
-        createNotification();
         initWidget();
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        toggle.setDrawerIndicatorEnabled(false);
+        // mDrawerToggle.setHomeAsUpIndicator(R.drawable.menu_icon);
+        toolbar.setNavigationIcon(R.drawable.ic_drawer);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawer.openDrawer(Gravity.LEFT);
+            }
+        });
         drawer.setDrawerListener(toggle);
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -116,12 +123,41 @@ public class MainActivity extends BasicActivity implements IHomeView, OnComplete
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             mAppBarLayout.setElevation(0);
         }
-
         viewPager = (LockableViewPager) findViewById(R.id.vpMain);
         pagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager());
         viewPager.setOffscreenPageLimit(4);
         viewPager.setSwipeable(false);
         viewPager.setAdapter(pagerAdapter);
+        viewPager.setCurrentItem(0);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+            switch (position){
+                case 0:
+                    toolbar.setTitle("Kết quả");
+                    break;
+                case 1:
+                    toolbar.setTitle("Thống kê");
+                    break;
+                case 2:
+                    toolbar.setTitle("Soi Cầu");
+                    break;
+                case 3:
+                    toolbar.setTitle("Mở Rộng");
+                    break;
+            }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
         navigationBottom = (BottomNavigationViewEx) findViewById(R.id.bottomTab);
         navigationBottom.enableAnimation(false);
@@ -137,9 +173,14 @@ public class MainActivity extends BasicActivity implements IHomeView, OnComplete
         rcl_menu.setLayoutManager(layoutManager);
         adapterMenu = new AdapterMenu(menuList, this, this);
         rcl_menu.setAdapter(adapterMenu);
-        presenter.startService(true);
+        initAlarmManager();
         presenter.initDrawerMenu();
         presenter.getDream();
+    }
+
+    private void initAlarmManager() {
+        Intent intent = new Intent(this, SchedulingService.class);
+        startService(intent);
     }
 
     private void initBottomNavigationListener() {
@@ -209,8 +250,9 @@ public class MainActivity extends BasicActivity implements IHomeView, OnComplete
                 @Override
                 public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                     Log.e("onDate Set", "onDateSet: " + year + " - " + month + " - " + day);
-                    String date_set = year + "-" + (month + 1) + "-" + day;
-                    onDateSelect(date_set);
+                    Calendar get_cal = Calendar.getInstance();
+                    get_cal.set(year, month, day);
+                    onDateSelect(get_cal);
                 }
             }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
             datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
@@ -286,11 +328,16 @@ public class MainActivity extends BasicActivity implements IHomeView, OnComplete
     }
 
     @Override
-    public void onDateSelect(String date) {
+    public void onDateSelect(Calendar date) {
         ((FragmentResult) pagerAdapter.getItem(0)).queryDate(date);
     }
 
-    public static class FragmentPagerAdapter extends android.support.v4.app.FragmentPagerAdapter {
+    public void setTitleToolbar(String s) {
+        if (s!=null)
+        toolbar.setTitle(s);
+    }
+
+    public static class FragmentPagerAdapter extends FragmentStatePagerAdapter {
 
         List<Fragment> fragmentList;
 
@@ -337,20 +384,20 @@ public class MainActivity extends BasicActivity implements IHomeView, OnComplete
         }
     }
 
-    private void createNotification() {
-        Intent intentLive = new Intent(this, MainActivity.class);
-        intentLive.putExtra(Constants.START_LIVE, 3);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intentLive, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-        builder.setContentTitle("Trực tiếp");
-        builder.setContentText("Test notification");
-        builder.setSound(Settings.System.DEFAULT_NOTIFICATION_URI);
-        builder.setDefaults(Notification.DEFAULT_SOUND);
-        builder.setSmallIcon(R.mipmap.ic_nav_north);
-        builder.setContentIntent(pendingIntent);
-
-        NotificationManager notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(11, builder.build());
-    }
+//    private void createNotification() {
+//        Intent intentLive = new Intent(this, MainActivity.class);
+//        intentLive.putExtra(Constants.START_LIVE, 3);
+//        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intentLive, PendingIntent.FLAG_UPDATE_CURRENT);
+//
+//        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+//        builder.setContentTitle("Trực tiếp");
+//        builder.setContentText("Test notification");
+//        builder.setSound(Settings.System.DEFAULT_NOTIFICATION_URI);
+//        builder.setDefaults(Notification.DEFAULT_SOUND);
+//        builder.setSmallIcon(R.mipmap.ic_nav_north);
+//        builder.setContentIntent(pendingIntent);
+//
+//        NotificationManager notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+//        notificationManager.notify(11, builder.build());
+//    }
 }

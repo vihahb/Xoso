@@ -11,6 +11,7 @@ import android.support.v4.app.NotificationCompat;
 
 import com.xtelsolution.xoso.R;
 import com.xtelsolution.xoso.sdk.common.Constants;
+import com.xtelsolution.xoso.sdk.service.SchedulingService;
 import com.xtelsolution.xoso.xoso.view.activity.MainActivity;
 
 /**
@@ -27,13 +28,22 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         if (notify_id_value == 1){
             intentLive.putExtra(Constants.START_LIVE, 1);
-            content_notify = "Đã đến giờ quay giải miền Bắc";
+            content_notify = "Sắp đến giờ quay giải miền Bắc";
         } else if (notify_id_value == 2){
             intentLive.putExtra(Constants.START_LIVE, 2);
-            content_notify = "Đã đến giờ quay giải miền Trung";
+            content_notify = "Săp đến giờ quay giải miền Trung";
         } else if (notify_id_value == 3){
             intentLive.putExtra(Constants.START_LIVE, 3);
-            content_notify = "Đã đến giờ quay giải miền Nam";
+            content_notify = "Sắp đến giờ quay giải miền Nam";
+        } else if (notify_id_value == 4){
+            intentLive.putExtra(Constants.START_LIVE, 1);
+            content_notify = "Đang quay giải miền Bắc";
+        }else if (notify_id_value == 5){
+            intentLive.putExtra(Constants.START_LIVE, 2);
+            content_notify = "Đang quay giải miền Trung";
+        }else if (notify_id_value == 6){
+            intentLive.putExtra(Constants.START_LIVE, 3);
+            content_notify = "Đang quay giải miền Nam";
         }
 
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intentLive, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -43,11 +53,15 @@ public class AlarmReceiver extends BroadcastReceiver {
         builder.setContentText(content_notify);
         builder.setSound(Settings.System.DEFAULT_NOTIFICATION_URI);
         builder.setDefaults(Notification.DEFAULT_SOUND);
-        builder.setSmallIcon(R.mipmap.ic_nav_north);
+        builder.setSmallIcon(R.mipmap.ic_launcher);
         builder.setContentIntent(pendingIntent);
 
         int notify_id = intent.getIntExtra(Constants.NOTIFICATION_ID, 0);
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(notify_id, builder.build());
+
+        Intent startServices = new Intent(context, SchedulingService.class);
+        context.startService(startServices);
+
     }
 }

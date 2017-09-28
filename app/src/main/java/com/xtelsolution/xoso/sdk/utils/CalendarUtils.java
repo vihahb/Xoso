@@ -41,9 +41,54 @@ public class CalendarUtils {
 
         Date date = new Date(calendar.getTimeInMillis());
         DateFormat f = new SimpleDateFormat("EEE");
+        String day_name = "";
         try {
             Log.e(TAG, "getDayName: " + f.format(date));
-            return f.format(date);
+            switch (f.format(date)){
+                case "T.2":
+                    day_name = "Thứ 2";
+                    break;
+                case "T.3":
+                    day_name = "Thứ 3";
+                    break;
+                case "T.4":
+                    day_name = "Thứ 4";
+                    break;
+                case "T.5":
+                    day_name = "Thứ 5";
+                    break;
+                case "T.6":
+                    day_name = "Thứ 6";
+                    break;
+                case "T.7":
+                    day_name = "Thứ 7";
+                    break;
+                case "CN":
+                    day_name = "Chủ nhật";
+                    break;
+                case "Mon":
+                    day_name = "Thứ 2";
+                    break;
+                case "Tue":
+                    day_name = "Thứ 3";
+                    break;
+                case "Wed":
+                    day_name = "Thứ 4";
+                    break;
+                case "Thu":
+                    day_name = "Thứ 5";
+                    break;
+                case "Fri":
+                    day_name = "Thứ 6";
+                    break;
+                case "Sat":
+                    day_name = "Thứ 7";
+                    break;
+                case "Sun":
+                    day_name = "Chủ nhật";
+                    break;
+            }
+            return day_name;
         }
         catch(Exception e) {
             e.printStackTrace();

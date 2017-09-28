@@ -60,28 +60,28 @@ public class BasicActivity extends IActivity {
         transaction.commit();
     }
 
-    @Override
-    public void showShortSnackBar(View view, String message) {
-        Snackbar.make(view, message, Snackbar.LENGTH_SHORT).show();
-    }
-
-    /*
-    * Hiển thị thông báo snackbar 3.5s
-    * */
-    public void showLongSnackBar(View view, String message) {
-        Snackbar.make(view, message, Snackbar.LENGTH_LONG).show();
-    }
-
-    /*
-    * Hiển thị thông báo 3.5s
-    * */
-    public void showLongToast(String message) {
-        if (toast != null)
-            toast.cancel();
-
-        toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
-        toast.show();
-    }
+//    @Override
+//    public void showShortSnackBar(View view, String message) {
+//        Snackbar.make(view, message, Snackbar.LENGTH_SHORT).show();
+//    }
+//
+//    /*
+//    * Hiển thị thông báo snackbar 3.5s
+//    * */
+//    public void showLongSnackBar(View view, String message) {
+//        Snackbar.make(view, message, Snackbar.LENGTH_LONG).show();
+//    }
+//
+//    /*
+//    * Hiển thị thông báo 3.5s
+//    * */
+//    public void showLongToast(String message) {
+//        if (toast != null)
+//            toast.cancel();
+//
+//        toast = Toast.makeText(this, message, Toast.LENGTH_LONG);
+//        toast.show();
+//    }
 
     /*
     * Hiển thị thông báo 2s

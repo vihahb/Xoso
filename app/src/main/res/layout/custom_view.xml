@@ -5,13 +5,13 @@
 
     <TextView
         android:id="@+id/tab"
+        android:typeface="normal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="16dp"
         android:gravity="center"
-        android:text="hello world "
         android:textColor="@android:color/white"
-        android:textSize="@dimen/font_11"
+        android:textSize="@dimen/font_15"
         android:textAppearance="@style/TextAppearance.AppCompat.Caption"/>
 
     <TextView

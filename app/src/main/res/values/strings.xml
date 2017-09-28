@@ -21,4 +21,22 @@
     <string name="column_begin">Đầu</string>
     <string name="title_loto">Lô tô</string>
     <string name="title_activity_test">TestActivity</string>
+    <string name="err_network">Không có kết nối dữ liệu</string>
+    <string name="title_activity_navigation_drawer">NavigationDrawerActivity</string>
+    <string name="result_value">Kết quả xổ số</string>
+    <string name="not_yet_result">Chưa có kết quả</string>
+    <string name="live_loto">Lô trực tiếp</string>
+    <string name="result_central">Kết quả xổ số miền Trung</string>
+    <string name="begin">Đầu</string>
+    <string name="value_0">0</string>
+    <string name="value_1">1</string>
+    <string name="value_2">2</string>
+    <string name="value_3">3</string>
+    <string name="value_4">4</string>
+    <string name="value_5">5</string>
+    <string name="value_6">6</string>
+    <string name="value_7">7</string>
+    <string name="value_8">8</string>
+    <string name="value_9">9</string>
+    <string name="prize">Giải</string>
 </resources>

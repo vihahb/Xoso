@@ -1,6 +1,7 @@
 package com.xtelsolution.xoso.xoso.view.adapter;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -55,6 +56,8 @@ public class AdapterMenu extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             DrawerMenu drawerMenu = menuList.get(position);
             defaultHolder.tv_name.setText(drawerMenu.getItemName());
             defaultHolder.item_icon.setImageResource(drawerMenu.getResource());
+            Typeface typeface = Typeface.createFromAsset(viewHome.getActivity().getAssets(), "fonts/deftone stylus.ttf");
+            defaultHolder.tv_name.setTypeface(typeface);
         }
 
         if (holder instanceof HeaderHolder){

@@ -15,17 +15,8 @@
         android:id="@+id/bottomTab"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/black_10"
+        android:background="@android:color/white"
         app:itemIconTint="@drawable/selector_bottom_navigation"
         app:itemTextColor="@drawable/selector_bottom_navigation"
         app:menu="@menu/activity_bottom_menu" />
-
-    <!--<android.support.design.widget.TabLayout-->
-        <!--style="@style/AppTabLayout"-->
-        <!--android:id="@+id/bottomTab"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="48dp"-->
-        <!--app:tabGravity="fill"-->
-        <!--app:tabMode="fixed"-->
-        <!--app:tabIndicatorHeight="0dp"/>-->
 </LinearLayout>
