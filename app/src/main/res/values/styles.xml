@@ -8,7 +8,9 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@mipmap/background_home</item>
         <item name="android:typeface">normal</item>
-
+        <item name="colorControlNormal">@color/black_20</item>
+        <item name="colorControlActivated">@color/black_20</item>
+        <item name="colorControlHighlight">@color/black_20</item>
     </style>
 
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
@@ -30,7 +32,7 @@
 
     <!-- for text -->
     <style name="AppTabTextAppearance" parent="TextAppearance.Design.Tab">
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">15sp</item>
         <item name="textAllCaps">false</item>
     </style>
 
@@ -88,7 +90,6 @@
         <item name="android:textSize">@dimen/font_15</item>
     </style>
 
-
     <!-- Central -->
     <style name="TextTitleStyle_LotoCentral">
         <item name="android:layout_weight">1</item>
@@ -110,5 +111,45 @@
         <item name="android:textSize">@dimen/font_18</item>
     </style>
 
+    <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
 
+    <style name="EditTextAccent" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorControlNormal">@color/black_20</item>
+        <item name="colorControlActivated">@color/black_20</item>
+        <item name="android:textSize">@dimen/font_15</item>
+        <item name="android:longClickable">false</item>
+        <item name="android:textColorHint">@color/black_65</item>
+    </style>
+
+    <style name="CustomTabText" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">@dimen/font_15</item>
+    </style>
+
+    <style name="Button_app">
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:background">@drawable/button_background</item>
+    </style>
+
+    <style name="Theme_Transparents" parent="@style/AppTheme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowMinWidthMajor">100%</item>
+    </style>
+
+    <style name="checkBoxStyle" parent="Base.Theme.AppCompat">
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="colorControlNormal">@color/black_40</item>
+    </style>
 </resources>

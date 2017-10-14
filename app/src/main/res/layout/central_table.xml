@@ -20,7 +20,7 @@
             android:layout_weight="1"
             android:background="@drawable/bolder_table"
             android:gravity="center"
-            android:text="Tỉnh"
+            android:text="Giải"
             android:lines="2"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/font_16"

@@ -11,16 +11,15 @@
     android:background="@android:color/white">
     <ImageView
         android:id="@+id/ic_item_icon"
-        android:layout_width="@dimen/size_36"
-        android:layout_height="@dimen/size_36"
+        android:layout_width="@dimen/size_24"
+        android:layout_height="@dimen/size_24"
         tools:ignore="ContentDescription" />
     <TextView
         android:id="@+id/tv_item_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:textColor="@color/black_55"
-        android:textAllCaps="false"
+        android:textColor="@android:color/black"
         android:layout_marginLeft="@dimen/size_16"
         android:textSize="@dimen/font_13"
         tools:ignore="RtlHardcoded" />

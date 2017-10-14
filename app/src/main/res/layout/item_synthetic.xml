@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:orientation="horizontal"
+    android:weightSum="5"
+    android:background="@drawable/bolder_table">
+
+    <TextView
+        android:id="@+id/tv_number"
+        android:background="@drawable/bolder_table"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.5"
+        android:gravity="center"
+        android:textSize="@dimen/font_16"
+        android:textStyle="bold"
+        android:text="01" />
+
+    <TextView
+        android:id="@+id/tv_count"
+        android:background="@drawable/bolder_table"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1.4"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="@dimen/font_16"
+        android:text="241" />
+
+    <TextView
+        android:id="@+id/tv_last_visible"
+        android:background="@drawable/bolder_table"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1.7"
+        android:gravity="center"
+        android:textSize="@dimen/font_16"
+        android:textStyle="bold"
+        android:textColor="@color/colorPrimary"
+        android:text="30/08/2017" />
+    <TextView
+        android:id="@+id/tv_not_append"
+        android:background="@drawable/bolder_table"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1.4"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="@dimen/font_16"
+        android:text="241" />
+</LinearLayout>

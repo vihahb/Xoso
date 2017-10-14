@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="48dp">
+    <TextView
+        android:id="@+id/tv_day"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1.7"
+        android:background="@drawable/bolder_table"
+        android:gravity="center"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/font_14"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/day_of_week"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1.1"
+        android:background="@drawable/bolder_table"
+        android:gravity="center"
+        android:textColor="@color/black_75"
+        android:textSize="@dimen/font_14"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_count_append"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1.1"
+        android:background="@drawable/bolder_table"
+        android:gravity="center"
+        android:padding="2dp"
+        android:textColor="@color/black_75"
+        android:textSize="@dimen/font_14"
+        android:textStyle="bold" />
+    <TextView
+        android:id="@+id/tv_count_visible"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1.1"
+        android:background="@drawable/bolder_table"
+        android:gravity="center"
+        android:textColor="@color/black_75"
+        android:textSize="@dimen/font_14"
+        android:textStyle="bold" />
+</LinearLayout>

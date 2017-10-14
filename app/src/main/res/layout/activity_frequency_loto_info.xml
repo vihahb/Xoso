@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.xproject.xoso.xoso.view.activity.FrequencyLotoInfoActivity">
+
+    <include layout="@layout/toolbar" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:descendantFocusability="blocksDescendants">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="16dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/tv_title_speed"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/black_75"
+                    android:textSize="@dimen/size_16"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_48"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/bolder_table"
+                    android:orientation="horizontal"
+                    android:weightSum="5">
+
+                    <TextView
+                        android:id="@+id/tv_day"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.7"
+                        android:background="@drawable/bolder_table"
+                        android:gravity="center"
+                        android:text="Ngày"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/font_14"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/day_of_week"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.1"
+                        android:background="@drawable/bolder_table"
+                        android:gravity="center"
+                        android:text="Thứ"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/font_14"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_count_append"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.1"
+                        android:background="@drawable/bolder_table"
+                        android:gravity="center"
+                        android:padding="2dp"
+                        android:text="Số lần về"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/font_14"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_count_visible"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.1"
+                        android:background="@drawable/bolder_table"
+                        android:gravity="center"
+                        android:text="Số nhịp xuất hiện"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/font_14"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rcl_analytics_fre_loto"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bolder_table" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_48"
+                    android:background="@drawable/bolder_table"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="@dimen/size_8"
+                        android:text="Tổng số lần về: "
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/font_14"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_total_appends"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:paddingLeft="@dimen/size_8"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/font_14"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+</android.support.design.widget.CoordinatorLayout>
+
+

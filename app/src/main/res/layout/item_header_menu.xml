@@ -5,12 +5,13 @@
     android:background="@android:color/white">
     <TextView
         android:paddingTop="@dimen/size_8"
-        android:textSize="@dimen/font_20"
+        android:textSize="@dimen/font_15"
         android:paddingLeft="@dimen/size_16"
-        android:textColor="@color/black_75"
+        android:textColor="@color/black_85"
         android:id="@+id/tv_header_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textAllCaps="true"
         android:text="Header Type"/>
     <View
         android:layout_width="match_parent"

@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.xproject.xoso.xoso.view.activity.ActivityCycleSpecialInfo">
+    <include
+        android:id="@+id/include3"
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <android.support.v4.widget.NestedScrollView
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true"
+        android:layout_marginBottom="@dimen/size_16">
+
+        <LinearLayout
+            android:descendantFocusability="blocksDescendants"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_title_speed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:textColor="@color/black_75"
+                android:textSize="@dimen/size_16"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_16"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_title_begin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:textColor="@color/black_75"
+                    android:textSize="@dimen/size_14"
+                    android:textStyle="bold"
+                    />
+
+                <LinearLayout
+                    android:layout_marginTop="@dimen/size_8"
+                    android:orientation="horizontal" android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_48"
+                    android:weightSum="5">
+                    <TextView
+                        android:textColor="@color/colorPrimary"
+                        android:background="@drawable/bolder_table"
+                        android:gravity="center"
+                        android:layout_weight="0.8"
+                        android:id="@+id/tv_number"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:textSize="@dimen/font_14"
+                        android:textStyle="bold"
+                        android:text="Đầu"/>
+                    <TextView
+                        android:textColor="@color/colorPrimary"
+                        android:background="@drawable/bolder_table"
+                        android:gravity="center"
+                        android:layout_weight="2"
+                        android:id="@+id/tv_last_append"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:textSize="@dimen/font_14"
+                        android:textStyle="bold"
+                        android:text="Ngày xuất hiện gần nhất"/>
+                    <TextView
+                        android:textColor="@color/colorPrimary"
+                        android:background="@drawable/bolder_table"
+                        android:gravity="center"
+                        android:layout_weight="1.1"
+                        android:id="@+id/tv_not_append"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:textSize="@dimen/font_14"
+                        android:textStyle="bold"
+                        android:text="Chưa xuất hiện"/>
+                    <TextView
+                        android:textColor="@color/colorPrimary"
+                        android:background="@drawable/bolder_table"
+                        android:gravity="center"
+                        android:layout_weight="1.1"
+                        android:id="@+id/tv_max_gan"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:textSize="@dimen/font_14"
+                        android:textStyle="bold"
+                        android:text="Max gan"/>
+                </LinearLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rcl_begin"
+                    android:nestedScrollingEnabled="false"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:targetApi="lollipop" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_16"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_title_end"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:textColor="@color/black_75"
+                    android:textSize="@dimen/size_14"
+                    android:textStyle="bold" />
+                <LinearLayout
+                    android:layout_marginTop="@dimen/size_8"
+                    android:orientation="horizontal" android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_48"
+                    android:weightSum="5">
+                    <TextView
+                        android:textColor="@color/colorPrimary"
+                        android:background="@drawable/bolder_table"
+                        android:gravity="center"
+                        android:layout_weight="0.8"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:textSize="@dimen/font_14"
+                        android:textStyle="bold"
+                        android:text="Cuối"/>
+                    <TextView
+                        android:textColor="@color/colorPrimary"
+                        android:background="@drawable/bolder_table"
+                        android:gravity="center"
+                        android:layout_weight="2"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:textSize="@dimen/font_14"
+                        android:textStyle="bold"
+                        android:text="Ngày xuất hiện gần nhất"/>
+                    <TextView
+                        android:textColor="@color/colorPrimary"
+                        android:background="@drawable/bolder_table"
+                        android:gravity="center"
+                        android:layout_weight="1.1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:textSize="@dimen/font_14"
+                        android:textStyle="bold"
+                        android:text="Chưa xuất hiện"/>
+                    <TextView
+                        android:textColor="@color/colorPrimary"
+                        android:background="@drawable/bolder_table"
+                        android:gravity="center"
+                        android:layout_weight="1.1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:textSize="@dimen/font_14"
+                        android:textStyle="bold"
+                        android:text="Max gan"/>
+                </LinearLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rcl_end"
+                    android:nestedScrollingEnabled="false"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:targetApi="lollipop" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_16"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_title_sum"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:textColor="@color/black_75"
+                    android:textSize="@dimen/size_14"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_marginTop="@dimen/size_8"
+                    android:orientation="horizontal" android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_48"
+                    android:weightSum="5">
+                    <TextView
+                        android:textColor="@color/colorPrimary"
+                        android:background="@drawable/bolder_table"
+                        android:gravity="center"
+                        android:layout_weight="0.8"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:textSize="@dimen/font_14"
+                        android:textStyle="bold"
+                        android:text="Cuối"/>
+                    <TextView
+                        android:textColor="@color/colorPrimary"
+                        android:background="@drawable/bolder_table"
+                        android:gravity="center"
+                        android:layout_weight="2"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:textSize="@dimen/font_14"
+                        android:textStyle="bold"
+                        android:text="Ngày xuất hiện gần nhất"/>
+                    <TextView
+                        android:textColor="@color/colorPrimary"
+                        android:background="@drawable/bolder_table"
+                        android:gravity="center"
+                        android:layout_weight="1.1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:textSize="@dimen/font_14"
+                        android:textStyle="bold"
+                        android:text="Chưa xuất hiện"/>
+                    <TextView
+                        android:textColor="@color/colorPrimary"
+                        android:background="@drawable/bolder_table"
+                        android:gravity="center"
+                        android:layout_weight="1.1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:textSize="@dimen/font_14"
+                        android:textStyle="bold"
+                        android:text="Max gan"/>
+                </LinearLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rcl_sum"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    android:layout_marginBottom="@dimen/size_16"
+                    tools:targetApi="lollipop" />
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</android.support.design.widget.CoordinatorLayout>

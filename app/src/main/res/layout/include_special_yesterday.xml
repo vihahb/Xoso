@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bolder_table"
+    android:layout_marginTop="@dimen/size_16"
+    tools:context="com.xproject.xoso.xoso.view.activity.SpecialTomorowInfoActivity">
+
+    <TextView
+        android:paddingLeft="@dimen/size_16"
+        android:paddingRight="@dimen/size_16"
+        android:layout_marginTop="@dimen/size_8"
+        android:id="@+id/tv_title_loto_special_yester_day"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:textColor="@color/black_75"
+        android:textSize="@dimen/size_16"
+        android:textStyle="bold"
+        android:text="Xem kết quả đặc biệt đã về vào Thứ Tư sau khi ra 85 vào ngày trước đó"/>
+
+    <TextView
+        android:layout_marginTop="@dimen/size_8"
+        android:id="@+id/tv_date_loto_special_yester_day"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:textColor="@color/black_75"
+        android:textSize="@dimen/size_14"
+        android:textStyle="bold"
+        android:text="Ngày 11/10/2017, Giải đặc biệt 97257"/>
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/size_16"
+        android:background="@drawable/bolder_table"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:minHeight="@dimen/size_36"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <TextView
+                android:background="@drawable/border_background_v"
+                android:padding="@dimen/size_4"
+                android:id="@+id/tv_date_loto_special_visible_yester_day"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:textColor="@color/black_75"
+                android:textSize="@dimen/size_14"
+                android:textStyle="bold"
+                android:text="Ngày xuất hiện Loto DB 57"/>
+
+            <TextView
+                android:background="@drawable/border_background_x"
+                android:padding="@dimen/size_4"
+                android:id="@+id/tv_special_tomorow"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:textColor="@color/black_75"
+                android:textSize="@dimen/size_14"
+                android:textStyle="bold"
+                android:text="Loto ĐB ngày tiếp theo"/>
+        </LinearLayout>
+        <LinearLayout
+            android:minHeight="@dimen/size_36"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:weightSum="4">
+            <TextView
+                android:background="@drawable/border_background_v"
+                android:padding="@dimen/size_4"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textColor="@color/black_75"
+                android:textSize="@dimen/font_14"
+                android:textStyle="bold"
+                android:text="Ngày"/>
+
+            <TextView
+                android:background="@drawable/border_background_v"
+                android:padding="@dimen/size_4"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textColor="@color/black_75"
+                android:textSize="@dimen/font_14"
+                android:textStyle="bold"
+                android:text="Giải đặc biệt"/>
+
+            <TextView
+                android:background="@drawable/border_background_x"
+                android:padding="@dimen/size_4"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textColor="@color/black_75"
+                android:textSize="@dimen/font_14"
+                android:textStyle="bold"
+                android:text="Ngày"/>
+
+            <TextView
+                android:background="@drawable/border_background_x"
+                android:padding="@dimen/size_4"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textColor="@color/black_75"
+                android:textSize="@dimen/font_14"
+                android:textStyle="bold"
+                android:text="Giải đặc biệt"/>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rcl_loto_db_yester_day"
+                android:overScrollMode="never"
+                android:nestedScrollingEnabled="false"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

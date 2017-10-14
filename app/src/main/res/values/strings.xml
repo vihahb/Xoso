@@ -23,7 +23,7 @@
     <string name="title_activity_test">TestActivity</string>
     <string name="err_network">Không có kết nối dữ liệu</string>
     <string name="title_activity_navigation_drawer">NavigationDrawerActivity</string>
-    <string name="result_value">Kết quả xổ số</string>
+    <string name="result_value">Kết quả</string>
     <string name="not_yet_result">Chưa có kết quả</string>
     <string name="live_loto">Lô trực tiếp</string>
     <string name="result_central">Kết quả xổ số miền Trung</string>
@@ -39,4 +39,55 @@
     <string name="value_8">8</string>
     <string name="value_9">9</string>
     <string name="prize">Giải</string>
+
+    <string name="new_message_notification_title_template">New message: %1$s</string>
+
+    <!-- TODO: remove this placeholder text -->
+    <string name="new_message_notification_placeholder_text_template">You said %1$s and lorem ipsum
+        dolor sit amet, consectetur adipiscing elit. Etiam non enim magna. Morbi dictum, velit vel
+        semper venenatis, magna odio volutpat velit, at ullamcorper nulla lacus sed turpis.
+        Pellentesque vitae metus elit, nec tincidunt tellus. Integer sed nisl sem, ullamcorper
+        ornare lacus. Duis ac mauris sed massa congue volutpat. Donec sed erat sit amet turpis
+        viverra rhoncus sit amet nec magna. Donec lacinia ligula at libero volutpat volutpat nec nec
+        tortor.
+    </string>
+
+    <string name="action_share">Share</string>
+    <string name="action_reply">Reply</string>
+
+    <string name="message_notification_title_template">Message: %1$s</string>
+
+    <!-- TODO: remove this placeholder text -->
+    <string name="message_notification_placeholder_text_template">You said %1$s and lorem ipsum
+        dolor sit amet, consectetur adipiscing elit. Etiam non enim magna. Morbi dictum, velit vel
+        semper venenatis, magna odio volutpat velit, at ullamcorper nulla lacus sed turpis.
+        Pellentesque vitae metus elit, nec tincidunt tellus. Integer sed nisl sem, ullamcorper
+        ornare lacus. Duis ac mauris sed massa congue volutpat. Donec sed erat sit amet turpis
+        viverra rhoncus sit amet nec magna. Donec lacinia ligula at libero volutpat volutpat nec nec
+        tortor.
+    </string>
+    <string name="region">Tỉnh thành</string>
+    <string name="begin_date">Từ ngày</string>
+    <string name="end_date">Đến ngày</string>
+    <string name="note_number_tool">Điền các bộ số bạn muốn xem.</string>
+    <string name="number_set">Bộ số</string>
+    <string name="count_visible">Số lần xuất hiện</string>
+    <string name="last_visible">Xuất hiện lần cuối</string>
+    <string name="select_analytics">Chọn thống kê bạn muốn xem</string>
+    <string name="set_special">Chỉ xét những giải đặc biệt</string>
+    <string name="view_result">Xem kết quả</string>
+    <string name="title_activity_analytics_sum">Thống kê theo tổng</string>
+    <string name="note_sum">Điền tổng mà bạn muốn xem</string>
+    <string name="title_activity_analytics_frequency">Thống kê tần xuất bộ số</string>
+    <string name="date">Ngày</string>
+    <string name="title_activity_frequency_info">Chi tiết thống kê tần xuất</string>
+    <string name="day_ago">Số ngày trước</string>
+    <string name="title_activity_analytics_important_activity">Thống kê quan trọng</string>
+    <string name="tv_analytics_type_select">Chọn thống kê bạn muốn xem</string>
+    <string name="title_activity_important_info">Chi tiết TK quan trọng</string>
+    <string name="title_activity_analytics_loto_auto">Thống kê lô xiên tự động</string>
+    <string name="title_activity_analytics_synthetic">Thống kê tổng hợp</string>
+    <string name="analytics_type">Loại thống kê</string>
+    <string name="loading">Loading...</string>
+    <string name="query_date">Xem đến ngày</string>
 </resources>

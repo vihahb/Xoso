@@ -5,18 +5,5 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.xtelsolution.xoso.xoso.view.widget.LockableViewPager
-        android:id="@+id/vpMain"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
 
-    <com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
-        android:id="@+id/bottomTab"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        app:itemIconTint="@drawable/selector_bottom_navigation"
-        app:itemTextColor="@drawable/selector_bottom_navigation"
-        app:menu="@menu/activity_bottom_menu" />
 </LinearLayout>
