@@ -2,51 +2,52 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="48dp"
+    android:background="@drawable/bolder_table"
     android:orientation="horizontal"
-    android:weightSum="5"
-    android:background="@drawable/bolder_table">
+    android:weightSum="5">
 
     <TextView
         android:id="@+id/tv_number"
-        android:background="@drawable/bolder_table"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="0.5"
+        android:layout_weight="0.7"
+        android:background="@drawable/bolder_table"
         android:gravity="center"
+        android:text="01"
         android:textSize="@dimen/font_16"
-        android:textStyle="bold"
-        android:text="01" />
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tv_count"
-        android:background="@drawable/bolder_table"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1.4"
+        android:layout_weight="1.2"
+        android:background="@drawable/bolder_table"
         android:gravity="center"
-        android:textStyle="bold"
+        android:text="241"
         android:textSize="@dimen/font_16"
-        android:text="241" />
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tv_last_visible"
-        android:background="@drawable/bolder_table"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1.7"
+        android:background="@drawable/bolder_table"
         android:gravity="center"
-        android:textSize="@dimen/font_16"
-        android:textStyle="bold"
+        android:text="30/08/2017"
         android:textColor="@color/colorPrimary"
-        android:text="30/08/2017" />
+        android:textSize="@dimen/font_16"
+        android:textStyle="bold" />
+
     <TextView
         android:id="@+id/tv_not_append"
-        android:background="@drawable/bolder_table"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1.4"
+        android:background="@drawable/bolder_table"
         android:gravity="center"
-        android:textStyle="bold"
+        android:text="241"
         android:textSize="@dimen/font_16"
-        android:text="241" />
+        android:textStyle="bold" />
 </LinearLayout>

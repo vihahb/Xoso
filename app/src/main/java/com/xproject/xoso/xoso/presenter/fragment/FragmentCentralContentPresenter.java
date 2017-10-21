@@ -7,15 +7,15 @@ import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
 import com.xproject.xoso.sdk.callback.Icmd;
 import com.xproject.xoso.sdk.common.Constants;
+import com.xproject.xoso.sdk.utils.JsonHelper;
 import com.xproject.xoso.sdk.utils.ResponseHandle;
 import com.xproject.xoso.xoso.model.MainModel;
 import com.xproject.xoso.xoso.model.entity.Authent;
+import com.xproject.xoso.xoso.model.entity.Error;
 import com.xproject.xoso.xoso.model.respond.RESP_GetLottery;
 import com.xproject.xoso.xoso.model.respond.RESP_LiveLoto;
-import com.xproject.xoso.xoso.model.respond.RESP_Result;
-import com.xproject.xoso.sdk.utils.JsonHelper;
-import com.xproject.xoso.xoso.model.entity.Error;
 import com.xproject.xoso.xoso.model.respond.RESP_NewResult;
+import com.xproject.xoso.xoso.model.respond.RESP_Result;
 import com.xproject.xoso.xoso.view.fragment.inf.IFragmentCentralContent;
 
 import org.json.JSONException;
@@ -30,124 +30,23 @@ import java.util.Arrays;
 
 public class FragmentCentralContentPresenter {
 
-    private Socket socket;
-
-    private String cat_area_1, cat_area_2, cat_area_3;
     private static final String SERVER_ADDRESS = "http://124.158.4.190:3000/";
-    {
-        try {
-            IO.Options opts = new IO.Options();
-            opts.forceNew = true;
-            opts.reconnection = true;
-            socket = IO.socket("http://124.158.4.190:3000/mientrung", opts);
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     private static final String TAG = "FragmentCentralContentP";
-
+    private Socket socket;
+    private String cat_area_1, cat_area_2, cat_area_3;
     private IFragmentCentralContent view;
-    private Icmd icmd = new Icmd() {
-        @Override
-        public void excute(Object... params) {
-            switch ((int) params[0]) {
-                case 1:
-                    String date_time = (String) params[1];
-                    MainModel.getInstance().getLotteryCentral(date_time, new ResponseHandle<RESP_GetLottery>(RESP_GetLottery.class) {
-                        @Override
-                        public void onSuccess(RESP_GetLottery obj) {
-                            view.setVisibleTable(true);
-                            Log.e(TAG, "onSuccess: obj " + obj.toString());
-                            switch (obj.getData().size()) {
-                                case 1:
-                                    view.setTable2Hidden();
-                                    view.setTable3Hidden();
-                                    view.setTableRegion1(obj.getData().get(0));
-                                    break;
-                                case 2:
-                                    view.setTable3Hidden();
-                                    view.setTableRegion1(obj.getData().get(0));
-                                    view.setTableRegion2(obj.getData().get(1));
-                                    break;
-                                case 3:
-                                    view.setTableRegion1(obj.getData().get(0));
-                                    view.setTableRegion2(obj.getData().get(1));
-                                    view.setTableRegion3(obj.getData().get(2));
-                                    break;
-                            }
-                        }
-
-                        @Override
-                        public void onError(Error error) {
-                            view.getResultLotteryError(error.getMessage());
-                            view.setVisibleTable(false);
-                        }
-                    });
-                    break;
-
-                case 2:
-                    if (view.getActivity()!=null){
-                        view.getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                socket.connect();
-                                socket.on(Socket.EVENT_CONNECT, onConnect);
-                                socket.on(Socket.EVENT_CONNECT_ERROR, onConnectError);
-                                socket.on(Socket.EVENT_CONNECT_TIMEOUT, onConnectError);
-                                socket.on(Socket.EVENT_DISCONNECT, onDisconnect);
-                            }
-                        });
-                    }
-                    break;
-            }
-        }
-    };
-
-    public FragmentCentralContentPresenter(final IFragmentCentralContent view) {
-        this.view = view;
-
-    }
-
-    public void getResultLottery(String date) {
-        icmd.excute(1, date);
-    }
-
-
-    public void connectSocket() {
-        icmd.excute(2);
-//        if (NetworkUtils.getInstance().isOnline(view.getActivity().getApplicationContext())){
-//        } else {
-//            view.getResultLotteryError(view.getActivity().getString(R.string.err_network));
-//        }
-    }
-
-    public void checkSocket() {
-        if (socket.connected()) {
-            socket.disconnect();
-        }
-    }
-
-    public void disconnectSocket() {
-        if (socket!=null) {
-           checkSocket();
-        }
-    }
-
     private Emitter.Listener onConnectError = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
             Log.e(TAG, "Socket connect error");
         }
     };
-
     private Emitter.Listener onDisconnect = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
             Log.d(TAG, "onDisconnect");
         }
     };
-
     private Emitter.Listener onConnect = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
@@ -271,6 +170,101 @@ public class FragmentCentralContentPresenter {
             }
         }
     };
+    private Icmd icmd = new Icmd() {
+        @Override
+        public void excute(Object... params) {
+            switch ((int) params[0]) {
+                case 1:
+                    String date_time = (String) params[1];
+                    MainModel.getInstance().getLotteryCentral(date_time, new ResponseHandle<RESP_GetLottery>(RESP_GetLottery.class) {
+                        @Override
+                        public void onSuccess(RESP_GetLottery obj) {
+                            view.setVisibleTable(true);
+                            Log.e(TAG, "onSuccess: obj " + obj.toString());
+                            switch (obj.getData().size()) {
+                                case 1:
+                                    view.setTable2Hidden();
+                                    view.setTable3Hidden();
+                                    view.setTableRegion1(obj.getData().get(0));
+                                    break;
+                                case 2:
+                                    view.setTable3Hidden();
+                                    view.setTableRegion1(obj.getData().get(0));
+                                    view.setTableRegion2(obj.getData().get(1));
+                                    break;
+                                case 3:
+                                    view.setTableRegion1(obj.getData().get(0));
+                                    view.setTableRegion2(obj.getData().get(1));
+                                    view.setTableRegion3(obj.getData().get(2));
+                                    break;
+                            }
+                        }
+
+                        @Override
+                        public void onError(Error error) {
+                            view.getResultLotteryError(error.getMessage());
+                            view.setVisibleTable(false);
+                        }
+                    });
+                    break;
+
+                case 2:
+                    if (view.getActivity() != null) {
+                        view.getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                socket.connect();
+                                socket.on(Socket.EVENT_CONNECT, onConnect);
+                                socket.on(Socket.EVENT_CONNECT_ERROR, onConnectError);
+                                socket.on(Socket.EVENT_CONNECT_TIMEOUT, onConnectError);
+                                socket.on(Socket.EVENT_DISCONNECT, onDisconnect);
+                            }
+                        });
+                    }
+                    break;
+            }
+        }
+    };
+
+    {
+        try {
+            IO.Options opts = new IO.Options();
+            opts.forceNew = true;
+            opts.reconnection = true;
+            socket = IO.socket("http://124.158.4.190:3000/mientrung", opts);
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public FragmentCentralContentPresenter(final IFragmentCentralContent view) {
+        this.view = view;
+
+    }
+
+    public void getResultLottery(String date) {
+        icmd.excute(1, date);
+    }
+
+    public void connectSocket() {
+        icmd.excute(2);
+//        if (NetworkUtils.getInstance().isOnline(view.getActivity().getApplicationContext())){
+//        } else {
+//            view.getResultLotteryError(view.getActivity().getString(R.string.err_network));
+//        }
+    }
+
+    public void checkSocket() {
+        if (socket.connected()) {
+            socket.disconnect();
+        }
+    }
+
+    public void disconnectSocket() {
+        if (socket != null) {
+            checkSocket();
+        }
+    }
 
     private void initAuthentSocket() {
         Authent data = Constants.getAuthent();
@@ -287,7 +281,7 @@ public class FragmentCentralContentPresenter {
         socket.on("authenticated", new Emitter.Listener() {
             @Override
             public void call(Object... args) {
-                if (view.getActivity() != null){
+                if (view.getActivity() != null) {
                     view.getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {

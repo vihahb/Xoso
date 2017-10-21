@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="@dimen/size_16"
+        android:layout_marginRight="@dimen/size_16">
+        <!-- Favorite -->
+        <LinearLayout
+            android:layout_marginTop="@dimen/size_16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/size_30"
+                android:layout_height="@dimen/size_30"
+                android:contentDescription="@null"
+                android:src="@mipmap/ic_setting_favorite" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginStart="16dp"
+                android:orientation="vertical"
+                android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/size_4"
+                    android:text="@string/region"
+                    android:textSize="@dimen/font_12" />
+
+                <Spinner
+                    android:id="@+id/sp_province"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_36"
+                    android:background="@android:color/transparent" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/size_5"
+                    android:layout_marginRight="@dimen/size_5"
+                    android:background="@color/black_20" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Favorite -->
+        <LinearLayout
+            android:layout_marginTop="@dimen/size_16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/size_30"
+                android:layout_height="@dimen/size_30"
+                android:contentDescription="@null"
+                android:src="@mipmap/ic_setting_favorite" />
+
+            <TextView
+                android:layout_marginLeft="@dimen/size_16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Miền yêu thích"
+                android:textColor="@color/black_75"
+                android:textStyle="bold"
+                android:textSize="@dimen/font_16"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_marginTop="@dimen/size_16"
+                android:layout_marginLeft="@dimen/size_36"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_marginLeft="@dimen/size_16"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Miền Bắc"
+                    android:textColor="@color/black_75"
+                    android:textSize="@dimen/font_16"/>
+
+                <CheckBox
+                    android:id="@+id/checkNorth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black_75"
+                    android:textSize="16sp"
+                    android:theme="@style/checkBoxStyle" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="@dimen/size_16"
+                android:layout_marginLeft="@dimen/size_36"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_marginLeft="@dimen/size_16"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Miền Trung"
+                    android:textColor="@color/black_75"
+                    android:textSize="@dimen/font_16"/>
+
+                <CheckBox
+                    android:id="@+id/checkCentral"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black_75"
+                    android:textSize="16sp"
+                    android:theme="@style/checkBoxStyle" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="@dimen/size_16"
+                android:layout_marginLeft="@dimen/size_36"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_marginLeft="@dimen/size_16"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Miền Nam"
+                    android:textColor="@color/black_75"
+                    android:textSize="@dimen/font_16"/>
+
+                <CheckBox
+                    android:id="@+id/checkSouth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black_75"
+                    android:textSize="16sp"
+                    android:theme="@style/checkBoxStyle" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Notify -->
+        <LinearLayout
+            android:layout_marginTop="@dimen/size_16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/size_30"
+                android:layout_height="@dimen/size_30"
+                android:contentDescription="@null"
+                android:src="@mipmap/ic_setting_notify" />
+
+            <TextView
+                android:layout_marginLeft="@dimen/size_16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Thông báo"
+                android:textColor="@color/black_75"
+                android:textStyle="bold"
+                android:textSize="@dimen/font_16"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_marginTop="@dimen/size_16"
+                android:layout_marginLeft="@dimen/size_36"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_marginLeft="@dimen/size_16"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Miền Bắc"
+                    android:textColor="@color/black_75"
+                    android:textSize="@dimen/font_16"/>
+
+                <CheckBox
+                    android:id="@+id/checkNotifyNorth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black_75"
+                    android:textSize="16sp"
+                    android:theme="@style/checkBoxStyle" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="@dimen/size_16"
+                android:layout_marginLeft="@dimen/size_36"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_marginLeft="@dimen/size_16"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Miền Trung"
+                    android:textColor="@color/black_75"
+                    android:textSize="@dimen/font_16"/>
+
+                <CheckBox
+                    android:id="@+id/checkNotifyCentral"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black_75"
+                    android:textSize="16sp"
+                    android:theme="@style/checkBoxStyle" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="@dimen/size_16"
+                android:layout_marginLeft="@dimen/size_36"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_marginLeft="@dimen/size_16"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Miền Nam"
+                    android:textColor="@color/black_75"
+                    android:textSize="@dimen/font_16"/>
+
+                <CheckBox
+                    android:id="@+id/checkNotifySouth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black_75"
+                    android:textSize="16sp"
+                    android:theme="@style/checkBoxStyle" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Vibrate -->
+        <LinearLayout
+            android:layout_marginTop="@dimen/size_16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/size_30"
+                android:layout_height="@dimen/size_30"
+                android:contentDescription="@null"
+                android:src="@mipmap/ic_setting_notify" />
+
+            <TextView
+                android:layout_marginLeft="@dimen/size_16"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Rung khi có thông báo"
+                android:textColor="@color/black_75"
+                android:textStyle="bold"
+                android:textSize="@dimen/font_16"/>
+
+            <CheckBox
+                android:id="@+id/checkVibrate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black_75"
+                android:textSize="16sp"
+                android:theme="@style/checkBoxStyle" />
+        </LinearLayout>
+
+        <!-- Play Music -->
+        <LinearLayout
+            android:layout_marginTop="@dimen/size_16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/size_30"
+                android:layout_height="@dimen/size_30"
+                android:contentDescription="@null"
+                android:src="@mipmap/ic_play_music" />
+
+            <TextView
+                android:layout_marginLeft="@dimen/size_16"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Nghe nhạc khi quay số"
+                android:textColor="@color/black_75"
+                android:textStyle="bold"
+                android:textSize="@dimen/font_16"/>
+
+            <CheckBox
+                android:id="@+id/checkPlay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black_75"
+                android:textSize="16sp"
+                android:theme="@style/checkBoxStyle" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_result"
+            style="@style/Button_app"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_marginEnd="@dimen/size_64"
+            android:layout_marginLeft="@dimen/size_64"
+            android:layout_marginRight="@dimen/size_64"
+            android:layout_marginStart="@dimen/size_64"
+            android:layout_marginTop="16dp"
+            android:text="Lưu" />
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>

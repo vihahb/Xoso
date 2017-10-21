@@ -9,11 +9,9 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 
-import com.xproject.xoso.xoso.view.activity.MainActivity;
 import com.xtelsolution.xoso.R;
 
 /**
@@ -51,7 +49,7 @@ public class MessageNotification {
         // This image is used as the notification's large icon (thumbnail).
         // TODO: Remove this if your notification has no relevant thumbnail.
         Bitmap picture = null;
-        switch (id_notify){
+        switch (id_notify) {
             case 1:
                 picture = BitmapFactory.decodeResource(res, R.mipmap.ic_nav_north);
                 break;
@@ -130,9 +128,9 @@ public class MessageNotification {
 
                 // Automatically dismiss the notification when it is touched.
                 .setAutoCancel(true);
-                if (picture != null) {
-                    builder.setLargeIcon(picture);
-                }
+        if (picture != null) {
+            builder.setLargeIcon(picture);
+        }
         notify(context, builder.build(), id_notify);
     }
 

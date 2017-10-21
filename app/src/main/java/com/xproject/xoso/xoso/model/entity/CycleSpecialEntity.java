@@ -9,7 +9,7 @@ import java.util.List;
  * Created by vivhp on 10/10/2017.
  */
 
-public class CycleSpecialEntity implements Serializable{
+public class CycleSpecialEntity implements Serializable {
 
     @Expose
     private List<SpecialCycleEntity> begin_with;

@@ -1,8 +1,8 @@
 package com.xproject.xoso.xoso.presenter.activity;
 
 import com.xproject.xoso.sdk.utils.DatabaseHelper;
-import com.xproject.xoso.xoso.view.activity.inf.IDream;
 import com.xproject.xoso.xoso.model.entity.Dream;
+import com.xproject.xoso.xoso.view.activity.inf.IDream;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +27,7 @@ public class DreamPresenter {
 
     public void findProductByName(String name) {
         List<Dream> dreamList = new ArrayList<>();
-        dreamList = DatabaseHelper.getInstance().findObjectByName(Dream.class,"dreamed",name);
+        dreamList = DatabaseHelper.getInstance().findObjectByName(Dream.class, "dreamed", name);
         view.getDreamFind(dreamList);
     }
 

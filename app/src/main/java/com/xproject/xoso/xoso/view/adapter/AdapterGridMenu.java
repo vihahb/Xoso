@@ -9,8 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.xproject.xoso.xoso.model.entity.GridMenu;
-import com.xtelsolution.xoso.R;
 import com.xproject.xoso.xoso.view.adapter.inf.ViewGrid;
+import com.xtelsolution.xoso.R;
 
 import java.util.List;
 
@@ -38,7 +38,7 @@ public class AdapterGridMenu extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof ViewHolder){
+        if (holder instanceof ViewHolder) {
             ViewHolder viewHolder = (ViewHolder) holder;
             GridMenu menu = menuList.get(position);
             viewHolder.setData(menu);
@@ -51,7 +51,15 @@ public class AdapterGridMenu extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return menuList.size();
     }
 
-    private class ViewHolder extends RecyclerView.ViewHolder{
+    public void refreshData(List<GridMenu> menuList) {
+        if (this.menuList.size() > 0) {
+            this.menuList.clear();
+        }
+        this.menuList.addAll(menuList);
+        notifyDataSetChanged();
+    }
+
+    private class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView tv_name;
         private ImageView img_icon;
@@ -62,17 +70,17 @@ public class AdapterGridMenu extends RecyclerView.Adapter<RecyclerView.ViewHolde
             img_icon = (ImageView) itemView.findViewById(R.id.item_image);
         }
 
-        public void setData(GridMenu data){
-            if (data.getName() != null){
+        public void setData(GridMenu data) {
+            if (data.getName() != null) {
                 tv_name.setText(data.getName());
             }
 
-            if (data.getResource() != -1){
+            if (data.getResource() != -1) {
                 img_icon.setImageResource(data.getResource());
             }
         }
 
-        public void setOnCLick(final int position){
+        public void setOnCLick(final int position) {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -80,13 +88,5 @@ public class AdapterGridMenu extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 }
             });
         }
-    }
-
-    public void refreshData(List<GridMenu> menuList){
-        if (this.menuList.size()>0) {
-            this.menuList.clear();
-        }
-        this.menuList.addAll(menuList);
-        notifyDataSetChanged();
     }
 }

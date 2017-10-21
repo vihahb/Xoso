@@ -1,17 +1,14 @@
 package com.xproject.xoso.xoso.view.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.xproject.xoso.sdk.common.Constants;
 import com.xproject.xoso.xoso.model.entity.AnalyticsSetNumber;
 import com.xproject.xoso.xoso.model.entity.SpeedTemp;
-import com.xproject.xoso.xoso.view.adapter.AdapterAnalyticsSpeedActivity;
 import com.xproject.xoso.xoso.view.adapter.AdapterSynthetic;
 import com.xtelsolution.xoso.R;
 

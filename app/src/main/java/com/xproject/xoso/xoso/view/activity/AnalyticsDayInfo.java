@@ -17,9 +17,9 @@ import java.util.List;
 
 public class AnalyticsDayInfo extends BasicActivity {
 
+    List<AnalyticsSetNumber> list, list_10;
     private RecyclerView rcl_27_value, rcl_10_value;
     private TextView tv_title, tv_title_27;
-    List<AnalyticsSetNumber> list, list_10;
     private AdapterDayAnalytics adapter_27, adapter_10;
 
     @Override
@@ -33,15 +33,15 @@ public class AnalyticsDayInfo extends BasicActivity {
 
     private void getData() {
         SpeedTemp temp = (SpeedTemp) getIntent().getSerializableExtra(Constants.TEMP);
-        if (temp!=null){
+        if (temp != null) {
             tv_title.setText(temp.getName_cat() + " cho tất cả các " + temp.getDay_name() + " trong " + temp.getWeek() + " tuần trước");
         }
         List<AnalyticsSetNumber> extraList = (List<AnalyticsSetNumber>) getIntent().getSerializableExtra(Constants.LIST_SPEED);
-        if (extraList.size() > 0){
+        if (extraList.size() > 0) {
             List<AnalyticsSetNumber> numberList27 = new ArrayList<>();
             for (int i = 0; i < extraList.size(); i++) {
                 numberList27.add(extraList.get(i));
-                if (numberList27.size() == 27){
+                if (numberList27.size() == 27) {
                     break;
                 }
             }
@@ -49,9 +49,9 @@ public class AnalyticsDayInfo extends BasicActivity {
 
 
             List<AnalyticsSetNumber> numberList10 = new ArrayList<>();
-            for (int i = extraList.size()-1; i >= 0; i--) {
+            for (int i = extraList.size() - 1; i >= 0; i--) {
                 numberList10.add(extraList.get(i));
-                if (numberList10.size() == 10){
+                if (numberList10.size() == 10) {
                     break;
                 }
             }
@@ -81,7 +81,7 @@ public class AnalyticsDayInfo extends BasicActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home){
+        if (item.getItemId() == android.R.id.home) {
             finish();
         }
         return super.onOptionsItemSelected(item);

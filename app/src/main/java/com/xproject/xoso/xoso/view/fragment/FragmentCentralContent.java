@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.widget.ImageView;
-import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
@@ -42,26 +41,20 @@ import java.util.Random;
 public class FragmentCentralContent extends BasicFragment implements IFragmentCentralContent {
 
     private static final String TAG = "FragmentCentralContent";
-
-    private Context context;
-
+    private static final String KEY_DATE = "date";
     int count = 0;
-
+    long millis;
+    private Context context;
     private FragmentCentralContentPresenter presenter;
-
     private String getDateTime;
-
     private TextView tvContent;
-
     private NestedScrollView scroll_central;
-
     private TableLayout table_1, table_2, table_3;
-    private TextView tv_title, tv_not_yet;
-    private ImageView img_mute;
     /**
      * Value table result lottery
      */
-
+    private TextView tv_title, tv_not_yet;
+    private ImageView img_mute;
     /**
      * Table 1
      */
@@ -72,7 +65,6 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
             tv2_1, tv1_1, tvDb,
             tvLotoTitle1, tvLoto0_1, tvLoto1_1, tvLoto2_1, tvLoto3_1,
             tvLoto4_1, tvLoto5_1, tvLoto6_1, tvLoto7_1, tvLoto8_1, tvLoto9_1;
-
     /**
      * Table 2
      */
@@ -83,7 +75,6 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
             tv2_2, tv1_2, tvDb_2,
             tvLotoTitle2, tvLoto0_2, tvLoto1_2, tvLoto2_2, tvLoto3_2,
             tvLoto4_2, tvLoto5_2, tvLoto6_2, tvLoto7_2, tvLoto8_2, tvLoto9_2;
-
     /**
      * Table 3
      */
@@ -94,32 +85,24 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
             tv2_3, tv1_3, tvDb_3,
             tvLotoTitle3, tvLoto0_3, tvLoto1_3, tvLoto2_3, tvLoto3_3,
             tvLoto4_3, tvLoto5_3, tvLoto6_3, tvLoto7_3, tvLoto8_3, tvLoto9_3;
-
-    long millis;
-
     /**
      * Roller Table 1
      */
     private Roller rl81, rl71, rl611, rl612, rl613, rl51,
             rl41, rl412, rl413, rl414, rl415, rl416, rl417,
             rl311, rl312, rl_second_1, rl_first_1, rl_special_1;
-
     /**
      * Roller Table 2
      */
     private Roller rl82, rl72, rl621, rl622, rl623, rl52,
             rl42, rl422, rl423, rl424, rl425, rl426, rl427,
             rl321, rl322, rl_second_2, rl_first_2, rl_special_2;
-
     /**
      * Roller Table 3
      */
     private Roller rl83, rl73, rl631, rl632, rl633, rl53,
             rl43, rl432, rl433, rl434, rl435, rl436, rl437,
             rl331, rl332, rl_second_3, rl_first_3, rl_special_3;
-
-    private static final String KEY_DATE = "date";
-
     private MediaPlayer player;
 
     private boolean toDay, mute = false;
@@ -1675,10 +1658,10 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
         tvResgion_2.setText(area);
         tvLotoTitle2.setText(area);
 
-        if (special.size() > 0){
+        if (special.size() > 0) {
             tvDb_2.setText(special.get(0));
             LotoSpecial_2 = special.get(0).substring(4);
-            }
+        }
 
         if (eight.size() > 0)
             tv8_2.setText(eight.get(0));
@@ -2135,7 +2118,6 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
 
     public void setBegin1(BeginResult beginResult) {
         if (beginResult != null) {
-
             if (beginResult.getB0().size() > 0) {
                 String begin_0 = "";
                 for (int i = 0; i < beginResult.getB0().size(); i++) {
@@ -2655,10 +2637,9 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
 
 
     private class Roller implements Runnable {
+        TextView textRoll;
         private int numTimes;
         private long delayMillis;
-        TextView textRoll;
-
         private int max, min;
 
         private volatile boolean shutdown;

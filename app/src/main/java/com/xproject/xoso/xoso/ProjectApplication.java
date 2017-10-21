@@ -5,7 +5,6 @@ import android.content.Context;
 
 import com.crashlytics.android.Crashlytics;
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.messaging.FirebaseMessaging;
 import com.xproject.xoso.sdk.utils.TypefaceUtil;
 
 import io.fabric.sdk.android.Fabric;

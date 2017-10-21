@@ -8,7 +8,7 @@ import java.io.Serializable;
  * Created by vivhp on 10/12/2017.
  */
 
-public class SameDayEntity implements Serializable{
+public class SameDayEntity implements Serializable {
     @Expose
     private String day;
     @Expose

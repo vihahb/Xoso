@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bolder_table"
     android:layout_marginTop="@dimen/size_16"
+    android:background="@drawable/bolder_table"
+    android:orientation="vertical"
     tools:context="com.xproject.xoso.xoso.view.activity.SpecialTomorowInfoActivity">
 
     <TextView
-        android:paddingLeft="@dimen/size_16"
-        android:paddingRight="@dimen/size_16"
-        android:layout_marginTop="@dimen/size_8"
         android:id="@+id/tv_title_loto_special"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_8"
         android:gravity="center_horizontal"
+        android:paddingLeft="@dimen/size_16"
+        android:paddingRight="@dimen/size_16"
+        android:text="Các kết quả mà ngày trước đó cũng có loto đặc biệt 85"
         android:textColor="@color/black_75"
         android:textSize="@dimen/size_16"
-        android:textStyle="bold"
-        android:text="Các kết quả mà ngày trước đó cũng có loto đặc biệt 85"/>
+        android:textStyle="bold" />
 
     <TextView
-        android:layout_marginTop="@dimen/size_8"
         android:id="@+id/tv_date_loto_special"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_8"
         android:gravity="center_horizontal"
+        android:text="Ngày 11/10/2017, Giải đặc biệt 97257"
         android:textColor="@color/black_75"
         android:textSize="@dimen/size_14"
-        android:textStyle="bold"
-        android:text="Ngày 11/10/2017, Giải đặc biệt 97257"/>
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -136,12 +136,12 @@
             android:orientation="horizontal">
 
             <android.support.v7.widget.RecyclerView
-                android:overScrollMode="never"
                 android:id="@+id/rcl_loto_db"
-                android:nestedScrollingEnabled="false"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:nestedScrollingEnabled="false"
+                android:overScrollMode="never" />
         </LinearLayout>
     </LinearLayout>
 

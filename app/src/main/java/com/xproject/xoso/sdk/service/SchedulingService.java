@@ -3,12 +3,9 @@ package com.xproject.xoso.sdk.service;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
-import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 
-import com.xproject.xoso.sdk.common.Constants;
 import com.xproject.xoso.sdk.utils.AlarmUtils;
-import com.xproject.xoso.sdk.utils.TimeUtils;
 
 /**
  * Created by vivhp on 9/12/2017.
@@ -29,7 +26,7 @@ public class SchedulingService extends Service {
     }
 
     private void checkType(int type) {
-        switch (type){
+        switch (type) {
             case 1:
                 break;
         }

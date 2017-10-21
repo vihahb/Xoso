@@ -1,26 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="wrap_content"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="6dp"
+    android:background="@color/colorPrimary"
     android:gravity="center"
-    android:background="@color/colorPrimary">
+    android:orientation="vertical"
+    android:padding="6dp">
+
     <TextView
         android:id="@+id/tv_week_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
+        android:text="Chủ nhật"
         android:textColor="@android:color/white"
-        android:text="Chủ nhật"/>
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/tv_week_day"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="4dp"
-        android:textSize="16sp"
-        android:textColor="@android:color/white"
         android:layout_marginTop="4dp"
         android:background="@drawable/selected_day"
-        android:text="12"/>
+        android:padding="4dp"
+        android:text="12"
+        android:textColor="@android:color/white"
+        android:textSize="16sp" />
 </LinearLayout>

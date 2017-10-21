@@ -1,15 +1,10 @@
 package com.xproject.xoso.xoso.view.activity;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 
 import com.xproject.xoso.sdk.common.Constants;
@@ -28,6 +23,7 @@ public class ImportantInfoActivity extends BasicActivity {
     private AdapterImportant adapterImportant;
     private List<ImportantEntity> list;
     private SpeedTemp temp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +36,7 @@ public class ImportantInfoActivity extends BasicActivity {
     private void getData() {
         temp = (SpeedTemp) getIntent().getSerializableExtra(Constants.TEMP);
         list = (List<ImportantEntity>) getIntent().getSerializableExtra(Constants.IMPORTANT);
-        switch (temp.getType()){
+        switch (temp.getType()) {
             case "0":
                 adapterImportant.refresh(list, 0);
                 tv_date_not_appen.setText("Số ngày chưa về");

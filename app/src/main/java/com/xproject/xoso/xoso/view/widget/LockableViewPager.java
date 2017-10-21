@@ -8,7 +8,7 @@ import android.view.MotionEvent;
 public class LockableViewPager extends ViewPager {
 
     private boolean swipeable;
-    
+
     public LockableViewPager(Context context) {
         super(context);
     }

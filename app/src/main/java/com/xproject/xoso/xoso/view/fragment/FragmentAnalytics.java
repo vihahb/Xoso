@@ -23,9 +23,9 @@ public class FragmentAnalytics extends BasicFragment {
     private TabLayout tabAnalytics;
 
     public static FragmentAnalytics newInstance() {
-        
+
         Bundle args = new Bundle();
-        
+
         FragmentAnalytics fragment = new FragmentAnalytics();
         fragment.setArguments(args);
         return fragment;
@@ -85,7 +85,7 @@ public class FragmentAnalytics extends BasicFragment {
         super.onDestroy();
         cleanWidget();
     }
-    
+
     private class PagerAdapter extends FragmentStatePagerAdapter {
 
         public PagerAdapter(FragmentManager fm) {

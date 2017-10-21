@@ -203,28 +203,28 @@
         </LinearLayout>
 
         <android.support.v7.widget.RecyclerView
-            android:overScrollMode="never"
             android:id="@+id/rcl_touch_begin"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
-            android:nestedScrollingEnabled="false" />
+            android:nestedScrollingEnabled="false"
+            android:overScrollMode="never" />
 
         <android.support.v7.widget.RecyclerView
-            android:overScrollMode="never"
             android:id="@+id/rcl_touch_end"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
-            android:nestedScrollingEnabled="false" />
+            android:nestedScrollingEnabled="false"
+            android:overScrollMode="never" />
 
         <android.support.v7.widget.RecyclerView
-            android:overScrollMode="never"
             android:id="@+id/rcl_touch_sum"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
-            android:nestedScrollingEnabled="false" />
+            android:nestedScrollingEnabled="false"
+            android:overScrollMode="never" />
     </LinearLayout>
 
 </LinearLayout>

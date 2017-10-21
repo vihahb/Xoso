@@ -10,22 +10,16 @@ import android.widget.TextView;
 
 import com.xproject.xoso.sdk.common.Constants;
 import com.xproject.xoso.sdk.utils.JsonHelper;
-import com.xproject.xoso.xoso.model.entity.CycleSpecialEntity;
-import com.xproject.xoso.xoso.model.entity.SpecialCycleEntity;
 import com.xproject.xoso.xoso.model.entity.SpeedTemp;
 import com.xproject.xoso.xoso.model.respond.RESP_CycleSpecial;
 import com.xproject.xoso.xoso.view.adapter.AdapterCycleSpecial;
 import com.xtelsolution.xoso.R;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class ActivityCycleSpecialInfo extends BasicActivity {
 
+    RESP_CycleSpecial entity;
     private TextView tv_title_speed;
     private AdapterCycleSpecial adapter_begin, adapter_end, adapter_sum;
-
-    RESP_CycleSpecial entity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

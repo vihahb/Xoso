@@ -9,7 +9,7 @@ import java.util.List;
  * Created by vivhp on 9/11/2017.
  */
 
-public class RESP_GetLottery extends RESP_Basic{
+public class RESP_GetLottery extends RESP_Basic {
 
     @Expose
     private List<ResultLottery> data;

@@ -8,7 +8,7 @@ import java.io.Serializable;
  * Created by vivhp on 10/6/2017.
  */
 
-public class ImportantEntity implements Serializable{
+public class ImportantEntity implements Serializable {
 
     @Expose
     private int number;

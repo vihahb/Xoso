@@ -1,15 +1,17 @@
 package com.xproject.xoso.xoso.view.adapter;
 
 import android.content.Context;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.xtelsolution.xoso.R;
 import com.xproject.xoso.xoso.model.entity.MyCalendar;
-import com.xproject.xoso.xoso.view.adapter.inf.ListCalendarView;
+import com.xproject.xoso.xoso.view.widget.RecyclerTabLayout;
+import com.xtelsolution.xoso.R;
 
 import java.util.List;
 
@@ -17,36 +19,38 @@ import java.util.List;
  * Created by vivhp on 9/1/2017.
  */
 
-public class AdapterCalendar extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class AdapterCalendar extends RecyclerTabLayout.Adapter<AdapterCalendar.CalendarHolder> {
 
+    int selectedPosition = -1;
     private Context context;
-    private ListCalendarView calendarView;
     private List<MyCalendar> calendarList;
+    private ViewPager viewPager;
 
-    public AdapterCalendar(Context context, ListCalendarView calendarView, List<MyCalendar> calendarList) {
+    public AdapterCalendar(ViewPager viewPager, Context context, List<MyCalendar> calendarList) {
+        super(viewPager);
         this.context = context;
-        this.calendarView = calendarView;
         this.calendarList = calendarList;
+        this.viewPager = viewPager;
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public CalendarHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_calendar, parent, false);
         return new CalendarHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        if (holder instanceof CalendarHolder){
+    public void onBindViewHolder(CalendarHolder holder, final int position) {
+        if (holder instanceof CalendarHolder) {
             final CalendarHolder calendarHolder = (CalendarHolder) holder;
             final MyCalendar calendar = calendarList.get(position);
             calendarHolder.setData(calendar);
             calendarHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    viewPager.setCurrentItem(position);
                     calendarHolder.itemView.setSelected(true);
                     String time_value = calendar.getYearValue() + "-" + calendar.getMonthValue() + "-" + calendar.getDateValue();
-                    calendarView.onSelected(time_value, position);
                 }
             });
         }
@@ -57,34 +61,36 @@ public class AdapterCalendar extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return calendarList.size();
     }
 
-    private class CalendarHolder extends RecyclerView.ViewHolder{
+    public void refreshList(List<MyCalendar> calendarList) {
+        this.calendarList.addAll(calendarList);
+        notifyDataSetChanged();
+    }
+
+    public class CalendarHolder extends RecyclerView.ViewHolder {
 
         private TextView tv_date_label, tv_date_value, tv_month_lable;
-        private View selector;
+        private LinearLayout ln_view;
 
         public CalendarHolder(View itemView) {
             super(itemView);
             tv_date_label = (TextView) itemView.findViewById(R.id.tv_date_label);
             tv_date_value = (TextView) itemView.findViewById(R.id.tv_date_value);
             tv_month_lable = (TextView) itemView.findViewById(R.id.tv_month_value);
-            selector = itemView.findViewById(R.id.selector);
+            ln_view = (LinearLayout) itemView.findViewById(R.id.ln_view);
         }
 
-        public void setData(MyCalendar data){
+        public void setData(MyCalendar data) {
             tv_date_label.setText(data.getDateLabel());
             tv_date_value.setText(String.valueOf(data.getDateValue()));
             tv_month_lable.setText(data.getMonthLabel());
-            if (data.isSelectPosition()){
-                selector.setVisibility(View.VISIBLE);
+            if (data.getDateLabel().equals("TH 7") || data.getDateLabel().equals("CN")) {
+                tv_date_value.setTextColor(context.getResources().getColor(R.color.colorPrimary));
+                tv_date_label.setTextColor(context.getResources().getColor(R.color.colorPrimary));
             } else {
-                selector.setVisibility(View.INVISIBLE);
+                tv_date_value.setTextColor(context.getResources().getColor(R.color.black_85));
+                tv_date_label.setTextColor(context.getResources().getColor(R.color.black_85));
             }
         }
-    }
-
-    public void refreshList(List<MyCalendar> calendarList){
-        this.calendarList.addAll(calendarList);
-        notifyDataSetChanged();
     }
 
 }

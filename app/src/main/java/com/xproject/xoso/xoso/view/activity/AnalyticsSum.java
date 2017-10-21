@@ -28,6 +28,7 @@ import java.util.List;
 
 public class AnalyticsSum extends BasicActivity implements IAnalyticsSumActivity, View.OnClickListener {
 
+    SpeedTemp temp;
     private EditText edt_begin, edt_end, edt_number_set;
     private Spinner sp_province;
     private CheckBox checkSpecial;
@@ -35,7 +36,6 @@ public class AnalyticsSum extends BasicActivity implements IAnalyticsSumActivity
     private AdapterSpinner adapterSpinner;
     private List<ProvinceEntity> provinceEntityList;
     private AnalyticsSumActivityPresenter presenter;
-    SpeedTemp temp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +79,7 @@ public class AnalyticsSum extends BasicActivity implements IAnalyticsSumActivity
     private void setDefaultTime(EditText edt_begin, EditText edt_end) {
         Calendar calendarToday = Calendar.getInstance();
         int toDay = calendarToday.get(Calendar.DAY_OF_MONTH);
-        int month = (calendarToday.get(Calendar.MONTH))+1;
+        int month = (calendarToday.get(Calendar.MONTH)) + 1;
         int year = calendarToday.get(Calendar.YEAR);
 
         long milisTimeToday = calendarToday.getTimeInMillis();
@@ -88,7 +88,7 @@ public class AnalyticsSum extends BasicActivity implements IAnalyticsSumActivity
         Calendar calendarOldDay = Calendar.getInstance();
         calendarOldDay.setTimeInMillis(milisTimeOldDay);
         int oldDay = calendarOldDay.get(Calendar.DAY_OF_MONTH);
-        int oldMonth = (calendarOldDay.get(Calendar.MONTH))+1;
+        int oldMonth = (calendarOldDay.get(Calendar.MONTH)) + 1;
         int oldYear = calendarOldDay.get(Calendar.YEAR);
 
 
@@ -140,7 +140,7 @@ public class AnalyticsSum extends BasicActivity implements IAnalyticsSumActivity
 
     @Override
     public void getSumError(String message) {
-        if (!TextUtils.isEmpty(message)){
+        if (!TextUtils.isEmpty(message)) {
             showShortToast(message);
         }
     }
@@ -149,8 +149,8 @@ public class AnalyticsSum extends BasicActivity implements IAnalyticsSumActivity
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_result:
-                if (checkBeginNotNull() && checkEndNotNull() && checkSumNotNull() && checkBeginEqualEnd()){
-                    if (checkSpecial.isChecked()){
+                if (checkBeginNotNull() && checkEndNotNull() && checkSumNotNull() && checkBeginEqualEnd()) {
+                    if (checkSpecial.isChecked()) {
                         temp.setOnly_special(true);
                     } else {
                         temp.setOnly_special(false);
@@ -162,7 +162,7 @@ public class AnalyticsSum extends BasicActivity implements IAnalyticsSumActivity
                 TimeUtils.showDateTimePickerDialog(this, new DateTimePickerListener() {
                     @Override
                     public void onDateTimePickerListener(int year, int month, int day) {
-                        temp.setDate_begin(year + "-" + (month+1) + "-" + day);
+                        temp.setDate_begin(year + "-" + (month + 1) + "-" + day);
                         temp.setDate_format_begin(day + "/" + (month + 1) + "/" + year);
                         edt_begin.setText(day + "/" + (month + 1) + "/" + year);
                     }
@@ -172,7 +172,7 @@ public class AnalyticsSum extends BasicActivity implements IAnalyticsSumActivity
                 TimeUtils.showDateTimePickerDialog(this, new DateTimePickerListener() {
                     @Override
                     public void onDateTimePickerListener(int year, int month, int day) {
-                        temp.setDate_end(year + "-" + (month+1) + "-" + day);
+                        temp.setDate_end(year + "-" + (month + 1) + "-" + day);
                         temp.setDate_format_end(day + "/" + (month + 1) + "/" + year);
                         edt_end.setText(day + "/" + (month + 1) + "/" + year);
                     }
@@ -182,7 +182,7 @@ public class AnalyticsSum extends BasicActivity implements IAnalyticsSumActivity
     }
 
     private boolean checkSumNotNull() {
-        if (TextUtils.isEmpty(edt_number_set.getText().toString())){
+        if (TextUtils.isEmpty(edt_number_set.getText().toString())) {
             showShortToast("Vui lòng nhập tổng muốn xem.");
             return false;
         } else {
@@ -200,7 +200,7 @@ public class AnalyticsSum extends BasicActivity implements IAnalyticsSumActivity
         }
     }
 
-    private boolean checkEndNotNull(){
+    private boolean checkEndNotNull() {
         if (TextUtils.isEmpty(edt_end.getText().toString())) {
             showShortToast("Vui lòng chọn ngày kết thúc");
             return false;
@@ -209,22 +209,22 @@ public class AnalyticsSum extends BasicActivity implements IAnalyticsSumActivity
         }
     }
 
-    private boolean checkBeginEqualEnd(){
-        if (temp.getDate_begin() !=null && temp.getDate_end() !=null){
+    private boolean checkBeginEqualEnd() {
+        if (temp.getDate_begin() != null && temp.getDate_end() != null) {
             Calendar calendarBegin = TimeUtils.getCalendarFromString(temp.getDate_begin());
             long time_begin = calendarBegin.getTimeInMillis();
 
             Calendar calendarEnd = TimeUtils.getCalendarFromString(temp.getDate_end());
             long time_end = calendarEnd.getTimeInMillis();
 
-            if (time_begin > time_end){
+            if (time_begin > time_end) {
                 showShortToast("Vui lòng chọn thời gian bắt đầu nhỏ hơn thời gian kết thúc.");
                 return false;
-            } else if (time_begin <= time_end){
+            } else if (time_begin <= time_end) {
                 return true;
             }
 
-        } else if (temp.getDate_begin() ==null){
+        } else if (temp.getDate_begin() == null) {
             showShortToast("Vui lòng kiểm tra ngày bắt đầu");
             return false;
         } else if (temp.getDate_end() == null) {

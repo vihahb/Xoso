@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -151,5 +151,37 @@
     <style name="checkBoxStyle" parent="Base.Theme.AppCompat">
         <item name="colorAccent">@color/colorPrimary</item>
         <item name="colorControlNormal">@color/black_40</item>
+    </style>
+
+    <style name="rtl_RecyclerTabLayout">
+        <item name="rtl_tabIndicatorColor">@color/colorAccent</item>
+        <item name="rtl_tabIndicatorHeight">2dp</item>
+        <item name="rtl_tabPaddingStart">12dp</item>
+        <item name="rtl_tabPaddingEnd">12dp</item>
+        <item name="rtl_tabPaddingBottom">4dp</item>
+        <item name="rtl_tabBackground">?attr/selectableItemBackground</item>
+        <item name="rtl_tabTextAppearance">@style/rtl_RecyclerTabLayout.Tab</item>
+        <item name="rtl_tabSelectedTextColor">?android:textColorPrimary</item>
+    </style>
+
+    <style name="rtl_RecyclerTabLayout.Tab">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">?android:textColorSecondary</item>
+        <item name="textAllCaps">true</item>
+    </style>
+
+    <!--<style name="FinestWebViewTheme.Custom" parent="Theme.AppCompat.Light.NoActionBar">-->
+        <!--<item name="colorPrimary">@color/colorPrimary</item>-->
+        <!--<item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
+        <!--<item name="colorAccent">@android:color/white</item>-->
+        <!--<item name="android:textColorPrimary">@android:color/white</item>-->
+        <!--<item name="android:textColorSecondary">@color/finestSilver</item>-->
+        <!--<item name="windowActionModeOverlay">true</item>-->
+    <!--</style>-->
+
+    <style name="CustomTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="textAllCaps">false</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">15sp</item>
     </style>
 </resources>

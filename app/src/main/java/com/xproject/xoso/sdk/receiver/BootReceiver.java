@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
-import com.xproject.xoso.sdk.service.SchedulingService;
 import com.xproject.xoso.sdk.utils.AlarmUtils;
 
 /**

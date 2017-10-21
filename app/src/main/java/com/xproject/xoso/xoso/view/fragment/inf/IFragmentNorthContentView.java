@@ -10,9 +10,10 @@ import com.xproject.xoso.xoso.view.activity.inf.BasicView;
  * Created by vivhp on 9/8/2017.
  */
 
-public interface IFragmentNorthContentView extends BasicView{
+public interface IFragmentNorthContentView extends BasicView {
 
     void getResultLotterySuccess(ResultLottery data);
+
     void getResultLotteryError(String error);
 
     void setDataSocket(RESP_Result resp_result);
@@ -20,8 +21,6 @@ public interface IFragmentNorthContentView extends BasicView{
     void setNewResult(RESP_NewResult newResult);
 
     void cleaOldData();
-
-    void setCurrentResult(RESP_Result resp_result);
 
     void setLiveLoto(RESP_LiveLoto liveLoto);
 

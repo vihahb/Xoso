@@ -4,7 +4,6 @@ import com.google.gson.annotations.Expose;
 import com.xproject.xoso.xoso.model.entity.CycleSpecialEntity;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * Created by vivhp on 10/10/2017.

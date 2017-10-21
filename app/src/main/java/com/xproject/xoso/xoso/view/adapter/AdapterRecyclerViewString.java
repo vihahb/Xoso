@@ -33,7 +33,7 @@ public class AdapterRecyclerViewString extends RecyclerView.Adapter<RecyclerView
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof ViewHolder){
+        if (holder instanceof ViewHolder) {
             ViewHolder viewHolder = (ViewHolder) holder;
             String number = list.get(position);
             viewHolder.setDat(number);
@@ -45,7 +45,17 @@ public class AdapterRecyclerViewString extends RecyclerView.Adapter<RecyclerView
         return list.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder{
+    public void refreshData(List<String> data) {
+        if (list.size() > 0) {
+            list.clear();
+            list.addAll(data);
+        } else {
+            list.addAll(data);
+        }
+        notifyDataSetChanged();
+    }
+
+    class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView tv_number;
 
@@ -54,20 +64,10 @@ public class AdapterRecyclerViewString extends RecyclerView.Adapter<RecyclerView
             tv_number = (TextView) itemView.findViewById(R.id.tv_number);
         }
 
-        public void setDat(String message){
-            if (message!=null){
+        public void setDat(String message) {
+            if (message != null) {
                 tv_number.setText(message);
             }
         }
-    }
-
-    public void refreshData(List<String> data){
-        if (list.size() > 0){
-            list.clear();
-            list.addAll(data);
-        } else {
-            list.addAll(data);
-        }
-        notifyDataSetChanged();
     }
 }

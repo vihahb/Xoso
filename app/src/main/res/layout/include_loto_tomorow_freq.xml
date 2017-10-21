@@ -1,109 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/size_16"
     android:background="@drawable/bolder_table"
+    android:orientation="vertical"
     tools:context="com.xproject.xoso.xoso.view.activity.SpecialTomorowInfoActivity">
 
     <TextView
-        android:paddingLeft="@dimen/size_16"
-        android:paddingRight="@dimen/size_16"
-        android:layout_marginTop="@dimen/size_8"
         android:id="@+id/tv_title_loto_special_freq"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_8"
         android:gravity="center_horizontal"
+        android:paddingLeft="@dimen/size_16"
+        android:paddingRight="@dimen/size_16"
+        android:text="Thống kê tần suất lô tô đặc biệt sau khi giải đặc biệt xuất hiện"
         android:textColor="@color/black_75"
         android:textSize="@dimen/size_16"
-        android:textStyle="bold"
-        android:text="Thống kê tần suất lô tô đặc biệt sau khi giải đặc biệt xuất hiện"/>
+        android:textStyle="bold" />
 
     <LinearLayout
-        android:minHeight="@dimen/size_36"
-        android:layout_marginTop="@dimen/size_16"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_16"
+        android:minHeight="@dimen/size_36"
         android:orientation="horizontal"
         android:weightSum="6">
-        <TextView
-            android:background="@drawable/bolder_table"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/size_36"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:textSize="@dimen/font_14"
-            android:textStyle="bold"
-            android:textColor="@color/colorPrimary"
-            android:text="Bộ số" />
 
         <TextView
-            android:background="@drawable/bolder_table"
             android:layout_width="0dp"
             android:layout_height="@dimen/size_36"
             android:layout_weight="1"
+            android:background="@drawable/bolder_table"
             android:gravity="center"
-            android:textSize="@dimen/font_14"
-            android:textStyle="bold"
+            android:text="Bộ số"
             android:textColor="@color/colorPrimary"
-            android:text="Số lần" />
+            android:textSize="@dimen/font_14"
+            android:textStyle="bold" />
 
         <TextView
-            android:background="@drawable/bolder_table"
             android:layout_width="0dp"
             android:layout_height="@dimen/size_36"
             android:layout_weight="1"
+            android:background="@drawable/bolder_table"
             android:gravity="center"
-            android:textSize="@dimen/font_14"
-            android:textStyle="bold"
+            android:text="Số lần"
             android:textColor="@color/colorPrimary"
-            android:text="Bộ số" />
+            android:textSize="@dimen/font_14"
+            android:textStyle="bold" />
 
         <TextView
-            android:background="@drawable/bolder_table"
             android:layout_width="0dp"
             android:layout_height="@dimen/size_36"
             android:layout_weight="1"
+            android:background="@drawable/bolder_table"
             android:gravity="center"
-            android:textSize="@dimen/font_14"
-            android:textStyle="bold"
+            android:text="Bộ số"
             android:textColor="@color/colorPrimary"
-            android:text="Số lần" />
+            android:textSize="@dimen/font_14"
+            android:textStyle="bold" />
 
         <TextView
-            android:background="@drawable/bolder_table"
             android:layout_width="0dp"
             android:layout_height="@dimen/size_36"
             android:layout_weight="1"
+            android:background="@drawable/bolder_table"
             android:gravity="center"
-            android:textSize="@dimen/font_14"
-            android:textStyle="bold"
+            android:text="Số lần"
             android:textColor="@color/colorPrimary"
-            android:text="Bộ số" />
+            android:textSize="@dimen/font_14"
+            android:textStyle="bold" />
 
         <TextView
-            android:background="@drawable/bolder_table"
             android:layout_width="0dp"
             android:layout_height="@dimen/size_36"
             android:layout_weight="1"
+            android:background="@drawable/bolder_table"
             android:gravity="center"
-            android:textSize="@dimen/font_14"
-            android:textStyle="bold"
+            android:text="Bộ số"
             android:textColor="@color/colorPrimary"
-            android:text="Số lần" />
+            android:textSize="@dimen/font_14"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="@dimen/size_36"
+            android:layout_weight="1"
+            android:background="@drawable/bolder_table"
+            android:gravity="center"
+            android:text="Số lần"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/font_14"
+            android:textStyle="bold" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <android.support.v7.widget.RecyclerView
-            android:overScrollMode="never"
             android:id="@+id/rcl_number_freq"
-            android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:overScrollMode="never" />
     </LinearLayout>
 
 </LinearLayout>

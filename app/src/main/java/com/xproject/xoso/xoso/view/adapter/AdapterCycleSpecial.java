@@ -12,7 +12,6 @@ import com.xproject.xoso.xoso.model.entity.SpecialCycleEntity;
 import com.xtelsolution.xoso.R;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -38,7 +37,7 @@ public class AdapterCycleSpecial extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-        if (holder instanceof  ViewHolder){
+        if (holder instanceof ViewHolder) {
             SpecialCycleEntity cycleEntity = list.get(position);
             ViewHolder viewHolder = (ViewHolder) holder;
             viewHolder.setData(position, cycleEntity);
@@ -48,6 +47,15 @@ public class AdapterCycleSpecial extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public int getItemCount() {
         return list.size();
+    }
+
+    public void refreshData(List<SpecialCycleEntity> list_data) {
+        if (list.size() > 0) {
+            list.clear();
+        }
+
+        list.addAll(list_data);
+        notifyDataSetChanged();
     }
 
     private class ViewHolder extends RecyclerView.ViewHolder {
@@ -63,21 +71,12 @@ public class AdapterCycleSpecial extends RecyclerView.Adapter<RecyclerView.ViewH
         }
 
         public void setData(int position, SpecialCycleEntity data) {
-           tv_number.setText(String.valueOf(position));
+            tv_number.setText(String.valueOf(position));
 
             tv_not_append.setText(data.getDay_count() + " ngày");
 
             tv_last_append.setText(TimeUtils.getFormatTimeClient(data.getDate_appear()));
             tv_max_gan.setText(data.getMax_gan() + " ngày");
         }
-    }
-
-    public void refreshData(List<SpecialCycleEntity> list_data) {
-        if (list.size() > 0) {
-            list.clear();
-        }
-
-        list.addAll(list_data);
-        notifyDataSetChanged();
     }
 }

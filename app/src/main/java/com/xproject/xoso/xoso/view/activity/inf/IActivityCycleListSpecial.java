@@ -9,6 +9,7 @@ import com.xproject.xoso.xoso.model.respond.RESP_CycleLotoVip;
 public interface IActivityCycleListSpecial extends BasicView {
 
     void getListCycleSpecial(RESP_CycleLotoVip obj);
+
     void getListCycleSpecialError(String mes);
 
 }

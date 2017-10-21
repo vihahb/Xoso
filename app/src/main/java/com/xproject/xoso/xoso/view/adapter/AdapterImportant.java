@@ -36,7 +36,7 @@ public class AdapterImportant extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof ViewHolder){
+        if (holder instanceof ViewHolder) {
             ImportantEntity entity = entityList.get(position);
             ViewHolder viewHolder = (ViewHolder) holder;
             viewHolder.setData(entity, type);
@@ -49,7 +49,7 @@ public class AdapterImportant extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     public void refresh(List<ImportantEntity> list, int type) {
-        if (list.size() > 0){
+        if (list.size() > 0) {
             this.entityList.clear();
         }
         this.type = type;
@@ -57,7 +57,7 @@ public class AdapterImportant extends RecyclerView.Adapter<RecyclerView.ViewHold
         notifyDataSetChanged();
     }
 
-    private class ViewHolder extends RecyclerView.ViewHolder{
+    private class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView tv_number, tv_date_not_appen, tv_date_last_append, tv_total_append;
 
@@ -69,14 +69,14 @@ public class AdapterImportant extends RecyclerView.Adapter<RecyclerView.ViewHold
             tv_total_append = (TextView) itemView.findViewById(R.id.tv_total_append);
         }
 
-        public void setData(ImportantEntity data, int type){
-            if (String.valueOf(data.getNumber()).length() < 2){
+        public void setData(ImportantEntity data, int type) {
+            if (String.valueOf(data.getNumber()).length() < 2) {
                 tv_number.setText("0" + String.valueOf(data.getNumber()));
             } else {
                 tv_number.setText(String.valueOf(data.getNumber()));
             }
 
-            switch (type){
+            switch (type) {
                 case 0:
                     tv_date_not_appen.setText(String.valueOf(data.getNo_last()));
                     break;

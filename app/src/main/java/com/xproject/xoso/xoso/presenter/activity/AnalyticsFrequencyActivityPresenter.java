@@ -23,7 +23,7 @@ public class AnalyticsFrequencyActivityPresenter {
     private Icmd icmd = new Icmd() {
         @Override
         public void excute(Object... params) {
-            switch ((int)params[0]){
+            switch ((int) params[0]) {
                 case 1:
                     view.showProgressBar(false, false, null, "Đang tải...");
                     SpeedTemp temp = (SpeedTemp) params[1];
@@ -49,11 +49,11 @@ public class AnalyticsFrequencyActivityPresenter {
         this.view = view;
     }
 
-    public void getFrequency(SpeedTemp speedTemp){
+    public void getFrequency(SpeedTemp speedTemp) {
         icmd.excute(1, speedTemp);
     }
 
-    public List<ProvinceEntity> getCategory(){
+    public List<ProvinceEntity> getCategory() {
         return DatabaseHelper.getInstance().getListOfObjects(ProvinceEntity.class);
     }
 

@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bolder_table">
+    <!--Row giai dac biet-->
+    <TableRow
+        android:id="@+id/tableRowDB"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2">
+
+        <ImageView
+            android:id="@+id/tvSpecialTitle"
+            android:layout_width="0dp"
+            android:layout_height="36dp"
+            android:layout_weight="0.3"
+            android:background="@drawable/bolder_table"
+            android:gravity="center"
+            android:src="@mipmap/ic_gdb" />
+
+        <TextView
+            android:id="@+id/tvSpecialValue_1"
+            android:layout_width="0dp"
+            android:layout_height="36dp"
+            android:layout_weight="1.7"
+            android:background="@drawable/bolder_table"
+            android:gravity="center"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/font_20"
+            android:textStyle="bold" />
+    </TableRow>
+
+    <!--Row giai nhat-->
+    <TableRow
+        android:id="@+id/tableRowFirst"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="2">
+
+        <ImageView
+            android:id="@+id/icFirstTitle"
+            android:layout_width="0dp"
+            android:layout_height="36dp"
+            android:layout_weight="0.3"
+            android:background="@drawable/bolder_table"
+            android:gravity="center"
+            android:src="@mipmap/ic_g1" />
+
+        <TextView
+            android:id="@+id/tvFirstValue_1"
+            android:layout_width="0dp"
+            android:layout_height="36dp"
+            android:layout_weight="1.7"
+            android:background="@drawable/bolder_table"
+            android:gravity="center"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/font_18"
+            android:textStyle="bold" />
+    </TableRow>
+
+    <!--Row giai nhi-->
+    <TableRow
+        android:id="@+id/tableRowSecond"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bolder_table"
+        android:weightSum="2">
+
+        <ImageView
+            android:id="@+id/icSecondTitle"
+            android:layout_width="0dp"
+            android:layout_height="36dp"
+            android:layout_weight="0.3"
+            android:background="@drawable/bolder_table"
+            android:gravity="center"
+            android:src="@mipmap/ic_g2" />
+
+        <TableRow
+            android:layout_width="0dp"
+            android:layout_weight="1.7"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/tvSecondValue_1_1"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:layout_weight="1"
+                android:background="@drawable/bolder_table"
+                android:gravity="center"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/font_18"
+                android:textStyle="bold" />
+        </TableRow>
+    </TableRow>
+
+    <!--Row giai ba-->
+    <TableRow
+        android:id="@+id/tableRowThird"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3"
+            android:background="@drawable/bolder_table"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/icThirdTitle"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_36"
+                android:layout_marginBottom="@dimen/size_18"
+                android:layout_marginTop="@dimen/size_18"
+                android:gravity="center"
+                android:src="@mipmap/ic_g3" />
+        </LinearLayout>
+
+        <TableRow
+            android:layout_width="0dp"
+            android:layout_weight="1.7"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/tv3_1_1"
+                android:layout_height="@dimen/size_36"
+                android:layout_weight="1"
+                android:background="@drawable/bolder_table"
+                android:gravity="center"
+                android:textColor="#000000"
+                android:textSize="@dimen/font_18"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv3_2_1"
+                android:layout_height="@dimen/size_36"
+                android:layout_weight="1"
+                android:background="@drawable/bolder_table"
+                android:gravity="center"
+                android:textColor="#000000"
+                android:textSize="@dimen/font_18"
+                android:textStyle="bold" />
+        </TableRow>
+    </TableRow>
+
+    <!-- Row giai 4 -->
+    <TableRow
+        android:id="@+id/tableRowFourd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="2">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3"
+            android:background="@drawable/bolder_table"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/icFourdTitle"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:gravity="center"
+                android:src="@mipmap/ic_g4" />
+        </LinearLayout>
+
+        <TableLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.7"
+            android:background="@drawable/bolder_table">
+
+            <TableRow
+                android:layout_width="0dp"
+                android:layout_height="@dimen/size_36"
+                android:layout_weight="1"
+                android:weightSum="3">
+
+                <TextView
+                    android:id="@+id/tv4_1_1"
+                    android:layout_height="@dimen/size_36"
+                    android:layout_weight="1"
+                    android:background="@drawable/bolder_table"
+                    android:gravity="center"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/font_18"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv4_2_1"
+                    android:layout_height="@dimen/size_36"
+                    android:layout_weight="1"
+                    android:background="@drawable/bolder_table"
+                    android:gravity="center"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/font_18"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv4_3_1"
+                    android:layout_height="@dimen/size_36"
+                    android:layout_weight="1"
+                    android:background="@drawable/bolder_table"
+                    android:gravity="center"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/font_18"
+                    android:textStyle="bold" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="0dp"
+                android:layout_height="@dimen/size_36"
+                android:layout_weight="1"
+                android:weightSum="4">
+
+                <TextView
+                    android:id="@+id/tv4_4_1"
+                    android:layout_height="@dimen/size_36"
+                    android:layout_weight="1"
+                    android:background="@drawable/bolder_table"
+                    android:gravity="center"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/font_18"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv4_5_1"
+                    android:layout_height="@dimen/size_36"
+                    android:layout_weight="1"
+                    android:background="@drawable/bolder_table"
+                    android:gravity="center"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/font_18"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv4_6_1"
+                    android:layout_height="@dimen/size_36"
+                    android:layout_weight="1"
+                    android:background="@drawable/bolder_table"
+                    android:gravity="center"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/font_18"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/tv4_7_1"
+                    android:layout_height="@dimen/size_36"
+                    android:layout_weight="1"
+                    android:background="@drawable/bolder_table"
+                    android:gravity="center"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/font_18"
+                    android:textStyle="bold" />
+            </TableRow>
+        </TableLayout>
+    </TableRow>
+
+    <!--Row giai 5-->
+    <TableRow
+        android:id="@+id/tableRowFive"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="2">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3"
+            android:background="@drawable/bolder_table"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/icFiveTitle"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_36"
+                android:layout_marginBottom="@dimen/size_18"
+                android:layout_marginTop="@dimen/size_18"
+                android:src="@mipmap/ic_g5" />
+        </LinearLayout>
+
+        <TableRow
+            android:layout_width="0dp"
+            android:layout_weight="1.7"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/tv5_1_1"
+                android:layout_height="@dimen/size_36"
+                android:layout_weight="1"
+                android:background="@drawable/bolder_table"
+                android:gravity="center"
+                android:textColor="#000000"
+                android:textSize="@dimen/font_18"
+                android:textStyle="bold" />
+        </TableRow>
+    </TableRow>
+
+    <!-- Row giai 6 -->
+    <TableRow
+        android:id="@+id/tableRowSix"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="2">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3"
+            android:background="@drawable/bolder_table"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/icSixTitle"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:gravity="center"
+                android:src="@mipmap/ic_g6" />
+        </LinearLayout>
+
+        <TableRow
+            android:layout_width="0dp"
+            android:layout_weight="1.7"
+            android:weightSum="3">
+
+            <TextView
+                android:id="@+id/tv6_1_1"
+                android:layout_height="@dimen/size_36"
+                android:layout_weight="1"
+                android:background="@drawable/bolder_table"
+                android:gravity="center"
+                android:textColor="#000000"
+                android:textSize="@dimen/font_18"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv6_2_1"
+                android:layout_height="@dimen/size_36"
+                android:layout_weight="1"
+                android:background="@drawable/bolder_table"
+                android:gravity="center"
+                android:textColor="#000000"
+                android:textSize="@dimen/font_18"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv6_3_1"
+                android:layout_height="@dimen/size_36"
+                android:layout_weight="1"
+                android:background="@drawable/bolder_table"
+                android:gravity="center"
+                android:textColor="#000000"
+                android:textSize="@dimen/font_18"
+                android:textStyle="bold" />
+        </TableRow>
+    </TableRow>
+
+    <!-- Row giai 7 -->
+    <TableRow
+        android:id="@+id/tableRowSeven"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bolder_table"
+        android:weightSum="2">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3">
+
+            <ImageView
+                android:id="@+id/icSevenTitle"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:gravity="center"
+                android:src="@mipmap/ic_g7" />
+        </LinearLayout>
+
+        <TableRow
+            android:layout_width="0dp"
+            android:layout_weight="1.7"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/tv7_1_1"
+                android:layout_height="@dimen/size_36"
+                android:layout_weight="1"
+                android:background="@drawable/bolder_table"
+                android:gravity="center"
+                android:textColor="#000000"
+                android:textSize="@dimen/font_18"
+                android:textStyle="bold" />
+        </TableRow>
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRowEight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bolder_table"
+        android:weightSum="2">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3">
+
+            <ImageView
+                android:id="@+id/icEightTitle"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:gravity="center"
+                android:src="@mipmap/ic_g8" />
+        </LinearLayout>
+
+        <!-- Row giai 8 -->
+        <TableRow
+            android:layout_width="0dp"
+            android:layout_weight="1.7"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/tv8_1_1"
+                android:layout_height="@dimen/size_36"
+                android:layout_weight="1"
+                android:background="@drawable/bolder_table"
+                android:gravity="center"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/font_18"
+                android:textStyle="bold" />
+        </TableRow>
+    </TableRow>
+</TableLayout>
+
+

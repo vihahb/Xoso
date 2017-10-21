@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="48dp"
-    android:weightSum="5"
-    android:background="@drawable/bolder_table">
+    android:background="@drawable/bolder_table"
+    android:orientation="horizontal"
+    android:weightSum="5">
 
     <TextView
         android:id="@+id/tv_number"
@@ -12,10 +13,10 @@
         android:layout_weight="0.8"
         android:background="@drawable/bolder_table"
         android:gravity="center"
+        android:padding="@dimen/size_4"
         android:textColor="@color/black_75"
         android:textSize="@dimen/font_14"
-        android:textStyle="bold"
-        android:padding="@dimen/size_4"/>
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tv_date_not_appen"
@@ -24,10 +25,10 @@
         android:layout_weight="1.2"
         android:background="@drawable/bolder_table"
         android:gravity="center"
+        android:padding="@dimen/size_4"
         android:textColor="@color/black_75"
         android:textSize="@dimen/font_14"
-        android:textStyle="bold"
-        android:padding="@dimen/size_4"/>
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tv_date_last_append"
@@ -36,10 +37,10 @@
         android:layout_weight="1.5"
         android:background="@drawable/bolder_table"
         android:gravity="center"
+        android:padding="@dimen/size_4"
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/font_14"
-        android:textStyle="bold"
-        android:padding="@dimen/size_4"/>
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tv_total_append"
@@ -48,8 +49,8 @@
         android:layout_weight="1.5"
         android:background="@drawable/bolder_table"
         android:gravity="center"
+        android:padding="@dimen/size_4"
         android:textColor="@color/black_75"
         android:textSize="@dimen/font_14"
-        android:textStyle="bold"
-        android:padding="@dimen/size_4"/>
+        android:textStyle="bold" />
 </LinearLayout>

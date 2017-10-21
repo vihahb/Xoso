@@ -1,14 +1,12 @@
 package com.xproject.xoso.xoso.model.entity;
 
-import com.xproject.xoso.sdk.utils.ResponseHandle;
-
 import java.io.Serializable;
 
 /**
  * Created by vivhp on 10/5/2017.
  */
 
-public class SpeedTemp implements Serializable{
+public class SpeedTemp implements Serializable {
 
     private int id_cat;
     private String name_cat;

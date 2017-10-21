@@ -8,12 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.xproject.xoso.xoso.presenter.fragment.FragmentExplorePresenter;
-import com.xtelsolution.xoso.R;
+import com.xproject.xoso.sdk.common.Constants;
 import com.xproject.xoso.xoso.model.entity.GridMenu;
+import com.xproject.xoso.xoso.presenter.fragment.FragmentExplorePresenter;
+import com.xproject.xoso.xoso.view.activity.ActivityExploreBridgeLoto;
+import com.xproject.xoso.xoso.view.activity.BridgeForDayActivity;
 import com.xproject.xoso.xoso.view.adapter.AdapterGridMenu;
 import com.xproject.xoso.xoso.view.adapter.inf.ViewGrid;
 import com.xproject.xoso.xoso.view.fragment.inf.IFragmentExplore;
+import com.xtelsolution.xoso.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +55,7 @@ public class FragmentExplore extends BasicFragment implements IFragmentExplore, 
         presenter = new FragmentExplorePresenter(this);
         initWidGet(view);
     }
+
     private void initWidGet(View view) {
         menuList = new ArrayList<>();
         rcl_explore = (RecyclerView) view.findViewById(R.id.rcl_explore);
@@ -62,6 +66,7 @@ public class FragmentExplore extends BasicFragment implements IFragmentExplore, 
         rcl_explore.setAdapter(adapterGridMenu);
         presenter.initListMenu();
     }
+
     @Override
     public void initGridMenu(List<GridMenu> menus) {
         adapterGridMenu.refreshData(menus);
@@ -69,8 +74,30 @@ public class FragmentExplore extends BasicFragment implements IFragmentExplore, 
 
     @Override
     public void onClickItem(int position) {
-        switch (position){
+        switch (position) {
+            case 0:
+                startActivity(ActivityExploreBridgeLoto.class, Constants.ACTION_TYPE, 1);
+                break;
+            case 1:
+                startActivity(ActivityExploreBridgeLoto.class, Constants.ACTION_TYPE, 2);
+                break;
+            case 2:
+                startActivity(ActivityExploreBridgeLoto.class, Constants.ACTION_TYPE, 3);
+                break;
+            case 3:
+                startActivity(ActivityExploreBridgeLoto.class, Constants.ACTION_TYPE, 4);
+                break;
             case 4:
+                startActivity(ActivityExploreBridgeLoto.class, Constants.ACTION_TYPE, 5);
+                break;
+            case 5:
+                startActivity(ActivityExploreBridgeLoto.class, Constants.ACTION_TYPE, 6);
+                break;
+            case 6:
+                startActivity(BridgeForDayActivity.class,Constants.ACTION_TYPE, 1);
+                break;
+            case 7:
+                startActivity(BridgeForDayActivity.class,Constants.ACTION_TYPE, 2);
                 break;
         }
     }

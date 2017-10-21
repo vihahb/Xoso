@@ -5,5 +5,5 @@ package com.xproject.xoso.sdk.callback;
  */
 
 public interface AlarmSettingListener {
-    void onSettingAlarmSuccess(int idAlarm1,int idAlarm2);
+    void onSettingAlarmSuccess(int idAlarm1, int idAlarm2);
 }

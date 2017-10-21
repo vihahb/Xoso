@@ -8,5 +8,6 @@ import com.xproject.xoso.xoso.model.respond.RESP_FrequencyLoto;
 
 public interface IFrequencyLotoActivity extends BasicView {
     void getFrequencyLoto(RESP_FrequencyLoto obj);
+
     void getFrequencyLotoError(String message);
 }

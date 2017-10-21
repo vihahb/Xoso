@@ -16,11 +16,10 @@ import com.xproject.xoso.xoso.view.activity.ActivityLotoCycle;
 import com.xproject.xoso.xoso.view.activity.CycleListSpecialActivity;
 import com.xproject.xoso.xoso.view.activity.FrequencyLotoActivity;
 import com.xproject.xoso.xoso.view.activity.SpecialTomorowActivity;
-import com.xproject.xoso.xoso.view.adapter.AdapterCycleSpecial;
-import com.xproject.xoso.xoso.view.fragment.inf.IAnalyticsNormal;
-import com.xtelsolution.xoso.R;
 import com.xproject.xoso.xoso.view.adapter.AdapterGridMenu;
 import com.xproject.xoso.xoso.view.adapter.inf.ViewGrid;
+import com.xproject.xoso.xoso.view.fragment.inf.IAnalyticsNormal;
+import com.xtelsolution.xoso.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,7 +71,7 @@ public class FragmentAnalyticsVip extends BasicFragment implements ViewGrid, IAn
 
     @Override
     public void onClickItem(int position) {
-        switch (position){
+        switch (position) {
             case 0:
                 startActivity(ActivityLotoCycle.class);
                 break;

@@ -125,7 +125,6 @@ public abstract class BasicFragment extends IFragment implements BasicView {
     }
 
 
-
     public void startActivity(Class clazz) {
         startActivity(new Intent(getActivity(), clazz));
     }

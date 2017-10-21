@@ -25,15 +25,15 @@ import java.util.List;
 
 public class AnalyticsLotoAuto extends BasicActivity implements View.OnClickListener {
 
+    LinearLayout ln_table;
+    List<String> number_list;
+    List<String> listData;
     private Spinner sp_number;
     private EditText edt_number_set;
     private Button btnResult;
     private RecyclerView rcl_loto_auto;
     private TextView tv_auto_1, tv_auto_2, tv_auto_3, tv_auto_4, tv_title_auto;
     private AdapterRecyclerViewString adapter;
-    LinearLayout ln_table;
-    List<String> number_list;
-    List<String> listData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,7 +131,7 @@ public class AnalyticsLotoAuto extends BasicActivity implements View.OnClickList
                 }
 
                 adapter.refreshData(auto_list);
-                String result_text = "Tổng số lô xiên " + type + " tạo được là: <font color='red'>" + auto_list.size() +"</font>";
+                String result_text = "Tổng số lô xiên " + type + " tạo được là: <font color='red'>" + auto_list.size() + "</font>";
                 tv_title_auto.setText(Html.fromHtml(result_text));
                 number_list.clear();
                 ln_table.setVisibility(View.VISIBLE);
@@ -161,7 +161,7 @@ public class AnalyticsLotoAuto extends BasicActivity implements View.OnClickList
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home){
+        if (item.getItemId() == android.R.id.home) {
             finish();
         }
         return super.onOptionsItemSelected(item);

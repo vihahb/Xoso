@@ -19,15 +19,10 @@ import java.util.List;
 public class AnalyticsImportantActivityPresenter {
 
     private IAnalyticsImportantActivity view;
-
-    public AnalyticsImportantActivityPresenter(IAnalyticsImportantActivity view) {
-        this.view = view;
-    }
-
     private Icmd icmd = new Icmd() {
         @Override
         public void excute(Object... params) {
-            switch ((int)params[0]){
+            switch ((int) params[0]) {
                 case 1:
                     view.showProgressBar(false, false, null, "Đang tải...");
                     SpeedTemp temp = (SpeedTemp) params[1];
@@ -49,11 +44,15 @@ public class AnalyticsImportantActivityPresenter {
         }
     };
 
-    public void getImportant(SpeedTemp temp){
+    public AnalyticsImportantActivityPresenter(IAnalyticsImportantActivity view) {
+        this.view = view;
+    }
+
+    public void getImportant(SpeedTemp temp) {
         icmd.excute(1, temp);
     }
 
-    public List<ProvinceEntity> getCategory(){
+    public List<ProvinceEntity> getCategory() {
         return DatabaseHelper.getInstance().getListOfObjects(ProvinceEntity.class);
     }
 

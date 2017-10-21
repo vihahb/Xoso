@@ -28,27 +28,27 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         AlarmUtils.startService(context, AlarmUtils.NOTIFY_TYPE);
         Intent intentLive = new Intent(context, MainActivity.class);
-        String content_notify ="";
+        String content_notify = "";
         int notify_id_value = intent.getIntExtra(Constants.NOTIFICATION_ID, 1);
 
-        if (notify_id_value == 1){
+        if (notify_id_value == 1) {
             intentLive.putExtra(Constants.START_LIVE, 1);
             content_notify = "Sắp đến giờ quay giải miền Bắc";
-        } else if (notify_id_value == 2){
+        } else if (notify_id_value == 2) {
             intentLive.putExtra(Constants.START_LIVE, 2);
             content_notify = "Săp đến giờ quay giải miền Trung";
-        } else if (notify_id_value == 3){
+        } else if (notify_id_value == 3) {
             intentLive.putExtra(Constants.START_LIVE, 3);
             content_notify = "Sắp đến giờ quay giải miền Nam";
-        } else if (notify_id_value == 4){
+        } else if (notify_id_value == 4) {
             intentLive.putExtra(Constants.START_LIVE, 1);
             content_notify = "Đang quay giải miền Bắc";
             id_notify = 1;
-        }else if (notify_id_value == 5){
+        } else if (notify_id_value == 5) {
             intentLive.putExtra(Constants.START_LIVE, 2);
             content_notify = "Đang quay giải miền Trung";
             id_notify = 2;
-        }else if (notify_id_value == 6){
+        } else if (notify_id_value == 6) {
             intentLive.putExtra(Constants.START_LIVE, 3);
             content_notify = "Đang quay giải miền Nam";
             id_notify = 3;
@@ -56,8 +56,8 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         MessageNotification.notify(context, content_notify, id_notify, intentLive);
 
-        if (Helper.isAppRunning(context, "com.xtelsolution.xoso")){
-            if (id_notify > 0){
+        if (Helper.isAppRunning(context, "com.xtelsolution.xoso")) {
+            if (id_notify > 0) {
                 Intent live_intent = new Intent("ACTION_LIVE");
                 live_intent.putExtra(Constants.ACTION_TYPE, id_notify);
                 context.sendBroadcast(live_intent);

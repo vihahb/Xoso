@@ -1,106 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.xtelsolution.xoso.com.xproject.xoso.xoso.view.activity.DreamActivity">
-    <include layout="@layout/toolbar"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:id="@+id/include"
-        tools:ignore="IncludeLayoutParam"
-        android:layout_height="0dp"
-        android:layout_width="0dp" />
+    tools:context="com.xproject.xoso.xoso.view.activity.DreamActivity">
 
-    <android.support.v7.widget.RecyclerView
-        android:background="@drawable/bolder_table"
-        android:id="@+id/rcl_dream"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+    <include layout="@layout/toolbar" />
 
-    <EditText
-        android:hint="@string/input_dream"
-        android:id="@+id/search_dream"
-        style="@style/EditProfile"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp" />
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/bolder_table"
-        android:orientation="horizontal"
-        android:weightSum="3"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_dream"
-        android:id="@+id/linearLayout">
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/tv_dream_id"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:gravity="center"
-            android:paddingBottom="@dimen/size_4"
-            android:paddingTop="@dimen/size_4"
-            android:text="STT"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/font_14"
-            android:textStyle="bold"
-            android:background="@drawable/bolder_table"/>
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/search_dream"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:background="@drawable/bolder_table"
-            android:id="@+id/tv_dream_name"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.5"
-            android:gravity="center"
-            android:paddingBottom="@dimen/size_4"
-            android:paddingTop="@dimen/size_4"
-            android:text="Giấc mơ"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/font_14"
-            android:textStyle="bold" />
-
-        <TextView
-            android:background="@drawable/bolder_table"
-            android:id="@+id/tv_dream_number"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:paddingBottom="@dimen/size_4"
-            android:paddingTop="@dimen/size_4"
-            android:text="Bộ số"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/font_14"
-            android:textStyle="bold" />
-    </LinearLayout>
+                <EditText
+                    android:id="@+id/edt_search_dream"
+                    style="@style/EditTextAccent"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="@string/input_dream" />
+            </android.support.design.widget.TextInputLayout>
 
 
-</android.support.constraint.ConstraintLayout>
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bolder_table"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/search_dream">
+
+                <TextView
+                    android:id="@+id/tv_dream_id"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/bolder_table"
+                    android:gravity="center"
+                    android:paddingBottom="@dimen/size_4"
+                    android:paddingTop="@dimen/size_4"
+                    android:text="STT"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/font_14"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_dream_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.5"
+                    android:background="@drawable/bolder_table"
+                    android:gravity="center"
+                    android:paddingBottom="@dimen/size_4"
+                    android:paddingTop="@dimen/size_4"
+                    android:text="Giấc mơ"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/font_14"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_dream_number"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/bolder_table"
+                    android:gravity="center"
+                    android:paddingBottom="@dimen/size_4"
+                    android:paddingTop="@dimen/size_4"
+                    android:text="Bộ số"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/font_14"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rcl_dream"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bolder_table"
+                android:nestedScrollingEnabled="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v4.widget.NestedScrollView>
+</android.support.design.widget.CoordinatorLayout>
+
+

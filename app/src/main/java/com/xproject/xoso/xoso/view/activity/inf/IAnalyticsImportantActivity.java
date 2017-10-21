@@ -10,5 +10,6 @@ import java.util.List;
 
 public interface IAnalyticsImportantActivity extends BasicView {
     void getImportantSuccess(List<ImportantEntity> list);
+
     void getImportantError(String mes);
 }

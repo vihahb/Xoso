@@ -19,15 +19,10 @@ import java.util.List;
 public class SpecialTomorowActivityPresenter {
 
     private ISpecialTomorowActivity view;
-
-    public SpecialTomorowActivityPresenter(ISpecialTomorowActivity view) {
-        this.view = view;
-    }
-
     private Icmd icmd = new Icmd() {
         @Override
         public void excute(Object... params) {
-            switch ((int)params[0]){
+            switch ((int) params[0]) {
                 case 1:
                     view.showProgressBar(false, false, null, "Đang tải...");
                     SpeedTemp temp = (SpeedTemp) params[1];
@@ -49,11 +44,15 @@ public class SpecialTomorowActivityPresenter {
         }
     };
 
+    public SpecialTomorowActivityPresenter(ISpecialTomorowActivity view) {
+        this.view = view;
+    }
+
     public List<ProvinceEntity> getCategory() {
         return DatabaseHelper.getInstance().getListOfObjects(ProvinceEntity.class);
     }
 
-    public void getSpecialTomorow(SpeedTemp temp){
+    public void getSpecialTomorow(SpeedTemp temp) {
         icmd.excute(1, temp);
     }
 }

@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/table"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/bolder_table"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:showIn="@layout/fragment_north_content">
+    android:background="@drawable/bolder_table">
     <!--Row giai dac biet-->
     <TableRow
         android:id="@+id/tableRowDB"
@@ -15,24 +13,24 @@
         android:layout_weight="2">
 
         <ImageView
-            android:background="@drawable/bolder_table"
             android:id="@+id/tvSpecialTitle"
-            android:gravity="center"
             android:layout_width="0dp"
-            android:layout_weight="0.3"
             android:layout_height="36dp"
+            android:layout_weight="0.3"
+            android:background="@drawable/bolder_table"
+            android:gravity="center"
             android:src="@mipmap/ic_gdb" />
 
         <TextView
-            android:background="@drawable/bolder_table"
             android:id="@+id/tvSpecialValue"
-            android:gravity="center"
             android:layout_width="0dp"
-            android:layout_weight="1.7"
             android:layout_height="36dp"
-            android:textStyle="bold"
+            android:layout_weight="1.7"
+            android:background="@drawable/bolder_table"
+            android:gravity="center"
+            android:textColor="@color/colorPrimary"
             android:textSize="@dimen/font_20"
-            android:textColor="@color/colorPrimary" />
+            android:textStyle="bold" />
     </TableRow>
 
     <!--Row giai nhat-->
@@ -43,24 +41,24 @@
         android:weightSum="2">
 
         <ImageView
-            android:background="@drawable/bolder_table"
             android:id="@+id/icFirstTitle"
-            android:gravity="center"
             android:layout_width="0dp"
-            android:layout_weight="0.3"
             android:layout_height="36dp"
+            android:layout_weight="0.3"
+            android:background="@drawable/bolder_table"
+            android:gravity="center"
             android:src="@mipmap/ic_g1" />
 
         <TextView
-            android:background="@drawable/bolder_table"
             android:id="@+id/tvFirstValue"
-            android:gravity="center"
-            android:layout_weight="1.7"
             android:layout_width="0dp"
             android:layout_height="36dp"
-            android:textStyle="bold"
+            android:layout_weight="1.7"
+            android:background="@drawable/bolder_table"
+            android:gravity="center"
+            android:textColor="@android:color/black"
             android:textSize="@dimen/font_18"
-            android:textColor="@android:color/black" />
+            android:textStyle="bold" />
     </TableRow>
 
     <!--Row giai nhi-->
@@ -72,12 +70,12 @@
         android:weightSum="2">
 
         <ImageView
-            android:background="@drawable/bolder_table"
             android:id="@+id/icSecondTitle"
-            android:gravity="center"
             android:layout_width="0dp"
-            android:layout_weight="0.3"
             android:layout_height="36dp"
+            android:layout_weight="0.3"
+            android:background="@drawable/bolder_table"
+            android:gravity="center"
             android:src="@mipmap/ic_g2" />
 
         <TableRow
@@ -87,57 +85,57 @@
 
             <TextView
                 android:id="@+id/tvSecondValue_1"
-                android:gravity="center"
-                android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="36dp"
-                android:textStyle="bold"
-                android:textSize="@dimen/font_18"
+                android:layout_weight="1"
                 android:background="@drawable/bolder_table"
-                android:textColor="@android:color/black" />
+                android:gravity="center"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/font_18"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvSecondValue_2"
-                android:gravity="center"
-                android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="36dp"
-                android:textStyle="bold"
-                android:textSize="@dimen/font_18"
+                android:layout_weight="1"
                 android:background="@drawable/bolder_table"
-                android:textColor="@android:color/black" />
+                android:gravity="center"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/font_18"
+                android:textStyle="bold" />
         </TableRow>
     </TableRow>
 
     <!--Row giai ba-->
     <TableRow
-        android:weightSum="2"
         android:id="@+id/tableRowThird"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:weightSum="2">
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_weight="0.3"
             android:layout_height="match_parent"
+            android:layout_weight="0.3"
             android:background="@drawable/bolder_table"
             android:gravity="center">
 
             <ImageView
                 android:id="@+id/icThirdTitle"
-                android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_36"
-                android:layout_marginTop="@dimen/size_18"
                 android:layout_marginBottom="@dimen/size_18"
+                android:layout_marginTop="@dimen/size_18"
+                android:gravity="center"
                 android:src="@mipmap/ic_g3" />
         </LinearLayout>
 
         <TableLayout
-            android:background="@drawable/bolder_table"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1.7">
+            android:layout_weight="1.7"
+            android:background="@drawable/bolder_table">
 
             <TableRow
                 android:layout_width="0dp"
@@ -146,34 +144,34 @@
                 android:weightSum="3">
 
                 <TextView
-                    android:background="@drawable/bolder_table"
                     android:id="@+id/tv3_1"
-                    android:layout_weight="1"
                     android:layout_height="@dimen/size_36"
+                    android:layout_weight="1"
+                    android:background="@drawable/bolder_table"
                     android:gravity="center"
-                    android:textStyle="bold"
+                    android:textColor="#000000"
                     android:textSize="@dimen/font_18"
-                    android:textColor="#000000" />
+                    android:textStyle="bold" />
 
                 <TextView
-                    android:background="@drawable/bolder_table"
                     android:id="@+id/tv3_2"
-                    android:layout_weight="1"
                     android:layout_height="@dimen/size_36"
+                    android:layout_weight="1"
+                    android:background="@drawable/bolder_table"
                     android:gravity="center"
-                    android:textStyle="bold"
+                    android:textColor="#000000"
                     android:textSize="@dimen/font_18"
-                    android:textColor="#000000" />
+                    android:textStyle="bold" />
 
                 <TextView
-                    android:background="@drawable/bolder_table"
                     android:id="@+id/tv3_3"
-                    android:layout_weight="1"
                     android:layout_height="@dimen/size_36"
+                    android:layout_weight="1"
+                    android:background="@drawable/bolder_table"
                     android:gravity="center"
-                    android:textStyle="bold"
+                    android:textColor="#000000"
                     android:textSize="@dimen/font_18"
-                    android:textColor="#000000" />
+                    android:textStyle="bold" />
             </TableRow>
 
             <TableRow
@@ -183,34 +181,34 @@
                 android:weightSum="3">
 
                 <TextView
-                    android:background="@drawable/bolder_table"
                     android:id="@+id/tv3_4"
-                    android:layout_weight="1"
                     android:layout_height="@dimen/size_36"
+                    android:layout_weight="1"
+                    android:background="@drawable/bolder_table"
                     android:gravity="center"
-                    android:textStyle="bold"
+                    android:textColor="#000000"
                     android:textSize="@dimen/font_18"
-                    android:textColor="#000000" />
+                    android:textStyle="bold" />
 
                 <TextView
-                    android:background="@drawable/bolder_table"
                     android:id="@+id/tv3_5"
-                    android:layout_weight="1"
                     android:layout_height="@dimen/size_36"
+                    android:layout_weight="1"
+                    android:background="@drawable/bolder_table"
                     android:gravity="center"
-                    android:textStyle="bold"
+                    android:textColor="#000000"
                     android:textSize="@dimen/font_18"
-                    android:textColor="#000000" />
+                    android:textStyle="bold" />
 
                 <TextView
-                    android:background="@drawable/bolder_table"
                     android:id="@+id/tv3_6"
-                    android:layout_weight="1"
                     android:layout_height="@dimen/size_36"
+                    android:layout_weight="1"
+                    android:background="@drawable/bolder_table"
                     android:gravity="center"
-                    android:textStyle="bold"
+                    android:textColor="#000000"
                     android:textSize="@dimen/font_18"
-                    android:textColor="#000000" />
+                    android:textStyle="bold" />
             </TableRow>
         </TableLayout>
     </TableRow>
@@ -224,87 +222,87 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_weight="0.3"
             android:layout_height="match_parent"
+            android:layout_weight="0.3"
             android:background="@drawable/bolder_table"
             android:gravity="center">
 
             <ImageView
                 android:id="@+id/icFourdTitle"
-                android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="36dp"
+                android:gravity="center"
                 android:src="@mipmap/ic_g4" />
         </LinearLayout>
 
         <TableRow
-            android:background="@drawable/bolder_table"
             android:layout_width="0dp"
             android:layout_weight="1.7"
+            android:background="@drawable/bolder_table"
             android:weightSum="4">
 
             <TextView
-                android:background="@drawable/bolder_table"
                 android:id="@+id/tv4_1"
-                android:layout_weight="1"
                 android:layout_height="@dimen/size_36"
+                android:layout_weight="1"
+                android:background="@drawable/bolder_table"
                 android:gravity="center"
-                android:textStyle="bold"
+                android:textColor="#000000"
                 android:textSize="@dimen/font_18"
-                android:textColor="#000000" />
+                android:textStyle="bold" />
 
             <TextView
-                android:background="@drawable/bolder_table"
                 android:id="@+id/tv4_2"
-                android:layout_weight="1"
                 android:layout_height="@dimen/size_36"
+                android:layout_weight="1"
+                android:background="@drawable/bolder_table"
                 android:gravity="center"
-                android:textStyle="bold"
+                android:textColor="#000000"
                 android:textSize="@dimen/font_18"
-                android:textColor="#000000" />
+                android:textStyle="bold" />
 
             <TextView
-                android:background="@drawable/bolder_table"
                 android:id="@+id/tv4_3"
-                android:layout_weight="1"
                 android:layout_height="@dimen/size_36"
+                android:layout_weight="1"
+                android:background="@drawable/bolder_table"
                 android:gravity="center"
-                android:textStyle="bold"
+                android:textColor="#000000"
                 android:textSize="@dimen/font_18"
-                android:textColor="#000000" />
+                android:textStyle="bold" />
 
             <TextView
-                android:background="@drawable/bolder_table"
                 android:id="@+id/tv4_4"
-                android:layout_weight="1"
                 android:layout_height="@dimen/size_36"
+                android:layout_weight="1"
+                android:background="@drawable/bolder_table"
                 android:gravity="center"
-                android:textStyle="bold"
+                android:textColor="#000000"
                 android:textSize="@dimen/font_18"
-                android:textColor="#000000" />
+                android:textStyle="bold" />
         </TableRow>
     </TableRow>
 
     <!--Row giai 5-->
     <TableRow
-        android:weightSum="2"
         android:id="@+id/tableRowFive"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:weightSum="2">
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_weight="0.3"
             android:layout_height="match_parent"
+            android:layout_weight="0.3"
             android:background="@drawable/bolder_table"
             android:gravity="center">
 
             <ImageView
-                android:layout_marginTop="@dimen/size_18"
-                android:layout_marginBottom="@dimen/size_18"
                 android:id="@+id/icFiveTitle"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_36"
+                android:layout_marginBottom="@dimen/size_18"
+                android:layout_marginTop="@dimen/size_18"
                 android:src="@mipmap/ic_g5" />
         </LinearLayout>
 
@@ -320,34 +318,34 @@
                 android:weightSum="3">
 
                 <TextView
-                    android:background="@drawable/bolder_table"
                     android:id="@+id/tv5_1"
-                    android:layout_weight="1"
                     android:layout_height="@dimen/size_36"
+                    android:layout_weight="1"
+                    android:background="@drawable/bolder_table"
                     android:gravity="center"
-                    android:textStyle="bold"
+                    android:textColor="#000000"
                     android:textSize="@dimen/font_18"
-                    android:textColor="#000000" />
+                    android:textStyle="bold" />
 
                 <TextView
-                    android:background="@drawable/bolder_table"
                     android:id="@+id/tv5_2"
-                    android:layout_weight="1"
                     android:layout_height="@dimen/size_36"
+                    android:layout_weight="1"
+                    android:background="@drawable/bolder_table"
                     android:gravity="center"
-                    android:textStyle="bold"
+                    android:textColor="#000000"
                     android:textSize="@dimen/font_18"
-                    android:textColor="#000000" />
+                    android:textStyle="bold" />
 
                 <TextView
-                    android:background="@drawable/bolder_table"
                     android:id="@+id/tv5_3"
-                    android:layout_weight="1"
                     android:layout_height="@dimen/size_36"
+                    android:layout_weight="1"
+                    android:background="@drawable/bolder_table"
                     android:gravity="center"
-                    android:textStyle="bold"
+                    android:textColor="#000000"
                     android:textSize="@dimen/font_18"
-                    android:textColor="#000000" />
+                    android:textStyle="bold" />
             </TableRow>
 
             <TableRow
@@ -357,34 +355,34 @@
                 android:weightSum="3">
 
                 <TextView
-                    android:background="@drawable/bolder_table"
                     android:id="@+id/tv5_4"
-                    android:layout_weight="1"
                     android:layout_height="@dimen/size_36"
+                    android:layout_weight="1"
+                    android:background="@drawable/bolder_table"
                     android:gravity="center"
-                    android:textStyle="bold"
+                    android:textColor="#000000"
                     android:textSize="@dimen/font_18"
-                    android:textColor="#000000" />
+                    android:textStyle="bold" />
 
                 <TextView
-                    android:background="@drawable/bolder_table"
                     android:id="@+id/tv5_5"
-                    android:layout_weight="1"
                     android:layout_height="@dimen/size_36"
+                    android:layout_weight="1"
+                    android:background="@drawable/bolder_table"
                     android:gravity="center"
-                    android:textStyle="bold"
+                    android:textColor="#000000"
                     android:textSize="@dimen/font_18"
-                    android:textColor="#000000" />
+                    android:textStyle="bold" />
 
                 <TextView
-                    android:background="@drawable/bolder_table"
                     android:id="@+id/tv5_6"
-                    android:layout_weight="1"
                     android:layout_height="@dimen/size_36"
+                    android:layout_weight="1"
+                    android:background="@drawable/bolder_table"
                     android:gravity="center"
-                    android:textStyle="bold"
+                    android:textColor="#000000"
                     android:textSize="@dimen/font_18"
-                    android:textColor="#000000" />
+                    android:textStyle="bold" />
             </TableRow>
         </TableLayout>
     </TableRow>
@@ -398,16 +396,16 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_weight="0.3"
             android:layout_height="match_parent"
+            android:layout_weight="0.3"
             android:background="@drawable/bolder_table"
             android:gravity="center">
 
             <ImageView
                 android:id="@+id/icSixTitle"
-                android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="36dp"
+                android:gravity="center"
                 android:src="@mipmap/ic_g6" />
         </LinearLayout>
 
@@ -417,55 +415,55 @@
             android:weightSum="3">
 
             <TextView
-                android:background="@drawable/bolder_table"
                 android:id="@+id/tv6_1"
-                android:layout_weight="1"
                 android:layout_height="@dimen/size_36"
+                android:layout_weight="1"
+                android:background="@drawable/bolder_table"
                 android:gravity="center"
-                android:textStyle="bold"
+                android:textColor="#000000"
                 android:textSize="@dimen/font_18"
-                android:textColor="#000000" />
+                android:textStyle="bold" />
 
             <TextView
-                android:background="@drawable/bolder_table"
                 android:id="@+id/tv6_2"
-                android:layout_weight="1"
                 android:layout_height="@dimen/size_36"
+                android:layout_weight="1"
+                android:background="@drawable/bolder_table"
                 android:gravity="center"
-                android:textStyle="bold"
+                android:textColor="#000000"
                 android:textSize="@dimen/font_18"
-                android:textColor="#000000" />
+                android:textStyle="bold" />
 
             <TextView
-                android:background="@drawable/bolder_table"
                 android:id="@+id/tv6_3"
-                android:layout_weight="1"
                 android:layout_height="@dimen/size_36"
+                android:layout_weight="1"
+                android:background="@drawable/bolder_table"
                 android:gravity="center"
-                android:textStyle="bold"
+                android:textColor="#000000"
                 android:textSize="@dimen/font_18"
-                android:textColor="#000000" />
+                android:textStyle="bold" />
         </TableRow>
     </TableRow>
 
     <!-- Row giai 7 -->
     <TableRow
-        android:background="@drawable/bolder_table"
         android:id="@+id/tableRowSeven"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/bolder_table"
         android:weightSum="2">
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_weight="0.3"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_weight="0.3">
 
             <ImageView
                 android:id="@+id/icSevenTitle"
-                android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="36dp"
+                android:gravity="center"
                 android:src="@mipmap/ic_g7" />
         </LinearLayout>
 
@@ -475,44 +473,44 @@
             android:weightSum="4">
 
             <TextView
-                android:background="@drawable/bolder_table"
                 android:id="@+id/tv7_1"
-                android:layout_weight="1"
                 android:layout_height="@dimen/size_36"
+                android:layout_weight="1"
+                android:background="@drawable/bolder_table"
                 android:gravity="center"
-                android:textStyle="bold"
+                android:textColor="#000000"
                 android:textSize="@dimen/font_18"
-                android:textColor="#000000" />
+                android:textStyle="bold" />
 
             <TextView
-                android:background="@drawable/bolder_table"
                 android:id="@+id/tv7_2"
-                android:layout_weight="1"
                 android:layout_height="@dimen/size_36"
+                android:layout_weight="1"
+                android:background="@drawable/bolder_table"
                 android:gravity="center"
-                android:textStyle="bold"
+                android:textColor="#000000"
                 android:textSize="@dimen/font_18"
-                android:textColor="#000000" />
+                android:textStyle="bold" />
 
             <TextView
-                android:background="@drawable/bolder_table"
                 android:id="@+id/tv7_3"
-                android:layout_weight="1"
                 android:layout_height="@dimen/size_36"
+                android:layout_weight="1"
+                android:background="@drawable/bolder_table"
                 android:gravity="center"
-                android:textStyle="bold"
+                android:textColor="#000000"
                 android:textSize="@dimen/font_18"
-                android:textColor="#000000" />
+                android:textStyle="bold" />
 
             <TextView
-                android:background="@drawable/bolder_table"
                 android:id="@+id/tv7_4"
-                android:layout_weight="1"
                 android:layout_height="@dimen/size_36"
+                android:layout_weight="1"
+                android:background="@drawable/bolder_table"
                 android:gravity="center"
-                android:textStyle="bold"
+                android:textColor="#000000"
                 android:textSize="@dimen/font_18"
-                android:textColor="#000000" />
+                android:textStyle="bold" />
         </TableRow>
     </TableRow>
 </TableLayout>

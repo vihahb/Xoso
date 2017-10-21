@@ -1,7 +1,6 @@
 package com.xproject.xoso.xoso.view.activity;
 
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;

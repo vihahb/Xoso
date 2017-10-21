@@ -2,43 +2,43 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="48dp"
+    android:background="@drawable/bolder_table"
     android:orientation="horizontal"
-    android:weightSum="3"
-    android:background="@drawable/bolder_table">
+    android:weightSum="3">
 
     <TextView
         android:id="@+id/tv_number"
-        android:background="@drawable/bolder_table"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="0.5"
+        android:background="@drawable/bolder_table"
         android:gravity="center"
-        android:textSize="@dimen/font_16"
-        android:textStyle="bold"
+        android:text="01"
         android:textColor="@color/black_75"
-        android:text="01" />
+        android:textSize="@dimen/font_16"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tv_visible_count"
-        android:background="@drawable/bolder_table"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:background="@drawable/bolder_table"
         android:gravity="center"
-        android:textStyle="bold"
-        android:textSize="@dimen/font_16"
+        android:text="241"
         android:textColor="@color/black_75"
-        android:text="241" />
+        android:textSize="@dimen/font_16"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tv_last_visible"
-        android:background="@drawable/bolder_table"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1.5"
+        android:background="@drawable/bolder_table"
         android:gravity="center"
-        android:textSize="@dimen/font_16"
-        android:textStyle="bold"
+        android:text="30/08/2017"
         android:textColor="@color/colorPrimary"
-        android:text="30/08/2017" />
+        android:textSize="@dimen/font_16"
+        android:textStyle="bold" />
 </LinearLayout>

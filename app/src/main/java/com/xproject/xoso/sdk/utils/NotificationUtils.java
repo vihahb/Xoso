@@ -8,11 +8,11 @@ public class NotificationUtils {
 
     public static NotificationUtils instance;
 
-    public NotificationUtils getInstance() {
-        return instance;
+    public static void createNotification(String title, String message, int resource) {
+
     }
 
-    public static void createNotification(String title, String message, int resource){
-
+    public NotificationUtils getInstance() {
+        return instance;
     }
 }

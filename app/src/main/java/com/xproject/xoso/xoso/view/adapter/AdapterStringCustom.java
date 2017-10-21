@@ -44,7 +44,7 @@ public class AdapterStringCustom extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        if(convertView == null){
+        if (convertView == null) {
             convertView = inflater.inflate(R.layout.item_province, parent, false);
         }
 
@@ -58,7 +58,7 @@ public class AdapterStringCustom extends BaseAdapter {
 
     @Override
     public View getDropDownView(int position, View convertView, ViewGroup parent) {
-        if(convertView == null){
+        if (convertView == null) {
             convertView = inflater.inflate(R.layout.item_province, parent, false);
         }
 

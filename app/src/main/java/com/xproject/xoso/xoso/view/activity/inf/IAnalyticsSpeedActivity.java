@@ -1,7 +1,6 @@
 package com.xproject.xoso.xoso.view.activity.inf;
 
 import com.xproject.xoso.xoso.model.entity.AnalyticsSetNumber;
-import com.xproject.xoso.xoso.model.entity.ProvinceEntity;
 
 import java.util.List;
 

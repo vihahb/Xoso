@@ -14,8 +14,8 @@ import io.fabric.sdk.android.services.network.HttpRequest;
 
 public class MainModel extends BasicModel {
 
-    private static MainModel instance;
     private static final String TAG = "MainModel";
+    private static MainModel instance;
 
     public static synchronized MainModel getInstance() {
         if (instance == null)
@@ -26,7 +26,7 @@ public class MainModel extends BasicModel {
     public void getListDream(ResponseHandle responseHandle) {
         Authent authent = Constants.getAuthent();
         String basic_authent = "Basic " + HttpRequest.Base64.encode("XtelSolution:xoso.Xtel.123!@#");
-        String url_dream = SERVER_API + API_DREAM+ "?t=" + authent.getT() + "&k=" + authent.getK();
+        String url_dream = SERVER_API + API_DREAM + "?t=" + authent.getT() + "&k=" + authent.getK();
         requestServer.getApi(url_dream, basic_authent, responseHandle);
     }
 

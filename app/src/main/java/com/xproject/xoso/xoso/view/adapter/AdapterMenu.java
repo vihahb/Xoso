@@ -36,13 +36,13 @@ public class AdapterMenu extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == DEFAULT_TYPE){
+        if (viewType == DEFAULT_TYPE) {
             View view = LayoutInflater.from(context).inflate(R.layout.item_default_menu, parent, false);
             return new DefaultHolder(view);
-        } else if (viewType == HEADER_TYPE){
+        } else if (viewType == HEADER_TYPE) {
             View view = LayoutInflater.from(context).inflate(R.layout.item_header_menu, parent, false);
             return new HeaderHolder(view);
-        } else if (viewType == ITEM_TYPE){
+        } else if (viewType == ITEM_TYPE) {
             View view = LayoutInflater.from(context).inflate(R.layout.item_type_menu, parent, false);
             return new ItemHolder(view);
         }
@@ -51,7 +51,7 @@ public class AdapterMenu extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        if (holder instanceof DefaultHolder){
+        if (holder instanceof DefaultHolder) {
             DefaultHolder defaultHolder = (DefaultHolder) holder;
             DrawerMenu drawerMenu = menuList.get(position);
             defaultHolder.tv_name.setText(drawerMenu.getItemName());
@@ -60,21 +60,21 @@ public class AdapterMenu extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             defaultHolder.tv_name.setTypeface(typeface);
         }
 
-        if (holder instanceof HeaderHolder){
+        if (holder instanceof HeaderHolder) {
             HeaderHolder headerHolder = (HeaderHolder) holder;
             DrawerMenu drawerMenu = menuList.get(position);
             headerHolder.tv_name.setText(drawerMenu.getItemName());
         }
 
-        if (holder instanceof ItemHolder){
+        if (holder instanceof ItemHolder) {
             ItemHolder itemHolder = (ItemHolder) holder;
             DrawerMenu drawerMenu = menuList.get(position);
             itemHolder.tv_name.setText(drawerMenu.getItemName());
             itemHolder.item_icon.setImageResource(drawerMenu.getResource());
-            if (drawerMenu.getItemTime() != null){
+            if (drawerMenu.getItemTime() != null) {
                 itemHolder.tv_time.setText(drawerMenu.getItemTime());
             }
-            switch (drawerMenu.getLive_type()){
+            switch (drawerMenu.getLive_type()) {
                 case 1:
                     itemHolder.tv_time.setTextColor(context.getResources().getColor(android.R.color.holo_blue_dark));
                     break;
@@ -82,7 +82,7 @@ public class AdapterMenu extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     itemHolder.tv_time.setTextColor(context.getResources().getColor(R.color.colorAccent));
                     break;
                 case 3:
-                    itemHolder.tv_time.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_action_done, 0);
+                    itemHolder.tv_time.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_check_done, 0);
                     break;
             }
             itemHolder.initItemClick(position);
@@ -91,13 +91,13 @@ public class AdapterMenu extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemViewType(int position) {
-        if (menuList.get(position).getType() == HEADER_TYPE){
+        if (menuList.get(position).getType() == HEADER_TYPE) {
             //return header item
             return HEADER_TYPE;
-        }else if (menuList.get(position).getType() == ITEM_TYPE){
+        } else if (menuList.get(position).getType() == ITEM_TYPE) {
             //return item
             return ITEM_TYPE;
-        }else {
+        } else {
             //return logo
             return DEFAULT_TYPE;
         }
@@ -108,74 +108,15 @@ public class AdapterMenu extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return menuList.size();
     }
 
-    private class DefaultHolder extends RecyclerView.ViewHolder{
-
-        private TextView tv_name;
-        private ImageView item_icon;
-
-        public DefaultHolder(View itemView) {
-            super(itemView);
-            tv_name = (TextView) itemView.findViewById(R.id.tv_name);
-            item_icon = (ImageView) itemView.findViewById(R.id.item_icon);
-        }
-    }
-
-    private class HeaderHolder extends RecyclerView.ViewHolder{
-
-        private TextView tv_name;
-
-        public HeaderHolder(View itemView) {
-            super(itemView);
-            tv_name = (TextView) itemView.findViewById(R.id.tv_header_name);
-        }
-    }
-
-    private class ItemHolder extends RecyclerView.ViewHolder{
-
-        private TextView tv_name, tv_time;
-        private ImageView item_icon;
-
-        public ItemHolder(View itemView) {
-            super(itemView);
-            tv_name = (TextView) itemView.findViewById(R.id.tv_item_name);
-            tv_time = (TextView) itemView.findViewById(R.id.tv_item_time);
-            item_icon = (ImageView) itemView.findViewById(R.id.ic_item_icon);
-        }
-
-        public void initItemClick(final int position){
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    selectedPosition = position;
-                    notifyDataSetChanged();
-                    viewHome.itemDrawerClick(view, position);
-                }
-            });
-            if (selectedPosition==position){
-                setItemClick(itemView);
-            } else {
-                setItemNonClick(itemView);
-            }
-        }
-
-        private void setItemClick(View itemHolder) {
-            itemView.setBackgroundColor(context.getResources().getColor(R.color.black_10));
-        }
-
-        private void setItemNonClick(View itemHolder){
-            itemView.setBackgroundColor(context.getResources().getColor(android.R.color.white));
-        }
-    }
-
-    public void addList(List<DrawerMenu> menuList){
+    public void addList(List<DrawerMenu> menuList) {
         this.menuList.clear();
         this.menuList.addAll(menuList);
         Log.e("Adapter menu size", "Size " + this.menuList.size());
         notifyDataSetChanged();
     }
 
-    public void changeLiveItem(int position){
-        switch (position){
+    public void changeLiveItem(int position) {
+        switch (position) {
             case 1:
                 menuList.get(2).setItemTime("LIVE");
                 menuList.get(2).setLive_type(2);
@@ -192,26 +133,26 @@ public class AdapterMenu extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         notifyDataSetChanged();
     }
 
-    public void changeLiveDone(int position){
-        switch (position){
+    public void changeLiveDone(int position) {
+        switch (position) {
             case 1:
-                menuList.get(2).setItemTime("");
+                menuList.get(2).setItemTime("    ");
                 menuList.get(2).setLive_type(3);
                 break;
             case 2:
                 menuList.get(3).setLive_type(3);
-                menuList.get(3).setItemTime("");
+                menuList.get(3).setItemTime("    ");
                 break;
             case 3:
                 menuList.get(4).setLive_type(3);
-                menuList.get(4).setItemTime("");
+                menuList.get(4).setItemTime("    ");
                 break;
         }
         notifyDataSetChanged();
     }
 
-    public void changeEndLive(int position){
-        switch (position){
+    public void changeEndLive(int position) {
+        switch (position) {
             case 1:
                 menuList.get(2).setItemTime("DONE");
                 break;
@@ -224,7 +165,66 @@ public class AdapterMenu extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
     }
 
-    public void refreshItem(){
+    public void refreshItem() {
         notifyDataSetChanged();
+    }
+
+    private class DefaultHolder extends RecyclerView.ViewHolder {
+
+        private TextView tv_name;
+        private ImageView item_icon;
+
+        public DefaultHolder(View itemView) {
+            super(itemView);
+            tv_name = (TextView) itemView.findViewById(R.id.tv_name);
+            item_icon = (ImageView) itemView.findViewById(R.id.item_icon);
+        }
+    }
+
+    private class HeaderHolder extends RecyclerView.ViewHolder {
+
+        private TextView tv_name;
+
+        public HeaderHolder(View itemView) {
+            super(itemView);
+            tv_name = (TextView) itemView.findViewById(R.id.tv_header_name);
+        }
+    }
+
+    private class ItemHolder extends RecyclerView.ViewHolder {
+
+        private TextView tv_name, tv_time;
+        private ImageView item_icon;
+
+        public ItemHolder(View itemView) {
+            super(itemView);
+            tv_name = (TextView) itemView.findViewById(R.id.tv_item_name);
+            tv_time = (TextView) itemView.findViewById(R.id.tv_item_time);
+            item_icon = (ImageView) itemView.findViewById(R.id.ic_item_icon);
+        }
+
+        public void initItemClick(final int position) {
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    selectedPosition = position;
+                    notifyDataSetChanged();
+                    viewHome.itemDrawerClick(view, position);
+                }
+            });
+            if (selectedPosition == position) {
+                setItemClick(itemView);
+            } else {
+                setItemNonClick(itemView);
+            }
+        }
+
+        private void setItemClick(View itemHolder) {
+            itemView.setBackgroundColor(context.getResources().getColor(R.color.black_10));
+        }
+
+        private void setItemNonClick(View itemHolder) {
+            itemView.setBackgroundColor(context.getResources().getColor(android.R.color.white));
+        }
     }
 }

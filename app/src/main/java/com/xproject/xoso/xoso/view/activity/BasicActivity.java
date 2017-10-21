@@ -11,7 +11,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,7 +18,6 @@ import android.widget.Toast;
 import com.xtelsolution.xoso.R;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 /**
  * Created by vivhp on 9/1/2017.
@@ -84,7 +82,7 @@ public class BasicActivity extends IActivity {
     * */
     public void closeProgressBar() {
         try {
-            if (dialogProgress != null && dialogProgress.isShowing()){
+            if (dialogProgress != null && dialogProgress.isShowing()) {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -111,7 +109,7 @@ public class BasicActivity extends IActivity {
         }
     }
 
-    public void replaceFragment(int id, Fragment fragment){
+    public void replaceFragment(int id, Fragment fragment) {
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         //Khi được goi, fragment truyền vào sẽ thay thế vào vị trí FrameLayout trong Activity chính
@@ -155,7 +153,8 @@ public class BasicActivity extends IActivity {
 
 
     public void startActivity(Class clazz) {
-        startActivity(new Intent(this, clazz));
+        Intent intent = new Intent(getActivity(), clazz);
+        startActivity(intent);
     }
 
     @Override

@@ -7,11 +7,10 @@ import com.xproject.xoso.sdk.utils.RequestServer;
  */
 
 public class BasicModel {
-    public RequestServer requestServer = new RequestServer();
-
     public final String SERVER_API = "http://124.158.4.190:3000/";
     public final String API_REGION = "info/category";
     public final String API_DREAM = "dream";
     public final String API_RESULT = "result?type=category&";
     public final String API_RESULT_AREA = "result?type=area&";
+    public RequestServer requestServer = new RequestServer();
 }

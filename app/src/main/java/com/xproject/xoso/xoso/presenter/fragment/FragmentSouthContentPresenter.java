@@ -7,13 +7,13 @@ import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
 import com.xproject.xoso.sdk.callback.Icmd;
 import com.xproject.xoso.sdk.common.Constants;
-import com.xproject.xoso.sdk.common.SocketSingleton;
 import com.xproject.xoso.sdk.utils.JsonHelper;
 import com.xproject.xoso.sdk.utils.ResponseHandle;
 import com.xproject.xoso.xoso.model.MainModel;
 import com.xproject.xoso.xoso.model.entity.Authent;
 import com.xproject.xoso.xoso.model.entity.Error;
 import com.xproject.xoso.xoso.model.respond.RESP_GetLottery;
+import com.xproject.xoso.xoso.model.respond.RESP_LiveLoto;
 import com.xproject.xoso.xoso.model.respond.RESP_NewResult;
 import com.xproject.xoso.xoso.model.respond.RESP_Result;
 import com.xproject.xoso.xoso.view.fragment.inf.IFragmentSouthContent;
@@ -30,13 +30,151 @@ import java.util.Arrays;
 
 public class FragmentSouthContentPresenter {
 
-    private Socket socket;
-
-    private String cat_area_1, cat_area_2, cat_area_3;
     private static final String TAG = "FragmentSouthContentP";
     private static final String SERVER_ADDRESS = "";
-
+    private Socket socket;
+    private String cat_area_1, cat_area_2, cat_area_3, cat_area_4;
     private IFragmentSouthContent view;
+    private Emitter.Listener onConnectError = new Emitter.Listener() {
+        @Override
+        public void call(Object... args) {
+            Log.e(TAG, "Socket connect error");
+        }
+    };
+    private Emitter.Listener onDisconnect = new Emitter.Listener() {
+        @Override
+        public void call(Object... args) {
+            Log.d(TAG, "onDisconnect");
+        }
+    };
+    private Emitter.Listener onConnect = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            if (view.getActivity() != null) {
+                view.getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.e(TAG, "connect success: " + Arrays.toString(args));
+                        initAuthentSocket();
+
+                    }
+                });
+            }
+        }
+    };
+    private Emitter.Listener currentResult = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            if (view.getActivity() != null) {
+                view.getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.e(TAG, "get_current_result: " + args[0].toString());
+                        RESP_Result resp_result = JsonHelper.getObjectNoException(args[0].toString(), RESP_Result.class);
+                        Log.e(TAG, "Helper: " + resp_result.toString());
+                        switch (resp_result.getData().size()) {
+                            case 1:
+                                view.random(1);
+                                cat_area_1 = String.valueOf(resp_result.getData().get(0).getCat_id());
+                                break;
+                            case 2:
+                                view.random(2);
+                                cat_area_1 = String.valueOf(resp_result.getData().get(0).getCat_id());
+                                cat_area_2 = String.valueOf(resp_result.getData().get(1).getCat_id());
+                                break;
+                            case 3:
+                                view.random(3);
+                                cat_area_1 = String.valueOf(resp_result.getData().get(0).getCat_id());
+                                cat_area_2 = String.valueOf(resp_result.getData().get(1).getCat_id());
+                                cat_area_3 = String.valueOf(resp_result.getData().get(2).getCat_id());
+                                break;
+                            case 4:
+                                view.random(4);
+                                cat_area_1 = String.valueOf(resp_result.getData().get(0).getCat_id());
+                                cat_area_2 = String.valueOf(resp_result.getData().get(1).getCat_id());
+                                cat_area_3 = String.valueOf(resp_result.getData().get(2).getCat_id());
+                                cat_area_4 = String.valueOf(resp_result.getData().get(3).getCat_id());
+                                break;
+                        }
+                        view.setDataSocket(resp_result);
+                    }
+                });
+            }
+        }
+    };
+    private Emitter.Listener newResult = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            if (view.getActivity() != null) {
+                view.getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        RESP_NewResult newResult = JsonHelper.getObjectNoException(args[0].toString(), RESP_NewResult.class);
+                        Log.e(TAG, "new_result: " + Arrays.toString(args));
+                        if (newResult.getCat_id().equals(cat_area_1)) {
+                            view.setNewResult(newResult, 1);
+                        } else if (newResult.getCat_id().equals(cat_area_2)) {
+                            view.setNewResult(newResult, 2);
+                        } else if (newResult.getCat_id().equals(cat_area_3)) {
+                            view.setNewResult(newResult, 3);
+                        }else if (newResult.getCat_id().equals(cat_area_4)) {
+                            view.setNewResult(newResult, 4);
+                        }
+                    }
+                });
+            }
+        }
+    };
+    private Emitter.Listener done = new Emitter.Listener() {
+        @Override
+        public void call(Object... args) {
+            if (view.getActivity() != null) {
+                view.getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        socket.emit("get_current_result");
+                        view.setEndLive();
+                    }
+                });
+            }
+        }
+    };
+    private Emitter.Listener authenticate = new Emitter.Listener() {
+        @Override
+        public void call(Object... args) {
+            if (view.getActivity() != null) {
+                view.getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        socket.emit("get_current_result");
+                    }
+                });
+            }
+        }
+    };
+    private Emitter.Listener liveLoto = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            if (view.getActivity() != null) {
+                view.getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        RESP_LiveLoto liveLoto = JsonHelper.getObjectNoException(args[0].toString(), RESP_LiveLoto.class);
+                        Log.e(TAG, "call: liveloto " + liveLoto.toString());
+                        if (liveLoto.getCat_id().equals(cat_area_1)) {
+                            view.setLiveLoto(liveLoto, 1);
+                        } else if (liveLoto.getCat_id().equals(cat_area_2)) {
+                            view.setLiveLoto(liveLoto, 2);
+                        } else if (liveLoto.getCat_id().equals(cat_area_3)) {
+                            view.setLiveLoto(liveLoto, 3);
+                        }else if (liveLoto.getCat_id().equals(cat_area_4)) {
+                            view.setLiveLoto(liveLoto, 4);
+                        }
+                    }
+                });
+            }
+        }
+    };
     private Icmd icmd = new Icmd() {
         @Override
         public void excute(Object... params) {
@@ -87,28 +225,29 @@ public class FragmentSouthContentPresenter {
                     break;
 
                 case 2:
-                    if (view.getActivity()!=null){
-                     view.getActivity().runOnUiThread(new Runnable() {
-                         @Override
-                         public void run() {
-                             if (socket!=null){
-                                 if (!socket.connected()){
-                                     socket.connect();
-                                 } else {
-                                     socket.io().reconnection();
-                                 }
+                    if (view.getActivity() != null) {
+                        view.getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (socket != null) {
+                                    if (!socket.connected()) {
+                                        socket.connect();
+                                    } else {
+                                        socket.io().reconnection();
+                                    }
 
-                                 socket.on(Socket.EVENT_CONNECT, onConnect);
-                                 socket.on(Socket.EVENT_CONNECT_ERROR, onConnectError);
-                                 socket.on(Socket.EVENT_CONNECT_TIMEOUT, onConnectError);
-                                 socket.on(Socket.EVENT_DISCONNECT, onDisconnect);
-                                 socket.on("authenticated", authenticate);
-                                 socket.on("current_result", currentResult);
-                                 socket.on("new_result", newResult);
-                                 socket.on("done", done);
-                             }
-                         }
-                     });
+                                    socket.on(Socket.EVENT_CONNECT, onConnect);
+                                    socket.on(Socket.EVENT_CONNECT_ERROR, onConnectError);
+                                    socket.on(Socket.EVENT_CONNECT_TIMEOUT, onConnectError);
+                                    socket.on(Socket.EVENT_DISCONNECT, onDisconnect);
+                                    socket.on("authenticated", authenticate);
+                                    socket.on("current_result", currentResult);
+                                    socket.on("new_result", newResult);
+                                    socket.on("liveloto", liveLoto);
+                                    socket.on("done", done);
+                                }
+                            }
+                        });
                     }
                     break;
             }
@@ -134,11 +273,6 @@ public class FragmentSouthContentPresenter {
 
     public void connectSocket() {
         icmd.excute(2);
-//        if (NetworkUtils.getInstance().isOnline(view.getActivity().getApplicationContext())){
-//
-//        } else {
-//            view.getResultLotteryError(view.getActivity().getString(R.string.err_network));
-//        }
     }
 
     public void checkSocket() {
@@ -148,124 +282,10 @@ public class FragmentSouthContentPresenter {
     }
 
     public void disconnectSocket() {
-        if (socket!=null) {
+        if (socket != null) {
             checkSocket();
         }
     }
-
-    private Emitter.Listener onConnectError = new Emitter.Listener() {
-        @Override
-        public void call(Object... args) {
-            Log.e(TAG, "Socket connect error");
-        }
-    };
-
-    private Emitter.Listener onDisconnect = new Emitter.Listener() {
-        @Override
-        public void call(Object... args) {
-            Log.d(TAG, "onDisconnect");
-        }
-    };
-
-    private Emitter.Listener onConnect = new Emitter.Listener() {
-        @Override
-        public void call(final Object... args) {
-            if (view.getActivity() != null) {
-                view.getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Log.e(TAG, "connect success: " + Arrays.toString(args));
-                        initAuthentSocket();
-
-                    }
-                });
-            }
-        }
-    };
-
-    private Emitter.Listener currentResult = new Emitter.Listener() {
-        @Override
-        public void call(final Object... args) {
-            if (view.getActivity() != null) {
-                view.getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Log.e(TAG, "get_current_result: " + args[0].toString());
-                        RESP_Result resp_result = JsonHelper.getObjectNoException(args[0].toString(), RESP_Result.class);
-                        Log.e(TAG, "Helper: " + resp_result.toString());
-                        switch (resp_result.getData().size()) {
-                            case 1:
-                                view.random(1);
-                                cat_area_1 = String.valueOf(resp_result.getData().get(0).getCat_id());
-                                break;
-                            case 2:
-                                view.random(2);
-                                cat_area_1 = String.valueOf(resp_result.getData().get(0).getCat_id());
-                                cat_area_2 = String.valueOf(resp_result.getData().get(1).getCat_id());
-                                break;
-                            case 3:
-                                view.random(3);
-                                cat_area_1 = String.valueOf(resp_result.getData().get(0).getCat_id());
-                                cat_area_2 = String.valueOf(resp_result.getData().get(1).getCat_id());
-                                cat_area_3 = String.valueOf(resp_result.getData().get(2).getCat_id());
-                                break;
-                        }
-                        view.setDataSocket(resp_result);
-                    }
-                });
-            }
-        }
-    };
-
-    private Emitter.Listener newResult = new Emitter.Listener() {
-        @Override
-        public void call(final Object... args) {
-            if (view.getActivity() != null) {
-                view.getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        RESP_NewResult newResult = JsonHelper.getObjectNoException(args[0].toString(), RESP_NewResult.class);
-                        Log.e(TAG, "new_result: " + Arrays.toString(args));
-                        if (newResult.getCat_id().equals(cat_area_1)) {
-                            view.setNewResult(newResult, 1);
-                        } else if (newResult.getCat_id().equals(cat_area_2)) {
-                            view.setNewResult(newResult, 2);
-                        } else if (newResult.getCat_id().equals(cat_area_3)) {
-                            view.setNewResult(newResult, 3);
-                        }
-                    }
-                });
-            }
-        }
-    };
-
-    private Emitter.Listener done = new Emitter.Listener() {
-        @Override
-        public void call(Object... args) {
-            if (view.getActivity() != null) {
-                view.getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        view.setEndLive();
-                    }
-                });
-            }
-        }
-    };
-
-    private Emitter.Listener authenticate = new Emitter.Listener() {
-        @Override
-        public void call(Object... args) {
-            if (view.getActivity() != null){
-                view.getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        socket.emit("get_current_result");
-                    }
-                });
-            }
-        }
-    };
 
     private void initAuthentSocket() {
         Authent data = Constants.getAuthent();

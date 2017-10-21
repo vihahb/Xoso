@@ -1,6 +1,5 @@
 package com.xproject.xoso.xoso.view.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,8 +17,8 @@ import java.util.List;
 
 public class CycleLotoListInfo extends BasicActivity {
 
-    private RecyclerView rcl_cycle_loto;
     List<CycleLotoEntity> lotoEntityList;
+    private RecyclerView rcl_cycle_loto;
     private AdapterCycleLoto adapterCycleLoto;
     private SpeedTemp temp;
     private TextView tv_title;
@@ -37,11 +36,11 @@ public class CycleLotoListInfo extends BasicActivity {
         List<CycleLotoEntity> data = (List<CycleLotoEntity>) getIntent().getSerializableExtra(Constants.LIST_SPEED);
         temp = (SpeedTemp) getIntent().getSerializableExtra(Constants.TEMP);
 
-        if (temp !=null){
+        if (temp != null) {
             tv_title.setText("Thống kê chu kỳ lô tô " + temp.getName_cat());
         }
 
-        if (data!=null){
+        if (data != null) {
             adapterCycleLoto.refreshData(data);
         } else {
             showShortToast("Không có dữ liệu");
@@ -62,7 +61,7 @@ public class CycleLotoListInfo extends BasicActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home){
+        if (item.getItemId() == android.R.id.home) {
             finish();
         }
         return super.onOptionsItemSelected(item);

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.xproject.xoso.xoso.view.activity.BridgeForDayActivity">
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/size_4"
+            android:text="@string/region"
+            android:textSize="@dimen/font_12" />
+
+        <Spinner
+            android:id="@+id/sp_province"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_36"
+            android:background="@android:color/transparent" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="@dimen/size_5"
+            android:layout_marginRight="@dimen/size_5"
+            android:background="@color/black_20" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/size_8"
+            android:layout_weight="1">
+
+            <EditText
+                android:id="@+id/edt_number"
+                style="@style/EditTextAccent"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_48"
+                android:hint="Biên độ cầu chạy"
+                android:inputType="number"
+                android:maxLength="4"
+                android:textSize="15sp" />
+        </android.support.design.widget.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/size_4"
+                android:text="Chọn ngày trong tuần"
+                android:textSize="@dimen/font_12" />
+
+            <Spinner
+                android:id="@+id/sp_day"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_36"
+                android:background="@android:color/transparent" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/size_5"
+                android:layout_marginRight="@dimen/size_5"
+                android:background="@color/black_20" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <CheckBox
+        android:id="@+id/checkSpecial"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="16dp"
+        android:text="Gần giải đặc biệt hơn"
+        android:textAppearance="@style/TextAppearance.AppCompat.Notification.Title"
+        android:textColor="@color/black_75"
+        android:textSize="16sp"
+        android:theme="@style/checkBoxStyle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+
+    <Button
+        android:id="@+id/btn_result"
+        style="@style/Button_app"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/size_36"
+        android:layout_marginLeft="@dimen/size_64"
+        android:layout_marginRight="@dimen/size_64"
+        android:layout_marginTop="16dp"
+        android:text="@string/view_result"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkSpecial" />
+
+</android.support.constraint.ConstraintLayout>

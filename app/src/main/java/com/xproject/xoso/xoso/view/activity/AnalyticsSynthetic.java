@@ -1,12 +1,7 @@
 package com.xproject.xoso.xoso.view.activity;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -23,7 +18,6 @@ import com.xproject.xoso.sdk.utils.TimeUtils;
 import com.xproject.xoso.xoso.model.entity.AnalyticsSetNumber;
 import com.xproject.xoso.xoso.model.entity.ProvinceEntity;
 import com.xproject.xoso.xoso.model.entity.SpeedTemp;
-import com.xproject.xoso.xoso.model.entity.SyntheticEntity;
 import com.xproject.xoso.xoso.presenter.activity.AnalyticsSyntheticPresenter;
 import com.xproject.xoso.xoso.view.activity.inf.IAnalyticsSynthetic;
 import com.xproject.xoso.xoso.view.adapter.AdapterSpinner;
@@ -34,7 +28,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class AnalyticsSynthetic extends BasicActivity implements View.OnClickListener, IAnalyticsSynthetic{
+public class AnalyticsSynthetic extends BasicActivity implements View.OnClickListener, IAnalyticsSynthetic {
     private EditText edt_begin, edt_end;
     private Spinner sp_province, sp_type;
     private CheckBox checkSpecial;
@@ -101,7 +95,7 @@ public class AnalyticsSynthetic extends BasicActivity implements View.OnClickLis
     private void setDefaultTime(EditText edt_begin, EditText edt_end) {
         Calendar calendarToday = Calendar.getInstance();
         int toDay = calendarToday.get(Calendar.DAY_OF_MONTH);
-        int month = (calendarToday.get(Calendar.MONTH))+1;
+        int month = (calendarToday.get(Calendar.MONTH)) + 1;
         int year = calendarToday.get(Calendar.YEAR);
 
         long milisTimeToday = calendarToday.getTimeInMillis();
@@ -110,7 +104,7 @@ public class AnalyticsSynthetic extends BasicActivity implements View.OnClickLis
         Calendar calendarOldDay = Calendar.getInstance();
         calendarOldDay.setTimeInMillis(milisTimeOldDay);
         int oldDay = calendarOldDay.get(Calendar.DAY_OF_MONTH);
-        int oldMonth = (calendarOldDay.get(Calendar.MONTH))+1;
+        int oldMonth = (calendarOldDay.get(Calendar.MONTH)) + 1;
         int oldYear = calendarOldDay.get(Calendar.YEAR);
 
 
@@ -130,22 +124,22 @@ public class AnalyticsSynthetic extends BasicActivity implements View.OnClickLis
         edt_end.setText(temp.getDate_format_end());
     }
 
-    private boolean checkBeginEqualEnd(){
-        if (temp.getDate_begin() !=null && temp.getDate_end() !=null){
+    private boolean checkBeginEqualEnd() {
+        if (temp.getDate_begin() != null && temp.getDate_end() != null) {
             Calendar calendarBegin = TimeUtils.getCalendarFromString(temp.getDate_begin());
             long time_begin = calendarBegin.getTimeInMillis();
 
             Calendar calendarEnd = TimeUtils.getCalendarFromString(temp.getDate_end());
             long time_end = calendarEnd.getTimeInMillis();
 
-            if (time_begin > time_end){
+            if (time_begin > time_end) {
                 showShortToast("Vui lòng chọn thời gian bắt đầu nhỏ hơn thời gian kết thúc.");
                 return false;
-            } else if (time_begin <= time_end){
+            } else if (time_begin <= time_end) {
                 return true;
             }
 
-        } else if (temp.getDate_begin() ==null){
+        } else if (temp.getDate_begin() == null) {
             showShortToast("Vui lòng kiểm tra ngày bắt đầu");
             return false;
         } else if (temp.getDate_end() == null) {
@@ -173,7 +167,7 @@ public class AnalyticsSynthetic extends BasicActivity implements View.OnClickLis
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 temp.setType_name(type.get(position));
-                switch (position){
+                switch (position) {
                     case 0:
                         temp.setType("tong_chan");
                         break;
@@ -212,8 +206,8 @@ public class AnalyticsSynthetic extends BasicActivity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_result:
-                if (checkBeginNotNull() && checkEndNotNull() && checkBeginEqualEnd()){
-                    if (checkSpecial.isChecked()){
+                if (checkBeginNotNull() && checkEndNotNull() && checkBeginEqualEnd()) {
+                    if (checkSpecial.isChecked()) {
                         temp.setOnly_special(true);
                     } else {
                         temp.setOnly_special(false);
@@ -225,7 +219,7 @@ public class AnalyticsSynthetic extends BasicActivity implements View.OnClickLis
                 TimeUtils.showDateTimePickerDialog(this, new DateTimePickerListener() {
                     @Override
                     public void onDateTimePickerListener(int year, int month, int day) {
-                        temp.setDate_begin(year + "-" + (month+1) + "-" + day);
+                        temp.setDate_begin(year + "-" + (month + 1) + "-" + day);
                         temp.setDate_format_begin(day + "/" + (month + 1) + "/" + year);
                         edt_begin.setText(day + "/" + (month + 1) + "/" + year);
                     }
@@ -235,7 +229,7 @@ public class AnalyticsSynthetic extends BasicActivity implements View.OnClickLis
                 TimeUtils.showDateTimePickerDialog(this, new DateTimePickerListener() {
                     @Override
                     public void onDateTimePickerListener(int year, int month, int day) {
-                        temp.setDate_end(year + "-" + (month+1) + "-" + day);
+                        temp.setDate_end(year + "-" + (month + 1) + "-" + day);
                         temp.setDate_format_end(day + "/" + (month + 1) + "/" + year);
                         edt_end.setText(day + "/" + (month + 1) + "/" + year);
                     }
@@ -246,7 +240,7 @@ public class AnalyticsSynthetic extends BasicActivity implements View.OnClickLis
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId()==android.R.id.home)
+        if (item.getItemId() == android.R.id.home)
             finish();
 
         return super.onOptionsItemSelected(item);
@@ -261,7 +255,7 @@ public class AnalyticsSynthetic extends BasicActivity implements View.OnClickLis
         }
     }
 
-    private boolean checkEndNotNull(){
+    private boolean checkEndNotNull() {
         if (TextUtils.isEmpty(edt_end.getText().toString())) {
             showShortToast("Vui lòng chọn ngày kết thúc");
             return false;
@@ -277,7 +271,7 @@ public class AnalyticsSynthetic extends BasicActivity implements View.OnClickLis
 
     @Override
     public void getSyntheticsError(String message) {
-        if (!TextUtils.isEmpty(message)){
+        if (!TextUtils.isEmpty(message)) {
             showShortToast(message);
         }
     }

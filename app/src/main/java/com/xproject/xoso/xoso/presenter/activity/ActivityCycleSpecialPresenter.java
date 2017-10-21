@@ -10,7 +10,6 @@ import com.xproject.xoso.xoso.model.AnalyticsModel;
 import com.xproject.xoso.xoso.model.entity.Error;
 import com.xproject.xoso.xoso.model.entity.ProvinceEntity;
 import com.xproject.xoso.xoso.model.entity.SpeedTemp;
-import com.xproject.xoso.xoso.model.respond.RESP_Basic;
 import com.xproject.xoso.xoso.model.respond.RESP_CycleSpecial;
 import com.xproject.xoso.xoso.view.activity.inf.IActivityCycleSpecial;
 
@@ -23,15 +22,10 @@ import java.util.List;
 public class ActivityCycleSpecialPresenter {
 
     private IActivityCycleSpecial view;
-
-    public ActivityCycleSpecialPresenter(IActivityCycleSpecial view) {
-        this.view = view;
-    }
-
     private Icmd icmd = new Icmd() {
         @Override
         public void excute(Object... params) {
-            switch ((int) params[0]){
+            switch ((int) params[0]) {
                 case 1:
                     view.showProgressBar(false, false, null, "Đang tải...");
                     SpeedTemp temp = (SpeedTemp) params[1];
@@ -55,11 +49,15 @@ public class ActivityCycleSpecialPresenter {
         }
     };
 
-    public List<ProvinceEntity> getCategory(){
+    public ActivityCycleSpecialPresenter(IActivityCycleSpecial view) {
+        this.view = view;
+    }
+
+    public List<ProvinceEntity> getCategory() {
         return DatabaseHelper.getInstance().getListOfObjects(ProvinceEntity.class);
     }
 
-    public void getCycleSpecial(SpeedTemp temp){
+    public void getCycleSpecial(SpeedTemp temp) {
         icmd.excute(1, temp);
     }
 }

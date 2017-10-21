@@ -7,7 +7,6 @@ import com.xproject.xoso.xoso.model.AnalyticsModel;
 import com.xproject.xoso.xoso.model.entity.Error;
 import com.xproject.xoso.xoso.model.entity.ProvinceEntity;
 import com.xproject.xoso.xoso.model.entity.SpeedTemp;
-import com.xproject.xoso.xoso.model.respond.RESP_Basic;
 import com.xproject.xoso.xoso.model.respond.RESP_CycleLoto;
 import com.xproject.xoso.xoso.view.activity.inf.IActivityCycleLotoView;
 
@@ -19,15 +18,10 @@ import java.util.List;
 
 public class ActivityCycleLotoPresenter {
     private IActivityCycleLotoView view;
-
-    public ActivityCycleLotoPresenter(IActivityCycleLotoView view) {
-        this.view = view;
-    }
-
     private Icmd icmd = new Icmd() {
         @Override
         public void excute(Object... params) {
-            switch ((int)params[0]){
+            switch ((int) params[0]) {
                 case 1:
                     view.showProgressBar(false, false, null, "Đang tải...");
                     SpeedTemp temp = (SpeedTemp) params[1];
@@ -49,11 +43,15 @@ public class ActivityCycleLotoPresenter {
         }
     };
 
-    public List<ProvinceEntity> getCategory(){
+    public ActivityCycleLotoPresenter(IActivityCycleLotoView view) {
+        this.view = view;
+    }
+
+    public List<ProvinceEntity> getCategory() {
         return DatabaseHelper.getInstance().getListOfObjects(ProvinceEntity.class);
     }
 
-    public void getCycleLoto(SpeedTemp temp){
+    public void getCycleLoto(SpeedTemp temp) {
         icmd.excute(1, temp);
     }
 }

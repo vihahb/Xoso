@@ -38,7 +38,7 @@ public class AdapterFrequencyLoto extends RecyclerView.Adapter<RecyclerView.View
         if (holder instanceof ViewHolder) {
             FrequencyLotoEntity entity = entityList.get(position);
             ViewHolder viewHolder = (ViewHolder) holder;
-            if (entity.getDate_between()!=null){
+            if (entity.getDate_between() != null) {
                 viewHolder.setData(entity);
             }
         }
@@ -47,6 +47,14 @@ public class AdapterFrequencyLoto extends RecyclerView.Adapter<RecyclerView.View
     @Override
     public int getItemCount() {
         return entityList.size();
+    }
+
+    public void refreshData(List<FrequencyLotoEntity> frequencyLotoEntityList) {
+        if (entityList.size() > 0) {
+            entityList.clear();
+        }
+        entityList.addAll(frequencyLotoEntityList);
+        notifyDataSetChanged();
     }
 
     private class ViewHolder extends RecyclerView.ViewHolder {
@@ -66,17 +74,9 @@ public class AdapterFrequencyLoto extends RecyclerView.Adapter<RecyclerView.View
             tv_count_visible.setText(String.valueOf(data.getDate_between()));
             tv_count_append.setText(String.valueOf(data.getCount()));
 
-            if (TimeUtils.getCalendarFromString(data.getDate())!=null){
+            if (TimeUtils.getCalendarFromString(data.getDate()) != null) {
                 tv_day_of_week.setText(CalendarUtils.getDayName(TimeUtils.getCalendarFromString(data.getDate())));
             }
         }
-    }
-
-    public void refreshData(List<FrequencyLotoEntity> frequencyLotoEntityList) {
-        if (entityList.size() > 0) {
-            entityList.clear();
-        }
-        entityList.addAll(frequencyLotoEntityList);
-        notifyDataSetChanged();
     }
 }

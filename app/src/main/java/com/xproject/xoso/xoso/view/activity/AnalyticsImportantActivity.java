@@ -1,21 +1,13 @@
 package com.xproject.xoso.xoso.view.activity;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
 import com.xproject.xoso.sdk.common.Constants;
-import com.xproject.xoso.xoso.model.entity.AnalyticsSetNumber;
 import com.xproject.xoso.xoso.model.entity.ImportantEntity;
 import com.xproject.xoso.xoso.model.entity.ProvinceEntity;
 import com.xproject.xoso.xoso.model.entity.SpeedTemp;
@@ -30,11 +22,11 @@ import java.util.List;
 
 public class AnalyticsImportantActivity extends BasicActivity implements View.OnClickListener, IAnalyticsImportantActivity {
 
+    SpeedTemp temp;
     private Spinner sp_province, sp_analytics_type;
     private Button btn_get_result;
     private List<ProvinceEntity> provinceEntityList;
     private List<String> analytics_type;
-    SpeedTemp temp;
     private AnalyticsImportantActivityPresenter presenter;
     private int max = 0, min = 0;
 
@@ -51,10 +43,10 @@ public class AnalyticsImportantActivity extends BasicActivity implements View.On
         temp = new SpeedTemp();
         provinceEntityList = presenter.getCategory();
         analytics_type = new ArrayList<>();
-        analytics_type.add(0, "27 bộ số xuất hiện nhiều nhất trong 30 ngày trước.");
-        analytics_type.add(1, "10 bộ số xuất hiện ít nhất trong 30 ngày trước.");
-        analytics_type.add(2, "Những bộ số không xuất hiện trong vòng 10 lần gần nhất.");
-        analytics_type.add(3, "Những bộ số xuất hiện liên tiếp.");
+        analytics_type.add(0, "27 bộ số xuất hiện nhiều nhất trong 30 ngày trước");
+        analytics_type.add(1, "10 bộ số xuất hiện ít nhất trong 30 ngày trước");
+        analytics_type.add(2, "Những bộ số không xuất hiện trong vòng 10 lần gần nhất");
+        analytics_type.add(3, "Những bộ số xuất hiện liên tiếp");
         analytics_type.add(4, "Những bộ số xuất hiện liên tiếp và kết thúc vào ngày hôm nay");
 
         sp_province = findSpinner(R.id.sp_province);
@@ -111,7 +103,7 @@ public class AnalyticsImportantActivity extends BasicActivity implements View.On
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btn_get_result:
                 presenter.getImportant(temp);
                 break;
@@ -125,23 +117,23 @@ public class AnalyticsImportantActivity extends BasicActivity implements View.On
 
     @Override
     public void getImportantError(String mes) {
-        if (mes != null){
+        if (mes != null) {
             showShortToast(mes);
         }
     }
 
-    public int checkMax(List<ImportantEntity> list){
+    public int checkMax(List<ImportantEntity> list) {
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getCount() > max){
+            if (list.get(i).getCount() > max) {
                 max = list.get(i).getCount();
             }
         }
         return max;
     }
 
-    public int checkMin(List<ImportantEntity> list){
+    public int checkMin(List<ImportantEntity> list) {
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getCount() < max){
+            if (list.get(i).getCount() < max) {
                 min = list.get(i).getCount();
             }
         }

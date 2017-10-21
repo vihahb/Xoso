@@ -1,9 +1,6 @@
 package com.xproject.xoso.xoso.view.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,20 +15,18 @@ import com.xproject.xoso.xoso.model.entity.ProvinceEntity;
 import com.xproject.xoso.xoso.model.entity.SpeedTemp;
 import com.xproject.xoso.xoso.presenter.activity.ActivityCycleLotoPresenter;
 import com.xproject.xoso.xoso.view.activity.inf.IActivityCycleLotoView;
-import com.xproject.xoso.xoso.view.adapter.AdapterCycleLoto;
 import com.xproject.xoso.xoso.view.adapter.AdapterSpinner;
 import com.xtelsolution.xoso.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ActivityLotoCycle extends BasicActivity implements View.OnClickListener, IActivityCycleLotoView {
 
+    List<ProvinceEntity> provinceEntityList;
     private Spinner sp_province;
     private AdapterSpinner adapterSpinner;
     private EditText edt_number;
     private Button btn_result;
-    List<ProvinceEntity> provinceEntityList;
     private ActivityCycleLotoPresenter presenter;
     private SpeedTemp temp;
 
@@ -84,6 +79,7 @@ public class ActivityLotoCycle extends BasicActivity implements View.OnClickList
         if (list_result.length == 0) {
             // không nhập
             Log.e("abc", "onClick: 2 " + list_result.length);
+            showShortToast("Sai định dạng bộ số. Vui lòng nhập đúng định dạng.");
             return;
         } else {
             Log.e("abc", "onClick: 3 " + list_result.length);
@@ -103,7 +99,7 @@ public class ActivityLotoCycle extends BasicActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.btn_result){
+        if (v.getId() == R.id.btn_result) {
             checkRequirement();
         }
     }
@@ -122,7 +118,7 @@ public class ActivityLotoCycle extends BasicActivity implements View.OnClickList
 
     @Override
     public void getCycleLotoError(String message) {
-        if (message!=null){
+        if (message != null) {
             showShortToast(message);
         }
     }

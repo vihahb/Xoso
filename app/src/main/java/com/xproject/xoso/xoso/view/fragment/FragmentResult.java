@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,9 +16,9 @@ import com.xproject.xoso.sdk.common.Constants;
 import com.xproject.xoso.sdk.utils.SharedUtils;
 import com.xproject.xoso.sdk.utils.TimeUtils;
 import com.xproject.xoso.xoso.view.activity.MainActivity;
+import com.xproject.xoso.xoso.view.fragment.inf.OnCompleteListener;
 import com.xproject.xoso.xoso.view.widget.LockableViewPager;
 import com.xtelsolution.xoso.R;
-import com.xproject.xoso.xoso.view.fragment.inf.OnCompleteListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -33,11 +32,12 @@ public class FragmentResult extends BasicFragment {
 
 //    private BottomNavigationViewEx navigationTop;
 
-    private OnCompleteListener listener;
     LockableViewPager viewPager;
     TabLayout tabLayout;
-    TextView north, central, south, vietlott, tv_live_North, tv_live_Central, tv_live_South;
+    TextView north, central, south, tv_live_North, tv_live_Central, tv_live_South;
+    private OnCompleteListener listener;
     private FragmentPagerAdapter pagerAdapter;
+    private boolean live_one = false, live_two = false, live_three = false;
 
     public static FragmentResult newInstance() {
 
@@ -87,42 +87,6 @@ public class FragmentResult extends BasicFragment {
         viewPager.setAdapter(pagerAdapter);
         viewPager.setSwipeable(false);
         tabLayout = (TabLayout) view.findViewById(R.id.tabLayout);
-
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-
-                Activity activity = getActivity();
-                if (activity instanceof MainActivity) {
-                    MainActivity mainActivity = (MainActivity) activity;
-//                    switch (position) {
-//                        case 0:
-//                            mainActivity.setTitleToolbar("Kết quả xổ số miền Bắc");
-//                            break;
-//                        case 1:
-//                            mainActivity.setTitleToolbar("Kết quả xổ số miền Trung");
-//                            break;
-//                        case 2:
-//                            mainActivity.setTitleToolbar("Kết quả xổ số miền Nam");
-//                            break;
-//                        case 3:
-//                            mainActivity.setTitleToolbar("Kết quả xổ số Vietlott");
-//                            break;
-//                    }
-                }
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-
         tabLayout.setupWithViewPager(viewPager);
 
         /**
@@ -148,7 +112,7 @@ public class FragmentResult extends BasicFragment {
         } else {
             setViewTab3(false);
         }
-        setViewTab4();
+//        setViewTab4();
 
     }
 
@@ -162,7 +126,7 @@ public class FragmentResult extends BasicFragment {
 
         tv_live_North = (TextView) northView.findViewById(R.id.tv_live);
         north = (TextView) northView.findViewById(R.id.tab);
-        north.setText("M. Bắc");
+        north.setText("Miền Bắc");
         if (flag) {
             tv_live_North.setVisibility(View.VISIBLE);
         } else {
@@ -183,7 +147,7 @@ public class FragmentResult extends BasicFragment {
         View centralView = LayoutInflater.from(getContext()).inflate(R.layout.custom_view, null);
         tv_live_Central = (TextView) centralView.findViewById(R.id.tv_live);
         central = (TextView) centralView.findViewById(R.id.tab);
-        central.setText("M. Trung");
+        central.setText("Miền Trung");
         if (flag) {
             tv_live_Central.setVisibility(View.VISIBLE);
         } else {
@@ -204,7 +168,7 @@ public class FragmentResult extends BasicFragment {
         View southView = LayoutInflater.from(getContext()).inflate(R.layout.custom_view, null);
         tv_live_South = (TextView) southView.findViewById(R.id.tv_live);
         south = (TextView) southView.findViewById(R.id.tab);
-        south.setText("M. Nam");
+        south.setText("Miền Nam");
 
         if (flag) {
             tv_live_South.setVisibility(View.VISIBLE);
@@ -217,21 +181,21 @@ public class FragmentResult extends BasicFragment {
 
     }
 
-    private void setViewTab4() {
-        /**
-         * Set custom View for South result*/
-        TabLayout.Tab tab = tabLayout.getTabAt(3);
-        View tabView = ((ViewGroup) tabLayout.getChildAt(0)).getChildAt(3);
-        tabView.requestLayout();
-        View vlView = LayoutInflater.from(getContext()).inflate(R.layout.custom_view, null);
-        tv_live_South = (TextView) vlView.findViewById(R.id.tv_live);
-        vietlott = (TextView) vlView.findViewById(R.id.tab);
-        vietlott.setText("Vietlott");
-
-        if (tab != null) {
-            tab.setCustomView(vlView);
-        }
-    }
+//    private void setViewTab4() {
+//        /**
+//         * Set custom View for South result*/
+//        TabLayout.Tab tab = tabLayout.getTabAt(3);
+//        View tabView = ((ViewGroup) tabLayout.getChildAt(0)).getChildAt(3);
+//        tabView.requestLayout();
+//        View vlView = LayoutInflater.from(getContext()).inflate(R.layout.custom_view, null);
+//        tv_live_South = (TextView) vlView.findViewById(R.id.tv_live);
+//        vietlott = (TextView) vlView.findViewById(R.id.tab);
+//        vietlott.setText("Vietlott");
+//
+//        if (tab != null) {
+//            tab.setCustomView(vlView);
+//        }
+//    }
 
     @Override
     public void onStart() {
@@ -275,19 +239,48 @@ public class FragmentResult extends BasicFragment {
     public void changeLive(int i) {
         if (viewPager != null) {
             viewPager.setCurrentItem(i);
+            MainActivity mainActivity = (MainActivity) getActivity();
             switch (i) {
                 case 0:
+                    if (live_two){
+                        reSetViewTab2(false);
+                        mainActivity.setFlagLive(false, 2);
+                    }
+                    if (live_three){
+                        reSetViewTab3(false);
+                        mainActivity.setFlagLive(false, 3);
+                    }
                     reSetViewTab1(true);
+                    mainActivity.setFlagLive(true, 1);
                     viewPager.setCurrentItem(0);
                     ((FragmentNorthResult) pagerAdapter.getItem(0)).setLive();
                     break;
                 case 1:
+                    if (live_three){
+                        reSetViewTab3(false);
+                        mainActivity.setFlagLive(false, 3);
+                    }
+
+                    if (live_one){
+                        reSetViewTab1(false);
+                        mainActivity.setFlagLive(false, 1);
+                    }
                     reSetViewTab2(true);
+                    mainActivity.setFlagLive(true, 2);
                     viewPager.setCurrentItem(1);
                     ((FragmentCentralResult) pagerAdapter.getItem(1)).setLive();
                     break;
                 case 2:
+                    if (live_one){
+                        reSetViewTab1(false);
+                        mainActivity.setFlagLive(false, 1);
+                    }
+                    if (live_two){
+                        reSetViewTab2(false);
+                        mainActivity.setFlagLive(false, 2);
+                    }
                     reSetViewTab3(true);
+                    mainActivity.setFlagLive(true, 3);
                     viewPager.setCurrentItem(2);
                     ((FragmentSouthResult) pagerAdapter.getItem(2)).setLive();
                     break;
@@ -298,6 +291,7 @@ public class FragmentResult extends BasicFragment {
     private void reSetViewTab1(boolean flag) {
         /**
          * Set custom View for South result*/
+        this.live_one = flag;
         TabLayout.Tab tab = tabLayout.getTabAt(0);
         View southView = null;
         if (tab != null) {
@@ -316,6 +310,7 @@ public class FragmentResult extends BasicFragment {
     private void reSetViewTab2(boolean flag) {
         /**
          * Set custom View for South result*/
+        this.live_two = flag;
         TabLayout.Tab tab = tabLayout.getTabAt(1);
         View southView = null;
         if (tab != null) {
@@ -334,6 +329,7 @@ public class FragmentResult extends BasicFragment {
     private void reSetViewTab3(boolean flag) {
         /**
          * Set custom View for South result*/
+        this.live_three = flag;
         TabLayout.Tab tab = tabLayout.getTabAt(2);
         View southView = null;
         if (tab != null) {
@@ -350,21 +346,29 @@ public class FragmentResult extends BasicFragment {
     }
 
     public void changeLiveEnd(int i) {
+        MainActivity mainActivity = (MainActivity) getActivity();
         if (viewPager != null) {
             switch (i) {
                 case 0:
                     reSetViewTab1(false);
+                    mainActivity.setFlagLive(false, 1);
                     break;
                 case 1:
                     reSetViewTab2(false);
+                    mainActivity.setFlagLive(false, 2);
                     break;
                 case 2:
                     reSetViewTab3(false);
+                    mainActivity.setFlagLive(false, 3);
                     break;
             }
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
 
     public static class FragmentPagerAdapter extends android.support.v4.app.FragmentPagerAdapter {
 
@@ -375,7 +379,6 @@ public class FragmentResult extends BasicFragment {
             fragmentList = new ArrayList<>();
             fragmentList.add(FragmentNorthResult.newInstance());
             fragmentList.add(FragmentCentralResult.newInstance());
-            fragmentList.add(FragmentSouthResult.newInstance());
             fragmentList.add(FragmentSouthResult.newInstance());
         }
 
@@ -397,26 +400,18 @@ public class FragmentResult extends BasicFragment {
             String title = null;
             switch (position) {
                 case 0:
-                    title = "M. Bắc";
+                    title = "Miền Bắc";
                     break;
                 case 1:
-                    title = "M. Trung";
+                    title = "Miền Trung";
                     break;
                 case 2:
-                    title = "M. Nam";
-                    break;
-                case 3:
-                    title = "Vietlott";
+                    title = "Miền Nam";
                     break;
             }
             return title;
         }
 
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
     }
 
 }

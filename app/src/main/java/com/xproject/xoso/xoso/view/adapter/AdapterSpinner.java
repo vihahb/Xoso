@@ -1,7 +1,6 @@
 package com.xproject.xoso.xoso.view.adapter;
 
 import android.app.Activity;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +19,8 @@ import java.util.List;
 public class AdapterSpinner extends BaseAdapter {
 
     List<ProvinceEntity> provinceList;
-    private Activity context;
     LayoutInflater inflater;
+    private Activity context;
 
     public AdapterSpinner(List<ProvinceEntity> provinceList, Activity context) {
         this.provinceList = provinceList;
@@ -47,7 +46,7 @@ public class AdapterSpinner extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        if(convertView == null){
+        if (convertView == null) {
             convertView = inflater.inflate(R.layout.item_province, parent, false);
         }
 
@@ -61,7 +60,7 @@ public class AdapterSpinner extends BaseAdapter {
 
     @Override
     public View getDropDownView(int position, View convertView, ViewGroup parent) {
-        if(convertView == null){
+        if (convertView == null) {
             convertView = inflater.inflate(R.layout.item_province, parent, false);
         }
 

@@ -35,21 +35,21 @@ public class FrequencyLotoInfoActivity extends BasicActivity {
     private void getData() {
         List<FrequencyLotoEntity> fre_list = (List<FrequencyLotoEntity>) getIntent().getSerializableExtra(Constants.LIST_SPEED);
         temp = (SpeedTemp) getIntent().getSerializableExtra(Constants.TEMP);
-        if (temp != null){
-            if (temp.getNumber().length() < 2){
+        if (temp != null) {
+            if (temp.getNumber().length() < 2) {
                 tv_title_speed.setText("Thống kê tần số nhịp " + temp.getName_cat() + " bộ số 0" + temp.getNumber());
             } else {
                 tv_title_speed.setText("Thống kê tần số nhịp " + temp.getName_cat() + " bộ số " + temp.getNumber());
             }
         }
-        if (fre_list.size() > 0){
+        if (fre_list.size() > 0) {
             for (int i = 0; i < fre_list.size(); i++) {
-                if (fre_list.get(i).getDate_between() == null){
+                if (fre_list.get(i).getDate_between() == null) {
                     fre_list.remove(i);
                 }
             }
             adapterFrequencyLoto.refreshData(fre_list);
-            if (getTotalAppend(fre_list)!=-1){
+            if (getTotalAppend(fre_list) != -1) {
                 tv_total_appends.setText(getTotalAppend(fre_list) + " lần");
             }
         }
@@ -69,15 +69,15 @@ public class FrequencyLotoInfoActivity extends BasicActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId()==android.R.id.home)
+        if (item.getItemId() == android.R.id.home)
             finish();
         return super.onOptionsItemSelected(item);
     }
 
-    private int getTotalAppend(List<FrequencyLotoEntity> lotoEntityList){
+    private int getTotalAppend(List<FrequencyLotoEntity> lotoEntityList) {
         int total = -1;
         for (int i = 0; i < lotoEntityList.size(); i++) {
-            total+=lotoEntityList.get(i).getCount();
+            total += lotoEntityList.get(i).getCount();
         }
         return total;
     }

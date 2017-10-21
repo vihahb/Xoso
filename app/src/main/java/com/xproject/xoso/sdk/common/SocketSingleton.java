@@ -8,8 +8,8 @@ import com.github.nkzawa.socketio.client.Socket;
 import java.net.URISyntaxException;
 
 public class SocketSingleton {
-    private static SocketSingleton instance;
     private static final String SERVER_ADDRESS = "http://124.158.4.190:3000/";
+    private static SocketSingleton instance;
     private Socket mSocket;
     private Context context;
 
@@ -18,8 +18,8 @@ public class SocketSingleton {
         this.mSocket = getServerSocket(area);
     }
 
-    public static SocketSingleton get(Context context, String area){
-        if(instance == null){
+    public static SocketSingleton get(Context context, String area) {
+        if (instance == null) {
             instance = getSync(context, area);
         }
         instance.context = context;
@@ -27,14 +27,14 @@ public class SocketSingleton {
     }
 
     private static synchronized SocketSingleton getSync(Context context, String area) {
-        if(instance == null){
+        if (instance == null) {
             instance = new SocketSingleton(context, area);
         }
         return instance;
     }
 
-    public Socket getSocket(){
-        if (this.mSocket!=null){
+    public Socket getSocket() {
+        if (this.mSocket != null) {
             return this.mSocket;
         } else {
             return null;

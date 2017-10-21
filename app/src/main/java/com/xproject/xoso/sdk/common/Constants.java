@@ -7,16 +7,14 @@ import com.xproject.xoso.xoso.model.entity.Authent;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Date;
 import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * Created by vivhp on 9/8/2017.
  */
 
 public class Constants {
-
-    private static final String TAG = "Constants";
 
     public static final String SERVER_API = "124.158.4.190:3000/";
     public static final String API_DREAM = "dream";
@@ -29,8 +27,6 @@ public class Constants {
     public static final String FLAG_CENTRAL = "flag_central";
     public static final String FLAG_SOUTH = "flag_south";
     public static final String FCM_TOKEN = "fcm_token";
-
-
     public static final String ACTION_TYPE = "action_type";
     public static final String LIST_SPEED = "LIST_SPEED";
     public static final String TEMP = "temp";
@@ -38,12 +34,12 @@ public class Constants {
     public static final String IMPORTANT = "important";
     public static final String TITLE = "title";
     public static final String OBJECT = "object";
-
+    public static final String START_LIVE = "start_live";
+    public static final String NOTIFY = "notify";
+    private static final String TAG = "Constants";
+    public static final String URL = "url";
     public static String SHARED_NAME = "xoso_pref";
     public static String DREAM_FLAG = "dream_flag";
-    public static final String START_LIVE = "start_live";
-
-    public static final String NOTIFY = "notify";
     public static String CATEGORY_FLAG = "CATEGORY_FLAG";
     public static String BEGIN = "begin";
     public static String END = "end";
@@ -55,7 +51,7 @@ public class Constants {
 
         Date date = new Date();
         Timestamp time_stamp = new Timestamp(date.getTime());
-        long time = ((long)Math.floor(time_stamp.getTime()))/1000;
+        long time = ((long) Math.floor(time_stamp.getTime())) / 1000;
         String key = "131295041195841654789342" + time;
 
         authent.setT(time);
@@ -75,8 +71,7 @@ public class Constants {
                 hashtext = "0" + hashtext;
             }
             return hashtext;
-        }
-        catch (NoSuchAlgorithmException e) {
+        } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
     }

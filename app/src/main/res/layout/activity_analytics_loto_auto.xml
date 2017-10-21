@@ -2,35 +2,35 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/constraintLayout"
     android:focusableInTouchMode="true"
     tools:context="com.xproject.xoso.xoso.view.activity.AnalyticsLotoAuto">
 
     <include
+        android:id="@+id/include5"
         layout="@layout/toolbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:id="@+id/include5" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/linearLayout5"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:gravity="bottom"
         android:orientation="vertical"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include5"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp">
+        app:layout_constraintTop_toBottomOf="@+id/include5">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -54,9 +54,9 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
+                android:layout_marginBottom="@dimen/size_8"
                 android:layout_marginLeft="@dimen/size_5"
                 android:layout_marginRight="@dimen/size_5"
-                android:layout_marginBottom="@dimen/size_8"
                 android:background="@color/black_20" />
         </LinearLayout>
 
@@ -105,21 +105,21 @@
         app:layout_constraintTop_toBottomOf="@+id/btn_get_result">
 
         <TextView
-            android:background="@drawable/bolder_table"
-            android:padding="@dimen/size_4"
             android:id="@+id/tv_title_day"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/bolder_table"
             android:gravity="center_horizontal"
+            android:padding="@dimen/size_4"
             android:text="Tổng số lô xiên tạo được là"
             android:textColor="@color/black_75"
             android:textSize="@dimen/size_14"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rcl_day_27"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 

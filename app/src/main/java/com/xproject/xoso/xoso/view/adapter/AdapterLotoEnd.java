@@ -19,9 +19,9 @@ import java.util.List;
 
 public class AdapterLotoEnd extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    private static final String TAG = "AdapterLotoEnd";
     List<LotoEnd> lotoEnd;
     private Context context;
-    private static final String TAG = "AdapterLotoEnd";
 
     public AdapterLotoEnd(List<LotoEnd> lotoEnd, Context context) {
         this.lotoEnd = lotoEnd;
@@ -36,7 +36,7 @@ public class AdapterLotoEnd extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof ViewHolder){
+        if (holder instanceof ViewHolder) {
             ViewHolder viewHolder = (ViewHolder) holder;
             LotoEnd data = lotoEnd.get(position);
             viewHolder.setData(data);
@@ -48,7 +48,14 @@ public class AdapterLotoEnd extends RecyclerView.Adapter<RecyclerView.ViewHolder
         return lotoEnd.size();
     }
 
-    private class ViewHolder extends RecyclerView.ViewHolder{
+    public void refreshAdapter(List<LotoEnd> endList) {
+        Log.e(TAG, "refreshAdapter: End Size " + lotoEnd.size());
+        this.lotoEnd.clear();
+        this.lotoEnd.addAll(endList);
+        notifyDataSetChanged();
+    }
+
+    private class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView tv_label, tv_value;
 
@@ -58,18 +65,11 @@ public class AdapterLotoEnd extends RecyclerView.Adapter<RecyclerView.ViewHolder
             tv_value = (TextView) itemView.findViewById(R.id.tvLotoDuoivalue);
         }
 
-        private void setData(LotoEnd data){
-            if (data!=null){
+        private void setData(LotoEnd data) {
+            if (data != null) {
                 tv_label.setText(data.getLabel());
                 tv_value.setText(data.getValue());
             }
         }
-    }
-
-    public void refreshAdapter(List<LotoEnd> endList){
-        Log.e(TAG, "refreshAdapter: End Size " + lotoEnd.size());
-        this.lotoEnd.clear();
-        this.lotoEnd.addAll(endList);
-        notifyDataSetChanged();
     }
 }

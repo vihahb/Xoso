@@ -13,6 +13,8 @@ import com.xproject.xoso.xoso.view.adapter.AdapterAnalyticsSpeedActivity;
 import com.xtelsolution.xoso.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class SpeedListActivity extends BasicActivity {
@@ -43,27 +45,36 @@ public class SpeedListActivity extends BasicActivity {
 
     public void getData() {
         int type_title = getIntent().getIntExtra(Constants.TITLE, 1);
-        if (type_title == 1){
+        if (type_title == 1) {
             initToolbar(R.id.toolbar, "Chi tiết thống kê nhanh");
-        } else if (type_title == 2){
+        } else if (type_title == 2) {
             initToolbar(R.id.toolbar, "Chi tiết thống kê theo tổng");
-        } else if (type_title == 3){
+        } else if (type_title == 3) {
             initToolbar(R.id.toolbar, "Chi tiết TK tổng hợp");
         }
 
         SpeedTemp temp = (SpeedTemp) getIntent().getSerializableExtra(Constants.TEMP);
-        if (temp!=null){
+        if (temp != null) {
             tv_title.setText(temp.getName_cat() + ", " + temp.getDate_format_begin() + " đến " + temp.getDate_format_end());
         }
         list = (List<AnalyticsSetNumber>) getIntent().getSerializableExtra(Constants.LIST_SPEED);
-        if (list.size() > 0){
+        if (list.size() > 0) {
+            Collections.sort(list, new Comparator<AnalyticsSetNumber>() {
+                @Override
+                public int compare(AnalyticsSetNumber o1, AnalyticsSetNumber o2) {
+                    if (Integer.parseInt(o1.getNumber()) == Integer.parseInt(o2.getNumber()))
+                        return 0;
+
+                    return Integer.parseInt(o1.getNumber()) < Integer.parseInt(o2.getNumber()) ? -1 : 1;
+                }
+            });
             adapter.refreshData(list);
         }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home){
+        if (item.getItemId() == android.R.id.home) {
             finish();
         }
         return super.onOptionsItemSelected(item);

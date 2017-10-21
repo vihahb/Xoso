@@ -11,23 +11,26 @@
     <ProgressBar
         android:id="@+id/dialog.progress.progressview"
         style="?android:attr/progressBarStyleLarge"
-        android:progressDrawable="@drawable/circular_progressbar"
         android:layout_width="@dimen/size_48"
         android:layout_height="@dimen/size_48"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
         android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="17dp"
+        android:layout_marginStart="17dp"
         android:maxHeight="@dimen/size_2"
         android:minHeight="@dimen/size_2"
         android:progress="50"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="17dp"
-        android:layout_marginStart="17dp" />
+        android:progressDrawable="@drawable/circular_progressbar" />
 
     <TextView
         android:id="@+id/tv_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
         android:ellipsize="end"
         android:gravity="center"
         android:maxLines="2"
@@ -35,11 +38,7 @@
         android:paddingRight="@dimen/size_24"
         android:text="@string/loading"
         android:textColor="@color/black_55"
-        android:textSize="@dimen/font_13"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
+        android:textSize="@dimen/font_13" />
 
 
     <!--<ProgressBar-->

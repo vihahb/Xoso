@@ -19,16 +19,11 @@ import java.util.List;
 public class ActivityCycleListSpecialPresenter {
 
     private IActivityCycleListSpecial view;
-
-    public ActivityCycleListSpecialPresenter(IActivityCycleListSpecial view) {
-        this.view = view;
-    }
-
     private Icmd icmd = new Icmd() {
         @Override
         public void excute(Object... params) {
             SpeedTemp temp = (SpeedTemp) params[1];
-            switch ((int)params[0]){
+            switch ((int) params[0]) {
                 case 1:
                     view.showProgressBar(false, false, null, "Đang tải...");
                     AnalyticsModel.getInstance().getCycleListLoto(temp.getNumber(), temp.getDate_begin(), temp.getDate_end(), temp.getId_cat(), temp.getAllOrOne(), new ResponseHandle<RESP_CycleLotoVip>(RESP_CycleLotoVip.class) {
@@ -66,15 +61,19 @@ public class ActivityCycleListSpecialPresenter {
         }
     };
 
+    public ActivityCycleListSpecialPresenter(IActivityCycleListSpecial view) {
+        this.view = view;
+    }
+
     public List<ProvinceEntity> getCategory() {
         return DatabaseHelper.getInstance().getListOfObjects(ProvinceEntity.class);
     }
 
-    public void getCycleListSpecial(SpeedTemp temp){
+    public void getCycleListSpecial(SpeedTemp temp) {
         icmd.excute(2, temp);
     }
 
-    public void getCycleListLoto(SpeedTemp temp){
+    public void getCycleListLoto(SpeedTemp temp) {
         icmd.excute(1, temp);
     }
 }

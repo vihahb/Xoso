@@ -8,7 +8,7 @@ import java.io.Serializable;
  * Created by vivhp on 10/12/2017.
  */
 
-public class StatsEntity implements Serializable{
+public class StatsEntity implements Serializable {
 
     @Expose
     private BeginResult begin_with;

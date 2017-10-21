@@ -1,46 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:id="@+id/ln_view"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/size_4"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/size_8"
+    android:paddingRight="@dimen/size_8">
+
     <LinearLayout
-        android:layout_marginTop="@dimen/size_4"
-        android:layout_marginLeft="@dimen/size_8"
-        android:layout_marginRight="@dimen/size_8"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <TextView
-            android:gravity="right"
             android:id="@+id/tv_date_value"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/size_4"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="29"
             android:textColor="@color/black_85"
-            android:textSize="@dimen/font_20"
-            android:text="29"/>
+            android:textSize="@dimen/font_16" />
+
         <TextView
-            android:gravity="left"
             android:id="@+id/tv_date_label"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/size_4"
-            android:textSize="@dimen/font_13"
-            android:textAllCaps="true"
-            android:text="THUR"/>
+            android:layout_width="24dp"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal|bottom"
+            android:text="Th 2"
+            android:textSize="@dimen/font_9" />
     </LinearLayout>
 
     <TextView
-        android:gravity="center"
         android:id="@+id/tv_month_value"
-        android:text="MAY"
-        android:textSize="@dimen/font_16"
-        android:textAllCaps="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textStyle="bold"/>
-    <View
-        android:id="@+id/selector"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/size_4"
-        android:background="@color/colorAccent"/>
+        android:gravity="center"
+        android:text="MAY"
+        android:textAllCaps="true"
+        android:textSize="@dimen/font_9" />
 </LinearLayout>

@@ -20,17 +20,17 @@ import com.xproject.xoso.xoso.view.activity.inf.IActivityCycleSpecial;
 import com.xproject.xoso.xoso.view.adapter.AdapterSpinner;
 import com.xtelsolution.xoso.R;
 
+import java.util.Calendar;
 import java.util.List;
 
 public class ActivityCycleSpecial extends BasicActivity implements IActivityCycleSpecial, View.OnClickListener {
 
     Spinner sp_province;
-
+    List<ProvinceEntity> provinceList;
     private EditText edt_query_date;
     private Button btn_result;
     private SpeedTemp temp;
     private AdapterSpinner provinceAdapter;
-    List<ProvinceEntity> provinceList;
     private ActivityCycleSpecialPresenter presenter;
 
     @Override
@@ -54,6 +54,7 @@ public class ActivityCycleSpecial extends BasicActivity implements IActivityCycl
         provinceAdapter = new AdapterSpinner(provinceList, this);
         sp_province.setAdapter(provinceAdapter);
         initSpinnerSelect();
+        setToDayDefault(edt_query_date);
     }
 
     private void initSpinnerSelect() {
@@ -87,31 +88,48 @@ public class ActivityCycleSpecial extends BasicActivity implements IActivityCycl
 
     @Override
     public void getCycleSpecialError(String mes) {
-        if (mes!=null){
+        if (mes != null) {
             showShortToast(mes);
         }
     }
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.btn_result){
+        if (v.getId() == R.id.btn_result) {
             checkRequirement();
-        } else if (v.getId() == R.id.edt_date_query){
-                TimeUtils.showDateTimePickerDialog(this, new DateTimePickerListener() {
-                    @Override
-                    public void onDateTimePickerListener(int year, int month, int day) {
-                        temp.setDate_begin(year + "-" + (month+1) + "-" + day);
-                        temp.setDate_format_begin(day + "/" + (month + 1) + "/" + year);
-                        edt_query_date.setText(day + "/" + (month + 1) + "/" + year);
-                    }
-                }, false);
+        } else if (v.getId() == R.id.edt_date_query) {
+            TimeUtils.showDateTimePickerDialog(this, new DateTimePickerListener() {
+                @Override
+                public void onDateTimePickerListener(int year, int month, int day) {
+                    temp.setDate_begin(year + "-" + (month + 1) + "-" + day);
+                    temp.setDate_format_begin(day + "/" + (month + 1) + "/" + year);
+                    edt_query_date.setText(day + "/" + (month + 1) + "/" + year);
+                }
+            }, false);
         }
     }
 
     private void checkRequirement() {
-        if (checkBeginNotNull()){
+        if (checkBeginNotNull()) {
             presenter.getCycleSpecial(temp);
         }
+    }
+
+    private void setToDayDefault(EditText edt_query_date) {
+        Calendar calendarToday = Calendar.getInstance();
+        int toDay = calendarToday.get(Calendar.DAY_OF_MONTH);
+        int month = (calendarToday.get(Calendar.MONTH)) + 1;
+        int year = calendarToday.get(Calendar.YEAR);
+
+        long milisTimeToday = calendarToday.getTimeInMillis();
+
+        String setDate_begin = year + "-" + month + "-" + toDay;
+        String setDate_format_begin = toDay + "/" + month + "/" + year;
+
+        temp.setDate_begin(setDate_begin);
+        temp.setDate_format_begin(setDate_format_begin);
+
+        edt_query_date.setText(temp.getDate_format_begin());
     }
 
     @Override

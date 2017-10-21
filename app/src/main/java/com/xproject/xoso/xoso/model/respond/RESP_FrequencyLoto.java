@@ -10,7 +10,7 @@ import java.util.List;
  * Created by vivhp on 10/10/2017.
  */
 
-public class RESP_FrequencyLoto extends RESP_Basic implements Serializable{
+public class RESP_FrequencyLoto extends RESP_Basic implements Serializable {
 
     @Expose
     private int sum;

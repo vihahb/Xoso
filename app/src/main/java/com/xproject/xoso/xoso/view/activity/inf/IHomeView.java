@@ -10,7 +10,7 @@ import java.util.List;
  * Created by vivhp on 9/5/2017.
  */
 
-public interface IHomeView extends BasicView{
+public interface IHomeView extends BasicView {
 
     void initMenuDrawer(List<DrawerMenu> menuList);
 

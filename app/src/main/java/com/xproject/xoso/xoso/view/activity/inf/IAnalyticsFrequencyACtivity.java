@@ -10,5 +10,6 @@ import java.util.List;
 
 public interface IAnalyticsFrequencyACtivity extends BasicView {
     void getFrequencysuccess(List<FrequencyEntity> data);
+
     void getFrequencyError(String message);
 }

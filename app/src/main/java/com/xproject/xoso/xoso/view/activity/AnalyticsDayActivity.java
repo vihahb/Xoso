@@ -1,12 +1,10 @@
 package com.xproject.xoso.xoso.view.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.xproject.xoso.sdk.common.Constants;
@@ -18,24 +16,21 @@ import com.xproject.xoso.xoso.presenter.activity.AnalyticsDayPresenter;
 import com.xproject.xoso.xoso.view.activity.inf.IAnalyticsDayActivity;
 import com.xproject.xoso.xoso.view.adapter.AdapterSpinner;
 import com.xproject.xoso.xoso.view.adapter.AdapterStringCustom;
-import com.xproject.xoso.xoso.view.fragment.inf.IAnalyticsNormal;
 import com.xtelsolution.xoso.R;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 public class AnalyticsDayActivity extends BasicActivity implements IAnalyticsDayActivity, View.OnClickListener {
 
+    int day_of_week, week_value;
+    SpeedTemp temp;
     private Button btn_result;
     private Spinner sp_province, sp_day, sp_week;
     private AdapterStringCustom adapterDay, adapterWeek;
     private AdapterSpinner provinceAdapter;
     private List<String> dayList, weekList;
     private List<ProvinceEntity> provinceEntityList;
-
-    int day_of_week, week_value;
-    SpeedTemp temp;
     private AnalyticsDayPresenter presenter;
 
     @Override
@@ -93,7 +88,7 @@ public class AnalyticsDayActivity extends BasicActivity implements IAnalyticsDay
         weekList.add("72 tuần trước");
         weekList.add("80 tuần trước");
 
-        adapterDay= new AdapterStringCustom(dayList, this);
+        adapterDay = new AdapterStringCustom(dayList, this);
         adapterWeek = new AdapterStringCustom(weekList, this);
 
         sp_day.setAdapter(adapterDay);
@@ -117,7 +112,7 @@ public class AnalyticsDayActivity extends BasicActivity implements IAnalyticsDay
         sp_week.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                switch (position){
+                switch (position) {
                     case 0:
                         temp.setWeek("4");
                         break;
@@ -172,14 +167,14 @@ public class AnalyticsDayActivity extends BasicActivity implements IAnalyticsDay
 
     @Override
     public void getDayError(String message) {
-        if (message!=null){
+        if (message != null) {
             showShortToast(message);
         }
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btn_result:
                 temp.setDate_end(TimeUtils.getToday());
                 presenter.getDay(temp);

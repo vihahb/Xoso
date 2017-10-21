@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by vivhp on 10/5/2017.
  */
 
-public class DateSelect implements Serializable{
+public class DateSelect implements Serializable {
     private int count;
     private int name;
 

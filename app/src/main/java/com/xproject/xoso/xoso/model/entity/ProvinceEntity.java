@@ -8,7 +8,7 @@ import io.realm.RealmObject;
  * Created by vivhp on 10/4/2017.
  */
 
-public class ProvinceEntity extends RealmObject{
+public class ProvinceEntity extends RealmObject {
 
     @Expose
     private int mavung;

@@ -38,4 +38,8 @@
     <dimen name="size_14">15dp</dimen>
     <dimen name="size_2">2dp</dimen>
     <dimen name="size_3">3dp</dimen>
+    <dimen name="size_1">1dp</dimen>
+    <dimen name="list_item_spacing">16dp</dimen>
+    <dimen name="list_item_spacing_half">8dp</dimen>
+    <dimen name="appbar_padding_top">8dp</dimen>
 </resources>

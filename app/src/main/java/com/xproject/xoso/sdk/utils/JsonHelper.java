@@ -41,7 +41,8 @@ public class JsonHelper {
             return null;
 
         try {
-            return gson.fromJson(json, new TypeToken<ArrayList<T>>() {}.getType());
+            return gson.fromJson(json, new TypeToken<ArrayList<T>>() {
+            }.getType());
         } catch (Exception e) {
             return null;
         }

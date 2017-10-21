@@ -34,7 +34,7 @@ public class AdapterBeginEndSum extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof ViewHolder){
+        if (holder instanceof ViewHolder) {
             CustomBeginEndSum entity = list.get(position);
             ViewHolder viewHolder = (ViewHolder) holder;
             viewHolder.setData(entity);
@@ -46,7 +46,15 @@ public class AdapterBeginEndSum extends RecyclerView.Adapter {
         return list.size();
     }
 
-    private class ViewHolder extends RecyclerView.ViewHolder{
+    public void refreshData(List<CustomBeginEndSum> entityList) {
+        if (list.size() > 0) {
+            list.clear();
+        }
+        list.addAll(entityList);
+        notifyDataSetChanged();
+    }
+
+    private class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView tv_number;
 
@@ -55,16 +63,8 @@ public class AdapterBeginEndSum extends RecyclerView.Adapter {
             tv_number = (TextView) itemView.findViewById(R.id.tv_number);
         }
 
-        public void setData(CustomBeginEndSum data){
+        public void setData(CustomBeginEndSum data) {
             tv_number.setText(data.getCount() + " lần");
         }
-    }
-
-    public void refreshData(List<CustomBeginEndSum> entityList){
-        if (list.size() > 0){
-            list.clear();
-        }
-        list.addAll(entityList);
-        notifyDataSetChanged();
     }
 }

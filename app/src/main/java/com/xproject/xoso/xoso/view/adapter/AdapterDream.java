@@ -9,10 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.xproject.xoso.xoso.model.entity.Dream;
 import com.xproject.xoso.xoso.view.activity.inf.IDream;
 import com.xtelsolution.xoso.R;
-import com.xproject.xoso.xoso.model.entity.Dream;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static android.content.ContentValues.TAG;
@@ -23,17 +24,17 @@ import static android.content.ContentValues.TAG;
 
 public class AdapterDream extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    private final int VIEW_TYPE_ITEM = 0;
+    private final int VIEW_TYPE_LOADING = 1;
     private Context context;
     private List<Dream> list;
     private IDream interfaces;
-    private final int VIEW_TYPE_ITEM = 0;
-    private final int VIEW_TYPE_LOADING = 1;
     private boolean isLoadMore;
 
 
-    public AdapterDream(Context context, List<Dream> list, IDream interfaces) {
+    public AdapterDream(Context context, IDream interfaces) {
         this.context = context;
-        this.list = list;
+        this.list = new ArrayList<>();
         this.interfaces = interfaces;
     }
 
@@ -42,8 +43,7 @@ public class AdapterDream extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         if (viewType == VIEW_TYPE_ITEM) {
             View view = LayoutInflater.from(context).inflate(R.layout.item_dream, parent, false);
             return new ItemHolder(view);
-        }
-        else if (viewType == VIEW_TYPE_LOADING){
+        } else if (viewType == VIEW_TYPE_LOADING) {
             View view = LayoutInflater.from(context).inflate(R.layout.layout_loading_item, parent, false);
             return new LoadingHolder(view);
         }
@@ -52,7 +52,7 @@ public class AdapterDream extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof ItemHolder){
+        if (holder instanceof ItemHolder) {
             ItemHolder itemHolder = (ItemHolder) holder;
             Dream dream = list.get(position);
             itemHolder.setData(dream);
@@ -66,10 +66,32 @@ public class AdapterDream extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public int getItemViewType(int position) {
-       return VIEW_TYPE_ITEM;
+        return VIEW_TYPE_ITEM;
     }
 
-    private class ItemHolder extends RecyclerView.ViewHolder{
+    public void setLoadMore(boolean isLoadMore) {
+        this.isLoadMore = isLoadMore;
+    }
+
+    public void setData(List<Dream> data) {
+        if (list.size() == 0) {
+            list.addAll(data);
+        } else {
+            list.addAll(list.size(), data);
+        }
+        notifyDataSetChanged();
+    }
+
+    public void updateList(List<Dream> list) {
+        if (this.list.size() > 0){
+            this.list.clear();
+        }
+        this.list.addAll(list);
+        Log.e(TAG, "updateList: " + list.size());
+        notifyDataSetChanged();
+    }
+
+    private class ItemHolder extends RecyclerView.ViewHolder {
 
         private TextView tv_dream_id, tv_dream_name, tv_dream_number;
 
@@ -80,14 +102,14 @@ public class AdapterDream extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             tv_dream_number = (TextView) itemView.findViewById(R.id.tv_dream_number);
         }
 
-        public void setData(Dream data){
+        public void setData(Dream data) {
             tv_dream_id.setText(String.valueOf(data.getDream_id()));
             tv_dream_name.setText(data.getDreamed());
-            tv_dream_number.setText(data.getNumber());
+            tv_dream_number.setText(data.getNumber().substring(2));
         }
     }
 
-    private class LoadingHolder extends RecyclerView.ViewHolder{
+    private class LoadingHolder extends RecyclerView.ViewHolder {
 
         private ProgressBar progressBar;
 
@@ -95,25 +117,6 @@ public class AdapterDream extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             super(itemView);
             progressBar = (ProgressBar) itemView.findViewById(R.id.progressBar1);
         }
-    }
-
-    public void setLoadMore(boolean isLoadMore){
-        this.isLoadMore = isLoadMore;
-    }
-
-    public void setData(List<Dream> data){
-        if (list.size() == 0){
-            list.addAll(data);
-        } else {
-            list.addAll(list.size(), data);
-        }
-        notifyDataSetChanged();
-    }
-    public void updateList(List<Dream> list){
-        list.clear();
-        this.list = list;
-        Log.e(TAG, "updateList: " + list.size());
-        notifyDataSetChanged();
     }
 
 }

@@ -33,11 +33,11 @@ public class AdapterLoto extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof ViewHolder){
+        if (holder instanceof ViewHolder) {
             String loto_value = lotoList.get(position);
             ViewHolder viewHolder = (ViewHolder) holder;
             viewHolder.tv_loto.setText(loto_value);
-            if (position == 0){
+            if (position == 0) {
                 viewHolder.tv_loto.setTextColor(context.getResources().getColor(R.color.colorPrimary));
             }
         }
@@ -54,7 +54,7 @@ public class AdapterLoto extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         notifyDataSetChanged();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView tv_loto;
 

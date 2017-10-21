@@ -1,12 +1,9 @@
 package com.xproject.xoso.sdk.utils;
 
 import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
 import android.content.Context;
-import android.provider.Settings;
 import android.util.Log;
 import android.widget.DatePicker;
-import android.widget.TimePicker;
 
 import com.xproject.xoso.sdk.callback.DateTimePickerListener;
 import com.xtelsolution.xoso.R;
@@ -18,11 +15,10 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class TimeUtils {
-    private static final String TAG = "TimeUtils";
-
     public static final Calendar FIRST_DAY_OF_TIME;
     public static final Calendar LAST_DAY_OF_TIME;
     public static final int DAYS_OF_TIME;
+    private static final String TAG = "TimeUtils";
 
     static {
         FIRST_DAY_OF_TIME = Calendar.getInstance();
@@ -114,7 +110,7 @@ public class TimeUtils {
         return simpleDateFormat.format(new Date(milliseconds));
     }
 
-    public static String getFormatTimeClient(String date){
+    public static String getFormatTimeClient(String date) {
         Date time = null;
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         try {
@@ -194,13 +190,7 @@ public class TimeUtils {
 
     }
 
-    public String convertTimeInMilisecondToDate(long time) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date date = new Date(time);
-        return dateFormat.format(date);
-    }
-
-    public static void showDateTimePickerDialog(final Context context, final DateTimePickerListener dateTimePickerListener,boolean large_than_today) {
+    public static void showDateTimePickerDialog(final Context context, final DateTimePickerListener dateTimePickerListener, boolean large_than_today) {
         final Calendar calendar = Calendar.getInstance();
         DatePickerDialog datePickerDialog = new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -209,7 +199,7 @@ public class TimeUtils {
                 dateTimePickerListener.onDateTimePickerListener(year, month, day);
             }
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-        if (!large_than_today){
+        if (!large_than_today) {
             datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
         }
         datePickerDialog.show();
@@ -229,12 +219,12 @@ public class TimeUtils {
         return -1;
     }
 
-    public static Calendar getCalendarFromString(String date_string){
+    public static Calendar getCalendarFromString(String date_string) {
         Calendar calendar = Calendar.getInstance();
         DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date date;
         try {
-             date = formatter.parse(date_string);
+            date = formatter.parse(date_string);
             calendar.setTime(date);
             return calendar;
         } catch (ParseException e) {
@@ -242,5 +232,11 @@ public class TimeUtils {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public String convertTimeInMilisecondToDate(long time) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date(time);
+        return dateFormat.format(date);
     }
 }

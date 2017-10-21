@@ -9,7 +9,7 @@ import java.util.List;
  * Created by vivhp on 9/12/2017.
  */
 
-public class EndResult implements Serializable{
+public class EndResult implements Serializable {
 
     @Expose
     private List<String> e0;

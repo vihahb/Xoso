@@ -9,7 +9,7 @@ import java.util.List;
  * Created by vivhp on 10/6/2017.
  */
 
-public class RESP_Frequency extends RESP_Basic{
+public class RESP_Frequency extends RESP_Basic {
 
     @Expose
     private List<FrequencyEntity> data;

@@ -3,22 +3,22 @@ package com.xproject.xoso.xoso.presenter.activity;
 import android.util.Log;
 
 import com.xproject.xoso.sdk.callback.Icmd;
+import com.xproject.xoso.sdk.callback.RealmListener;
 import com.xproject.xoso.sdk.common.Constants;
+import com.xproject.xoso.sdk.utils.DatabaseHelper;
 import com.xproject.xoso.sdk.utils.NetworkUtils;
+import com.xproject.xoso.sdk.utils.ResponseHandle;
+import com.xproject.xoso.sdk.utils.SharedUtils;
+import com.xproject.xoso.sdk.utils.TextUtils;
+import com.xproject.xoso.xoso.model.MainModel;
 import com.xproject.xoso.xoso.model.entity.DrawerMenu;
+import com.xproject.xoso.xoso.model.entity.Dream;
+import com.xproject.xoso.xoso.model.entity.Error;
 import com.xproject.xoso.xoso.model.entity.ProvinceEntity;
-import com.xproject.xoso.xoso.model.respond.RESP_Basic;
 import com.xproject.xoso.xoso.model.respond.RESP_Category;
 import com.xproject.xoso.xoso.model.respond.RESP_Dream;
 import com.xproject.xoso.xoso.view.activity.inf.IHomeView;
 import com.xtelsolution.xoso.R;
-import com.xproject.xoso.sdk.callback.RealmListener;
-import com.xproject.xoso.sdk.utils.DatabaseHelper;
-import com.xproject.xoso.sdk.utils.ResponseHandle;
-import com.xproject.xoso.sdk.utils.SharedUtils;
-import com.xproject.xoso.xoso.model.MainModel;
-import com.xproject.xoso.xoso.model.entity.Dream;
-import com.xproject.xoso.xoso.model.entity.Error;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,8 +42,13 @@ public class HomePresenter {
                         public void onSuccess(RESP_Dream obj) {
                             Log.e(TAG, "Dream size: " + obj.getData().size());
                             List<Dream> dreamList = new ArrayList<>();
-                            dreamList.addAll(obj.getData());
-                            if (obj.getData().size() > 0) {
+                            for (int i = 0; i < obj.getData().size(); i++) {
+                                dreamList.add(i, new Dream(obj.getData().get(i).getDream_id(),
+                                        obj.getData().get(i).getDreamed(),
+                                        obj.getData().get(i).getNumber(),
+                                        TextUtils.getInstance().unicodeToKoDauLowerCase(obj.getData().get(i).getDreamed())));
+                            }
+                            if (dreamList.size() > 0) {
                                 DatabaseHelper.getInstance().saveOrUpdateListOfObject(dreamList, new RealmListener() {
                                     @Override
                                     public void onSuccess() {
@@ -71,6 +76,7 @@ public class HomePresenter {
                         public void onSuccess(RESP_Category obj) {
                             List<ProvinceEntity> provinceList = new ArrayList<ProvinceEntity>();
                             provinceList.addAll(obj.getData());
+                            Log.e(TAG, "onSuccess: province lít" + provinceList.toString());
                             if (provinceList.size() > 0) {
                                 DatabaseHelper.getInstance().saveOrUpdateListOfObject(provinceList, new RealmListener() {
                                     @Override

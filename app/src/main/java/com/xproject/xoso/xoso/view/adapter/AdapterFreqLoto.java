@@ -18,7 +18,7 @@ import java.util.List;
 
 public class AdapterFreqLoto extends RecyclerView.Adapter {
 
-    List<Freq_statsEntity>list;
+    List<Freq_statsEntity> list;
     Context context;
 
     public AdapterFreqLoto(List<Freq_statsEntity> list, Context context) {
@@ -34,7 +34,7 @@ public class AdapterFreqLoto extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof ViewHolder){
+        if (holder instanceof ViewHolder) {
             Freq_statsEntity entity = list.get(position);
             ViewHolder viewHolder = (ViewHolder) holder;
             viewHolder.setData(entity);
@@ -46,7 +46,16 @@ public class AdapterFreqLoto extends RecyclerView.Adapter {
         return list.size();
     }
 
-    private class ViewHolder extends RecyclerView.ViewHolder{
+    public void refreshData(List<Freq_statsEntity> entityList) {
+        if (list.size() > 0) {
+            list.clear();
+        }
+
+        list.addAll(entityList);
+        notifyDataSetChanged();
+    }
+
+    private class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView tv_count, tv_number;
 
@@ -56,18 +65,9 @@ public class AdapterFreqLoto extends RecyclerView.Adapter {
             tv_count = (TextView) itemView.findViewById(R.id.tv_count);
         }
 
-        public void setData(Freq_statsEntity data){
+        public void setData(Freq_statsEntity data) {
             tv_number.setText(String.valueOf(data.getNumber()));
             tv_count.setText(String.valueOf(data.getCount()));
         }
-    }
-
-    public void refreshData(List<Freq_statsEntity> entityList){
-        if (list.size() > 0){
-            list.clear();
-        }
-
-        list.addAll(entityList);
-        notifyDataSetChanged();
     }
 }

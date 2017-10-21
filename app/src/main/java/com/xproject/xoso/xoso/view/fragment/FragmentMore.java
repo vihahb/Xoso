@@ -8,13 +8,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.xproject.xoso.sdk.common.Constants;
 import com.xproject.xoso.xoso.model.entity.GridMenu;
 import com.xproject.xoso.xoso.presenter.fragment.FragmentMorePresenter;
 import com.xproject.xoso.xoso.view.activity.DreamActivity;
-import com.xproject.xoso.xoso.view.fragment.inf.IFragmentMore;
-import com.xtelsolution.xoso.R;
+import com.xproject.xoso.xoso.view.activity.RandomSpinActivity;
+import com.xproject.xoso.xoso.view.activity.WebViewActivity;
 import com.xproject.xoso.xoso.view.adapter.AdapterGridMenu;
 import com.xproject.xoso.xoso.view.adapter.inf.ViewGrid;
+import com.xproject.xoso.xoso.view.fragment.inf.IFragmentMore;
+import com.xtelsolution.xoso.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,9 +70,24 @@ public class FragmentMore extends BasicFragment implements ViewGrid, IFragmentMo
 
     @Override
     public void onClickItem(int position) {
-        switch (position){
-            case 4:
+        switch (position) {
+            case 0:
                 startActivity(DreamActivity.class);
+                break;
+            case 1:
+                startActivity(RandomSpinActivity.class);
+                break;
+            case 3:
+                String url = "http://xoso.la/index.php?route=webview/lichquaythuong";
+                startActivity(WebViewActivity.class, Constants.URL, url);
+//                new FinestWebView.Builder(getActivity())
+//                    .updateTitleFromHtml(true)
+//                    .webViewJavaScriptEnabled(true)
+//                    .webViewAllowContentAccess(true)
+//                    .webViewLoadWithOverviewMode(true)
+//                    .webViewNeedInitialFocus(true)
+//                    .showIconBack(true)
+//                    .show("http://xoso.la/index.php?route=webview/lichquaythuong");
                 break;
         }
     }

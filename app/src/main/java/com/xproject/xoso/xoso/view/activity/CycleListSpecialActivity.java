@@ -30,6 +30,7 @@ import java.util.Calendar;
 import java.util.List;
 
 public class CycleListSpecialActivity extends BasicActivity implements IActivityCycleListSpecial, View.OnClickListener {
+    SpeedTemp temp;
     private EditText edt_begin, edt_end, edt_number_set;
     private TextView tv_title_result, tv_number_set, tv_description, tv_gan_score;
     private Spinner sp_province;
@@ -37,7 +38,6 @@ public class CycleListSpecialActivity extends BasicActivity implements IActivity
     private AdapterSpinner adapterSpinner;
     private List<ProvinceEntity> provinceEntityList;
     private CheckBox checkAll;
-    SpeedTemp temp;
     private ActivityCycleListSpecialPresenter presenter;
     private int local_type = -1;
 
@@ -109,13 +109,13 @@ public class CycleListSpecialActivity extends BasicActivity implements IActivity
             tv_title_result.setText(obj.getMessage());
         } else {
             String description = "Ngưỡng cực đại không xuất hiện dàn số là " + obj.getData().getMax_gan()
-                    + " ngày, tính cả ngày về, từ " + obj.getData().getStart()
-                    + " đến " + obj.getData().getEnd()
-                    + ". \n Lần cuối cùng xuất hiện dàn số theo khoảng ngày bạn đã chọn là ngày: " + obj.getData().getLast_appear();
+                    + " ngày, tính cả ngày về, từ " + TimeUtils.getFormatTimeClient(obj.getData().getStart())
+                    + " đến " + TimeUtils.getFormatTimeClient(obj.getData().getEnd())
+                    + ". \n Lần cuối cùng xuất hiện dàn số theo khoảng ngày bạn đã chọn là ngày: " + TimeUtils.getFormatTimeClient(obj.getData().getLast_appear());
             tv_description.setText(description);
 
             String gan_score = "Điểm gan đến nay là " + obj.getData().getCurrent_gan()
-                    + " ngày, không tính lần về gần nhất là ngày: " + obj.getData().getLast_appear_not_between();
+                    + " ngày, không tính lần về gần nhất là ngày: " + TimeUtils.getFormatTimeClient(obj.getData().getLast_appear_not_between());
             tv_gan_score.setText(gan_score);
 
 
@@ -154,7 +154,7 @@ public class CycleListSpecialActivity extends BasicActivity implements IActivity
                     String[] list_result = result.split("\\.");
                     Log.e("abc", "onClick: " + list_result.length);
 
-                     if (list_result.length>0){
+                    if (list_result.length > 0) {
                         Log.e("abc", "onClick: 3 " + list_result.length);
                         for (int i = list_result.length - 1; i >= 0; i--) {
                             if (list_result[i].length() > 2) {
@@ -167,9 +167,9 @@ public class CycleListSpecialActivity extends BasicActivity implements IActivity
                     result = result.replace(".", ",");
                     temp.setNumber(result);
 
-                    if (local_type == 1){
+                    if (local_type == 1) {
                         presenter.getCycleListLoto(temp);
-                    } else if (local_type == 2){
+                    } else if (local_type == 2) {
                         presenter.getCycleListSpecial(temp);
                     }
                 }
@@ -227,7 +227,7 @@ public class CycleListSpecialActivity extends BasicActivity implements IActivity
     private void setDefaultTime(EditText edt_begin, EditText edt_end) {
         Calendar calendarToday = Calendar.getInstance();
         int toDay = calendarToday.get(Calendar.DAY_OF_MONTH);
-        int month = (calendarToday.get(Calendar.MONTH))+1;
+        int month = (calendarToday.get(Calendar.MONTH)) + 1;
         int year = calendarToday.get(Calendar.YEAR);
 
         long milisTimeToday = calendarToday.getTimeInMillis();
@@ -236,7 +236,7 @@ public class CycleListSpecialActivity extends BasicActivity implements IActivity
         Calendar calendarOldDay = Calendar.getInstance();
         calendarOldDay.setTimeInMillis(milisTimeOldDay);
         int oldDay = calendarOldDay.get(Calendar.DAY_OF_MONTH);
-        int oldMonth = (calendarOldDay.get(Calendar.MONTH))+1;
+        int oldMonth = (calendarOldDay.get(Calendar.MONTH)) + 1;
         int oldYear = calendarOldDay.get(Calendar.YEAR);
 
 
@@ -257,22 +257,22 @@ public class CycleListSpecialActivity extends BasicActivity implements IActivity
 
     }
 
-    private boolean checkBeginEqualEnd(){
-        if (temp.getDate_begin() !=null && temp.getDate_end() !=null){
+    private boolean checkBeginEqualEnd() {
+        if (temp.getDate_begin() != null && temp.getDate_end() != null) {
             Calendar calendarBegin = TimeUtils.getCalendarFromString(temp.getDate_begin());
             long time_begin = calendarBegin.getTimeInMillis();
 
             Calendar calendarEnd = TimeUtils.getCalendarFromString(temp.getDate_end());
             long time_end = calendarEnd.getTimeInMillis();
 
-            if (time_begin > time_end){
+            if (time_begin > time_end) {
                 showShortToast("Vui lòng chọn thời gian bắt đầu nhỏ hơn thời gian kết thúc.");
                 return false;
-            } else if (time_begin <= time_end){
+            } else if (time_begin <= time_end) {
                 return true;
             }
 
-        } else if (temp.getDate_begin() ==null){
+        } else if (temp.getDate_begin() == null) {
             showShortToast("Vui lòng kiểm tra ngày bắt đầu");
             return false;
         } else if (temp.getDate_end() == null) {
@@ -293,8 +293,8 @@ public class CycleListSpecialActivity extends BasicActivity implements IActivity
 
     public void getData() {
         int type = getIntent().getIntExtra(Constants.ACTION_TYPE, -1);
-        if (type > 0){
-            switch (type){
+        if (type > 0) {
+            switch (type) {
                 case 1:
                     local_type = 1;
                     initToolbar(R.id.toolbar, "Chu kỳ dàn lô tô");

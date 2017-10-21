@@ -2,8 +2,9 @@ package com.xproject.xoso.sdk.utils;
 
 import android.os.AsyncTask;
 
-import com.xtelsolution.xoso.R;
 import com.xproject.xoso.xoso.ProjectApplication;
+import com.xproject.xoso.xoso.model.entity.Error;
+import com.xtelsolution.xoso.R;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -13,8 +14,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-
-import com.xproject.xoso.xoso.model.entity.Error;
 
 public class RequestServer {
     protected final String AUTHORIZATION = "Authorization";

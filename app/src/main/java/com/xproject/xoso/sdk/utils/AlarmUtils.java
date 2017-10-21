@@ -32,7 +32,6 @@ public class AlarmUtils {
     }
 
 
-
     public static void setNorthAlarm() {
 
         long startTime;
@@ -41,10 +40,10 @@ public class AlarmUtils {
         calendar.set(Calendar.MINUTE, 10);
         calendar.set(Calendar.SECOND, 0);
 
-        if (calendar.getTimeInMillis() > System.currentTimeMillis()){
+        if (calendar.getTimeInMillis() > System.currentTimeMillis()) {
             startTime = calendar.getTimeInMillis();
         } else {
-            startTime = calendar.getTimeInMillis()+ AlarmManager.INTERVAL_DAY;
+            startTime = calendar.getTimeInMillis() + AlarmManager.INTERVAL_DAY;
         }
 
         Log.e(TAG, "setNorthAlarm: " + startTime);
@@ -66,10 +65,10 @@ public class AlarmUtils {
         calendar.set(Calendar.MINUTE, 10);
         calendar.set(Calendar.SECOND, 0);
 
-        if (calendar.getTimeInMillis() > System.currentTimeMillis()){
+        if (calendar.getTimeInMillis() > System.currentTimeMillis()) {
             startTime = calendar.getTimeInMillis();
         } else {
-            startTime = calendar.getTimeInMillis()+ AlarmManager.INTERVAL_DAY;
+            startTime = calendar.getTimeInMillis() + AlarmManager.INTERVAL_DAY;
         }
         Log.e(TAG, "setCentralAlarm: " + startTime);
         Log.e(TAG, "setCentralAlarm in format: " + TimeUtils.getHourseFromMilisecond(startTime));
@@ -91,10 +90,10 @@ public class AlarmUtils {
         calendar.set(Calendar.MINUTE, 10);
         calendar.set(Calendar.SECOND, 0);
 
-        if (calendar.getTimeInMillis() > System.currentTimeMillis()){
+        if (calendar.getTimeInMillis() > System.currentTimeMillis()) {
             startTime = calendar.getTimeInMillis();
         } else {
-            startTime = calendar.getTimeInMillis()+ AlarmManager.INTERVAL_DAY;
+            startTime = calendar.getTimeInMillis() + AlarmManager.INTERVAL_DAY;
         }
 
         Intent notificationSouth = new Intent(context, AlarmReceiver.class);
@@ -114,10 +113,10 @@ public class AlarmUtils {
         calendar.set(Calendar.MINUTE, 15);
         calendar.set(Calendar.SECOND, 0);
 
-        if (calendar.getTimeInMillis() > System.currentTimeMillis()){
+        if (calendar.getTimeInMillis() > System.currentTimeMillis()) {
             startTime = calendar.getTimeInMillis();
         } else {
-            startTime = calendar.getTimeInMillis()+ AlarmManager.INTERVAL_DAY;
+            startTime = calendar.getTimeInMillis() + AlarmManager.INTERVAL_DAY;
         }
 
         Log.e(TAG, "setNorthAlarm: " + startTime);
@@ -139,10 +138,10 @@ public class AlarmUtils {
         calendar.set(Calendar.MINUTE, 15);
         calendar.set(Calendar.SECOND, 0);
 
-        if (calendar.getTimeInMillis() > System.currentTimeMillis()){
+        if (calendar.getTimeInMillis() > System.currentTimeMillis()) {
             startTime = calendar.getTimeInMillis();
         } else {
-            startTime = calendar.getTimeInMillis()+ AlarmManager.INTERVAL_DAY;
+            startTime = calendar.getTimeInMillis() + AlarmManager.INTERVAL_DAY;
         }
 
         Log.e(TAG, "setCentralAlarmFix: " + startTime);
@@ -164,10 +163,10 @@ public class AlarmUtils {
         calendar.set(Calendar.MINUTE, 15);
         calendar.set(Calendar.SECOND, 0);
 
-        if (calendar.getTimeInMillis() > System.currentTimeMillis()){
+        if (calendar.getTimeInMillis() > System.currentTimeMillis()) {
             startTime = calendar.getTimeInMillis();
         } else {
-            startTime = calendar.getTimeInMillis()+ AlarmManager.INTERVAL_DAY;
+            startTime = calendar.getTimeInMillis() + AlarmManager.INTERVAL_DAY;
         }
 
         Log.e(TAG, "setSouthAlarmFix: " + startTime);

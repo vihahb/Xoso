@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import com.xproject.xoso.sdk.utils.CalendarUtils;
 import com.xproject.xoso.sdk.utils.TimeUtils;
 import com.xproject.xoso.xoso.model.entity.BeginResult;
 import com.xproject.xoso.xoso.model.entity.ResultLottery;
+import com.xproject.xoso.xoso.model.respond.RESP_LiveLoto;
 import com.xproject.xoso.xoso.model.respond.RESP_NewResult;
 import com.xproject.xoso.xoso.model.respond.RESP_Result;
 import com.xproject.xoso.xoso.presenter.fragment.FragmentSouthContentPresenter;
@@ -37,29 +39,23 @@ import java.util.Random;
 
 public class FragmentSouthContent extends BasicFragment implements IFragmentSouthContent {
 
+    private static final String KEY_DATE = "date";
+    boolean isLive = false;
+    long millis;
     private ViewStub viewStub;
-
     private FragmentSouthContentPresenter presenter;
-
     private String getDateTime;
-
     private TextView tvContent, tv_title;
 
-    private NestedScrollView scroll_south;
-
-    private TableLayout table_1, table_2, table_3, table_4;
-
-    private ImageView img_mute;
-
 //    private OnLoadComplete loadComplete;
-
-    boolean isLive = false;
-
-    private String special_value, special_value_1, special_value_2, special_value_3;
+    private NestedScrollView scroll_south;
+    private TableLayout table_1, table_2, table_3, table_4;
 
     /**
      * Value table result lottery
      */
+    private ImageView img_mute;
+    private String special_value, special_value_1, special_value_2, special_value_3;
     /**
      * Table 1
      */
@@ -70,7 +66,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
             tv2_1, tv1_1, tvDb,
             tvLotoTitle1, tvLoto0_1, tvLoto1_1, tvLoto2_1, tvLoto3_1,
             tvLoto4_1, tvLoto5_1, tvLoto6_1, tvLoto7_1, tvLoto8_1, tvLoto9_1;
-
     /**
      * Table 2
      */
@@ -81,7 +76,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
             tv2_2, tv1_2, tvDb_2,
             tvLotoTitle2, tvLoto0_2, tvLoto1_2, tvLoto2_2, tvLoto3_2,
             tvLoto4_2, tvLoto5_2, tvLoto6_2, tvLoto7_2, tvLoto8_2, tvLoto9_2;
-
     /**
      * Table 3
      */
@@ -92,7 +86,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
             tv2_3, tv1_3, tvDb_3,
             tvLotoTitle3, tvLoto0_3, tvLoto1_3, tvLoto2_3, tvLoto3_3,
             tvLoto4_3, tvLoto5_3, tvLoto6_3, tvLoto7_3, tvLoto8_3, tvLoto9_3;
-
     /**
      * Table 4
      */
@@ -103,45 +96,37 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
             tv2_4, tv1_4, tvDb_4,
             tvLotoTitle4, tvLoto0_4, tvLoto1_4, tvLoto2_4, tvLoto3_4,
             tvLoto4_4, tvLoto5_4, tvLoto6_4, tvLoto7_4, tvLoto8_4, tvLoto9_4;
-
-
-    long millis;
-
     /**
      * Roller Table 1
      */
     private Roller rl81, rl71, rl611, rl612, rl613, rl51,
             rl41, rl412, rl413, rl414, rl415, rl416, rl417,
             rl311, rl312, rl_second_1, rl_first_1, rl_special_1;
-
     /**
      * Roller Table 2
      */
     private Roller rl82, rl72, rl621, rl622, rl623, rl52,
             rl42, rl422, rl423, rl424, rl425, rl426, rl427,
             rl321, rl322, rl_second_2, rl_first_2, rl_special_2;
-
     /**
      * Roller Table 3
      */
     private Roller rl83, rl73, rl631, rl632, rl633, rl53,
             rl43, rl432, rl433, rl434, rl435, rl436, rl437,
             rl331, rl332, rl_second_3, rl_first_3, rl_special_3;
-
     /**
      * Roller Table 4
      */
     private Roller rl84, rl74, rl641, rl642, rl643, rl54,
             rl44, rl442, rl443, rl444, rl445, rl446, rl447,
             rl341, rl342, rl_second_4, rl_first_4, rl_special_4;
-
-
-    private static final String KEY_DATE = "date";
     private MediaPlayer player;
     private boolean toDay;
     private boolean mute = false;
     private AudioManager audioManager;
     private Context context;
+    private boolean isExistsBegin, isExistsBegin_2, isExistsBegin_3, isExistsBegin_4;
+    private String LotoSpecial_1, LotoSpecial_2, LotoSpecial_3, LotoSpecial_4;
 
     public static FragmentSouthContent newInstance(long date) {
         FragmentSouthContent fragmentFirst = new FragmentSouthContent();
@@ -206,9 +191,9 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
 
 //                loadComplete.onComplete();
 
-                if (toDay && TimeUtils.checkTimeInMilisecondNorth(16, 10, 23, 59)){
+                if (toDay && TimeUtils.checkTimeInMilisecondNorth(16, 10, 23, 59)) {
                     tv_not_yet.setVisibility(View.GONE);
-                } else if (toDay && TimeUtils.checkTimeInMilisecondNorth(0, 0, 16, 9)){
+                } else if (toDay && TimeUtils.checkTimeInMilisecondNorth(0, 0, 16, 9)) {
                     tv_not_yet.setVisibility(View.VISIBLE);
                 } else {
                     tv_not_yet.setVisibility(View.GONE);
@@ -1472,10 +1457,18 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                             rl_special_1.shutdownThread(true);
                         }
                         special_value = newResult.getValue();
+                        LotoSpecial_1 = newResult.getValue();
                         tvDb.setText(newResult.getValue());
                         break;
                 }
                 break;
+
+
+
+
+
+
+
 
             /**
              * Table 2*/
@@ -1630,10 +1623,16 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                             rl_special_2.shutdownThread(true);
                         }
                         special_value = newResult.getValue();
+                        LotoSpecial_2 = newResult.getValue();
                         tvDb_2.setText(newResult.getValue());
                         break;
                 }
                 break;
+
+
+
+
+
 
             /**
              * Table 3*/
@@ -1788,10 +1787,14 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                             rl_special_3.shutdownThread(true);
                         }
                         special_value = newResult.getValue();
+                        LotoSpecial_3 = newResult.getValue();
                         tvDb_3.setText(newResult.getValue());
                         break;
                 }
                 break;
+
+
+
 
 
             /**
@@ -1947,6 +1950,7 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                             rl_special_4.shutdownThread(true);
                         }
                         special_value = newResult.getValue();
+                        LotoSpecial_4 = newResult.getValue();
                         tvDb_4.setText(newResult.getValue());
                         break;
                 }
@@ -1962,11 +1966,28 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
     }
 
     @Override
+    public void setLiveLoto(RESP_LiveLoto liveLoto, int table) {
+        switch (table){
+            case 1:
+                setBegin1(liveLoto.getBegin_with());
+                break;
+            case 2:
+                setBegin2(liveLoto.getBegin_with());
+                break;
+            case 3:
+                setBegin3(liveLoto.getBegin_with());
+                break;
+            case 4:
+                setBegin4(liveLoto.getBegin_with());
+                break;
+        }
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
 
 //        if ((toDay && TimeUtils.checkTimeInMilisecondNorth(16, 10, 16, 40)) || isLive) {
-
 
         if ((toDay && TimeUtils.checkTimeInMilisecondNorth(16, 10, 16, 40)) || isLive) {
             isLive = false;
@@ -1998,6 +2019,723 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
             player.stop();
     }
 
+    private boolean getExistsBegin() {
+        return isExistsBegin;
+    }
+
+    private void setExistsBegin(boolean isExists) {
+        this.isExistsBegin = isExists;
+    }
+
+    private boolean getExistsBegin2() {
+        return isExistsBegin_2;
+    }
+
+    private void setExistsBegin2(boolean isExists) {
+        this.isExistsBegin_2 = isExists;
+    }
+
+    private boolean getExistsBegin3() {
+        return isExistsBegin_3;
+    }
+
+    private void setExistsBegin3(boolean isExists) {
+        this.isExistsBegin_3 = isExists;
+    }
+
+    private boolean getExistsBegin4() {
+        return isExistsBegin_4;
+    }
+
+    private void setExistsBegin4(boolean isExists) {
+        this.isExistsBegin_4 = isExists;
+    }
+
+    private boolean checkExitstInBegin1(String s) {
+        if (LotoSpecial_1 != null) {
+            if (s.equals(LotoSpecial_1) && !getExistsBegin()) {
+                setExistsBegin(true);
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            setExistsBegin(false);
+            return false;
+        }
+    }
+
+    private boolean checkExitstInBegin2(String s) {
+        if (LotoSpecial_2 != null) {
+            if (s.equals(LotoSpecial_2) && !getExistsBegin2()) {
+                setExistsBegin2(true);
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            setExistsBegin2(false);
+            return false;
+        }
+    }
+
+    private boolean checkExitstInBegin3(String s) {
+        if (LotoSpecial_3 != null) {
+            if (s.equals(LotoSpecial_3) && !getExistsBegin3()) {
+                setExistsBegin3(true);
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            setExistsBegin3(false);
+            return false;
+        }
+    }
+
+    private boolean checkExitstInBegin4(String s) {
+        if (LotoSpecial_4 != null) {
+            if (s.equals(LotoSpecial_4) && !getExistsBegin4()) {
+                setExistsBegin4(true);
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            setExistsBegin4(false);
+            return false;
+        }
+    }
+
+    public void setBegin1(BeginResult beginResult) {
+        if (beginResult != null) {
+            if (beginResult.getB0().size() > 0) {
+                String begin_0 = "";
+                for (int i = 0; i < beginResult.getB0().size(); i++) {
+                    if (checkExitstInBegin1(beginResult.getB0().get(i))) {
+                        begin_0 += "<font color='red'>" + beginResult.getB0().get(i) + "</font>" + " - ";
+                    } else {
+                        begin_0 += beginResult.getB0().get(i) + " - ";
+                    }
+                }
+                if (begin_0.length() > 0) {
+                    begin_0 = begin_0.substring(0, begin_0.length() - 3);
+                }
+                tvLoto0_1.setText(Html.fromHtml(begin_0));
+            }
+
+
+            if (beginResult.getB1().size() > 0) {
+                String begin_1 = "";
+                for (int i = 0; i < beginResult.getB1().size(); i++) {
+                    if (checkExitstInBegin1(beginResult.getB1().get(i))) {
+                        begin_1 += "<font color='red'>" + beginResult.getB1().get(i) + "</font>" + " - ";
+                    } else {
+                        begin_1 += beginResult.getB1().get(i) + " - ";
+                    }
+                }
+                if (begin_1.length() > 0) {
+                    begin_1 = begin_1.substring(0, begin_1.length() - 2);
+                }
+                tvLoto1_1.setText(Html.fromHtml(begin_1));
+            }
+
+            if (beginResult.getB2().size() > 0) {
+                String begin_2 = "";
+                for (int i = 0; i < beginResult.getB2().size(); i++) {
+                    if (checkExitstInBegin1(beginResult.getB2().get(i))) {
+                        begin_2 += "<font color='red'>" + beginResult.getB2().get(i) + "</font>" + " - ";
+                    } else {
+                        begin_2 += beginResult.getB2().get(i) + " - ";
+                    }
+                }
+                if (begin_2.length() > 0) {
+                    begin_2 = begin_2.substring(0, begin_2.length() - 2);
+                }
+                tvLoto2_1.setText(Html.fromHtml(begin_2));
+            }
+
+            if (beginResult.getB3().size() > 0) {
+                String begin_3 = "";
+                for (int i = 0; i < beginResult.getB3().size(); i++) {
+                    if (checkExitstInBegin1(beginResult.getB3().get(i))) {
+                        begin_3 += "<font color='red'>" + beginResult.getB3().get(i) + "</font>" + " - ";
+                    } else {
+                        begin_3 += beginResult.getB3().get(i) + " - ";
+                    }
+                }
+                if (begin_3.length() > 0) {
+                    begin_3 = begin_3.substring(0, begin_3.length() - 2);
+                }
+                tvLoto3_1.setText(Html.fromHtml(begin_3));
+            }
+
+            if (beginResult.getB4().size() > 0) {
+                String begin_4 = "";
+                for (int i = 0; i < beginResult.getB4().size(); i++) {
+                    if (checkExitstInBegin1(beginResult.getB4().get(i))) {
+                        begin_4 += "<font color='red'>" + beginResult.getB4().get(i) + "</font>" + " - ";
+                    } else {
+                        begin_4 += beginResult.getB4().get(i) + " - ";
+                    }
+                }
+                if (begin_4.length() > 0) {
+                    begin_4 = begin_4.substring(0, begin_4.length() - 2);
+                }
+
+                tvLoto4_1.setText(Html.fromHtml(begin_4));
+            }
+
+            if (beginResult.getB5().size() > 0) {
+                String begin_5 = "";
+                for (int i = 0; i < beginResult.getB5().size(); i++) {
+                    if (checkExitstInBegin1(beginResult.getB5().get(i))) {
+                        begin_5 += "<font color='red'>" + beginResult.getB5().get(i) + "</font>" + " - ";
+                    } else {
+                        begin_5 += beginResult.getB5().get(i) + " - ";
+                    }
+                }
+                if (begin_5.length() > 0) {
+                    begin_5 = begin_5.substring(0, begin_5.length() - 2);
+                }
+                tvLoto5_1.setText(Html.fromHtml(begin_5));
+            }
+
+            if (beginResult.getB6().size() > 0) {
+                String begin_6 = "";
+                for (int i = 0; i < beginResult.getB6().size(); i++) {
+                    if (checkExitstInBegin1(beginResult.getB6().get(i))) {
+                        begin_6 += "<font color='red'>" + beginResult.getB6().get(i) + "</font>" + " - ";
+                    } else {
+                        begin_6 += beginResult.getB6().get(i) + " - ";
+                    }
+                }
+                if (begin_6.length() > 0) {
+                    begin_6 = begin_6.substring(0, begin_6.length() - 2);
+                }
+                tvLoto6_1.setText(Html.fromHtml(begin_6));
+            }
+
+            if (beginResult.getB7().size() > 0) {
+                String begin_7 = "";
+                for (int i = 0; i < beginResult.getB7().size(); i++) {
+                    if (checkExitstInBegin1(beginResult.getB7().get(i))) {
+                        begin_7 += "<font color='red'>" + beginResult.getB7().get(i) + "</font>" + " - ";
+                    } else {
+                        begin_7 += beginResult.getB7().get(i) + " - ";
+                    }
+                }
+                if (begin_7.length() > 0) {
+                    begin_7 = begin_7.substring(0, begin_7.length() - 2);
+                }
+
+                tvLoto7_1.setText(Html.fromHtml(begin_7));
+            }
+
+            if (beginResult.getB8().size() > 0) {
+                String begin_8 = "";
+                for (int i = 0; i < beginResult.getB8().size(); i++) {
+                    if (checkExitstInBegin1(beginResult.getB8().get(i))) {
+                        begin_8 += "<font color='red'>" + beginResult.getB8().get(i) + "</font>" + " - ";
+                    } else {
+                        begin_8 += beginResult.getB8().get(i) + " - ";
+                    }
+                }
+                if (begin_8.length() > 0) {
+                    begin_8 = begin_8.substring(0, begin_8.length() - 2);
+                }
+                tvLoto8_1.setText(Html.fromHtml(begin_8));
+            }
+
+            if (beginResult.getB9().size() > 0) {
+                String begin_9 = "";
+                for (int i = 0; i < beginResult.getB9().size(); i++) {
+                    if (checkExitstInBegin1(beginResult.getB9().get(i))) {
+                        begin_9 += "<font color='red'>" + beginResult.getB9().get(i) + "</font>" + " - ";
+                    } else {
+                        begin_9 += beginResult.getB9().get(i) + " - ";
+                    }
+                }
+                if (begin_9.length() > 0) {
+                    begin_9 = begin_9.substring(0, begin_9.length() - 2);
+                }
+                tvLoto9_1.setText(Html.fromHtml(begin_9));
+            }
+
+        }
+    }
+
+    public void setBegin2(BeginResult beginResult) {
+        if (beginResult != null) {
+            if (beginResult.getB0().size() > 0) {
+                String begin_0 = "";
+                for (int i = 0; i < beginResult.getB0().size(); i++) {
+                    if (checkExitstInBegin2(beginResult.getB0().get(i))) {
+                        begin_0 += "<font color='red'>" + beginResult.getB0().get(i) + "</font>" + " - ";
+                    } else {
+                        begin_0 += beginResult.getB0().get(i) + " - ";
+                    }
+                }
+                if (begin_0.length() > 0) {
+                    begin_0 = begin_0.substring(0, begin_0.length() - 3);
+                }
+                tvLoto0_2.setText(Html.fromHtml(begin_0));
+            }
+
+
+            if (beginResult.getB1().size() > 0) {
+                String begin_1 = "";
+                for (int i = 0; i < beginResult.getB1().size(); i++) {
+                    if (checkExitstInBegin2(beginResult.getB1().get(i))) {
+                        begin_1 += "<font color='red'>" + beginResult.getB1().get(i) + "</font>" + " - ";
+                    } else {
+                        begin_1 += beginResult.getB1().get(i) + " - ";
+                    }
+                }
+                if (begin_1.length() > 0) {
+                    begin_1 = begin_1.substring(0, begin_1.length() - 2);
+                }
+                tvLoto1_2.setText(Html.fromHtml(begin_1));
+            }
+
+            if (beginResult.getB2().size() > 0) {
+                String begin_2 = "";
+                for (int i = 0; i < beginResult.getB2().size(); i++) {
+                    if (checkExitstInBegin2(beginResult.getB2().get(i))) {
+                        begin_2 += "<font color='red'>" + beginResult.getB2().get(i) + "</font>" + " - ";
+                    } else {
+                        begin_2 += beginResult.getB2().get(i) + " - ";
+                    }
+                }
+                if (begin_2.length() > 0) {
+                    begin_2 = begin_2.substring(0, begin_2.length() - 2);
+                }
+                tvLoto2_2.setText(Html.fromHtml(begin_2));
+            }
+
+            if (beginResult.getB3().size() > 0) {
+                String begin_3 = "";
+                for (int i = 0; i < beginResult.getB3().size(); i++) {
+                    if (checkExitstInBegin2(beginResult.getB3().get(i))) {
+                        begin_3 += "<font color='red'>" + beginResult.getB3().get(i) + "</font>" + " - ";
+                    } else {
+                        begin_3 += beginResult.getB3().get(i) + " - ";
+                    }
+                }
+                if (begin_3.length() > 0) {
+                    begin_3 = begin_3.substring(0, begin_3.length() - 2);
+                }
+                tvLoto3_2.setText(Html.fromHtml(begin_3));
+            }
+
+            if (beginResult.getB4().size() > 0) {
+                String begin_4 = "";
+                for (int i = 0; i < beginResult.getB4().size(); i++) {
+                    if (checkExitstInBegin2(beginResult.getB4().get(i))) {
+                        begin_4 += "<font color='red'>" + beginResult.getB4().get(i) + "</font>" + " - ";
+                    } else {
+                        begin_4 += beginResult.getB4().get(i) + " - ";
+                    }
+                }
+                if (begin_4.length() > 0) {
+                    begin_4 = begin_4.substring(0, begin_4.length() - 2);
+                }
+
+                tvLoto4_2.setText(Html.fromHtml(begin_4));
+            }
+
+            if (beginResult.getB5().size() > 0) {
+                String begin_5 = "";
+                for (int i = 0; i < beginResult.getB5().size(); i++) {
+                    if (checkExitstInBegin2(beginResult.getB5().get(i))) {
+                        begin_5 += "<font color='red'>" + beginResult.getB5().get(i) + "</font>" + " - ";
+                    } else {
+                        begin_5 += beginResult.getB5().get(i) + " - ";
+                    }
+                }
+                if (begin_5.length() > 0) {
+                    begin_5 = begin_5.substring(0, begin_5.length() - 2);
+                }
+                tvLoto5_2.setText(Html.fromHtml(begin_5));
+            }
+
+            if (beginResult.getB6().size() > 0) {
+                String begin_6 = "";
+                for (int i = 0; i < beginResult.getB6().size(); i++) {
+                    if (checkExitstInBegin2(beginResult.getB6().get(i))) {
+                        begin_6 += "<font color='red'>" + beginResult.getB6().get(i) + "</font>" + " - ";
+                    } else {
+                        begin_6 += beginResult.getB6().get(i) + " - ";
+                    }
+                }
+                if (begin_6.length() > 0) {
+                    begin_6 = begin_6.substring(0, begin_6.length() - 2);
+                }
+                tvLoto6_2.setText(Html.fromHtml(begin_6));
+            }
+
+            if (beginResult.getB7().size() > 0) {
+                String begin_7 = "";
+                for (int i = 0; i < beginResult.getB7().size(); i++) {
+                    if (checkExitstInBegin2(beginResult.getB7().get(i))) {
+                        begin_7 += "<font color='red'>" + beginResult.getB7().get(i) + "</font>" + " - ";
+                    } else {
+                        begin_7 += beginResult.getB7().get(i) + " - ";
+                    }
+                }
+                if (begin_7.length() > 0) {
+                    begin_7 = begin_7.substring(0, begin_7.length() - 2);
+                }
+
+                tvLoto7_2.setText(Html.fromHtml(begin_7));
+            }
+
+            if (beginResult.getB8().size() > 0) {
+                String begin_8 = "";
+                for (int i = 0; i < beginResult.getB8().size(); i++) {
+                    if (checkExitstInBegin2(beginResult.getB8().get(i))) {
+                        begin_8 += "<font color='red'>" + beginResult.getB8().get(i) + "</font>" + " - ";
+                    } else {
+                        begin_8 += beginResult.getB8().get(i) + " - ";
+                    }
+                }
+                if (begin_8.length() > 0) {
+                    begin_8 = begin_8.substring(0, begin_8.length() - 2);
+                }
+                tvLoto8_2.setText(Html.fromHtml(begin_8));
+            }
+
+            if (beginResult.getB9().size() > 0) {
+                String begin_9 = "";
+                for (int i = 0; i < beginResult.getB9().size(); i++) {
+                    if (checkExitstInBegin2(beginResult.getB9().get(i))) {
+                        begin_9 += "<font color='red'>" + beginResult.getB9().get(i) + "</font>" + " - ";
+                    } else {
+                        begin_9 += beginResult.getB9().get(i) + " - ";
+                    }
+                }
+                if (begin_9.length() > 0) {
+                    begin_9 = begin_9.substring(0, begin_9.length() - 2);
+                }
+                tvLoto9_2.setText(Html.fromHtml(begin_9));
+            }
+        }
+    }
+
+    public void setBegin3(BeginResult beginResult) {
+        if (beginResult != null) {
+            if (beginResult.getB0().size() > 0) {
+                String begin_0 = "";
+                for (int i = 0; i < beginResult.getB0().size(); i++) {
+                    if (checkExitstInBegin3(beginResult.getB0().get(i))) {
+                        begin_0 += "<font color='red'>" + beginResult.getB0().get(i) + "</font>" + " - ";
+                    } else {
+                        begin_0 += beginResult.getB0().get(i) + " - ";
+                    }
+                }
+                if (begin_0.length() > 0) {
+                    begin_0 = begin_0.substring(0, begin_0.length() - 3);
+                }
+                tvLoto0_3.setText(Html.fromHtml(begin_0));
+            }
+
+
+            if (beginResult.getB1().size() > 0) {
+                String begin_1 = "";
+                for (int i = 0; i < beginResult.getB1().size(); i++) {
+                    if (checkExitstInBegin3(beginResult.getB1().get(i))) {
+                        begin_1 += "<font color='red'>" + beginResult.getB1().get(i) + "</font>" + " - ";
+                    } else {
+                        begin_1 += beginResult.getB1().get(i) + " - ";
+                    }
+                }
+                if (begin_1.length() > 0) {
+                    begin_1 = begin_1.substring(0, begin_1.length() - 2);
+                }
+                tvLoto1_3.setText(Html.fromHtml(begin_1));
+            }
+
+            if (beginResult.getB2().size() > 0) {
+                String begin_2 = "";
+                for (int i = 0; i < beginResult.getB2().size(); i++) {
+                    if (checkExitstInBegin3(beginResult.getB2().get(i))) {
+                        begin_2 += "<font color='red'>" + beginResult.getB2().get(i) + "</font>" + " - ";
+                    } else {
+                        begin_2 += beginResult.getB2().get(i) + " - ";
+                    }
+                }
+                if (begin_2.length() > 0) {
+                    begin_2 = begin_2.substring(0, begin_2.length() - 2);
+                }
+                tvLoto2_3.setText(Html.fromHtml(begin_2));
+            }
+
+            if (beginResult.getB3().size() > 0) {
+                String begin_3 = "";
+                for (int i = 0; i < beginResult.getB3().size(); i++) {
+                    if (checkExitstInBegin3(beginResult.getB3().get(i))) {
+                        begin_3 += "<font color='red'>" + beginResult.getB3().get(i) + "</font>" + " - ";
+                    } else {
+                        begin_3 += beginResult.getB3().get(i) + " - ";
+                    }
+                }
+                if (begin_3.length() > 0) {
+                    begin_3 = begin_3.substring(0, begin_3.length() - 2);
+                }
+                tvLoto3_3.setText(Html.fromHtml(begin_3));
+            }
+
+            if (beginResult.getB4().size() > 0) {
+                String begin_4 = "";
+                for (int i = 0; i < beginResult.getB4().size(); i++) {
+                    if (checkExitstInBegin3(beginResult.getB4().get(i))) {
+                        begin_4 += "<font color='red'>" + beginResult.getB4().get(i) + "</font>" + " - ";
+                    } else {
+                        begin_4 += beginResult.getB4().get(i) + " - ";
+                    }
+                }
+                if (begin_4.length() > 0) {
+                    begin_4 = begin_4.substring(0, begin_4.length() - 2);
+                }
+
+                tvLoto4_3.setText(Html.fromHtml(begin_4));
+            }
+
+            if (beginResult.getB5().size() > 0) {
+                String begin_5 = "";
+                for (int i = 0; i < beginResult.getB5().size(); i++) {
+                    if (checkExitstInBegin3(beginResult.getB5().get(i))) {
+                        begin_5 += "<font color='red'>" + beginResult.getB5().get(i) + "</font>" + " - ";
+                    } else {
+                        begin_5 += beginResult.getB5().get(i) + " - ";
+                    }
+                }
+                if (begin_5.length() > 0) {
+                    begin_5 = begin_5.substring(0, begin_5.length() - 2);
+                }
+                tvLoto5_3.setText(Html.fromHtml(begin_5));
+            }
+
+            if (beginResult.getB6().size() > 0) {
+                String begin_6 = "";
+                for (int i = 0; i < beginResult.getB6().size(); i++) {
+                    if (checkExitstInBegin3(beginResult.getB6().get(i))) {
+                        begin_6 += "<font color='red'>" + beginResult.getB6().get(i) + "</font>" + " - ";
+                    } else {
+                        begin_6 += beginResult.getB6().get(i) + " - ";
+                    }
+                }
+                if (begin_6.length() > 0) {
+                    begin_6 = begin_6.substring(0, begin_6.length() - 2);
+                }
+                tvLoto6_3.setText(Html.fromHtml(begin_6));
+            }
+
+            if (beginResult.getB7().size() > 0) {
+                String begin_7 = "";
+                for (int i = 0; i < beginResult.getB7().size(); i++) {
+                    if (checkExitstInBegin3(beginResult.getB7().get(i))) {
+                        begin_7 += "<font color='red'>" + beginResult.getB7().get(i) + "</font>" + " - ";
+                    } else {
+                        begin_7 += beginResult.getB7().get(i) + " - ";
+                    }
+                }
+                if (begin_7.length() > 0) {
+                    begin_7 = begin_7.substring(0, begin_7.length() - 2);
+                }
+
+                tvLoto7_3.setText(Html.fromHtml(begin_7));
+            }
+
+            if (beginResult.getB8().size() > 0) {
+                String begin_8 = "";
+                for (int i = 0; i < beginResult.getB8().size(); i++) {
+                    if (checkExitstInBegin3(beginResult.getB8().get(i))) {
+                        begin_8 += "<font color='red'>" + beginResult.getB8().get(i) + "</font>" + " - ";
+                    } else {
+                        begin_8 += beginResult.getB8().get(i) + " - ";
+                    }
+                }
+                if (begin_8.length() > 0) {
+                    begin_8 = begin_8.substring(0, begin_8.length() - 2);
+                }
+                tvLoto8_3.setText(Html.fromHtml(begin_8));
+            }
+
+            if (beginResult.getB9().size() > 0) {
+                String begin_9 = "";
+                for (int i = 0; i < beginResult.getB9().size(); i++) {
+                    if (checkExitstInBegin3(beginResult.getB9().get(i))) {
+                        begin_9 += "<font color='red'>" + beginResult.getB9().get(i) + "</font>" + " - ";
+                    } else {
+                        begin_9 += beginResult.getB9().get(i) + " - ";
+                    }
+                }
+                if (begin_9.length() > 0) {
+                    begin_9 = begin_9.substring(0, begin_9.length() - 2);
+                }
+                tvLoto9_3.setText(Html.fromHtml(begin_9));
+            }
+        }
+    }
+
+    public void setBegin4(BeginResult beginResult) {
+        if (beginResult != null) {
+            if (beginResult.getB0().size() > 0) {
+                String begin_0 = "";
+                for (int i = 0; i < beginResult.getB0().size(); i++) {
+                    if (checkExitstInBegin4(beginResult.getB0().get(i))) {
+                        begin_0 += "<font color='red'>" + beginResult.getB0().get(i) + "</font>" + " - ";
+                    } else {
+                        begin_0 += beginResult.getB0().get(i) + " - ";
+                    }
+                }
+                if (begin_0.length() > 0) {
+                    begin_0 = begin_0.substring(0, begin_0.length() - 3);
+                }
+                tvLoto0_4.setText(Html.fromHtml(begin_0));
+            }
+
+
+            if (beginResult.getB1().size() > 0) {
+                String begin_1 = "";
+                for (int i = 0; i < beginResult.getB1().size(); i++) {
+                    if (checkExitstInBegin4(beginResult.getB1().get(i))) {
+                        begin_1 += "<font color='red'>" + beginResult.getB1().get(i) + "</font>" + " - ";
+                    } else {
+                        begin_1 += beginResult.getB1().get(i) + " - ";
+                    }
+                }
+                if (begin_1.length() > 0) {
+                    begin_1 = begin_1.substring(0, begin_1.length() - 2);
+                }
+                tvLoto1_4.setText(Html.fromHtml(begin_1));
+            }
+
+            if (beginResult.getB2().size() > 0) {
+                String begin_2 = "";
+                for (int i = 0; i < beginResult.getB2().size(); i++) {
+                    if (checkExitstInBegin4(beginResult.getB2().get(i))) {
+                        begin_2 += "<font color='red'>" + beginResult.getB2().get(i) + "</font>" + " - ";
+                    } else {
+                        begin_2 += beginResult.getB2().get(i) + " - ";
+                    }
+                }
+                if (begin_2.length() > 0) {
+                    begin_2 = begin_2.substring(0, begin_2.length() - 2);
+                }
+                tvLoto2_4.setText(Html.fromHtml(begin_2));
+            }
+
+            if (beginResult.getB3().size() > 0) {
+                String begin_3 = "";
+                for (int i = 0; i < beginResult.getB3().size(); i++) {
+                    if (checkExitstInBegin4(beginResult.getB3().get(i))) {
+                        begin_3 += "<font color='red'>" + beginResult.getB3().get(i) + "</font>" + " - ";
+                    } else {
+                        begin_3 += beginResult.getB3().get(i) + " - ";
+                    }
+                }
+                if (begin_3.length() > 0) {
+                    begin_3 = begin_3.substring(0, begin_3.length() - 2);
+                }
+                tvLoto3_4.setText(Html.fromHtml(begin_3));
+            }
+
+            if (beginResult.getB4().size() > 0) {
+                String begin_4 = "";
+                for (int i = 0; i < beginResult.getB4().size(); i++) {
+                    if (checkExitstInBegin4(beginResult.getB4().get(i))) {
+                        begin_4 += "<font color='red'>" + beginResult.getB4().get(i) + "</font>" + " - ";
+                    } else {
+                        begin_4 += beginResult.getB4().get(i) + " - ";
+                    }
+                }
+                if (begin_4.length() > 0) {
+                    begin_4 = begin_4.substring(0, begin_4.length() - 2);
+                }
+
+                tvLoto4_4.setText(Html.fromHtml(begin_4));
+            }
+
+            if (beginResult.getB5().size() > 0) {
+                String begin_5 = "";
+                for (int i = 0; i < beginResult.getB5().size(); i++) {
+                    if (checkExitstInBegin4(beginResult.getB5().get(i))) {
+                        begin_5 += "<font color='red'>" + beginResult.getB5().get(i) + "</font>" + " - ";
+                    } else {
+                        begin_5 += beginResult.getB5().get(i) + " - ";
+                    }
+                }
+                if (begin_5.length() > 0) {
+                    begin_5 = begin_5.substring(0, begin_5.length() - 2);
+                }
+                tvLoto5_4.setText(Html.fromHtml(begin_5));
+            }
+
+            if (beginResult.getB6().size() > 0) {
+                String begin_6 = "";
+                for (int i = 0; i < beginResult.getB6().size(); i++) {
+                    if (checkExitstInBegin4(beginResult.getB6().get(i))) {
+                        begin_6 += "<font color='red'>" + beginResult.getB6().get(i) + "</font>" + " - ";
+                    } else {
+                        begin_6 += beginResult.getB6().get(i) + " - ";
+                    }
+                }
+                if (begin_6.length() > 0) {
+                    begin_6 = begin_6.substring(0, begin_6.length() - 2);
+                }
+                tvLoto6_4.setText(Html.fromHtml(begin_6));
+            }
+
+            if (beginResult.getB7().size() > 0) {
+                String begin_7 = "";
+                for (int i = 0; i < beginResult.getB7().size(); i++) {
+                    if (checkExitstInBegin4(beginResult.getB7().get(i))) {
+                        begin_7 += "<font color='red'>" + beginResult.getB7().get(i) + "</font>" + " - ";
+                    } else {
+                        begin_7 += beginResult.getB7().get(i) + " - ";
+                    }
+                }
+                if (begin_7.length() > 0) {
+                    begin_7 = begin_7.substring(0, begin_7.length() - 2);
+                }
+
+                tvLoto7_4.setText(Html.fromHtml(begin_7));
+            }
+
+            if (beginResult.getB8().size() > 0) {
+                String begin_8 = "";
+                for (int i = 0; i < beginResult.getB8().size(); i++) {
+                    if (checkExitstInBegin4(beginResult.getB8().get(i))) {
+                        begin_8 += "<font color='red'>" + beginResult.getB8().get(i) + "</font>" + " - ";
+                    } else {
+                        begin_8 += beginResult.getB8().get(i) + " - ";
+                    }
+                }
+                if (begin_8.length() > 0) {
+                    begin_8 = begin_8.substring(0, begin_8.length() - 2);
+                }
+                tvLoto8_4.setText(Html.fromHtml(begin_8));
+            }
+
+            if (beginResult.getB9().size() > 0) {
+                String begin_9 = "";
+                for (int i = 0; i < beginResult.getB9().size(); i++) {
+                    if (checkExitstInBegin4(beginResult.getB9().get(i))) {
+                        begin_9 += "<font color='red'>" + beginResult.getB9().get(i) + "</font>" + " - ";
+                    } else {
+                        begin_9 += beginResult.getB9().get(i) + " - ";
+                    }
+                }
+                if (begin_9.length() > 0) {
+                    begin_9 = begin_9.substring(0, begin_9.length() - 2);
+                }
+                tvLoto9_4.setText(Html.fromHtml(begin_9));
+            }
+        }
+    }
+
     private void setResultLotteryTable1(String area, List<String> special,
                                         List<String> first,
                                         List<String> second,
@@ -2017,6 +2755,7 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
         if (special.size() > 0) {
             special_value = special.get(0);
             tvDb.setText(special.get(0));
+            LotoSpecial_1 = special.get(0).substring(4);
         }
 
         if (eight.size() > 0)
@@ -2108,120 +2847,7 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
             tv1_1.setText(first.get(0));
         /**
          * Dau loto*/
-
-        if (beginResult != null) {
-            if (beginResult.getB0().size() > 0) {
-                String begin_0 = "";
-                for (int i = 0; i < beginResult.getB0().size(); i++) {
-                    begin_0 += beginResult.getB0().get(i) + " - ";
-                }
-                if (begin_0.length() > 0) {
-                    begin_0 = begin_0.substring(0, begin_0.length() - 3);
-                }
-                tvLoto0_1.setText(begin_0);
-            }
-
-
-            if (beginResult.getB1().size() > 0) {
-                String begin_1 = "";
-                for (int i = 0; i < beginResult.getB1().size(); i++) {
-                    begin_1 += beginResult.getB1().get(i) + " - ";
-                }
-                if (begin_1.length() > 0) {
-                    begin_1 = begin_1.substring(0, begin_1.length() - 3);
-                }
-                tvLoto1_1.setText(begin_1);
-            }
-
-            if (beginResult.getB2().size() > 0) {
-                String begin_2 = "";
-                for (int i = 0; i < beginResult.getB2().size(); i++) {
-                    begin_2 += beginResult.getB2().get(i) + " - ";
-                }
-                if (begin_2.length() > 0) {
-                    begin_2 = begin_2.substring(0, begin_2.length() - 3);
-                }
-                tvLoto2_1.setText(begin_2);
-            }
-
-            if (beginResult.getB3().size() > 0) {
-                String begin_3 = "";
-                for (int i = 0; i < beginResult.getB3().size(); i++) {
-                    begin_3 += beginResult.getB3().get(i) + " - ";
-                }
-                if (begin_3.length() > 0) {
-                    begin_3 = begin_3.substring(0, begin_3.length() - 3);
-                }
-                tvLoto3_1.setText(begin_3);
-            }
-
-            if (beginResult.getB4().size() > 0) {
-                String begin_4 = "";
-                for (int i = 0; i < beginResult.getB4().size(); i++) {
-                    begin_4 += beginResult.getB4().get(i) + " - ";
-                }
-                if (begin_4.length() > 0) {
-                    begin_4 = begin_4.substring(0, begin_4.length() - 3);
-                }
-                tvLoto4_1.setText(begin_4);
-            }
-
-            if (beginResult.getB5().size() > 0) {
-                String begin_5 = "";
-                for (int i = 0; i < beginResult.getB5().size(); i++) {
-                    begin_5 += beginResult.getB5().get(i) + " - ";
-                }
-                if (begin_5.length() > 0) {
-                    begin_5 = begin_5.substring(0, begin_5.length() - 3);
-                }
-                tvLoto5_1.setText(begin_5);
-            }
-
-            if (beginResult.getB6().size() > 0) {
-                String begin_6 = "";
-                for (int i = 0; i < beginResult.getB6().size(); i++) {
-                    begin_6 += beginResult.getB6().get(i) + " - ";
-                }
-                if (begin_6.length() > 0) {
-                    begin_6 = begin_6.substring(0, begin_6.length() - 3);
-                }
-                tvLoto6_1.setText(begin_6);
-            }
-
-            if (beginResult.getB7().size() > 0) {
-                String begin_7 = "";
-                for (int i = 0; i < beginResult.getB7().size(); i++) {
-                    begin_7 += beginResult.getB7().get(i) + " - ";
-                }
-                if (begin_7.length() > 0) {
-                    begin_7 = begin_7.substring(0, begin_7.length() - 3);
-                }
-                tvLoto7_1.setText(begin_7);
-            }
-
-            if (beginResult.getB8().size() > 0) {
-                String begin_8 = "";
-                for (int i = 0; i < beginResult.getB8().size(); i++) {
-                    begin_8 += beginResult.getB8().get(i) + " - ";
-                }
-                if (begin_8.length() > 0) {
-                    begin_8 = begin_8.substring(0, begin_8.length() - 3);
-                }
-                tvLoto8_1.setText(begin_8);
-            }
-
-            if (beginResult.getB9().size() > 0) {
-                String begin_9 = "";
-                for (int i = 0; i < beginResult.getB9().size(); i++) {
-                    begin_9 += beginResult.getB9().get(i) + " - ";
-                }
-                if (begin_9.length() > 0) {
-                    begin_9 = begin_9.substring(0, begin_9.length() - 3);
-                }
-                tvLoto9_1.setText(begin_9);
-            }
-
-        }
+        setBegin1(beginResult);
     }
 
     private void setResultLotteryTable2(String area, List<String> special,
@@ -2243,6 +2869,7 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
         if (special.size() > 0) {
             special_value_1 = special.get(0);
             tvDb_2.setText(special.get(0));
+            LotoSpecial_2 = special.get(0).substring(4);
         }
 
         if (eight.size() > 0)
@@ -2334,118 +2961,7 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
             tv1_2.setText(first.get(0));
         /**
          * Dau loto*/
-        if (beginResult != null) {
-            if (beginResult.getB0().size() > 0) {
-                String begin_0 = "";
-                for (int i = 0; i < beginResult.getB0().size(); i++) {
-                    begin_0 += beginResult.getB0().get(i) + " - ";
-                }
-                if (begin_0.length() > 0) {
-                    begin_0 = begin_0.substring(0, begin_0.length() - 3);
-                }
-                tvLoto0_2.setText(begin_0);
-            }
-
-
-            if (beginResult.getB1().size() > 0) {
-                String begin_1 = "";
-                for (int i = 0; i < beginResult.getB1().size(); i++) {
-                    begin_1 += beginResult.getB1().get(i) + " - ";
-                }
-                if (begin_1.length() > 0) {
-                    begin_1 = begin_1.substring(0, begin_1.length() - 3);
-                }
-                tvLoto1_2.setText(begin_1);
-            }
-
-            if (beginResult.getB2().size() > 0) {
-                String begin_2 = "";
-                for (int i = 0; i < beginResult.getB2().size(); i++) {
-                    begin_2 += beginResult.getB2().get(i) + " - ";
-                }
-                if (begin_2.length() > 0) {
-                    begin_2 = begin_2.substring(0, begin_2.length() - 3);
-                }
-                tvLoto2_2.setText(begin_2);
-            }
-
-            if (beginResult.getB3().size() > 0) {
-                String begin_3 = "";
-                for (int i = 0; i < beginResult.getB3().size(); i++) {
-                    begin_3 += beginResult.getB3().get(i) + " - ";
-                }
-                if (begin_3.length() > 0) {
-                    begin_3 = begin_3.substring(0, begin_3.length() - 3);
-                }
-                tvLoto3_2.setText(begin_3);
-            }
-
-            if (beginResult.getB4().size() > 0) {
-                String begin_4 = "";
-                for (int i = 0; i < beginResult.getB4().size(); i++) {
-                    begin_4 += beginResult.getB4().get(i) + " - ";
-                }
-                if (begin_4.length() > 0) {
-                    begin_4 = begin_4.substring(0, begin_4.length() - 3);
-                }
-                tvLoto4_2.setText(begin_4);
-            }
-
-            if (beginResult.getB5().size() > 0) {
-                String begin_5 = "";
-                for (int i = 0; i < beginResult.getB5().size(); i++) {
-                    begin_5 += beginResult.getB5().get(i) + " - ";
-                }
-                if (begin_5.length() > 0) {
-                    begin_5 = begin_5.substring(0, begin_5.length() - 3);
-                }
-                tvLoto5_2.setText(begin_5);
-            }
-
-            if (beginResult.getB6().size() > 0) {
-                String begin_6 = "";
-                for (int i = 0; i < beginResult.getB6().size(); i++) {
-                    begin_6 += beginResult.getB6().get(i) + " - ";
-                }
-                if (begin_6.length() > 0) {
-                    begin_6 = begin_6.substring(0, begin_6.length() - 3);
-                }
-                tvLoto6_2.setText(begin_6);
-            }
-
-            if (beginResult.getB7().size() > 0) {
-                String begin_7 = "";
-                for (int i = 0; i < beginResult.getB7().size(); i++) {
-                    begin_7 += beginResult.getB7().get(i) + " - ";
-                }
-                if (begin_7.length() > 0) {
-                    begin_7 = begin_7.substring(0, begin_7.length() - 3);
-                }
-                tvLoto7_2.setText(begin_7);
-            }
-
-            if (beginResult.getB8().size() > 0) {
-                String begin_8 = "";
-                for (int i = 0; i < beginResult.getB8().size(); i++) {
-                    begin_8 += beginResult.getB8().get(i) + " - ";
-                }
-                if (begin_8.length() > 0) {
-                    begin_8 = begin_8.substring(0, begin_8.length() - 3);
-                }
-                tvLoto8_2.setText(begin_8);
-            }
-
-            if (beginResult.getB9().size() > 0) {
-                String begin_9 = "";
-                for (int i = 0; i < beginResult.getB9().size(); i++) {
-                    begin_9 += beginResult.getB9().get(i) + " - ";
-                }
-                if (begin_9.length() > 0) {
-                    begin_9 = begin_9.substring(0, begin_9.length() - 3);
-                }
-                tvLoto9_2.setText(begin_9);
-            }
-        }
+        setBegin2(beginResult);
     }
 
     private void setResultLotteryTable3(String area, List<String> special,
@@ -2465,6 +2981,7 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
         if (special.size() > 0) {
             special_value_2 = special.get(0);
             tvDb_3.setText(special.get(0));
+            LotoSpecial_3 = special.get(0).substring(4);
         }
 
         if (eight.size() > 0)
@@ -2560,119 +3077,7 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
         /**
          * Dau loto*/
 
-        if (beginResult != null) {
-            if (beginResult.getB0().size() > 0) {
-                String begin_0 = "";
-                for (int i = 0; i < beginResult.getB0().size(); i++) {
-                    begin_0 += beginResult.getB0().get(i) + " - ";
-                }
-                if (begin_0.length() > 0) {
-                    begin_0 = begin_0.substring(0, begin_0.length() - 3);
-                }
-                tvLoto0_3.setText(begin_0);
-            }
-
-
-            if (beginResult.getB1().size() > 0) {
-                String begin_1 = "";
-                for (int i = 0; i < beginResult.getB1().size(); i++) {
-                    begin_1 += beginResult.getB1().get(i) + " - ";
-                }
-                if (begin_1.length() > 0) {
-                    begin_1 = begin_1.substring(0, begin_1.length() - 3);
-                }
-                tvLoto1_3.setText(begin_1);
-            }
-
-            if (beginResult.getB2().size() > 0) {
-                String begin_2 = "";
-                for (int i = 0; i < beginResult.getB2().size(); i++) {
-                    begin_2 += beginResult.getB2().get(i) + " - ";
-                }
-                if (begin_2.length() > 0) {
-                    begin_2 = begin_2.substring(0, begin_2.length() - 3);
-                }
-                tvLoto2_3.setText(begin_2);
-            }
-
-            if (beginResult.getB3().size() > 0) {
-                String begin_3 = "";
-                for (int i = 0; i < beginResult.getB3().size(); i++) {
-                    begin_3 += beginResult.getB3().get(i) + " - ";
-                }
-                if (begin_3.length() > 0) {
-                    begin_3 = begin_3.substring(0, begin_3.length() - 3);
-                }
-                tvLoto3_3.setText(begin_3);
-            }
-
-            if (beginResult.getB4().size() > 0) {
-                String begin_4 = "";
-                for (int i = 0; i < beginResult.getB4().size(); i++) {
-                    begin_4 += beginResult.getB4().get(i) + " - ";
-                }
-                if (begin_4.length() > 0) {
-                    begin_4 = begin_4.substring(0, begin_4.length() - 3);
-                }
-                tvLoto4_3.setText(begin_4);
-            }
-
-            if (beginResult.getB5().size() > 0) {
-                String begin_5 = "";
-                for (int i = 0; i < beginResult.getB5().size(); i++) {
-                    begin_5 += beginResult.getB5().get(i) + " - ";
-                }
-                if (begin_5.length() > 0) {
-                    begin_5 = begin_5.substring(0, begin_5.length() - 3);
-                }
-                tvLoto5_3.setText(begin_5);
-            }
-
-            if (beginResult.getB6().size() > 0) {
-                String begin_6 = "";
-                for (int i = 0; i < beginResult.getB6().size(); i++) {
-                    begin_6 += beginResult.getB6().get(i) + " - ";
-                }
-                if (begin_6.length() > 0) {
-                    begin_6 = begin_6.substring(0, begin_6.length() - 3);
-                }
-                tvLoto6_3.setText(begin_6);
-            }
-
-            if (beginResult.getB7().size() > 0) {
-                String begin_7 = "";
-                for (int i = 0; i < beginResult.getB7().size(); i++) {
-                    begin_7 += beginResult.getB7().get(i) + " - ";
-                }
-                if (begin_7.length() > 0) {
-                    begin_7 = begin_7.substring(0, begin_7.length() - 3);
-                }
-
-                tvLoto7_3.setText(begin_7);
-            }
-
-            if (beginResult.getB8().size() > 0) {
-                String begin_8 = "";
-                for (int i = 0; i < beginResult.getB8().size(); i++) {
-                    begin_8 += beginResult.getB8().get(i) + " - ";
-                }
-                if (begin_8.length() > 0) {
-                    begin_8 = begin_8.substring(0, begin_8.length() - 3);
-                }
-                tvLoto8_3.setText(begin_8);
-            }
-
-            if (beginResult.getB9().size() > 0) {
-                String begin_9 = "";
-                for (int i = 0; i < beginResult.getB9().size(); i++) {
-                    begin_9 += beginResult.getB9().get(i) + " - ";
-                }
-                if (begin_9.length() > 0) {
-                    begin_9 = begin_9.substring(0, begin_9.length() - 3);
-                }
-                tvLoto9_3.setText(begin_9);
-            }
-        }
+        setBegin3(beginResult);
     }
 
 
@@ -2693,6 +3098,7 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
         if (special.size() > 0) {
             special_value_3 = special.get(0);
             tvDb_4.setText(special.get(0));
+            LotoSpecial_4 = special.get(0).substring(4);
         }
 
         if (eight.size() > 0)
@@ -2789,118 +3195,7 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
         /**
          * Dau loto*/
 
-        if (beginResult != null) {
-            if (beginResult.getB0().size() > 0) {
-                String begin_0 = "";
-                for (int i = 0; i < beginResult.getB0().size(); i++) {
-                    begin_0 += beginResult.getB0().get(i) + " - ";
-                }
-                if (begin_0.length() > 0) {
-                    begin_0 = begin_0.substring(0, begin_0.length() - 3);
-                }
-                tvLoto0_4.setText(begin_0);
-            }
-
-
-            if (beginResult.getB1().size() > 0) {
-                String begin_1 = "";
-                for (int i = 0; i < beginResult.getB1().size(); i++) {
-                    begin_1 += beginResult.getB1().get(i) + " - ";
-                }
-                if (begin_1.length() > 0) {
-                    begin_1 = begin_1.substring(0, begin_1.length() - 3);
-                }
-                tvLoto1_4.setText(begin_1);
-            }
-
-            if (beginResult.getB2().size() > 0) {
-                String begin_2 = "";
-                for (int i = 0; i < beginResult.getB2().size(); i++) {
-                    begin_2 += beginResult.getB2().get(i) + " - ";
-                }
-                if (begin_2.length() > 0) {
-                    begin_2 = begin_2.substring(0, begin_2.length() - 3);
-                }
-                tvLoto2_4.setText(begin_2);
-            }
-
-            if (beginResult.getB3().size() > 0) {
-                String begin_3 = "";
-                for (int i = 0; i < beginResult.getB3().size(); i++) {
-                    begin_3 += beginResult.getB3().get(i) + " - ";
-                }
-                if (begin_3.length() > 0) {
-                    begin_3 = begin_3.substring(0, begin_3.length() - 3);
-                }
-                tvLoto3_4.setText(begin_3);
-            }
-
-            if (beginResult.getB4().size() > 0) {
-                String begin_4 = "";
-                for (int i = 0; i < beginResult.getB4().size(); i++) {
-                    begin_4 += beginResult.getB4().get(i) + " - ";
-                }
-                if (begin_4.length() > 0) {
-                    begin_4 = begin_4.substring(0, begin_4.length() - 3);
-                }
-                tvLoto4_4.setText(begin_4);
-            }
-
-            if (beginResult.getB5().size() > 0) {
-                String begin_5 = "";
-                for (int i = 0; i < beginResult.getB5().size(); i++) {
-                    begin_5 += beginResult.getB5().get(i) + " - ";
-                }
-                if (begin_5.length() > 0) {
-                    begin_5 = begin_5.substring(0, begin_5.length() - 3);
-                }
-                tvLoto5_4.setText(begin_5);
-            }
-
-            if (beginResult.getB6().size() > 0) {
-                String begin_6 = "";
-                for (int i = 0; i < beginResult.getB6().size(); i++) {
-                    begin_6 += beginResult.getB6().get(i) + " - ";
-                }
-                if (begin_6.length() > 0) {
-                    begin_6 = begin_6.substring(0, begin_6.length() - 3);
-                }
-                tvLoto6_4.setText(begin_6);
-            }
-
-            if (beginResult.getB7().size() > 0) {
-                String begin_7 = "";
-                for (int i = 0; i < beginResult.getB7().size(); i++) {
-                    begin_7 += beginResult.getB7().get(i) + " - ";
-                }
-                if (begin_7.length() > 0) {
-                    begin_7 = begin_7.substring(0, begin_7.length() - 3);
-                }
-                tvLoto7_4.setText(begin_7);
-            }
-
-            if (beginResult.getB8().size() > 0) {
-                String begin_8 = "";
-                for (int i = 0; i < beginResult.getB8().size(); i++) {
-                    begin_8 += beginResult.getB8().get(i) + " - ";
-                }
-                if (begin_8.length() > 0) {
-                    begin_8 = begin_8.substring(0, begin_8.length() - 3);
-                }
-                tvLoto8_4.setText(begin_8);
-            }
-
-            if (beginResult.getB9().size() > 0) {
-                String begin_9 = "";
-                for (int i = 0; i < beginResult.getB9().size(); i++) {
-                    begin_9 += beginResult.getB9().get(i) + " - ";
-                }
-                if (begin_9.length() > 0) {
-                    begin_9 = begin_9.substring(0, begin_9.length() - 3);
-                }
-                tvLoto9_4.setText(begin_9);
-            }
-        }
+        setBegin4(beginResult);
     }
 
     @Override
@@ -2970,10 +3265,9 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
     }
 
     private class Roller implements Runnable {
+        TextView textRoll;
         private int numTimes;
         private long delayMillis;
-        TextView textRoll;
-
         private int max, min;
 
         private volatile boolean shutdown;
@@ -2990,8 +3284,7 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
         public void run() {
             if (!shutdown) {
                 if (textRoll != null) {
-
-//                    textRoll.setTextColor(context.getResources().getColor(android.R.color.holo_blue_dark));
+                    textRoll.setTextColor(context.getResources().getColor(android.R.color.holo_blue_dark));
 
                     Random rn = new Random();
                     int range = max - min + 1;
@@ -3010,7 +3303,7 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
 
         public void shutdownThread(boolean isSpecial) {
             if (textRoll != null) {
-                if (isSpecial){
+                if (isSpecial) {
                     textRoll.setTextColor(context.getResources().getColor(R.color.colorPrimary));
                 } else {
                     textRoll.setTextColor(context.getResources().getColor(android.R.color.black));

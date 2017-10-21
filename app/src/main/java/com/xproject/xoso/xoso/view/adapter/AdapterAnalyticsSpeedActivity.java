@@ -35,7 +35,7 @@ public class AdapterAnalyticsSpeedActivity extends RecyclerView.Adapter<Recycler
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         AnalyticsSetNumber setNumber = list.get(position);
-        if (holder instanceof Viewholder){
+        if (holder instanceof Viewholder) {
             Viewholder viewholder = (Viewholder) holder;
             viewholder.setData(setNumber);
         }
@@ -47,14 +47,14 @@ public class AdapterAnalyticsSpeedActivity extends RecyclerView.Adapter<Recycler
     }
 
     public void refreshData(List<AnalyticsSetNumber> list) {
-        if (list.size() > 0){
+        if (list.size() > 0) {
             this.list.clear();
             this.list.addAll(list);
             notifyDataSetChanged();
         }
     }
 
-    private class Viewholder extends RecyclerView.ViewHolder{
+    private class Viewholder extends RecyclerView.ViewHolder {
 
         private TextView tv_number, tv_count, tv_last_visible;
 
@@ -65,10 +65,10 @@ public class AdapterAnalyticsSpeedActivity extends RecyclerView.Adapter<Recycler
             tv_last_visible = (TextView) itemView.findViewById(R.id.tv_last_visible);
         }
 
-        public void setData(AnalyticsSetNumber data){
-            if (data.getNumber().length() > 1){
+        public void setData(AnalyticsSetNumber data) {
+            if (data.getNumber().length() > 1) {
                 tv_number.setText(data.getNumber());
-            } else if (data.getNumber().length() > 0 && data.getNumber().length() == 1){
+            } else if (data.getNumber().length() > 0 && data.getNumber().length() == 1) {
                 tv_number.setText("0" + data.getNumber());
             }
             tv_count.setText(String.valueOf(data.getCount()));

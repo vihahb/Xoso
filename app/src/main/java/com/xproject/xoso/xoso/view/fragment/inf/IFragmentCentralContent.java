@@ -14,7 +14,9 @@ public interface IFragmentCentralContent extends BasicView {
     void getResultLotteryError(String error);
 
     void setTableRegion1(ResultLottery data);
+
     void setTableRegion2(ResultLottery data);
+
     void setTableRegion3(ResultLottery data);
 
     void setDataSocket(RESP_Result resp_result);

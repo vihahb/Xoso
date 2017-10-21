@@ -109,7 +109,15 @@
         <activity android:name="com.xproject.xoso.xoso.view.activity.CycleListSpecialActivity" />
         <activity android:name="com.xproject.xoso.xoso.view.activity.FrequencyLotoInfoActivity" />
         <activity android:name="com.xproject.xoso.xoso.view.activity.SpecialTomorowActivity" />
-        <activity android:name="com.xproject.xoso.xoso.view.activity.SpecialTomorowInfoActivity"></activity>
+        <activity android:name="com.xproject.xoso.xoso.view.activity.SpecialTomorowInfoActivity" />
+        <activity android:name="com.xproject.xoso.xoso.view.activity.ActivityExploreBridgeLoto" />
+        <activity android:name="com.xproject.xoso.xoso.view.activity.RandomSpinActivity" />
+        <activity android:name="com.xproject.xoso.xoso.view.activity.BridgeForDayActivity" />
+        <activity
+            android:name="com.xproject.xoso.xoso.view.activity.SettingActivity"
+            android:label="@string/title_activity_setting"
+            android:theme="@style/AppTheme" />
+        <activity android:name="com.xproject.xoso.xoso.view.activity.WebViewActivity"></activity>
     </application>
 
 </manifest>

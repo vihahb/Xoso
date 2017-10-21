@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.xproject.xoso.xoso.view.widget.RecyclerTabLayout
+        android:id="@+id/recycler_tab_layout"
+        style="@style/rtl_RecyclerTabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        app:rtl_tabOnScreenLimit="5" />
+
     <android.support.v4.view.ViewPager
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:id="@+id/vpPager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <android.support.v4.view.PagerTabStrip
-            android:id="@+id/pager_header"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top"
-            android:paddingBottom="4dp"
-            android:paddingTop="4dp" />
-    </android.support.v4.view.ViewPager>
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"></android.support.v4.view.ViewPager>
 </LinearLayout>

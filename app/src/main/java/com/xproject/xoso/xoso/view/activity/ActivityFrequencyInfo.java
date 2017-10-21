@@ -1,15 +1,10 @@
 package com.xproject.xoso.xoso.view.activity;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 
 import com.xproject.xoso.sdk.common.Constants;
@@ -19,15 +14,16 @@ import com.xproject.xoso.xoso.view.adapter.AdapterFrequency;
 import com.xtelsolution.xoso.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class ActivityFrequencyInfo extends BasicActivity {
 
+    List<FrequencyEntity> frequencyEntityList;
     private TextView tv_title_speed;
     private RecyclerView rcl_analytics_frequency_value;
     private AdapterFrequency adapter;
-    List<FrequencyEntity> frequencyEntityList;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,11 +37,20 @@ public class ActivityFrequencyInfo extends BasicActivity {
     private void getData() {
 
         SpeedTemp temp = (SpeedTemp) getIntent().getSerializableExtra(Constants.TEMP);
-        if (temp!=null){
+        if (temp != null) {
             tv_title_speed.setText(Html.fromHtml("<b>" + temp.getName_cat() + "</b>" + " trong vòng " + temp.getDate_count() + " ngày trước"));
         }
         frequencyEntityList = (List<FrequencyEntity>) getIntent().getSerializableExtra(Constants.LIST_FREQUENCY);
-        if (frequencyEntityList.size() > 0){
+        if (frequencyEntityList.size() > 0) {
+            Collections.sort(frequencyEntityList, new Comparator<FrequencyEntity>() {
+                @Override
+                public int compare(FrequencyEntity o1, FrequencyEntity o2) {
+                    if (Integer.parseInt(o1.getNumber()) == Integer.parseInt(o2.getNumber()))
+                        return 0;
+
+                    return Integer.parseInt(o1.getNumber()) < Integer.parseInt(o2.getNumber()) ? -1 : 1;
+                }
+            });
             adapter.refreshData(frequencyEntityList);
         }
     }

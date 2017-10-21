@@ -64,10 +64,10 @@ public class MainActivity extends BasicActivity implements IHomeView, OnComplete
     private BottomNavigationViewEx navigationBottom;
     private LockableViewPager viewPager;
     private FragmentPagerAdapter pagerAdapter;
+    BroadcastReceiver broadcastLive;
     private boolean isResultView = false;
     private MenuItem item;
     private AppBarLayout.LayoutParams params;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,16 +80,18 @@ public class MainActivity extends BasicActivity implements IHomeView, OnComplete
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             PermissionHelper.checkOnlyPermission(Manifest.permission.READ_EXTERNAL_STORAGE, this, 99);
         }
-        registerReceiver(broadcastLive, new IntentFilter("ACTION_LIVE"));
+        handlerAction();
         initAlarmManager();
         FirebaseMessaging.getInstance().subscribeToTopic("mienbac");
-
-//        Authent authent = Constants.getAuthent();
-//        Log.e("MAin", "onCreate: " + authent.toString());
-
         presenter = new HomePresenter(this);
         initProvinceDatabase();
         initWidget();
+        initDrawer();
+        logUser();
+        registerReceiver(broadcastLive, new IntentFilter("ACTION_LIVE"));
+    }
+
+    private void initDrawer() {
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -106,58 +108,75 @@ public class MainActivity extends BasicActivity implements IHomeView, OnComplete
         drawer.setDrawerListener(toggle);
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        logUser();
+    }
+
+    public void handlerAction(){
+        broadcastLive = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                int action_type = intent.getIntExtra(Constants.ACTION_TYPE, -1);
+                switch (action_type) {
+                    case 1:
+                        ((FragmentResult) pagerAdapter.getItem(0)).changeLive(0);
+                        break;
+                    case 2:
+                        ((FragmentResult) pagerAdapter.getItem(0)).changeLive(1);
+                        break;
+                    case 3:
+                        ((FragmentResult) pagerAdapter.getItem(0)).changeLive(2);
+                        break;
+                    case 4:
+                        ((FragmentResult) pagerAdapter.getItem(0)).changeLiveEnd(0);
+                        break;
+                    case 5:
+                        ((FragmentResult) pagerAdapter.getItem(0)).changeLiveEnd(1);
+                        break;
+                    case 6:
+                        ((FragmentResult) pagerAdapter.getItem(0)).changeLiveEnd(2);
+                        break;
+                }
+            }
+        };
+    }
+
+    public void setFlagLive(boolean flag, int position){
+        if (flag) {
+            adapterMenu.changeLiveItem(position);
+        } else {
+            adapterMenu.changeLiveDone(position);
+        }
     }
 
     private void initProvinceDatabase() {
         presenter.saveProvince();
     }
 
-    BroadcastReceiver broadcastLive = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            int action_type = intent.getIntExtra(Constants.ACTION_TYPE, -1);
-            switch (action_type){
-                case 1:
-                    adapterMenu.changeLiveItem(1);
-                    ((FragmentResult) pagerAdapter.getItem(0)).changeLive(0);
-                    break;
-                case 2:
-                    adapterMenu.changeLiveItem(2);
-                    ((FragmentResult) pagerAdapter.getItem(0)).changeLive(1);
-
-                    break;
-                case 3:
-                    adapterMenu.changeLiveItem(3);
-                    ((FragmentResult) pagerAdapter.getItem(0)).changeLive(2);
-                    break;
-            }
-        }
-    };
-
-    public void setChangeLive(){
-        if (TimeUtils.checkTimeInMilisecondNorth(18, 13, 18, 50)){
+    public void setChangeLive() {
+        if (TimeUtils.checkTimeInMilisecondNorth(18, 10, 18, 45)) {
             adapterMenu.changeLiveItem(1);
         }
 
-        if (TimeUtils.checkTimeInMilisecondNorth(17, 13, 17, 50)){
+        if (TimeUtils.checkTimeInMilisecondNorth(17, 10, 17, 45)) {
             adapterMenu.changeLiveItem(2);
         }
 
-        if (TimeUtils.checkTimeInMilisecondNorth(16, 13, 16, 50)){
+        if (TimeUtils.checkTimeInMilisecondNorth(16, 10, 16, 45)) {
             adapterMenu.changeLiveItem(3);
         }
     }
 
-    public void setEndLive(int position_area){
-        switch (position_area){
+    public void setEndLive(int position_area) {
+        switch (position_area) {
             case 1:
+                ((FragmentResult) pagerAdapter.getItem(0)).changeLiveEnd(0);
                 adapterMenu.changeLiveDone(1);
                 break;
             case 2:
+                ((FragmentResult) pagerAdapter.getItem(0)).changeLiveEnd(1);
                 adapterMenu.changeLiveDone(2);
                 break;
             case 3:
+                ((FragmentResult) pagerAdapter.getItem(0)).changeLiveEnd(2);
                 adapterMenu.changeLiveDone(3);
                 break;
         }
@@ -208,29 +227,29 @@ public class MainActivity extends BasicActivity implements IHomeView, OnComplete
             public void onPageSelected(int position) {
                 switch (position) {
                     case 0:
-                        params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL| AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS);
-                        if (item!=null) {
+                        params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL | AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS);
+                        if (item != null) {
                             item.setVisible(true);
                         }
                         toolbar.setTitle("Kết quả");
                         break;
                     case 1:
                         params.setScrollFlags(0);
-                        if (item!=null) {
+                        if (item != null) {
                             item.setVisible(false);
                         }
                         toolbar.setTitle("Thống kê");
                         break;
                     case 2:
                         params.setScrollFlags(0);
-                        if (item!=null) {
+                        if (item != null) {
                             item.setVisible(false);
                         }
                         toolbar.setTitle("Soi Cầu");
                         break;
                     case 3:
                         params.setScrollFlags(0);
-                        if (item!=null) {
+                        if (item != null) {
                             item.setVisible(false);
                         }
                         toolbar.setTitle("Mở Rộng");
@@ -265,15 +284,15 @@ public class MainActivity extends BasicActivity implements IHomeView, OnComplete
     }
 
     private void setLiveDone() {
-        if (TimeUtils.checkTimeInMilisecondNorth(16, 45, 23, 58)){
+        if (TimeUtils.checkTimeInMilisecondNorth(16, 45, 23, 58)) {
             adapterMenu.changeLiveDone(3);
         }
 
-        if (TimeUtils.checkTimeInMilisecondNorth(17, 45, 23, 58)){
+        if (TimeUtils.checkTimeInMilisecondNorth(17, 45, 23, 58)) {
             adapterMenu.changeLiveDone(2);
         }
 
-        if (TimeUtils.checkTimeInMilisecondNorth(18, 45, 23, 58)){
+        if (TimeUtils.checkTimeInMilisecondNorth(18, 45, 23, 58)) {
             adapterMenu.changeLiveDone(1);
         }
     }
@@ -387,12 +406,25 @@ public class MainActivity extends BasicActivity implements IHomeView, OnComplete
                 break;
             case 8:
                 navigationBottom.setSelectedItemId(R.id.nav_analytics);
+                startActivity(ActivityExploreBridgeLoto.class, Constants.ACTION_TYPE, 1);
                 break;
             case 10:
                 navigationBottom.setSelectedItemId(R.id.nav_explore);
+                startActivity(ActivityExploreBridgeLoto.class, Constants.ACTION_TYPE, 5);
                 break;
             case 12:
                 navigationBottom.setSelectedItemId(R.id.nav_explore);
+                break;
+            case 14:
+                navigationBottom.setSelectedItemId(R.id.nav_more);
+                startActivity(DreamActivity.class);
+                break;
+            case 15:
+                navigationBottom.setSelectedItemId(R.id.nav_more);
+                startActivity(RandomSpinActivity.class);
+                break;
+            case 16:
+                startActivity(SettingActivity.class);
                 break;
             case 17:
                 navigationBottom.setSelectedItemId(R.id.nav_more);

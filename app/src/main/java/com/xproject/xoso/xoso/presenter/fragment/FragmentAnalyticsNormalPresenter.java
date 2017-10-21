@@ -1,8 +1,8 @@
 package com.xproject.xoso.xoso.presenter.fragment;
 
-import com.xtelsolution.xoso.R;
 import com.xproject.xoso.xoso.model.entity.GridMenu;
 import com.xproject.xoso.xoso.view.fragment.inf.IAnalyticsNormal;
+import com.xtelsolution.xoso.R;
 
 import java.util.ArrayList;
 import java.util.List;

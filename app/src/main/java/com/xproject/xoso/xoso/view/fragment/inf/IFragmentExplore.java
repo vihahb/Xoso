@@ -1,7 +1,7 @@
 package com.xproject.xoso.xoso.view.fragment.inf;
 
-import com.xproject.xoso.xoso.view.activity.inf.BasicView;
 import com.xproject.xoso.xoso.model.entity.GridMenu;
+import com.xproject.xoso.xoso.view.activity.inf.BasicView;
 
 import java.util.List;
 

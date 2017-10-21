@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.xproject.xoso.sdk.common.Constants;
 import com.xproject.xoso.sdk.utils.TimeUtils;
 import com.xproject.xoso.xoso.model.entity.CycleLotoEntity;
 import com.xtelsolution.xoso.R;
@@ -19,7 +18,7 @@ import java.util.List;
  * Created by vivhp on 10/10/2017.
  */
 
-public class AdapterCycleLoto extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class AdapterCycleLoto extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     List<CycleLotoEntity> list;
     Context context;
@@ -38,7 +37,7 @@ public class AdapterCycleLoto extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         CycleLotoEntity entity = list.get(position);
-        if (holder instanceof ViewHolder){
+        if (holder instanceof ViewHolder) {
             ViewHolder viewHolder = (ViewHolder) holder;
             viewHolder.setData(entity);
         }
@@ -49,7 +48,16 @@ public class AdapterCycleLoto extends RecyclerView.Adapter<RecyclerView.ViewHold
         return list.size();
     }
 
-    private class ViewHolder extends RecyclerView.ViewHolder{
+    public void refreshData(List<CycleLotoEntity> list_data) {
+        if (list.size() > 0) {
+            list.clear();
+            list.addAll(list_data);
+        } else {
+            list.addAll(list_data);
+        }
+    }
+
+    private class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView tv_number, tv_cycle_last_append, tv_cycle_not_append;
 
@@ -60,23 +68,14 @@ public class AdapterCycleLoto extends RecyclerView.Adapter<RecyclerView.ViewHold
             tv_cycle_not_append = (TextView) itemView.findViewById(R.id.tv_cycle_not_append);
         }
 
-        public void setData(CycleLotoEntity data){
-            if (String.valueOf(data.getNumber()).length() <2){
+        public void setData(CycleLotoEntity data) {
+            if (String.valueOf(data.getNumber()).length() < 2) {
                 tv_number.setText("0" + data.getNumber());
             } else {
                 tv_number.setText(String.valueOf(data.getNumber()));
             }
             tv_cycle_last_append.setText(TimeUtils.getFormatTimeClient(data.getLast_appear()));
             tv_cycle_not_append.setText(Html.fromHtml("<font color='red'>" + TimeUtils.getFormatTimeClient(data.getStart()) + "</font> đến " + "<font color='red'>" + TimeUtils.getFormatTimeClient(data.getEnd() + "</font>")));
-        }
-    }
-
-    public void refreshData(List<CycleLotoEntity> list_data){
-        if (list.size() > 0){
-            list.clear();
-            list.addAll(list_data);
-        } else {
-            list.addAll(list_data);
         }
     }
 }

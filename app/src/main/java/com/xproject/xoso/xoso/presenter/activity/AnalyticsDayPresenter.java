@@ -7,7 +7,6 @@ import com.xproject.xoso.xoso.model.AnalyticsModel;
 import com.xproject.xoso.xoso.model.entity.Error;
 import com.xproject.xoso.xoso.model.entity.ProvinceEntity;
 import com.xproject.xoso.xoso.model.entity.SpeedTemp;
-import com.xproject.xoso.xoso.model.respond.RESP_Basic;
 import com.xproject.xoso.xoso.model.respond.RESP_NumberSet;
 import com.xproject.xoso.xoso.view.activity.inf.IAnalyticsDayActivity;
 
@@ -23,7 +22,7 @@ public class AnalyticsDayPresenter {
     private Icmd icmd = new Icmd() {
         @Override
         public void excute(Object... params) {
-            switch ((int)params[0]){
+            switch ((int) params[0]) {
                 case 1:
                     view.showProgressBar(false, false, null, "Đang tải...");
                     SpeedTemp temp = (SpeedTemp) params[1];
@@ -49,11 +48,11 @@ public class AnalyticsDayPresenter {
         this.view = view;
     }
 
-    public List<ProvinceEntity> getCategory(){
+    public List<ProvinceEntity> getCategory() {
         return DatabaseHelper.getInstance().getListOfObjects(ProvinceEntity.class);
     }
 
-    public void getDay(SpeedTemp temp){
+    public void getDay(SpeedTemp temp) {
         icmd.excute(1, temp);
     }
 }

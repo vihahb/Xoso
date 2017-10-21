@@ -17,7 +17,7 @@ import java.util.List;
  * Created by vivhp on 10/9/2017.
  */
 
-public class AdapterDayAnalytics extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class AdapterDayAnalytics extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     List<AnalyticsSetNumber> data;
     private Context context;
@@ -36,9 +36,9 @@ public class AdapterDayAnalytics extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         AnalyticsSetNumber setNumber = data.get(position);
-        if (holder instanceof  ViewHolder){
+        if (holder instanceof ViewHolder) {
             ViewHolder viewHolder = (ViewHolder) holder;
-            viewHolder.setData(setNumber);
+            viewHolder.setData(setNumber, position);
         }
     }
 
@@ -47,28 +47,39 @@ public class AdapterDayAnalytics extends RecyclerView.Adapter<RecyclerView.ViewH
         return data.size();
     }
 
-    private class ViewHolder extends RecyclerView.ViewHolder{
+    public void refreshData(List<AnalyticsSetNumber> list) {
+        this.data.clear();
+        this.data.addAll(list);
+        notifyDataSetChanged();
+    }
+
+    private class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView tv_number;
+
         public ViewHolder(View itemView) {
             super(itemView);
             tv_number = (TextView) itemView.findViewById(R.id.tv_number);
         }
 
-        public void setData(AnalyticsSetNumber number){
-            if (String.valueOf(number.getNumber()).length() > 1){
-                String result  = "<font color='red'>" + number.getNumber() +"</font> (" + number.getCount() + " lần),";
+        public void setData(AnalyticsSetNumber number, int position) {
+            if (String.valueOf(number.getNumber()).length() > 1) {
+                String result;
+                if (position == data.size() - 1) {
+                    result = "<font color='red'>" + number.getNumber() + "</font> (" + number.getCount() + " lần)";
+                } else {
+                    result = "<font color='red'>" + number.getNumber() + "</font> (" + number.getCount() + " lần),";
+                }
                 tv_number.setText(Html.fromHtml(result));
             } else {
-                String result  = "<font color='red'>0" + number.getNumber() +"</font> (" + number.getCount() + " lần),";
+                String result;
+                if (position == data.size() - 1) {
+                    result = "<font color='red'>0" + number.getNumber() + "</font> (" + number.getCount() + " lần)";
+                } else {
+                    result = "<font color='red'>0" + number.getNumber() + "</font> (" + number.getCount() + " lần),";
+                }
                 tv_number.setText(Html.fromHtml(result));
             }
         }
-    }
-
-    public void refreshData(List<AnalyticsSetNumber> list){
-        this.data.clear();
-        this.data.addAll(list);
-        notifyDataSetChanged();
     }
 }

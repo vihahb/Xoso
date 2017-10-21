@@ -11,7 +11,6 @@ import com.xproject.xoso.sdk.utils.TimeUtils;
 import com.xproject.xoso.xoso.model.entity.AnalyticsSetNumber;
 import com.xtelsolution.xoso.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -77,7 +76,7 @@ public class AdapterSynthetic extends RecyclerView.Adapter<RecyclerView.ViewHold
                 tv_count.setText(String.valueOf(data.getCount()));
                 tv_last_visible.setText(TimeUtils.getFormatTimeClient(data.getLast_appear()));
                 int not_append_count = TimeUtils.subtractionDay(TimeUtils.getToday(), data.getLast_appear());
-                if (not_append_count > 0){
+                if (not_append_count > 0) {
                     tv_not_append.setText(String.valueOf(not_append_count));
                 }
             }

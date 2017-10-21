@@ -9,7 +9,7 @@ import java.util.List;
  * Created by vivhp on 9/9/2017.
  */
 
-public interface IFragmentMore extends BasicView{
+public interface IFragmentMore extends BasicView {
 
     void initGridMenu(List<GridMenu> menus);
 }

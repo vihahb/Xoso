@@ -22,6 +22,7 @@ public class AdapterLotoDb extends RecyclerView.Adapter {
 
     List<SameDow_NextDayEntity> list;
     Context context;
+    private int type = -1;
 
     public AdapterLotoDb(List<SameDow_NextDayEntity> list, Context context) {
         this.list = list;
@@ -46,6 +47,32 @@ public class AdapterLotoDb extends RecyclerView.Adapter {
     @Override
     public int getItemCount() {
         return list.size();
+    }
+
+    public String setColorRed(String begin_String) {
+        String start_char = null, end_char = null;
+        if (begin_String != null && !begin_String.equals("")) {
+            if (type == 1) {
+                start_char = begin_String.substring(0, 3);
+                end_char = begin_String.substring(3);
+            } else if (type == 2) {
+                start_char = begin_String.substring(0, 4);
+                end_char = begin_String.substring(4);
+            }
+
+            return start_char + "<font color='red'>" + end_char + "</font>";
+        } else {
+            return "";
+        }
+    }
+
+    public void refreshData(List<SameDow_NextDayEntity> entityList, int type) {
+        if (list.size() > 0) {
+            list.clear();
+        }
+        this.type = type;
+        list.addAll(entityList);
+        notifyDataSetChanged();
     }
 
     private class ViewHolder extends RecyclerView.ViewHolder {
@@ -75,24 +102,5 @@ public class AdapterLotoDb extends RecyclerView.Adapter {
                 tv_next_special_value.setText(Html.fromHtml(setColorRed(data.getNext_special())));
             }
         }
-    }
-
-    public String setColorRed(String begin_String) {
-        if (begin_String != null && !begin_String.equals("")) {
-            String start_char = begin_String.substring(0, 3);
-            String end_char = begin_String.substring(3);
-            return start_char + "<font color='red'>" + end_char + "</font>";
-        } else {
-            return "";
-        }
-    }
-
-    public void refreshData(List<SameDow_NextDayEntity> entityList){
-        if (list.size() > 0){
-            list.clear();
-        }
-
-        list.addAll(entityList);
-        notifyDataSetChanged();
     }
 }

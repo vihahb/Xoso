@@ -1,6 +1,5 @@
 package com.xproject.xoso.xoso.view.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MenuItem;
@@ -28,14 +27,13 @@ import java.util.List;
 
 public class FrequencyLotoActivity extends BasicActivity implements View.OnClickListener, IFrequencyLotoActivity {
 
-    private EditText edt_begin, edt_end, edt_number;
-    private Spinner sp_province, sp_day;
-    private Button btnResult;
-
-    private AdapterSpinner provinceAdapter;
     List<ProvinceEntity> provinceEntityList;
     SpeedTemp temp;
     FrequencyLotoActivityPresenter presenter;
+    private EditText edt_begin, edt_end, edt_number;
+    private Spinner sp_province, sp_day;
+    private Button btnResult;
+    private AdapterSpinner provinceAdapter;
     private AdapterStringCustom adapterDay;
     private List<String> dayList;
     private int day_of_week;
@@ -77,11 +75,12 @@ public class FrequencyLotoActivity extends BasicActivity implements View.OnClick
         dayList.add("Thứ 6");
         dayList.add("Thứ 7");
         adapterDay = new AdapterStringCustom(dayList, this);
-        sp_day.setAdapter(adapterDay);sp_day.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        sp_day.setAdapter(adapterDay);
+        sp_day.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 day_of_week = position;
-                switch (position){
+                switch (position) {
                     case 0:
                         temp.setDay_of_week("7");
                         break;
@@ -123,7 +122,7 @@ public class FrequencyLotoActivity extends BasicActivity implements View.OnClick
     private void setDefaultTime(EditText edt_begin, EditText edt_end) {
         Calendar calendarToday = Calendar.getInstance();
         int toDay = calendarToday.get(Calendar.DAY_OF_MONTH);
-        int month = (calendarToday.get(Calendar.MONTH))+1;
+        int month = (calendarToday.get(Calendar.MONTH)) + 1;
         int year = calendarToday.get(Calendar.YEAR);
 
         long milisTimeToday = calendarToday.getTimeInMillis();
@@ -132,7 +131,7 @@ public class FrequencyLotoActivity extends BasicActivity implements View.OnClick
         Calendar calendarOldDay = Calendar.getInstance();
         calendarOldDay.setTimeInMillis(milisTimeOldDay);
         int oldDay = calendarOldDay.get(Calendar.DAY_OF_MONTH);
-        int oldMonth = (calendarOldDay.get(Calendar.MONTH))+1;
+        int oldMonth = (calendarOldDay.get(Calendar.MONTH)) + 1;
         int oldYear = calendarOldDay.get(Calendar.YEAR);
 
 
@@ -170,10 +169,10 @@ public class FrequencyLotoActivity extends BasicActivity implements View.OnClick
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btn_result:
-                if (checkBeginNotNull() && checkEndNotNull() && checkSumNotNull() && checkBeginEqualEnd()){
-                    if (temp.getDay_of_week().equals("7")){
+                if (checkBeginNotNull() && checkEndNotNull() && checkSumNotNull() && checkBeginEqualEnd()) {
+                    if (temp.getDay_of_week().equals("7")) {
                         presenter.getFrequencyLotoAllDay(temp);
                     } else {
                         presenter.getFrequencyLotoOneDay(temp);
@@ -184,7 +183,7 @@ public class FrequencyLotoActivity extends BasicActivity implements View.OnClick
                 TimeUtils.showDateTimePickerDialog(this, new DateTimePickerListener() {
                     @Override
                     public void onDateTimePickerListener(int year, int month, int day) {
-                        temp.setDate_begin(year + "-" + (month+1) + "-" + day);
+                        temp.setDate_begin(year + "-" + (month + 1) + "-" + day);
                         temp.setDate_format_begin(day + "/" + (month + 1) + "/" + year);
                         edt_begin.setText(day + "/" + (month + 1) + "/" + year);
                     }
@@ -194,7 +193,7 @@ public class FrequencyLotoActivity extends BasicActivity implements View.OnClick
                 TimeUtils.showDateTimePickerDialog(this, new DateTimePickerListener() {
                     @Override
                     public void onDateTimePickerListener(int year, int month, int day) {
-                        temp.setDate_end(year + "-" + (month+1) + "-" + day);
+                        temp.setDate_end(year + "-" + (month + 1) + "-" + day);
                         temp.setDate_format_end(day + "/" + (month + 1) + "/" + year);
                         edt_end.setText(day + "/" + (month + 1) + "/" + year);
                     }
@@ -210,13 +209,13 @@ public class FrequencyLotoActivity extends BasicActivity implements View.OnClick
 
     @Override
     public void getFrequencyLotoError(String message) {
-        if (message!=null){
+        if (message != null) {
             showShortToast(message);
         }
     }
 
     private boolean checkSumNotNull() {
-        if (TextUtils.isEmpty(edt_number.getText().toString())){
+        if (TextUtils.isEmpty(edt_number.getText().toString())) {
             showShortToast("Vui lòng nhập cặp số khảo sát muốn xem.");
             return false;
         } else {
@@ -234,7 +233,7 @@ public class FrequencyLotoActivity extends BasicActivity implements View.OnClick
         }
     }
 
-    private boolean checkEndNotNull(){
+    private boolean checkEndNotNull() {
         if (TextUtils.isEmpty(edt_end.getText().toString())) {
             showShortToast("Vui lòng chọn ngày kết thúc");
             return false;
@@ -243,22 +242,22 @@ public class FrequencyLotoActivity extends BasicActivity implements View.OnClick
         }
     }
 
-    private boolean checkBeginEqualEnd(){
-        if (temp.getDate_begin() !=null && temp.getDate_end() !=null){
+    private boolean checkBeginEqualEnd() {
+        if (temp.getDate_begin() != null && temp.getDate_end() != null) {
             Calendar calendarBegin = TimeUtils.getCalendarFromString(temp.getDate_begin());
             long time_begin = calendarBegin.getTimeInMillis();
 
             Calendar calendarEnd = TimeUtils.getCalendarFromString(temp.getDate_end());
             long time_end = calendarEnd.getTimeInMillis();
 
-            if (time_begin > time_end){
+            if (time_begin > time_end) {
                 showShortToast("Vui lòng chọn thời gian bắt đầu nhỏ hơn thời gian kết thúc.");
                 return false;
-            } else if (time_begin <= time_end){
+            } else if (time_begin <= time_end) {
                 return true;
             }
 
-        } else if (temp.getDate_begin() ==null){
+        } else if (temp.getDate_begin() == null) {
             showShortToast("Vui lòng kiểm tra ngày bắt đầu");
             return false;
         } else if (temp.getDate_end() == null) {

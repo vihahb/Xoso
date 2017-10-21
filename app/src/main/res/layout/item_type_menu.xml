@@ -1,26 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@android:color/white"
     android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/size_8"
     android:paddingLeft="@dimen/size_16"
     android:paddingRight="@dimen/size_16"
-    android:paddingTop="@dimen/size_8"
-    android:paddingBottom="@dimen/size_8"
-    android:background="@android:color/white">
+    android:paddingTop="@dimen/size_8">
+
     <ImageView
         android:id="@+id/ic_item_icon"
         android:layout_width="@dimen/size_24"
         android:layout_height="@dimen/size_24"
         tools:ignore="ContentDescription" />
+
     <TextView
         android:id="@+id/tv_item_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/size_16"
         android:layout_weight="1"
         android:textColor="@android:color/black"
-        android:layout_marginLeft="@dimen/size_16"
         android:textSize="@dimen/font_13"
         tools:ignore="RtlHardcoded" />
 
@@ -28,9 +31,9 @@
         android:id="@+id/tv_item_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/holo_blue_dark"
-        android:textAllCaps="false"
         android:layout_marginLeft="@dimen/size_16"
+        android:textAllCaps="false"
+        android:textColor="@android:color/holo_blue_dark"
         android:textSize="@dimen/font_13"
         tools:ignore="RtlHardcoded" />
 </LinearLayout>

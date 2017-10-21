@@ -2,7 +2,6 @@ package com.xproject.xoso.xoso.view.activity;
 
 import android.os.Bundle;
 
-import com.xproject.xoso.xoso.view.activity.BasicActivity;
 import com.xtelsolution.xoso.R;
 
 public class RandomLotteryActivity extends BasicActivity {
