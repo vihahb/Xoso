@@ -34,12 +34,15 @@ public class AlarmReceiver extends BroadcastReceiver {
         if (notify_id_value == 1) {
             intentLive.putExtra(Constants.START_LIVE, 1);
             content_notify = "Sắp đến giờ quay giải miền Bắc";
+            id_notify = 1;
         } else if (notify_id_value == 2) {
             intentLive.putExtra(Constants.START_LIVE, 2);
             content_notify = "Săp đến giờ quay giải miền Trung";
+            id_notify = 2;
         } else if (notify_id_value == 3) {
             intentLive.putExtra(Constants.START_LIVE, 3);
             content_notify = "Sắp đến giờ quay giải miền Nam";
+            id_notify = 3;
         } else if (notify_id_value == 4) {
             intentLive.putExtra(Constants.START_LIVE, 1);
             content_notify = "Đang quay giải miền Bắc";

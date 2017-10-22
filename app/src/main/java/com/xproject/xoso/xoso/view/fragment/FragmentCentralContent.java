@@ -334,7 +334,6 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
         tvContent.setVisibility(View.INVISIBLE);
         switch (resp_result.getData().size()) {
             case 1:
-//                Log.e(TAG, "swith case result size()" + resp_result.getData().size());
                 setTable2Hidden();
                 setTable3Hidden();
                 setResultLotteryTable1(
@@ -351,7 +350,6 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
                         resp_result.getData().get(0).getBegin_with());
                 break;
             case 2:
-//                Log.e(TAG, "swith case result size()" + resp_result.getData().size());
                 setResultLotteryTable1(
                         resp_result.getData().get(0).getArea(),
                         resp_result.getData().get(0).getRes_special(),
@@ -379,7 +377,6 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
                 setTable3Hidden();
                 break;
             case 3:
-//                Log.e(TAG, "swith case result size()" + resp_result.getData().size());
                 setResultLotteryTable1(
                         resp_result.getData().get(0).getArea(),
                         resp_result.getData().get(0).getRes_special(),

@@ -29,8 +29,8 @@
                 android:id="@+id/linearLayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
-                android:layout_marginStart="16dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:orientation="vertical"
                 android:layout_weight="1">
 
@@ -83,82 +83,74 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="horizontal">
             <LinearLayout
                 android:layout_marginTop="@dimen/size_16"
-                android:layout_marginLeft="@dimen/size_36"
-                android:layout_width="match_parent"
+                android:layout_marginLeft="@dimen/size_48"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <TextView
-                    android:layout_marginLeft="@dimen/size_16"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:minHeight="@dimen/size_36"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Miền Bắc"
                     android:textColor="@color/black_75"
                     android:textSize="@dimen/font_16"/>
-
-                <CheckBox
-                    android:id="@+id/checkNorth"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black_75"
-                    android:textSize="16sp"
-                    android:theme="@style/checkBoxStyle" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_marginTop="@dimen/size_16"
-                android:layout_marginLeft="@dimen/size_36"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
-
                 <TextView
-                    android:layout_marginLeft="@dimen/size_16"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:minHeight="@dimen/size_36"
+                    android:layout_marginTop="@dimen/size_8"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Miền Trung"
                     android:textColor="@color/black_75"
                     android:textSize="@dimen/font_16"/>
 
-                <CheckBox
-                    android:id="@+id/checkCentral"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black_75"
-                    android:textSize="16sp"
-                    android:theme="@style/checkBoxStyle" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_marginTop="@dimen/size_16"
-                android:layout_marginLeft="@dimen/size_36"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
-
                 <TextView
-                    android:layout_marginLeft="@dimen/size_16"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:minHeight="@dimen/size_36"
+                    android:layout_marginTop="@dimen/size_8"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Miền Nam"
                     android:textColor="@color/black_75"
                     android:textSize="@dimen/font_16"/>
-
-                <CheckBox
-                    android:id="@+id/checkSouth"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black_75"
-                    android:textSize="16sp"
-                    android:theme="@style/checkBoxStyle" />
             </LinearLayout>
+            <RadioGroup
+                android:id="@+id/radio_group_region"
+                android:layout_marginTop="@dimen/size_16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:orientation="vertical">
+
+                <RadioButton
+                    android:minHeight="@dimen/size_36"
+                    android:theme="@style/checkBoxStyle"
+                    android:id="@+id/radio_n"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <RadioButton
+                    android:minHeight="@dimen/size_36"
+                    android:theme="@style/checkBoxStyle"
+                    android:layout_marginTop="@dimen/size_8"
+                    android:id="@+id/radio_c"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <RadioButton
+                    android:minHeight="@dimen/size_36"
+                    android:theme="@style/checkBoxStyle"
+                    android:layout_marginTop="@dimen/size_8"
+                    android:id="@+id/radio_s"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </RadioGroup>
         </LinearLayout>
 
         <!-- Notify -->
@@ -191,7 +183,7 @@
             android:orientation="vertical">
             <LinearLayout
                 android:layout_marginTop="@dimen/size_16"
-                android:layout_marginLeft="@dimen/size_36"
+                android:layout_marginLeft="@dimen/size_32"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -216,7 +208,7 @@
             </LinearLayout>
             <LinearLayout
                 android:layout_marginTop="@dimen/size_16"
-                android:layout_marginLeft="@dimen/size_36"
+                android:layout_marginLeft="@dimen/size_32"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -241,7 +233,7 @@
             </LinearLayout>
             <LinearLayout
                 android:layout_marginTop="@dimen/size_16"
-                android:layout_marginLeft="@dimen/size_36"
+                android:layout_marginLeft="@dimen/size_32"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"

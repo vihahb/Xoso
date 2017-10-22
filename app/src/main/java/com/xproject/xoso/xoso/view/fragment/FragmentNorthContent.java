@@ -91,6 +91,7 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
     private String LotoSpecial;
 
     private String tmp_b0 = "", tmp_b1 = "", tmp_b2 = "", tmp_b3 = "", tmp_b4 = "", tmp_b5 = "", tmp_b6 = "", tmp_b7 = "", tmp_b8 = "", tmp_b9 = "";
+    private String tmp_e0 = "", tmp_e1 = "", tmp_e2 = "", tmp_e3 = "", tmp_e4 = "", tmp_e5 = "", tmp_e6 = "", tmp_e7 = "", tmp_e8 = "", tmp_e9 = "";
 
     public static FragmentNorthContent newInstance(long date) {
         FragmentNorthContent fragmentFirst = new FragmentNorthContent();
@@ -119,24 +120,24 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_north_content, container, false);
-        initTextView(rootView);
-        img_mute = (ImageView) rootView.findViewById(R.id.img_mute);
-        viewStub = (ViewStub) rootView.findViewById(R.id.view_stub_north);
-        viewStub.setVisibility(View.VISIBLE);
-        rcl_loto_live = (RecyclerView) rootView.findViewById(R.id.rcl_loto_live);
-        ln_data = (LinearLayout) rootView.findViewById(R.id.ln_data);
-        tvContent = (TextView) rootView.findViewById(R.id.tvContent);
-        tv_title = (TextView) rootView.findViewById(R.id.tv_title);
         return rootView;
     }
 
     @Override
-    public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onViewCreated(final View rootView, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(rootView, savedInstanceState);
         context = getContext();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+                initTextView(rootView);
+                img_mute = (ImageView) rootView.findViewById(R.id.img_mute);
+                viewStub = (ViewStub) rootView.findViewById(R.id.view_stub_north);
+                viewStub.setVisibility(View.VISIBLE);
+                rcl_loto_live = (RecyclerView) rootView.findViewById(R.id.rcl_loto_live);
+                ln_data = (LinearLayout) rootView.findViewById(R.id.ln_data);
+                tvContent = (TextView) rootView.findViewById(R.id.tvContent);
+                tv_title = (TextView) rootView.findViewById(R.id.tv_title);
 
                 loto_live = new ArrayList<>();
                 adapterLoto = new AdapterLoto(loto_live, getContext());
@@ -267,96 +268,96 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
 
     @Override
     public void setEndLive() {
-        presenter.initAuthentSocket();
+        presenter.getResultLottery(TimeUtils.getToday());
         presenter.checkSocket();
         MainActivity mainActivity = (MainActivity) getActivity();
-        mainActivity.setEndLive(2);
+        mainActivity.setEndLive(1);
     }
 
     private void initRoller() {
         if (toDay) {
             if (special == null) {
-                special = new Roller(tvSpecial, 100000, 80, 99999, 10000);
+                special = new Roller(tvSpecial, 100000, 110, 99999, 10000);
             }
 
             if (first == null) {
-                first = new Roller(tvFirst, 100000, 80, 99999, 10000);
+                first = new Roller(tvFirst, 100000, 110, 99999, 10000);
             }
 
             if (r21 == null)
-                r21 = new Roller(tv_21, 100000, 80, 99999, 10000);
+                r21 = new Roller(tv_21, 100000, 110, 99999, 10000);
 
             if (r22 == null)
-                r22 = new Roller(tv_22, 100000, 80, 99999, 10000);
+                r22 = new Roller(tv_22, 100000, 110, 99999, 10000);
 
             if (r31 == null)
-                r31 = new Roller(tv_31, 100000, 80, 99999, 10000);
+                r31 = new Roller(tv_31, 100000, 110, 99999, 10000);
 
             if (r32 == null)
-                r32 = new Roller(tv_32, 100000, 80, 99999, 10000);
+                r32 = new Roller(tv_32, 100000, 110, 99999, 10000);
 
             if (r33 == null)
-                r33 = new Roller(tv_33, 100000, 80, 99999, 10000);
+                r33 = new Roller(tv_33, 100000, 110, 99999, 10000);
 
             if (r34 == null)
-                r34 = new Roller(tv_34, 100000, 80, 99999, 10000);
+                r34 = new Roller(tv_34, 100000, 110, 99999, 10000);
 
             if (r35 == null)
-                r35 = new Roller(tv_35, 100000, 80, 99999, 10000);
+                r35 = new Roller(tv_35, 100000, 110, 99999, 10000);
 
             if (r36 == null)
-                r36 = new Roller(tv_36, 100000, 80, 99999, 10000);
+                r36 = new Roller(tv_36, 100000, 110, 99999, 10000);
 
             if (r41 == null)
-                r41 = new Roller(tv_41, 100000, 80, 99999, 10000);
+                r41 = new Roller(tv_41, 100000, 110, 99999, 10000);
 
             if (r42 == null)
-                r42 = new Roller(tv_42, 100000, 80, 9999, 1000);
+                r42 = new Roller(tv_42, 100000, 110, 9999, 1000);
 
             if (r43 == null)
-                r43 = new Roller(tv_43, 100000, 80, 9999, 1000);
+                r43 = new Roller(tv_43, 100000, 110, 9999, 1000);
 
             if (r44 == null)
-                r44 = new Roller(tv_44, 100000, 80, 9999, 1000);
+                r44 = new Roller(tv_44, 100000, 110, 9999, 1000);
 
             if (r51 == null)
-                r51 = new Roller(tv_51, 100000, 80, 9999, 1000);
+                r51 = new Roller(tv_51, 100000, 110, 9999, 1000);
 
             if (r52 == null)
-                r52 = new Roller(tv_52, 100000, 80, 9999, 1000);
+                r52 = new Roller(tv_52, 100000, 110, 9999, 1000);
 
             if (r53 == null)
-                r53 = new Roller(tv_53, 100000, 80, 9999, 1000);
+                r53 = new Roller(tv_53, 100000, 110, 9999, 1000);
 
             if (r54 == null)
-                r54 = new Roller(tv_54, 100000, 80, 9999, 1000);
+                r54 = new Roller(tv_54, 100000, 110, 9999, 1000);
 
             if (r55 == null)
-                r55 = new Roller(tv_55, 100000, 80, 9999, 1000);
+                r55 = new Roller(tv_55, 100000, 110, 9999, 1000);
 
             if (r56 == null)
-                r56 = new Roller(tv_56, 100000, 80, 9999, 1000);
+                r56 = new Roller(tv_56, 100000, 110, 9999, 1000);
 
             if (r61 == null)
-                r61 = new Roller(tv_61, 100000, 80, 999, 100);
+                r61 = new Roller(tv_61, 100000, 110, 999, 100);
 
             if (r62 == null)
-                r62 = new Roller(tv_62, 100000, 80, 999, 100);
+                r62 = new Roller(tv_62, 100000, 110, 999, 100);
 
             if (r63 == null)
-                r63 = new Roller(tv_63, 100000, 80, 999, 100);
+                r63 = new Roller(tv_63, 100000, 110, 999, 100);
 
             if (r71 == null)
-                r71 = new Roller(tv_71, 100000, 80, 99, 10);
+                r71 = new Roller(tv_71, 100000, 110, 99, 10);
 
             if (r72 == null)
-                r72 = new Roller(tv_72, 100000, 80, 99, 10);
+                r72 = new Roller(tv_72, 100000, 110, 99, 10);
 
             if (r73 == null)
-                r73 = new Roller(tv_73, 100000, 80, 99, 10);
+                r73 = new Roller(tv_73, 100000, 110, 99, 10);
 
             if (r74 == null)
-                r74 = new Roller(tv_74, 100000, 80, 99, 10);
+                r74 = new Roller(tv_74, 100000, 110, 99, 10);
         }
     }
 
@@ -368,212 +369,214 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
                                   List<String> six,
                                   List<String> seven) {
 
-        if (first != null && first.size() > 0) {
-            this.first.shutdownThread(false);
-        } else {
-            this.first.run();
-        }
-
-
-        /**
-         * Second*/
-        if (second != null && second.size() > 0) {
-            if (second.get(0) != null) {
-                r21.shutdownThread(false);
+        if (toDay) {
+            if (first != null && first.size() > 0) {
+                this.first.shutdownThread(false);
             } else {
-                if (first.get(0) != null)
+                this.first.run();
+            }
+
+
+            /**
+             * Second*/
+            if (second != null && second.size() > 0) {
+                if (second.get(0) != null) {
+                    r21.shutdownThread(false);
+                } else {
+                    if (first.get(0) != null)
+                        r21.run();
+                }
+
+                if (second.get(1) != null) {
+                    r22.shutdownThread(false);
+                } else {
+                    if (second.get(0) != null)
+                        r22.run();
+                }
+            } else {
+                if (first.size() > 0) {
                     r21.run();
+                }
             }
 
-            if (second.get(1) != null) {
-                r22.shutdownThread(false);
-            } else {
-                if (second.get(0) != null)
-                    r22.run();
-            }
-        } else {
-            if (first.size() > 0) {
-                r21.run();
-            }
-        }
+            /**
+             * Third*/
 
-        /**
-         * Third*/
-
-        if (third != null && third.size() > 0) {
-            if (third.get(0) != null) {
-                r31.shutdownThread(false);
-            } else {
-                if (second.get(1) != null)
-                    r31.run();
+            if (third != null && third.size() > 0) {
+                if (third.get(0) != null) {
+                    r31.shutdownThread(false);
+                } else {
+                    if (second.get(1) != null)
+                        r31.run();
+                }
+                if (third.get(1) != null) {
+                    r32.shutdownThread(false);
+                } else {
+                    if (third.get(0) != null)
+                        r32.run();
+                }
+                if (third.get(2) != null) {
+                    r33.shutdownThread(false);
+                } else {
+                    if (third.get(1) != null)
+                        r33.run();
+                }
+                if (third.get(3) != null) {
+                    r34.shutdownThread(false);
+                } else {
+                    if (third.get(2) != null)
+                        r33.run();
+                }
+                if (third.get(4) != null) {
+                    r35.shutdownThread(false);
+                } else {
+                    if (third.get(3) != null)
+                        r35.run();
+                }
+                if (third.get(5) != null) {
+                    r36.shutdownThread(false);
+                } else {
+                    if (third.get(4) != null)
+                        r36.run();
+                }
             }
-            if (third.get(1) != null) {
-                r32.shutdownThread(false);
-            } else {
-                if (third.get(0) != null)
-                    r32.run();
-            }
-            if (third.get(2) != null) {
-                r33.shutdownThread(false);
-            } else {
-                if (third.get(1) != null)
-                    r33.run();
-            }
-            if (third.get(3) != null) {
-                r34.shutdownThread(false);
-            } else {
-                if (third.get(2) != null)
-                    r33.run();
-            }
-            if (third.get(4) != null) {
-                r35.shutdownThread(false);
-            } else {
-                if (third.get(3) != null)
-                    r35.run();
-            }
-            if (third.get(5) != null) {
-                r36.shutdownThread(false);
-            } else {
-                if (third.get(4) != null)
-                    r36.run();
-            }
-        }
 
 
-        /**
-         * Fourd*/
+            /**
+             * Fourd*/
 
-        if (fourd != null && fourd.size() > 0) {
-            if (fourd.get(0) != null) {
-                r41.shutdownThread(false);
-            } else {
-                if (third.get(5) != null)
-                    r41.run();
+            if (fourd != null && fourd.size() > 0) {
+                if (fourd.get(0) != null) {
+                    r41.shutdownThread(false);
+                } else {
+                    if (third.get(5) != null)
+                        r41.run();
+                }
+                if (fourd.get(1) != null) {
+                    r42.shutdownThread(false);
+                } else {
+                    if (fourd.get(0) != null)
+                        r42.run();
+                }
+                if (fourd.get(2) != null) {
+                    r43.shutdownThread(false);
+                } else {
+                    if (fourd.get(1) != null)
+                        r43.run();
+                }
+                if (fourd.get(3) != null) {
+                    r44.shutdownThread(false);
+                } else {
+                    if (fourd.get(2) != null)
+                        r44.run();
+                }
             }
-            if (fourd.get(1) != null) {
-                r42.shutdownThread(false);
-            } else {
-                if (fourd.get(0) != null)
-                    r42.run();
-            }
-            if (fourd.get(2) != null) {
-                r43.shutdownThread(false);
-            } else {
-                if (fourd.get(1) != null)
-                    r43.run();
-            }
-            if (fourd.get(3) != null) {
-                r44.shutdownThread(false);
-            } else {
-                if (fourd.get(2) != null)
-                    r44.run();
-            }
-        }
 
-        /**
-         * Five*/
-        if (five != null && five.size() > 0) {
-            if (five.get(0) != null) {
-                r51.shutdownThread(false);
-            } else {
-                if (second.get(1) != null)
-                    r51.run();
-            }
-            if (five.get(1) != null) {
-                r52.shutdownThread(false);
-            } else {
-                if (five.get(0) != null)
-                    r52.run();
-            }
-            if (five.get(2) != null) {
-                r53.shutdownThread(false);
-            } else {
-                if (five.get(1) != null)
-                    r53.run();
-            }
-            if (five.get(3) != null) {
-                r54.shutdownThread(false);
-            } else {
-                if (five.get(2) != null)
-                    r53.run();
-            }
-            if (five.get(4) != null) {
-                r55.shutdownThread(false);
-            } else {
-                if (five.get(3) != null)
-                    r55.run();
-            }
-            if (five.get(5) != null) {
-                r56.shutdownThread(false);
-            } else {
-                if (five.get(4) != null)
-                    r56.run();
-            }
-        }
-
-        /**
-         * Six*/
-        if (six != null && six.size() > 0) {
-            if (six.get(0) != null) {
-                r61.shutdownThread(false);
-            } else {
+            /**
+             * Five*/
+            if (five != null && five.size() > 0) {
+                if (five.get(0) != null) {
+                    r51.shutdownThread(false);
+                } else {
+                    if (second.get(1) != null)
+                        r51.run();
+                }
+                if (five.get(1) != null) {
+                    r52.shutdownThread(false);
+                } else {
+                    if (five.get(0) != null)
+                        r52.run();
+                }
+                if (five.get(2) != null) {
+                    r53.shutdownThread(false);
+                } else {
+                    if (five.get(1) != null)
+                        r53.run();
+                }
+                if (five.get(3) != null) {
+                    r54.shutdownThread(false);
+                } else {
+                    if (five.get(2) != null)
+                        r53.run();
+                }
+                if (five.get(4) != null) {
+                    r55.shutdownThread(false);
+                } else {
+                    if (five.get(3) != null)
+                        r55.run();
+                }
                 if (five.get(5) != null) {
-                    r61.run();
+                    r56.shutdownThread(false);
+                } else {
+                    if (five.get(4) != null)
+                        r56.run();
                 }
             }
-            if (six.get(1) != null) {
-                r62.shutdownThread(false);
-            } else {
+
+            /**
+             * Six*/
+            if (six != null && six.size() > 0) {
                 if (six.get(0) != null) {
-                    r62.run();
+                    r61.shutdownThread(false);
+                } else {
+                    if (five.get(5) != null) {
+                        r61.run();
+                    }
+                }
+                if (six.get(1) != null) {
+                    r62.shutdownThread(false);
+                } else {
+                    if (six.get(0) != null) {
+                        r62.run();
+                    }
+                }
+                if (six.get(2) != null) {
+                    r63.shutdownThread(false);
+                } else {
+                    if (six.get(1) != null)
+                        r63.run();
                 }
             }
-            if (six.get(2) != null) {
-                r63.shutdownThread(false);
-            } else {
-                if (six.get(1) != null)
-                    r63.run();
-            }
-        }
 
-        /**
-         * Sevent*/
-        if (seven != null && seven.size() > 0) {
-            if (seven.get(0) != null) {
-                r71.shutdownThread(false);
-            } else {
-                if (six.get(2) != null)
-                    r71.run();
+            /**
+             * Sevent*/
+            if (seven != null && seven.size() > 0) {
+                if (seven.get(0) != null) {
+                    r71.shutdownThread(false);
+                } else {
+                    if (six.get(2) != null)
+                        r71.run();
+                }
+                if (seven.get(0) != null) {
+                    r72.shutdownThread(false);
+                } else {
+                    if (seven.get(0) != null)
+                        r72.run();
+                }
+                if (seven.get(0) != null) {
+                    r73.shutdownThread(false);
+                } else {
+                    if (seven.get(1) != null)
+                        r73.run();
+                }
+                if (seven.get(0) != null) {
+                    r74.shutdownThread(false);
+                } else {
+                    if (seven.get(2) != null)
+                        r74.run();
+                }
             }
-            if (seven.get(0) != null) {
-                r72.shutdownThread(false);
-            } else {
-                if (seven.get(0) != null)
-                    r72.run();
-            }
-            if (seven.get(0) != null) {
-                r73.shutdownThread(false);
-            } else {
-                if (seven.get(1) != null)
-                    r73.run();
-            }
-            if (seven.get(0) != null) {
-                r74.shutdownThread(false);
-            } else {
-                if (seven.get(2) != null)
-                    r74.run();
-            }
-        }
 
 
-        if (res_special.size() > 0) {
-            if (this.special != null) {
-                this.special.shutdownThread(false);
-            }
-        } else {
-            if (this.special != null) {
-                if (seven != null && seven.size() == 4)
-                    this.special.run();
+            if (res_special.size() > 0) {
+                if (this.special != null) {
+                    this.special.shutdownThread(false);
+                }
+            } else {
+                if (this.special != null) {
+                    if (seven != null && seven.size() == 4)
+                        this.special.run();
+                }
             }
         }
 //
@@ -716,6 +719,10 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
         loto_list.addAll(resp_result.getData().get(0).getLoto());
         adapterLoto.refreshLotoList(loto_list);
 //        sortList(loto_list);
+
+        if (resp_result.getData().get(0).getBegin_with() != null && resp_result.getData().get(0).getEnd_with() != null) {
+            setBeginEndLoto(resp_result.getData().get(0).getBegin_with(), resp_result.getData().get(0).getEnd_with());
+        }
     }
 
     @Override
@@ -1019,13 +1026,14 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
                 }
             }
             if (begin_0.length() > 0) {
-                begin_0 = begin_0.substring(0, begin_0.length() - 2);
-                if (tmp_b0 == null || tmp_b0.equals("")) {
+                begin_0 = begin_0.substring(0, begin_0.length() - 3);
+                if (android.text.TextUtils.isEmpty(tmp_b0)) {
                     tmp_b0 = begin_0;
                     TextUtils.getInstance().setAnimationTextView(tvLoto0);
                 } else {
                     if (tmp_b0.length() < begin_0.length()) {
                         TextUtils.getInstance().setAnimationTextView(tvLoto0);
+                        tmp_b0 = begin_0;
                     }
                 }
             }
@@ -1043,18 +1051,18 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
                 }
             }
             if (begin_1.length() > 0) {
-                begin_1 = begin_1.substring(0, begin_1.length() - 2);
+                begin_1 = begin_1.substring(0, begin_1.length() - 3);
 
-                if (tmp_b1 == null || tmp_b1.equals("")) {
+                if (android.text.TextUtils.isEmpty(tmp_b1)) {
                     tmp_b1 = begin_1;
                     TextUtils.getInstance().setAnimationTextView(tvLoto1);
                 } else {
                     if (tmp_b1.length() < begin_1.length()) {
                         TextUtils.getInstance().setAnimationTextView(tvLoto1);
+                        tmp_b1 = begin_1;
                     }
                 }
             }
-            TextUtils.getInstance().setAnimationTextView(tvLoto1);
             tvLoto1.setText(Html.fromHtml(begin_1));
         }
 
@@ -1068,17 +1076,18 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
                 }
             }
             if (begin_2.length() > 0) {
-                begin_2 = begin_2.substring(0, begin_2.length() - 2);
-                if (tmp_b2 == null || tmp_b2.equals("")) {
+                begin_2 = begin_2.substring(0, begin_2.length() - 3);
+
+                if (android.text.TextUtils.isEmpty(tmp_b2)) {
                     tmp_b2 = begin_2;
                     TextUtils.getInstance().setAnimationTextView(tvLoto2);
                 } else {
                     if (tmp_b2.length() < begin_2.length()) {
                         TextUtils.getInstance().setAnimationTextView(tvLoto2);
+                        tmp_b2 = begin_2;
                     }
                 }
             }
-            TextUtils.getInstance().setAnimationTextView(tvLoto2);
             tvLoto2.setText(Html.fromHtml(begin_2));
         }
 
@@ -1092,18 +1101,18 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
                 }
             }
             if (begin_3.length() > 0) {
-                begin_3 = begin_3.substring(0, begin_3.length() - 2);
+                begin_3 = begin_3.substring(0, begin_3.length() - 3);
 
-                if (tmp_b3 == null || tmp_b3.equals("")) {
+                if (android.text.TextUtils.isEmpty(tmp_b3)) {
                     tmp_b3 = begin_3;
                     TextUtils.getInstance().setAnimationTextView(tvLoto3);
                 } else {
                     if (tmp_b3.length() < begin_3.length()) {
                         TextUtils.getInstance().setAnimationTextView(tvLoto3);
+                        tmp_b3 = begin_3;
                     }
                 }
             }
-            TextUtils.getInstance().setAnimationTextView(tvLoto3);
             tvLoto3.setText(Html.fromHtml(begin_3));
         }
 
@@ -1117,18 +1126,18 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
                 }
             }
             if (begin_4.length() > 0) {
-                begin_4 = begin_4.substring(0, begin_4.length() - 2);
+                begin_4 = begin_4.substring(0, begin_4.length() - 3);
 
-                if (tmp_b4 == null || tmp_b4.equals("")) {
+                if (android.text.TextUtils.isEmpty(tmp_b4)) {
                     tmp_b4 = begin_4;
                     TextUtils.getInstance().setAnimationTextView(tvLoto4);
                 } else {
                     if (tmp_b4.length() < begin_4.length()) {
                         TextUtils.getInstance().setAnimationTextView(tvLoto4);
+                        tmp_b4 = begin_4;
                     }
                 }
             }
-            TextUtils.getInstance().setAnimationTextView(tvLoto4);
             tvLoto4.setText(Html.fromHtml(begin_4));
         }
 
@@ -1143,14 +1152,15 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
                 }
             }
             if (begin_5.length() > 0) {
-                begin_5 = begin_5.substring(0, begin_5.length() - 2);
+                begin_5 = begin_5.substring(0, begin_5.length() - 3);
 
-                if (tmp_b5 == null || tmp_b5.equals("")) {
+                if (android.text.TextUtils.isEmpty(tmp_b5)) {
                     tmp_b5 = begin_5;
                     TextUtils.getInstance().setAnimationTextView(tvLoto5);
                 } else {
                     if (tmp_b5.length() < begin_5.length()) {
                         TextUtils.getInstance().setAnimationTextView(tvLoto5);
+                        tmp_b5 = begin_5;
                     }
                 }
             }
@@ -1168,14 +1178,15 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
                 }
             }
             if (begin_6.length() > 0) {
-                begin_6 = begin_6.substring(0, begin_6.length() - 2);
+                begin_6 = begin_6.substring(0, begin_6.length() - 3);
 
-                if (tmp_b6 == null || tmp_b6.equals("")) {
+                if (android.text.TextUtils.isEmpty(tmp_b6)) {
                     tmp_b6 = begin_6;
                     TextUtils.getInstance().setAnimationTextView(tvLoto6);
                 } else {
                     if (tmp_b6.length() < begin_6.length()) {
                         TextUtils.getInstance().setAnimationTextView(tvLoto6);
+                        tmp_b6 = begin_6;
                     }
                 }
             }
@@ -1192,14 +1203,15 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
                 }
             }
             if (begin_7.length() > 0) {
-                begin_7 = begin_7.substring(0, begin_7.length() - 2);
+                begin_7 = begin_7.substring(0, begin_7.length() - 3);
 
-                if (tmp_b7 == null || tmp_b7.equals("")) {
+                if (android.text.TextUtils.isEmpty(tmp_b7)) {
                     tmp_b7 = begin_7;
                     TextUtils.getInstance().setAnimationTextView(tvLoto7);
                 } else {
                     if (tmp_b7.length() < begin_7.length()) {
                         TextUtils.getInstance().setAnimationTextView(tvLoto7);
+                        tmp_b7 = begin_7;
                     }
                 }
             }
@@ -1217,18 +1229,18 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
                 }
             }
             if (begin_8.length() > 0) {
-                begin_8 = begin_8.substring(0, begin_8.length() - 2);
+                begin_8 = begin_8.substring(0, begin_8.length() - 3);
 
-                if (tmp_b8 == null || tmp_b8.equals("")) {
+                if (android.text.TextUtils.isEmpty(tmp_b8)) {
                     tmp_b8 = begin_8;
                     TextUtils.getInstance().setAnimationTextView(tvLoto8);
                 } else {
                     if (tmp_b8.length() < begin_8.length()) {
                         TextUtils.getInstance().setAnimationTextView(tvLoto8);
+                        tmp_b8 = begin_8;
                     }
                 }
             }
-
             tvLoto8.setText(Html.fromHtml(begin_8));
         }
 
@@ -1242,14 +1254,15 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
                 }
             }
             if (begin_9.length() > 0) {
-                begin_9 = begin_9.substring(0, begin_9.length() - 2);
+                begin_9 = begin_9.substring(0, begin_9.length() - 3);
 
-                if (tmp_b9 == null || tmp_b9.equals("")) {
+                if (android.text.TextUtils.isEmpty(tmp_b9)) {
                     tmp_b9 = begin_9;
                     TextUtils.getInstance().setAnimationTextView(tvLoto9);
                 } else {
-                    if (tmp_b8.length() < begin_9.length()) {
+                    if (tmp_b9.length() < begin_9.length()) {
                         TextUtils.getInstance().setAnimationTextView(tvLoto9);
+                        tmp_b9 = begin_9;
                     }
                 }
             }
@@ -1270,6 +1283,16 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
             }
             if (end_0.length() > 0) {
                 end_0 = end_0.substring(0, end_0.length() - 2);
+
+                if (android.text.TextUtils.isEmpty(tmp_e0)) {
+                    tmp_e0 = end_0;
+                    TextUtils.getInstance().setAnimationTextView(tvLotoDuoi0);
+                } else {
+                    if (tmp_e0.length() < end_0.length()) {
+                        TextUtils.getInstance().setAnimationTextView(tvLotoDuoi0);
+                        tmp_e0 = end_0;
+                    }
+                }
             }
             tvLotoDuoi0.setText(Html.fromHtml(end_0));
         }
@@ -1285,6 +1308,15 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
             }
             if (end_1.length() > 0) {
                 end_1 = end_1.substring(0, end_1.length() - 2);
+                if (android.text.TextUtils.isEmpty(tmp_e1)) {
+                    tmp_e1 = end_1;
+                    TextUtils.getInstance().setAnimationTextView(tvLotoDuoi1);
+                } else {
+                    if (tmp_e1.length() < end_1.length()) {
+                        TextUtils.getInstance().setAnimationTextView(tvLotoDuoi1);
+                        tmp_e1 = end_1;
+                    }
+                }
             }
 
             tvLotoDuoi1.setText(Html.fromHtml(end_1));
@@ -1301,6 +1333,15 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
             }
             if (end_2.length() > 0) {
                 end_2 = end_2.substring(0, end_2.length() - 2);
+                if (android.text.TextUtils.isEmpty(tmp_e2)) {
+                    tmp_e2 = end_2;
+                    TextUtils.getInstance().setAnimationTextView(tvLotoDuoi2);
+                } else {
+                    if (tmp_e2.length() < end_2.length()) {
+                        TextUtils.getInstance().setAnimationTextView(tvLotoDuoi2);
+                        tmp_e2 = end_2;
+                    }
+                }
             }
             tvLotoDuoi2.setText(Html.fromHtml(end_2));
         }
@@ -1316,6 +1357,15 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
             }
             if (end_3.length() > 0) {
                 end_3 = end_3.substring(0, end_3.length() - 2);
+                if (android.text.TextUtils.isEmpty(tmp_e3)) {
+                    tmp_e3 = end_3;
+                    TextUtils.getInstance().setAnimationTextView(tvLotoDuoi3);
+                } else {
+                    if (tmp_e3.length() < end_3.length()) {
+                        TextUtils.getInstance().setAnimationTextView(tvLotoDuoi3);
+                        tmp_e3 = end_3;
+                    }
+                }
             }
             tvLotoDuoi3.setText(Html.fromHtml(end_3));
         }
@@ -1331,6 +1381,15 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
             }
             if (end_4.length() > 0) {
                 end_4 = end_4.substring(0, end_4.length() - 2);
+                if (android.text.TextUtils.isEmpty(tmp_e4)) {
+                    tmp_e4 = end_4;
+                    TextUtils.getInstance().setAnimationTextView(tvLotoDuoi4);
+                } else {
+                    if (tmp_e4.length() < end_4.length()) {
+                        TextUtils.getInstance().setAnimationTextView(tvLotoDuoi4);
+                        tmp_e4 = end_4;
+                    }
+                }
             }
             tvLotoDuoi4.setText(Html.fromHtml(end_4));
         }
@@ -1346,6 +1405,15 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
             }
             if (end_5.length() > 0) {
                 end_5 = end_5.substring(0, end_5.length() - 2);
+                if (android.text.TextUtils.isEmpty(tmp_e5)) {
+                    tmp_e5 = end_5;
+                    TextUtils.getInstance().setAnimationTextView(tvLotoDuoi5);
+                } else {
+                    if (tmp_e5.length() < end_5.length()) {
+                        TextUtils.getInstance().setAnimationTextView(tvLotoDuoi5);
+                        tmp_e5 = end_5;
+                    }
+                }
             }
             tvLotoDuoi5.setText(Html.fromHtml(end_5));
         }
@@ -1361,6 +1429,15 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
             }
             if (end_6.length() > 0) {
                 end_6 = end_6.substring(0, end_6.length() - 2);
+                if (android.text.TextUtils.isEmpty(tmp_e6)) {
+                    tmp_e6 = end_6;
+                    TextUtils.getInstance().setAnimationTextView(tvLotoDuoi6);
+                } else {
+                    if (tmp_e6.length() < end_6.length()) {
+                        TextUtils.getInstance().setAnimationTextView(tvLotoDuoi6);
+                        tmp_e6 = end_6;
+                    }
+                }
             }
 
             tvLotoDuoi6.setText(Html.fromHtml(end_6));
@@ -1378,6 +1455,15 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
 
             if (end_7.length() > 0) {
                 end_7 = end_7.substring(0, end_7.length() - 2);
+                if (android.text.TextUtils.isEmpty(tmp_e7)) {
+                    tmp_e7 = end_7;
+                    TextUtils.getInstance().setAnimationTextView(tvLotoDuoi7);
+                } else {
+                    if (tmp_e7.length() < end_7.length()) {
+                        TextUtils.getInstance().setAnimationTextView(tvLotoDuoi7);
+                        tmp_e7 = end_7;
+                    }
+                }
             }
             tvLotoDuoi7.setText(Html.fromHtml(end_7));
         }
@@ -1393,6 +1479,15 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
             }
             if (end_8.length() > 0) {
                 end_8 = end_8.substring(0, end_8.length() - 2);
+                if (android.text.TextUtils.isEmpty(tmp_e8)) {
+                    tmp_e8 = end_8;
+                    TextUtils.getInstance().setAnimationTextView(tvLotoDuoi8);
+                } else {
+                    if (tmp_e8.length() < end_8.length()) {
+                        TextUtils.getInstance().setAnimationTextView(tvLotoDuoi8);
+                        tmp_e8 = end_8;
+                    }
+                }
             }
             tvLotoDuoi8.setText(Html.fromHtml(end_8));
         }
@@ -1408,6 +1503,15 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
             }
             if (end_9.length() > 0) {
                 end_9 = end_9.substring(0, end_9.length() - 2);
+                if (android.text.TextUtils.isEmpty(tmp_e9)) {
+                    tmp_e9 = end_9;
+                    TextUtils.getInstance().setAnimationTextView(tvLotoDuoi9);
+                } else {
+                    if (tmp_e9.length() < end_9.length()) {
+                        TextUtils.getInstance().setAnimationTextView(tvLotoDuoi9);
+                        tmp_e9 = end_9;
+                    }
+                }
             }
             tvLotoDuoi9.setText(Html.fromHtml(end_9));
         }

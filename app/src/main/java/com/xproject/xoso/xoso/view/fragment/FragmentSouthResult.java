@@ -114,6 +114,17 @@ public class FragmentSouthResult extends BasicFragment {
         }
     }
 
+    public void setEndLive() {
+        if (!checkSelectedDay()) {
+            int position = TimeUtils.getPositionForDay(Calendar.getInstance());
+            ((FragmentSouthContent) adapterViewPager.getItem(position)).setEndLive();
+            vpPager.setCurrentItem(position);
+        } else {
+            int position = TimeUtils.getPositionForDay(Calendar.getInstance());
+            ((FragmentSouthContent) adapterViewPager.getItem(position)).setEndLive();
+        }
+    }
+
 
     public static class MyPagerAdapter extends FragmentStatePagerAdapter {
 

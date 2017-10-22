@@ -18,7 +18,13 @@ import com.xproject.xoso.xoso.view.adapter.AdapterDream;
 import com.xtelsolution.xoso.R;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public class DreamActivity extends BasicActivity implements IDream {
 
@@ -63,7 +69,7 @@ public class DreamActivity extends BasicActivity implements IDream {
                 List<Dream> dreams_tmp = new ArrayList<>();
                 if (charSequence.length() >= 3) {
 //                    filter(searchView.toString());
-                    dreams_tmp = getFillterList(charSequence);
+                    dreams_tmp = getFillterList1(charSequence);
                     adapter.updateList(dreams_tmp);
                 } else {
                     presenter.getDreamList();
@@ -84,6 +90,24 @@ public class DreamActivity extends BasicActivity implements IDream {
                 list.add(dreamList.get(i));
             }
         }
+
+        Set<Dream> dreamSet = new HashSet<>();
+        dreamSet.addAll(list);
+
+
+        return list;
+    }
+
+    private List<Dream> getFillterList1(CharSequence charSequence) {
+        String searchKey =charSequence.toString();
+        List<Dream> list = new ArrayList<>();
+
+        for (Dream dream : dreamList){
+            if (dream.getDreamed_unicoed().contains(searchKey)){
+                list.add(dream);
+            }
+        }
+
         return list;
     }
 

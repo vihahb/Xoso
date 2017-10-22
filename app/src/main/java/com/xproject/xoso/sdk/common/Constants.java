@@ -41,9 +41,26 @@ public class Constants {
     public static String SHARED_NAME = "xoso_pref";
     public static String DREAM_FLAG = "dream_flag";
     public static String CATEGORY_FLAG = "CATEGORY_FLAG";
-    public static String BEGIN = "begin";
-    public static String END = "end";
-    public static String SUM = "sum";
+
+
+    /**
+     * Setting configuration*/
+    //Notification
+    public static String NOTIFY_N_FLAG = "NOTIFY_N_FLAG";
+    public static String NOTIFY_C_FLAG = "NOTIFY_C_FLAG";
+    public static String NOTIFY_S_FLAG = "NOTIFY_S_FLAG";
+
+    //REGION
+    public static final String FLAG_RADIO_REGION = "FLAG_RADIO_REGION";
+
+    //ViBRATE
+    public static String ViBRATE_FLAG = "VIBRATE_FLAG";
+
+    //SOUND
+    public static String SOUND_FLAG = "SOUND_FLAG";
+
+    //CODE PROVINCE
+    public static final String PROVINCE_FAVORITE_CODE = "PROVINCE_FAVORITE_CODE";
 
 
     public static Authent getAuthent() {

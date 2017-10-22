@@ -117,6 +117,17 @@ public class FragmentCentralResult extends BasicFragment implements OnLoadComple
         setLive();
     }
 
+    public void setEndLive() {
+        if (!checkSelectedDay()) {
+            int position = TimeUtils.getPositionForDay(Calendar.getInstance());
+            ((FragmentCentralContent) adapterViewPager.getItem(position)).setEndLive();
+            vpPager.setCurrentItem(position);
+        } else {
+            int position = TimeUtils.getPositionForDay(Calendar.getInstance());
+            ((FragmentCentralContent) adapterViewPager.getItem(position)).setEndLive();
+        }
+    }
+
     public static class MyPagerAdapter extends FragmentStatePagerAdapter {
 
         private List<Fragment> list;

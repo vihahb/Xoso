@@ -111,6 +111,17 @@ public class FragmentNorthResult extends BasicFragment implements OnLoadComplete
         }
     }
 
+    public void setEndLive(){
+        if (!checkSelectedDay()) {
+            int position = TimeUtils.getPositionForDay(Calendar.getInstance());
+            ((FragmentNorthContent) adapterViewPager.getItem(position)).setEndLive();
+            vpPager.setCurrentItem(position);
+        } else {
+            int position = TimeUtils.getPositionForDay(Calendar.getInstance());
+            ((FragmentNorthContent) adapterViewPager.getItem(position)).setEndLive();
+        }
+    }
+
     public void queryResult(Calendar calendar) {
         vpPager.setCurrentItem(TimeUtils.getPositionForDay(calendar));
     }

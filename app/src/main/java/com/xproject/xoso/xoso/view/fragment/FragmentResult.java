@@ -242,43 +242,69 @@ public class FragmentResult extends BasicFragment {
             MainActivity mainActivity = (MainActivity) getActivity();
             switch (i) {
                 case 0:
+
+                    /**
+                     * End live if central exists*/
                     if (live_two){
                         reSetViewTab2(false);
                         mainActivity.setFlagLive(false, 2);
                     }
+
+                    /**
+                     * End live if south exists*/
                     if (live_three){
                         reSetViewTab3(false);
                         mainActivity.setFlagLive(false, 3);
                     }
+
+                    /**
+                     * Set Done live north*/
                     reSetViewTab1(true);
                     mainActivity.setFlagLive(true, 1);
                     viewPager.setCurrentItem(0);
                     ((FragmentNorthResult) pagerAdapter.getItem(0)).setLive();
                     break;
                 case 1:
+
+                    /**
+                     * End live if south exists*/
                     if (live_three){
                         reSetViewTab3(false);
                         mainActivity.setFlagLive(false, 3);
                     }
 
+                    /**
+                     * End live if north exists*/
                     if (live_one){
                         reSetViewTab1(false);
                         mainActivity.setFlagLive(false, 1);
                     }
+
+                    /**
+                     * Set Done live central*/
                     reSetViewTab2(true);
                     mainActivity.setFlagLive(true, 2);
                     viewPager.setCurrentItem(1);
                     ((FragmentCentralResult) pagerAdapter.getItem(1)).setLive();
                     break;
+
                 case 2:
+                    /**
+                     * End live if north exists*/
                     if (live_one){
                         reSetViewTab1(false);
                         mainActivity.setFlagLive(false, 1);
                     }
+
+                    /**
+                     * End live if central exists*/
                     if (live_two){
                         reSetViewTab2(false);
                         mainActivity.setFlagLive(false, 2);
                     }
+
+                    /**
+                     * Set Done live south*/
                     reSetViewTab3(true);
                     mainActivity.setFlagLive(true, 3);
                     viewPager.setCurrentItem(2);
@@ -346,24 +372,40 @@ public class FragmentResult extends BasicFragment {
     }
 
     public void changeLiveEnd(int i) {
-        MainActivity mainActivity = (MainActivity) getActivity();
+//        MainActivity mainActivity = (MainActivity) getActivity();
         if (viewPager != null) {
             switch (i) {
                 case 0:
                     reSetViewTab1(false);
-                    mainActivity.setFlagLive(false, 1);
+//                    mainActivity.setFlagLive(false, 1);
                     break;
                 case 1:
                     reSetViewTab2(false);
-                    mainActivity.setFlagLive(false, 2);
+//                    mainActivity.setFlagLive(false, 2);
                     break;
                 case 2:
                     reSetViewTab3(false);
-                    mainActivity.setFlagLive(false, 3);
+//                    mainActivity.setFlagLive(false, 3);
                     break;
             }
         }
     }
+
+
+    public void emulatorEndLive(int i) {
+        switch (i){
+            case 0:
+                ((FragmentNorthResult) pagerAdapter.getItem(0)).setEndLive();
+                break;
+            case 1:
+                ((FragmentCentralResult) pagerAdapter.getItem(1)).setEndLive();
+                break;
+            case 2:
+                ((FragmentSouthResult) pagerAdapter.getItem(2)).setEndLive();
+                break;
+        }
+    }
+
 
     @Override
     public void onResume() {

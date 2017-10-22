@@ -203,12 +203,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                     presenter.connectSocket();
                 } else {
                     presenter.getResultLottery(getDateTime);
-
-//                    if (NetworkUtils.getInstance().isConnected(getContext())) {
-//
-//                    } else {
-//                        getResultLotteryError(getString(R.string.err_network));
-//                    }
                 }
             }
         }, 100);

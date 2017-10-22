@@ -93,7 +93,7 @@ public class TextUtils {
 
     public void setAnimationTextView(TextView textView){
         Flubber.with()
-                .animation(Flubber.AnimationPreset.FLASH)
+                .animation(Flubber.AnimationPreset.FADE_IN)
                 .interpolator(Flubber.Curve.BZR_EASE_IN)
                 .duration(500)
                 .createFor(textView)
