@@ -92,14 +92,19 @@ public class SpecialTomorowInfoActivity extends BasicActivity {
                     loto_special_end = entity.getSpecial().substring(3);
                 } else {
                     north_area = false;
-                    loto_special_begin = entity.getSpecial().substring(0, 4);
-                    loto_special_end = entity.getSpecial().substring(4);
+                    if (entity.getSpecial().length() == 6) {
+                        loto_special_begin = entity.getSpecial().substring(0, 4);
+                        loto_special_end = entity.getSpecial().substring(4);
+                    } else {
+                        loto_special_begin = entity.getSpecial().substring(0, 3);
+                        loto_special_end = entity.getSpecial().substring(3);
+                    }
                 }
 
                 tv_title_loto_special.setText("Các kết quả mà ngày trước đó cũng có lô tô đặc biệt " + loto_special_end);
-                String result = "Ngày <font color='red'>"
+                String result = "Ngày <font color='red'><i>"
                         + TimeUtils.getFormatTimeClient(entity.getDate())
-                        + "</font>, Giải đặc biệt "
+                        + "</i></font>, Giải đặc biệt "
                         + loto_special_begin
                         + "<font color='red'>"
                         + loto_special_end + "</font>";

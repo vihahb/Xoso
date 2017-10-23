@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.xproject.xoso.sdk.common.Constants;
+import com.xproject.xoso.sdk.utils.SharedUtils;
 import com.xproject.xoso.xoso.model.entity.CycleLotoEntity;
 import com.xproject.xoso.xoso.model.entity.ProvinceEntity;
 import com.xproject.xoso.xoso.model.entity.SpeedTemp;
@@ -29,6 +30,7 @@ public class ActivityLotoCycle extends BasicActivity implements View.OnClickList
     private Button btn_result;
     private ActivityCycleLotoPresenter presenter;
     private SpeedTemp temp;
+    private int tmp_province_code = -1;
 
 
     @Override
@@ -56,6 +58,15 @@ public class ActivityLotoCycle extends BasicActivity implements View.OnClickList
     }
 
     private void initSpinnerSelect() {
+        tmp_province_code = SharedUtils.getInstance().getIntValue(Constants.PROVINCE_FAVORITE_CODE);
+        if (tmp_province_code > 0){
+            for (int i = 0; i < provinceEntityList.size(); i++) {
+                if (provinceEntityList.get(i).getMavung() == tmp_province_code) {
+                    sp_province.setSelection(i);
+                }
+            }
+        }
+
         sp_province.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

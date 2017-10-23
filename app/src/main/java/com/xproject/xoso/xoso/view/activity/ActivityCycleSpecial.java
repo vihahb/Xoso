@@ -11,6 +11,7 @@ import android.widget.Spinner;
 
 import com.xproject.xoso.sdk.callback.DateTimePickerListener;
 import com.xproject.xoso.sdk.common.Constants;
+import com.xproject.xoso.sdk.utils.SharedUtils;
 import com.xproject.xoso.sdk.utils.TimeUtils;
 import com.xproject.xoso.xoso.model.entity.ProvinceEntity;
 import com.xproject.xoso.xoso.model.entity.SpeedTemp;
@@ -32,6 +33,7 @@ public class ActivityCycleSpecial extends BasicActivity implements IActivityCycl
     private SpeedTemp temp;
     private AdapterSpinner provinceAdapter;
     private ActivityCycleSpecialPresenter presenter;
+    private int tmp_province_code = - 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +60,14 @@ public class ActivityCycleSpecial extends BasicActivity implements IActivityCycl
     }
 
     private void initSpinnerSelect() {
+        tmp_province_code = SharedUtils.getInstance().getIntValue(Constants.PROVINCE_FAVORITE_CODE);
+        if (tmp_province_code > 0){
+            for (int i = 0; i < provinceList.size(); i++) {
+                if (provinceList.get(i).getMavung() == tmp_province_code) {
+                    sp_province.setSelection(i);
+                }
+            }
+        }
         sp_province.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

@@ -24,6 +24,7 @@ public class AlarmUtils {
     public static int NOTIFY_TYPE = 1;
 
     private static Context context = ProjectApplication.context;
+    private static boolean flag_n = false, flag_c =false, flag_s = false;
 
     public static void startService(Context context, int type) {
         Intent intent = new Intent(context, SchedulingService.class);
@@ -32,7 +33,7 @@ public class AlarmUtils {
     }
 
 
-    public static void setNorthAlarm() {
+    public static void setNorthAlarm(boolean off) {
 
         long startTime;
         Calendar calendar = Calendar.getInstance();
@@ -55,10 +56,14 @@ public class AlarmUtils {
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC_WAKEUP, startTime, northPendingIntent);
+
+        if (off){
+            alarmManager.cancel(northPendingIntent);
+        }
     }
 
 
-    public static void setAlarmCentral() {
+    public static void setAlarmCentral(boolean off) {
         long startTime;
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, 17);
@@ -80,10 +85,13 @@ public class AlarmUtils {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC_WAKEUP, startTime, centralPendingIntent);
 
+        if (off){
+            alarmManager.cancel(centralPendingIntent);
+        }
     }
 
 
-    public static void setAlarmSouth() {
+    public static void setAlarmSouth(boolean off) {
         long startTime;
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, 16);
@@ -102,10 +110,14 @@ public class AlarmUtils {
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC_WAKEUP, startTime, southPendingIntent);
+
+        if (off){
+            alarmManager.cancel(southPendingIntent);
+        }
     }
 
 
-    public static void setNorthAlarmIntoSpin() {
+    public static void setNorthAlarmIntoSpin(boolean off) {
 
         long startTime;
         Calendar calendar = Calendar.getInstance();
@@ -128,10 +140,14 @@ public class AlarmUtils {
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC_WAKEUP, startTime, northPendingIntent);
+
+        if (off){
+            alarmManager.cancel(northPendingIntent);
+        }
     }
 
 
-    public static void setAlarmCentralIntoSpin() {
+    public static void setAlarmCentralIntoSpin(boolean off) {
         long startTime;
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, 17);
@@ -147,16 +163,18 @@ public class AlarmUtils {
         Log.e(TAG, "setCentralAlarmFix: " + startTime);
         Log.e(TAG, "setCentralAlarmFix in format: " + TimeUtils.getHourseFromMilisecond(startTime));
 
-        Intent notificationNorth = new Intent(context, AlarmReceiver.class);
-        notificationNorth.putExtra(Constants.NOTIFICATION_ID, 5);
-        PendingIntent northPendingIntent = PendingIntent.getBroadcast(context, 102, notificationNorth, PendingIntent.FLAG_CANCEL_CURRENT);
+        Intent notificationCentral = new Intent(context, AlarmReceiver.class);
+        notificationCentral.putExtra(Constants.NOTIFICATION_ID, 5);
+        PendingIntent CentralPendingIntent = PendingIntent.getBroadcast(context, 102, notificationCentral, PendingIntent.FLAG_CANCEL_CURRENT);
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, startTime, northPendingIntent);
-
+        alarmManager.set(AlarmManager.RTC_WAKEUP, startTime, CentralPendingIntent);
+        if (off){
+            alarmManager.cancel(CentralPendingIntent);
+        }
     }
 
-    public static void setAlarmSouthIntoSpin() {
+    public static void setAlarmSouthIntoSpin(boolean off) {
         long startTime;
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, 16);
@@ -172,24 +190,55 @@ public class AlarmUtils {
         Log.e(TAG, "setSouthAlarmFix: " + startTime);
         Log.e(TAG, "setSouthAlarmFix in format: " + TimeUtils.getHourseFromMilisecond(startTime));
 
-        Intent notificationNorth = new Intent(context, AlarmReceiver.class);
-        notificationNorth.putExtra(Constants.NOTIFICATION_ID, 6);
-        PendingIntent northPendingIntent = PendingIntent.getBroadcast(context, 103, notificationNorth, PendingIntent.FLAG_CANCEL_CURRENT);
+        Intent notificationSouth = new Intent(context, AlarmReceiver.class);
+        notificationSouth.putExtra(Constants.NOTIFICATION_ID, 6);
+        PendingIntent southPendingIntent = PendingIntent.getBroadcast(context, 103, notificationSouth, PendingIntent.FLAG_CANCEL_CURRENT);
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, startTime, northPendingIntent);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, startTime, southPendingIntent);
+        if (off){
+            alarmManager.cancel(southPendingIntent);
+        }
     }
 
-
+    /**
+     * Set Alarm spin
+     * @deprecated Flag on method
+     *             flag = false -> set on alarm
+     *             flag = true -> set off alarm */
     public static void setAlarm() {
-        setNorthAlarm();
-        setAlarmCentral();
-        setAlarmSouth();
+        flag_n = SharedUtils.getInstance().getBooleanValue(Constants.NOTIFY_N_FLAG);
+        if (flag_n){
+            Log.e(TAG, "setAlarm: N - ON");
+            setNorthAlarm(false);
+            setNorthAlarmIntoSpin(false);
+        } else {
+            Log.e(TAG, "setAlarm: N - OFF");
+            setNorthAlarm(true);
+            setNorthAlarmIntoSpin(true);
+        }
 
-        /**
-         * Set Alarm spin*/
-        setNorthAlarmIntoSpin();
-        setAlarmCentralIntoSpin();
-        setAlarmSouthIntoSpin();
+
+        flag_c = SharedUtils.getInstance().getBooleanValue(Constants.NOTIFY_C_FLAG);
+        if (flag_c){
+            Log.e(TAG, "setAlarm: C - ON");
+            setAlarmCentral(false);
+            setAlarmCentralIntoSpin(false);
+        } else {
+            Log.e(TAG, "setAlarm: C - OFF");
+            setAlarmCentral(true);
+            setAlarmCentralIntoSpin(true);
+        }
+
+        flag_s = SharedUtils.getInstance().getBooleanValue(Constants.NOTIFY_S_FLAG);
+        if (flag_s){
+            Log.e(TAG, "setAlarm: S - ON");
+            setAlarmSouth(false);
+            setAlarmSouthIntoSpin(false);
+        } else {
+            Log.e(TAG, "setAlarm: S - OFF");
+            setAlarmSouth(true);
+            setAlarmSouthIntoSpin(true);
+        }
     }
 }

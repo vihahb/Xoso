@@ -38,11 +38,10 @@ public class FragmentResult extends BasicFragment {
     private OnCompleteListener listener;
     private FragmentPagerAdapter pagerAdapter;
     private boolean live_one = false, live_two = false, live_three = false;
+    private int tmp_flag_region_radio;
 
     public static FragmentResult newInstance() {
-
         Bundle args = new Bundle();
-
         FragmentResult fragment = new FragmentResult();
         fragment.setArguments(args);
         return fragment;
@@ -113,6 +112,21 @@ public class FragmentResult extends BasicFragment {
             setViewTab3(false);
         }
 //        setViewTab4();
+
+        tmp_flag_region_radio = SharedUtils.getInstance().getIntValue(Constants.FLAG_RADIO_REGION);
+        if (tmp_flag_region_radio > 0){
+            switch (tmp_flag_region_radio){
+                case 1:
+                    viewPager.setCurrentItem(0);
+                    break;
+                case 2:
+                    viewPager.setCurrentItem(1);
+                    break;
+                case 3:
+                    viewPager.setCurrentItem(2);
+                    break;
+            }
+        }
 
     }
 

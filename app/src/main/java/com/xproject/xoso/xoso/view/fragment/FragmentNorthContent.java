@@ -18,9 +18,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.xproject.xoso.sdk.common.Constants;
 import com.xproject.xoso.sdk.utils.CalendarUtils;
+import com.xproject.xoso.sdk.utils.SharedUtils;
 import com.xproject.xoso.sdk.utils.TextUtils;
 import com.xproject.xoso.sdk.utils.TimeUtils;
+import com.xproject.xoso.sdk.utils.Utils;
 import com.xproject.xoso.xoso.model.entity.BeginResult;
 import com.xproject.xoso.xoso.model.entity.EndResult;
 import com.xproject.xoso.xoso.model.entity.ResultLottery;
@@ -59,6 +62,7 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
     private ImageView img_mute;
     private boolean isExistsBegin = false;
     private boolean isExistsEnd = false;
+    private boolean vibrate = false, sound = true;
     /**
      * Value table result lottery
      */
@@ -229,6 +233,19 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
         } else {
             img_mute.setVisibility(View.GONE);
         }
+
+        vibrate = SharedUtils.getInstance().getBooleanValue(Constants.ViBRATE_FLAG);
+        sound = SharedUtils.getInstance().getBooleanValue(Constants.SOUND_FLAG);
+        if (sound){
+            mute = false;
+            img_mute.setImageResource(R.mipmap.ic_mute);
+            audioManager.setStreamMute(AudioManager.STREAM_MUSIC, false);
+        } else {
+            mute = true;
+            img_mute.setImageResource(R.mipmap.ic_mute_on);
+            audioManager.setStreamMute(AudioManager.STREAM_MUSIC, true);
+        }
+
         img_mute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -728,6 +745,9 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
     @Override
     public void setNewResult(RESP_NewResult newResult) {
         player.start();
+        if (vibrate){
+            Utils.vibrateAction();
+        }
         configRoller(newResult);
     }
 

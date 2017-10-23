@@ -57,14 +57,14 @@ public class AlarmReceiver extends BroadcastReceiver {
             id_notify = 3;
         }
 
-        MessageNotification.notify(context, content_notify, id_notify, intentLive);
-
         if (Helper.isAppRunning(context, "com.xtelsolution.xoso")) {
             if (id_notify > 0) {
                 Intent live_intent = new Intent("ACTION_LIVE");
                 live_intent.putExtra(Constants.ACTION_TYPE, id_notify);
                 context.sendBroadcast(live_intent);
             }
+        } else {
+            MessageNotification.notify(context, content_notify, id_notify, intentLive);
         }
 
 //        PendingIntent pendingIntent = PendingIntent.getService(context, 99, intentLive, PendingIntent.FLAG_UPDATE_CURRENT);

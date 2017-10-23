@@ -3,10 +3,7 @@ package com.xproject.xoso.xoso.view.activity;
 import android.app.Activity;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
@@ -14,12 +11,14 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.RadioButton;
@@ -38,7 +37,7 @@ import com.xtelsolution.xoso.R;
 
 import java.util.List;
 
-public class SettingActivity extends BasicActivity implements OnCompleteListener{
+public class SettingActivity extends BasicActivity {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -125,19 +124,15 @@ public class SettingActivity extends BasicActivity implements OnCompleteListener
         int id = item.getItemId();
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_save) {
-            PlaceholderFragment fragment = (PlaceholderFragment) mSectionsPagerAdapter.getItem(0);
-            fragment.onSave();
-            showShortToast("Đã lưu cài đặt.");
+            PlaceholderFragment page = (PlaceholderFragment) getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.container + ":" + mViewPager.getCurrentItem());
+            // based on the current position you can then cast the page to the correct
+            // class and call the method:
+            page.onSave();
         } else if (id == android.R.id.home) {
             finish();
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onComplete() {
-//        ((PlaceholderFragment) mSectionsPagerAdapter.getItem(0)).onSave();
     }
 
     /**
@@ -148,10 +143,9 @@ public class SettingActivity extends BasicActivity implements OnCompleteListener
          * The fragment argument representing the section number for this
          * fragment.
          */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-        private int section;
+        private static final String ARG_ACTION_NUMBER = "section_number";
+        private int type_action = 0;
 
-        private Button btnResult;
         private Spinner sp_province;
         private AdapterSpinner adapterSpinner;
         private List<ProvinceEntity> provinceEntityList;
@@ -163,12 +157,11 @@ public class SettingActivity extends BasicActivity implements OnCompleteListener
         private RadioGroup radio_group_region;
         private boolean viewCreated = false;
 
-        private OnCompleteListener mListener;
 
         /**
          * Variable flag get from SharePref
          */
-        private int tmp_flag_region_radio = 0;
+        private int tmp_flag_region_radio = 0, tmp_province_code = 0;
         private boolean tmp_flag_n = false, tmp_flag_c = false, tmp_flag_s = false;
 
 
@@ -176,7 +169,7 @@ public class SettingActivity extends BasicActivity implements OnCompleteListener
          * Variable flag save to SharePref
          */
         private int flag_region_radio = 0;
-        private boolean flag_n = false, flag_c = false, flag_s = false;
+        private boolean flag_n = false, flag_c = false, flag_s = false, tmp_vibrate = false, tmp_sound = false;
         private int province_code = -1;
 
         public PlaceholderFragment() {
@@ -186,29 +179,18 @@ public class SettingActivity extends BasicActivity implements OnCompleteListener
          * Returns a new instance of this fragment for the given section
          * number.
          */
-        public static PlaceholderFragment newInstance() {
+        public static PlaceholderFragment newInstance(int type_action) {
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
-//            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+            args.putInt(ARG_ACTION_NUMBER, type_action);
             fragment.setArguments(args);
             return fragment;
-        }
-
-
-        @Override
-        public void onAttach(Activity activity) {
-            super.onAttach(activity);
-            try {
-                this.mListener = (OnCompleteListener)activity;
-            }
-            catch (final ClassCastException e) {
-                throw new ClassCastException(activity.toString() + " must implement OnCompleteListener");
-            }
         }
 
         @Override
         public void onCreate(@Nullable Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
+            type_action = getArguments().getInt(ARG_ACTION_NUMBER);
         }
 
         @Override
@@ -224,6 +206,17 @@ public class SettingActivity extends BasicActivity implements OnCompleteListener
             sp_province = (Spinner) rootView.findViewById(R.id.sp_province);
             adapterSpinner = new AdapterSpinner(provinceEntityList, getActivity());
             sp_province.setAdapter(adapterSpinner);
+            sp_province.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    province_code = provinceEntityList.get(i).getMavung();
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                }
+            });
 
             radio_group_region = (RadioGroup) rootView.findViewById(R.id.radio_group_region);
 
@@ -238,7 +231,22 @@ public class SettingActivity extends BasicActivity implements OnCompleteListener
             spinVibrate = (CheckBox) rootView.findViewById(R.id.checkVibrate);
             playMusic = (CheckBox) rootView.findViewById(R.id.checkPlay);
 
-            btnResult = (Button) rootView.findViewById(R.id.btn_result);
+            Log.e("Setting fragment", "province_code: " + SharedUtils.getInstance().getIntValue(Constants.PROVINCE_FAVORITE_CODE));
+            Log.e("Setting fragment", "tmp_flag_region_radio: " + SharedUtils.getInstance().getIntValue(Constants.FLAG_RADIO_REGION));
+
+            Log.e("Setting fragment", "tmp_flag_n: " + SharedUtils.getInstance().getBooleanValue(Constants.NOTIFY_N_FLAG));
+            Log.e("Setting fragment", "tmp_flag_c: " + SharedUtils.getInstance().getBooleanValue(Constants.NOTIFY_C_FLAG));
+            Log.e("Setting fragment", "tmp_flag_s: " + SharedUtils.getInstance().getBooleanValue(Constants.NOTIFY_S_FLAG));
+
+            tmp_province_code = SharedUtils.getInstance().getIntValue(Constants.PROVINCE_FAVORITE_CODE);
+            tmp_flag_region_radio = SharedUtils.getInstance().getIntValue(Constants.FLAG_RADIO_REGION);
+
+            tmp_flag_n = SharedUtils.getInstance().getBooleanValue(Constants.NOTIFY_N_FLAG);
+            tmp_flag_c = SharedUtils.getInstance().getBooleanValue(Constants.NOTIFY_C_FLAG);
+            tmp_flag_s = SharedUtils.getInstance().getBooleanValue(Constants.NOTIFY_S_FLAG);
+
+            tmp_sound = SharedUtils.getInstance().getBooleanValue(Constants.SOUND_FLAG);
+            tmp_vibrate = SharedUtils.getInstance().getBooleanValue(Constants.ViBRATE_FLAG);
         }
 
         private List<ProvinceEntity> getCategory() {
@@ -248,26 +256,26 @@ public class SettingActivity extends BasicActivity implements OnCompleteListener
         @Override
         public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
             super.onViewCreated(view, savedInstanceState);
-                viewCreated = true;
-                mListener.onComplete();
-                getData();
+            viewCreated = true;
+            getData();
         }
 
         public void onSave() {
-                if (viewCreated) {
-                    if (initRadioGroupSelected()) {
-                        initCheckNotify();
-                        checkVibrateAndSound();
-                    }
+            if (viewCreated) {
+                if (initRadioGroupSelected()) {
+                    initCheckNotify();
+                    checkVibrateAndSound();
+                    SharedUtils.getInstance().putIntValue(Constants.FLAG_RADIO_REGION, flag_region_radio);
+                    SharedUtils.getInstance().putIntValue(Constants.PROVINCE_FAVORITE_CODE, province_code);
+                    Toast.makeText(getContext(), "Đã lưu cài đặt.", Toast.LENGTH_SHORT).show();
                 }
+            }
         }
 
         private void getData() {
-
-            province_code = SharedUtils.getInstance().getIntValue(Constants.PROVINCE_FAVORITE_CODE);
-            if (province_code > 0) {
+            if (tmp_province_code > 0) {
                 for (int i = 0; i < provinceEntityList.size(); i++) {
-                    if (provinceEntityList.get(i).getMavung() == province_code) {
+                    if (provinceEntityList.get(i).getMavung() == tmp_province_code) {
                         sp_province.setSelection(i);
                     }
                 }
@@ -276,34 +284,47 @@ public class SettingActivity extends BasicActivity implements OnCompleteListener
 
             /**
              * Radio group modified*/
-            tmp_flag_region_radio = SharedUtils.getInstance().getIntValue(Constants.FLAG_RADIO_REGION);
+
             if (tmp_flag_region_radio > 0) {
-                switch (flag_region_radio) {
+                switch (tmp_flag_region_radio) {
                     case 1:
-                        radio_n.isChecked();
+                        radio_group_region.check(radio_n.getId());
                         break;
                     case 2:
-                        radio_c.isChecked();
+                        radio_group_region.check(radio_c.getId());
                         break;
                     case 3:
-                        radio_s.isChecked();
+                        radio_group_region.check(radio_s.getId());
                         break;
                 }
             }
 
             /**
              * Checkbox notify modified*/
-            tmp_flag_n = SharedUtils.getInstance().getBooleanValue(Constants.NOTIFY_N_FLAG);
-            if (flag_n)
-                chkNotifyNorth.isChecked();
+            if (tmp_flag_n)
+                chkNotifyNorth.setChecked(true);
+            else
+                chkNotifyNorth.setChecked(false);
 
-            tmp_flag_c = SharedUtils.getInstance().getBooleanValue(Constants.NOTIFY_C_FLAG);
-            if (flag_c)
-                chkNotifyCentral.isChecked();
+            if (tmp_flag_c)
+                chkNotifyCentral.setChecked(true);
+            else
+                chkNotifyCentral.setChecked(false);
 
-            tmp_flag_s = SharedUtils.getInstance().getBooleanValue(Constants.NOTIFY_S_FLAG);
-            if (flag_s)
-                chkNotifySouth.isChecked();
+            if (tmp_flag_s)
+                chkNotifySouth.setChecked(true);
+            else
+                chkNotifySouth.setChecked(false);
+
+            if (tmp_vibrate)
+                spinVibrate.setChecked(true);
+            else
+                spinVibrate.setChecked(false);
+
+            if (tmp_sound)
+                playMusic.setChecked(true);
+            else
+                playMusic.setChecked(false);
         }
 
         private void initCheckNotify() {
@@ -337,7 +358,7 @@ public class SettingActivity extends BasicActivity implements OnCompleteListener
 
         private boolean initRadioGroupSelected() {
             int selectedId = radio_group_region.getCheckedRadioButtonId();
-            if (selectedId !=-1) {
+            if (selectedId != -1) {
                 switch (selectedId) {
                     case R.id.radio_n:
                         flag_region_radio = 1;
@@ -356,6 +377,10 @@ public class SettingActivity extends BasicActivity implements OnCompleteListener
             }
         }
 
+        @Override
+        public void onResume() {
+            super.onResume();
+        }
     }
 
     public static class PlaceholderFragmentTwo extends Fragment {
@@ -430,14 +455,24 @@ public class SettingActivity extends BasicActivity implements OnCompleteListener
 
         @Override
         public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            if (position == 0){
-                return PlaceholderFragment.newInstance();
-            } else if (position == 1){
+            if (position == 0) {
+                return PlaceholderFragment.newInstance(0);
+            } else if (position == 1) {
                 return PlaceholderFragmentTwo.newInstance(position + 1);
             }
             return null;
+        }
+
+        public Fragment setItem(int position, int type) {
+            // getItem is called to instantiate the fragment for the given page.
+            // Return a PlaceholderFragment (defined as a static inner class below).
+            if (position == 0) {
+                return PlaceholderFragment.newInstance(type);
+            } else if (position == 1) {
+                return PlaceholderFragmentTwo.newInstance(type);
+            } else {
+                return null;
+            }
         }
 
         @Override

@@ -60,13 +60,13 @@ public class ActivityCycleSpecialInfo extends BasicActivity {
         TextView tv_title_end = findTextView(R.id.tv_title_end);
         TextView tv_title_sum = findTextView(R.id.tv_title_sum);
 
-        String begin = "1. Chu kỳ gần nhất của các số <font color='red'> đầu </font> trong 2 số cuối giải đặc biệt";
+        String begin = "1. Chu kỳ gần nhất của các số <font color='#eb2227'> đầu </font> trong 2 số cuối giải đặc biệt";
         tv_title_begin.setText(Html.fromHtml(begin));
 
-        String end = "2. Chu kỳ gần nhất của các số <font color='red'> cuối </font> trong 2 số cuối giải đặc biệt";
+        String end = "2. Chu kỳ gần nhất của các số <font color='#eb2227'> cuối </font> trong 2 số cuối giải đặc biệt";
         tv_title_end.setText(Html.fromHtml(end));
 
-        String sum = "3. Chu kỳ gần nhất của các <font color='red'> tổng </font> trong 2 số cuối giải đặc biệt";
+        String sum = "3. Chu kỳ gần nhất của các <font color='#eb2227'> tổng </font> trong 2 số cuối giải đặc biệt";
         tv_title_sum.setText(Html.fromHtml(sum));
 
         RecyclerView rcl_begin = findRecyclerView(R.id.rcl_begin);

@@ -75,7 +75,7 @@ public class AdapterCycleLoto extends RecyclerView.Adapter<RecyclerView.ViewHold
                 tv_number.setText(String.valueOf(data.getNumber()));
             }
             tv_cycle_last_append.setText(TimeUtils.getFormatTimeClient(data.getLast_appear()));
-            tv_cycle_not_append.setText(Html.fromHtml("<font color='red'>" + TimeUtils.getFormatTimeClient(data.getStart()) + "</font> đến " + "<font color='red'>" + TimeUtils.getFormatTimeClient(data.getEnd() + "</font>")));
+            tv_cycle_not_append.setText(Html.fromHtml("<font color='#eb2227'>" + TimeUtils.getFormatTimeClient(data.getStart()) + "</font> đến " + "<font color='#eb2227'>" + TimeUtils.getFormatTimeClient(data.getEnd() + "</font>")));
         }
     }
 }

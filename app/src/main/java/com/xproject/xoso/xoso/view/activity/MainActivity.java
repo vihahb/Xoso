@@ -34,6 +34,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.xproject.xoso.sdk.common.Constants;
 import com.xproject.xoso.sdk.utils.AlarmUtils;
+import com.xproject.xoso.sdk.utils.MessageNotification;
 import com.xproject.xoso.sdk.utils.PermissionHelper;
 import com.xproject.xoso.sdk.utils.TimeUtils;
 import com.xproject.xoso.xoso.model.entity.DrawerMenu;
@@ -52,6 +53,8 @@ import com.xtelsolution.xoso.R;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import static com.xproject.xoso.xoso.ProjectApplication.context;
 
 public class MainActivity extends BasicActivity implements IHomeView, OnCompleteListener, onDateSelectListener {
 
@@ -287,22 +290,21 @@ public class MainActivity extends BasicActivity implements IHomeView, OnComplete
         presenter.initDrawerMenu();
         presenter.getDream();
         setChangeLive();
-        setLiveDone();
     }
 
-    private void setLiveDone() {
-        if (TimeUtils.checkTimeInMilisecondNorth(16, 45, 23, 58)) {
-            adapterMenu.changeLiveDone(3);
-        }
-
-        if (TimeUtils.checkTimeInMilisecondNorth(17, 45, 23, 58)) {
-            adapterMenu.changeLiveDone(2);
-        }
-
-        if (TimeUtils.checkTimeInMilisecondNorth(18, 45, 23, 58)) {
-            adapterMenu.changeLiveDone(1);
-        }
-    }
+//    private void setLiveDone() {
+//        if (TimeUtils.checkTimeInMilisecondNorth(16, 45, 23, 58)) {
+//            adapterMenu.changeLiveDone(3);
+//        }
+//
+//        if (TimeUtils.checkTimeInMilisecondNorth(17, 45, 23, 58)) {
+//            adapterMenu.changeLiveDone(2);
+//        }
+//
+//        if (TimeUtils.checkTimeInMilisecondNorth(18, 45, 23, 58)) {
+//            adapterMenu.changeLiveDone(1);
+//        }
+//    }
 
     private void initAlarmManager() {
         AlarmUtils.setAlarm();
@@ -378,6 +380,9 @@ public class MainActivity extends BasicActivity implements IHomeView, OnComplete
             }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
             datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
             datePickerDialog.show();
+
+            Intent intentLive = new Intent(context, MainActivity.class);
+            MessageNotification.notify(this, "Sắp đến giờ quay giải miền Nam", 3, intentLive);
         }
 
         return super.onOptionsItemSelected(item);
@@ -413,9 +418,12 @@ public class MainActivity extends BasicActivity implements IHomeView, OnComplete
                 break;
             case 8:
                 navigationBottom.setSelectedItemId(R.id.nav_analytics);
-                startActivity(ActivityExploreBridgeLoto.class, Constants.ACTION_TYPE, 1);
                 break;
             case 10:
+                navigationBottom.setSelectedItemId(R.id.nav_explore);
+                startActivity(ActivityExploreBridgeLoto.class, Constants.ACTION_TYPE, 1);
+                break;
+            case 11:
                 navigationBottom.setSelectedItemId(R.id.nav_explore);
                 startActivity(ActivityExploreBridgeLoto.class, Constants.ACTION_TYPE, 5);
                 break;

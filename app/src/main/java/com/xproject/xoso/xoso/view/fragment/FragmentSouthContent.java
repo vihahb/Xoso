@@ -17,8 +17,11 @@ import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
+import com.xproject.xoso.sdk.common.Constants;
 import com.xproject.xoso.sdk.utils.CalendarUtils;
+import com.xproject.xoso.sdk.utils.SharedUtils;
 import com.xproject.xoso.sdk.utils.TimeUtils;
+import com.xproject.xoso.sdk.utils.Utils;
 import com.xproject.xoso.xoso.model.entity.BeginResult;
 import com.xproject.xoso.xoso.model.entity.ResultLottery;
 import com.xproject.xoso.xoso.model.respond.RESP_LiveLoto;
@@ -127,6 +130,7 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
     private Context context;
     private boolean isExistsBegin, isExistsBegin_2, isExistsBegin_3, isExistsBegin_4;
     private String LotoSpecial_1, LotoSpecial_2, LotoSpecial_3, LotoSpecial_4;
+    private boolean vibrate = false, sound = false;
 
     public static FragmentSouthContent newInstance(long date) {
         FragmentSouthContent fragmentFirst = new FragmentSouthContent();
@@ -181,6 +185,10 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                 tv_title = (TextView) view.findViewById(R.id.tv_title);
                 TextView tv_not_yet = (TextView) view.findViewById(R.id.tv_not_yet);
                 img_mute = (ImageView) view.findViewById(R.id.img_mute);
+
+                sound = SharedUtils.getInstance().getBooleanValue(Constants.SOUND_FLAG);
+                vibrate = SharedUtils.getInstance().getBooleanValue(Constants.ViBRATE_FLAG);
+
                 getTitle();
                 setMute();
                 initTable1(view);
@@ -221,6 +229,17 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
         } else {
             img_mute.setVisibility(View.GONE);
         }
+
+        if (sound){
+            mute = false;
+            img_mute.setImageResource(R.mipmap.ic_mute);
+            audioManager.setStreamMute(AudioManager.STREAM_MUSIC, false);
+        } else {
+            mute = true;
+            img_mute.setImageResource(R.mipmap.ic_mute_on);
+            audioManager.setStreamMute(AudioManager.STREAM_MUSIC, true);
+        }
+
         img_mute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -1297,6 +1316,9 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
     @Override
     public void setNewResult(RESP_NewResult newResult, int position_table) {
         player.start();
+        if (vibrate){
+            Utils.vibrateAction();
+        }
         switch (position_table) {
             /**
              * Table 1*/

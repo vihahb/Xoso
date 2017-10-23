@@ -207,6 +207,7 @@ public class AdapterMenu extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    Log.e("MENU Item", "onClickPosition: " + position);
                     selectedPosition = position;
                     notifyDataSetChanged();
                     viewHome.itemDrawerClick(view, position);

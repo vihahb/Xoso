@@ -11,6 +11,7 @@ import android.widget.Spinner;
 
 import com.xproject.xoso.sdk.callback.DateTimePickerListener;
 import com.xproject.xoso.sdk.common.Constants;
+import com.xproject.xoso.sdk.utils.SharedUtils;
 import com.xproject.xoso.sdk.utils.TimeUtils;
 import com.xproject.xoso.xoso.model.entity.ProvinceEntity;
 import com.xproject.xoso.xoso.model.entity.SpeedTemp;
@@ -37,6 +38,7 @@ public class FrequencyLotoActivity extends BasicActivity implements View.OnClick
     private AdapterStringCustom adapterDay;
     private List<String> dayList;
     private int day_of_week;
+    private int tmp_province_code = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,6 +155,15 @@ public class FrequencyLotoActivity extends BasicActivity implements View.OnClick
     }
 
     private void initSpinnerSelect() {
+        tmp_province_code = SharedUtils.getInstance().getIntValue(Constants.PROVINCE_FAVORITE_CODE);
+        if (tmp_province_code > 0){
+            for (int i = 0; i < provinceEntityList.size(); i++) {
+                if (provinceEntityList.get(i).getMavung() == tmp_province_code) {
+                    sp_province.setSelection(i);
+                }
+            }
+        }
+
         sp_province.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

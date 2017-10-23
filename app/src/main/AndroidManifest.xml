@@ -117,7 +117,8 @@
             android:name="com.xproject.xoso.xoso.view.activity.SettingActivity"
             android:label="@string/title_activity_setting"
             android:theme="@style/AppTheme" />
-        <activity android:name="com.xproject.xoso.xoso.view.activity.WebViewActivity"></activity>
+        <activity android:name="com.xproject.xoso.xoso.view.activity.WebViewActivity" />
+        <activity android:name="com.xproject.xoso.xoso.view.activity.AppIntroActivity"></activity>
     </application>
 
 </manifest>

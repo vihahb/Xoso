@@ -56,8 +56,13 @@ public class AdapterLotoDb extends RecyclerView.Adapter {
                 start_char = begin_String.substring(0, 3);
                 end_char = begin_String.substring(3);
             } else if (type == 2) {
-                start_char = begin_String.substring(0, 4);
-                end_char = begin_String.substring(4);
+                if (begin_String.length() == 6) {
+                    start_char = begin_String.substring(0, 4);
+                    end_char = begin_String.substring(4);
+                } else {
+                    start_char = begin_String.substring(0, 3);
+                    end_char = begin_String.substring(3);
+                }
             }
 
             return start_char + "<font color='red'>" + end_char + "</font>";

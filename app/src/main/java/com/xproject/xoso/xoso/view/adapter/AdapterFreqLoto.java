@@ -66,7 +66,11 @@ public class AdapterFreqLoto extends RecyclerView.Adapter {
         }
 
         public void setData(Freq_statsEntity data) {
-            tv_number.setText(String.valueOf(data.getNumber()));
+            if (String.valueOf(data.getNumber()).length() > 1) {
+                tv_number.setText(String.valueOf(data.getNumber()));
+            } else {
+                tv_number.setText("0" + String.valueOf(data.getNumber()));
+            }
             tv_count.setText(String.valueOf(data.getCount()));
         }
     }

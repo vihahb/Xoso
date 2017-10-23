@@ -8,12 +8,12 @@
 
     <LinearLayout android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginLeft="@dimen/size_16"
-        android:layout_marginRight="@dimen/size_16">
+        android:orientation="vertical">
         <!-- Favorite -->
         <LinearLayout
             android:layout_marginTop="@dimen/size_16"
+            android:layout_marginLeft="@dimen/size_16"
+            android:layout_marginRight="@dimen/size_16"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="bottom"
@@ -59,6 +59,8 @@
         <!-- Favorite -->
         <LinearLayout
             android:layout_marginTop="@dimen/size_16"
+            android:layout_marginLeft="@dimen/size_16"
+            android:layout_marginRight="@dimen/size_16"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -81,6 +83,8 @@
         </LinearLayout>
 
         <LinearLayout
+            android:layout_marginLeft="@dimen/size_16"
+            android:layout_marginRight="@dimen/size_16"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -155,6 +159,8 @@
 
         <!-- Notify -->
         <LinearLayout
+            android:layout_marginLeft="@dimen/size_16"
+            android:layout_marginRight="@dimen/size_16"
             android:layout_marginTop="@dimen/size_16"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -178,6 +184,8 @@
         </LinearLayout>
 
         <LinearLayout
+            android:layout_marginLeft="@dimen/size_16"
+            android:layout_marginRight="@dimen/size_16"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -260,6 +268,8 @@
 
         <!-- Vibrate -->
         <LinearLayout
+            android:layout_marginLeft="@dimen/size_16"
+            android:layout_marginRight="@dimen/size_16"
             android:layout_marginTop="@dimen/size_16"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -293,6 +303,8 @@
 
         <!-- Play Music -->
         <LinearLayout
+            android:layout_marginLeft="@dimen/size_16"
+            android:layout_marginRight="@dimen/size_16"
             android:layout_marginTop="@dimen/size_16"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -324,17 +336,6 @@
                 android:theme="@style/checkBoxStyle" />
         </LinearLayout>
 
-        <Button
-            android:id="@+id/btn_result"
-            style="@style/Button_app"
-            android:layout_width="match_parent"
-            android:layout_height="36dp"
-            android:layout_marginEnd="@dimen/size_64"
-            android:layout_marginLeft="@dimen/size_64"
-            android:layout_marginRight="@dimen/size_64"
-            android:layout_marginStart="@dimen/size_64"
-            android:layout_marginTop="16dp"
-            android:text="Lưu" />
     </LinearLayout>
 
 </android.support.v4.widget.NestedScrollView>

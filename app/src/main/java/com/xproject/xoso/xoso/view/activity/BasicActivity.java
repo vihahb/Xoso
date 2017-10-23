@@ -159,7 +159,9 @@ public class BasicActivity extends IActivity {
 
     @Override
     public void startActivity(Class clazz, String key, Object object) {
-
+        Intent intent = new Intent(this, clazz);
+        intent.putExtra(key, (Serializable) object);
+        startActivity(intent);
     }
 
     public void startActivity(Class clazz, String key_1, Object object_1, String key_2, Object object_2) {

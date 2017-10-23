@@ -25,28 +25,28 @@ public class SchedulingService extends Service {
         AlarmUtils.setAlarm();
     }
 
-    private void checkType(int type) {
-        switch (type) {
-            case 1:
-                break;
-        }
-    }
-
-    private void initAlarmBeforeSpin() {
-        /**
-         * Notification North Area
-         */
-        AlarmUtils.setNorthAlarm();
-
-        /**
-         * Notification Central area*/
-
-        AlarmUtils.setAlarmCentral();
-
-        /**
-         * Notification South area*/
-        AlarmUtils.setAlarmSouth();
-    }
+//    private void checkType(int type) {
+//        switch (type) {
+//            case 1:
+//                break;
+//        }
+//    }
+//
+//    private void initAlarmBeforeSpin() {
+//        /**
+//         * Notification North Area
+//         */
+//        AlarmUtils.setNorthAlarm(false);
+//
+//        /**
+//         * Notification Central area*/
+//
+//        AlarmUtils.setAlarmCentral(off);
+//
+//        /**
+//         * Notification South area*/
+//        AlarmUtils.setAlarmSouth(off);
+//    }
 
 //    private void initAlarmIntoSpin() {
 ///**

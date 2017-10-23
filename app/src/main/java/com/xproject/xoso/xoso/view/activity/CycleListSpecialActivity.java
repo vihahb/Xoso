@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.xproject.xoso.sdk.callback.DateTimePickerListener;
 import com.xproject.xoso.sdk.common.Constants;
+import com.xproject.xoso.sdk.utils.SharedUtils;
 import com.xproject.xoso.sdk.utils.TimeUtils;
 import com.xproject.xoso.xoso.model.entity.ProvinceEntity;
 import com.xproject.xoso.xoso.model.entity.SpeedTemp;
@@ -40,6 +41,7 @@ public class CycleListSpecialActivity extends BasicActivity implements IActivity
     private CheckBox checkAll;
     private ActivityCycleListSpecialPresenter presenter;
     private int local_type = -1;
+    private int tmp_province_code = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +88,16 @@ public class CycleListSpecialActivity extends BasicActivity implements IActivity
     }
 
     private void initSpinnerSelect() {
+
+        tmp_province_code = SharedUtils.getInstance().getIntValue(Constants.PROVINCE_FAVORITE_CODE);
+        if (tmp_province_code > 0){
+            for (int i = 0; i < provinceEntityList.size(); i++) {
+                if (provinceEntityList.get(i).getMavung() == tmp_province_code) {
+                    sp_province.setSelection(i);
+                }
+            }
+        }
+
         sp_province.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -108,21 +120,21 @@ public class CycleListSpecialActivity extends BasicActivity implements IActivity
             tv_number_set.setText("");
             tv_title_result.setText(obj.getMessage());
         } else {
-            String description = "Ngưỡng cực đại không xuất hiện dàn số là " + obj.getData().getMax_gan()
+            String description = "     Ngưỡng cực đại không xuất hiện dàn số là " + obj.getData().getMax_gan()
                     + " ngày, tính cả ngày về, từ " + TimeUtils.getFormatTimeClient(obj.getData().getStart())
                     + " đến " + TimeUtils.getFormatTimeClient(obj.getData().getEnd())
-                    + ". \n Lần cuối cùng xuất hiện dàn số theo khoảng ngày bạn đã chọn là ngày: " + TimeUtils.getFormatTimeClient(obj.getData().getLast_appear());
+                    + ". \n     Lần cuối cùng xuất hiện dàn số theo khoảng ngày bạn đã chọn là ngày: " + TimeUtils.getFormatTimeClient(obj.getData().getLast_appear());
             tv_description.setText(description);
 
-            String gan_score = "Điểm gan đến nay là " + obj.getData().getCurrent_gan()
+            String gan_score = "     Điểm gan đến nay là " + obj.getData().getCurrent_gan()
                     + " ngày, không tính lần về gần nhất là ngày: " + TimeUtils.getFormatTimeClient(obj.getData().getLast_appear_not_between());
             tv_gan_score.setText(gan_score);
 
 
             if (temp.getNumber().length() < 2) {
-                tv_number_set.setText(Html.fromHtml("Dàn số: <font color='red'>0" + temp.getNumber() + "</font>"));
+                tv_number_set.setText(Html.fromHtml("Dàn số: <font color='#eb2227'>0" + temp.getNumber() + "</font>"));
             } else {
-                tv_number_set.setText(Html.fromHtml("Dàn số: <font color='red'>" + temp.getNumber() + "</font>"));
+                tv_number_set.setText(Html.fromHtml("Dàn số: <font color='#eb2227'>" + temp.getNumber() + "</font>"));
             }
             String title_result = "<b>Dữ liệu kết quả " + temp.getName_cat() + "</b>"
                     + "<br>từ ngày " + temp.getDate_format_begin()

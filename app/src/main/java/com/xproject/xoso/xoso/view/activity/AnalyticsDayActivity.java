@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 
 import com.xproject.xoso.sdk.common.Constants;
+import com.xproject.xoso.sdk.utils.SharedUtils;
 import com.xproject.xoso.sdk.utils.TimeUtils;
 import com.xproject.xoso.xoso.model.entity.AnalyticsSetNumber;
 import com.xproject.xoso.xoso.model.entity.ProvinceEntity;
@@ -32,6 +33,7 @@ public class AnalyticsDayActivity extends BasicActivity implements IAnalyticsDay
     private List<String> dayList, weekList;
     private List<ProvinceEntity> provinceEntityList;
     private AnalyticsDayPresenter presenter;
+    private int tmp_province_code = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +51,15 @@ public class AnalyticsDayActivity extends BasicActivity implements IAnalyticsDay
         provinceAdapter = new AdapterSpinner(provinceEntityList, this);
 
         sp_province.setAdapter(provinceAdapter);
+
+        tmp_province_code = SharedUtils.getInstance().getIntValue(Constants.PROVINCE_FAVORITE_CODE);
+        if (tmp_province_code > 0){
+            for (int i = 0; i < provinceEntityList.size(); i++) {
+                if (provinceEntityList.get(i).getMavung() == tmp_province_code) {
+                    sp_province.setSelection(i);
+                }
+            }
+        }
         sp_province.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
