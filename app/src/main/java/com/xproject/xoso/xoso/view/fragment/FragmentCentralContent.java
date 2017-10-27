@@ -361,6 +361,7 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
         Log.e(TAG, "setDataSocket: " + toDay);
         loadingView.setVisibility(View.GONE);
         tvContent.setVisibility(View.GONE);
+        tv_not_yet.setVisibility(View.GONE);
         switch (resp_result.getData().size()) {
             case 1:
                 setTable2Hidden();

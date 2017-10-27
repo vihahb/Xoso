@@ -136,7 +136,7 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
     private String tmp1_b0 = "", tmp1_b1 = "", tmp1_b2 = "", tmp1_b3 = "", tmp1_b4 = "", tmp1_b5 = "", tmp1_b6 = "", tmp1_b7 = "", tmp1_b8 = "", tmp1_b9 = "";
     private String tmp2_b0 = "", tmp2_b1 = "", tmp2_b2 = "", tmp2_b3 = "", tmp2_b4 = "", tmp2_b5 = "", tmp2_b6 = "", tmp2_b7 = "", tmp2_b8 = "", tmp2_b9 = "";
     private String tmp3_b0 = "", tmp3_b1 = "", tmp3_b2 = "", tmp3_b3 = "", tmp3_b4 = "", tmp3_b5 = "", tmp3_b6 = "", tmp3_b7 = "", tmp3_b8 = "", tmp3_b9 = "";
-
+    TextView tv_not_yet;
     public static FragmentSouthContent newInstance(long date) {
         FragmentSouthContent fragmentFirst = new FragmentSouthContent();
         Bundle args = new Bundle();
@@ -182,7 +182,7 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                 scroll_south = (NestedScrollView) view.findViewById(R.id.scroll_south);
                 tvContent = (TextView) view.findViewById(R.id.tvContent);
                 tv_title = (TextView) view.findViewById(R.id.tv_title);
-                TextView tv_not_yet = (TextView) view.findViewById(R.id.tv_not_yet);
+                tv_not_yet = (TextView) view.findViewById(R.id.tv_not_yet);
                 img_mute = (ImageView) view.findViewById(R.id.img_mute);
 
                 sound = SharedUtils.getInstance().getBooleanDefaultTrueValue(Constants.SOUND_FLAG);
@@ -1456,6 +1456,7 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
     public void setDataSocket(RESP_Result resp_result) {
         loadingView.setVisibility(View.GONE);
         tvContent.setVisibility(View.GONE);
+        tv_not_yet.setVisibility(View.GONE);
         switch (resp_result.getData().size()) {
             case 1:
                 setTable2Hidden();
