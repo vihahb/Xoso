@@ -16,12 +16,26 @@ public class ProvinceEntity extends RealmObject {
     @Expose
     private String tenvung;
 
+    @Expose
+    private String mamien;
+
+    @Expose
+    private String tenvungUnicode;
+
     public ProvinceEntity() {
     }
 
-    public ProvinceEntity(int province_id, String provinceName) {
-        this.mavung = province_id;
-        this.tenvung = provinceName;
+    public ProvinceEntity(int mavung, String tenvung, String mamien) {
+        this.mavung = mavung;
+        this.tenvung = tenvung;
+        this.mamien = mamien;
+    }
+
+    public ProvinceEntity(int mavung, String tenvung, String mamien, String tenvungUnicode) {
+        this.mavung = mavung;
+        this.tenvung = tenvung;
+        this.mamien = mamien;
+        this.tenvungUnicode = tenvungUnicode;
     }
 
     public int getMavung() {
@@ -40,11 +54,28 @@ public class ProvinceEntity extends RealmObject {
         this.tenvung = tenvung;
     }
 
+    public String getMamien() {
+        return mamien;
+    }
+
+    public void setMamien(String mamien) {
+        this.mamien = mamien;
+    }
+
+    public String getTenvungUnicode() {
+        return tenvungUnicode;
+    }
+
+    public void setTenvungUnicode(String tenvungUnicode) {
+        this.tenvungUnicode = tenvungUnicode;
+    }
+
     @Override
     public String toString() {
         return "ProvinceEntity{" +
                 "mavung=" + mavung +
                 ", tenvung='" + tenvung + '\'' +
+                ", mamien='" + mamien + '\'' +
                 '}';
     }
 }

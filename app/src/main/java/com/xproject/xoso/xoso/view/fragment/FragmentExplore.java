@@ -94,10 +94,10 @@ public class FragmentExplore extends BasicFragment implements IFragmentExplore, 
                 startActivity(ActivityExploreBridgeLoto.class, Constants.ACTION_TYPE, 6);
                 break;
             case 6:
-                startActivity(BridgeForDayActivity.class,Constants.ACTION_TYPE, 1);
+                startActivity(BridgeForDayActivity.class, Constants.ACTION_TYPE, 1);
                 break;
             case 7:
-                startActivity(BridgeForDayActivity.class,Constants.ACTION_TYPE, 2);
+                startActivity(BridgeForDayActivity.class, Constants.ACTION_TYPE, 2);
                 break;
         }
     }

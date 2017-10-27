@@ -1,25 +1,21 @@
 package com.xproject.xoso.xoso.view.activity;
 
-import android.app.Activity;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.Toolbar;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -32,7 +28,7 @@ import com.xproject.xoso.sdk.utils.DatabaseHelper;
 import com.xproject.xoso.sdk.utils.SharedUtils;
 import com.xproject.xoso.xoso.model.entity.ProvinceEntity;
 import com.xproject.xoso.xoso.view.adapter.AdapterSpinner;
-import com.xproject.xoso.xoso.view.fragment.inf.OnCompleteListener;
+import com.xproject.xoso.xoso.view.fragment.BasicFragment;
 import com.xtelsolution.xoso.R;
 
 import java.util.List;
@@ -53,7 +49,6 @@ public class SettingActivity extends BasicActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
-    private MenuItem item;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,42 +72,14 @@ public class SettingActivity extends BasicActivity {
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int i, float v, int i1) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                showShortToast("" + position);
-                switch (position) {
-                    case 0:
-                        if (item != null)
-                            item.setVisible(true);
-                        break;
-                    case 1:
-                        if (item != null)
-                            item.setVisible(false);
-                        break;
-                }
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int i) {
-
-            }
-        });
-        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
+        final TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(mViewPager);
 
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_setting, menu);
-        item = menu.findItem(R.id.action_save);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -124,21 +91,40 @@ public class SettingActivity extends BasicActivity {
         int id = item.getItemId();
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_save) {
+
+        } else if (id == android.R.id.home) {
             PlaceholderFragment page = (PlaceholderFragment) getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.container + ":" + mViewPager.getCurrentItem());
             // based on the current position you can then cast the page to the correct
             // class and call the method:
             page.onSave();
-        } else if (id == android.R.id.home) {
             finish();
         }
 
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+        PlaceholderFragment page = (PlaceholderFragment) getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.container + ":" + mViewPager.getCurrentItem());
+        // based on the current position you can then cast the page to the correct
+        // class and call the method:
+        page.onSave();
+        finish();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        PlaceholderFragment page = (PlaceholderFragment) getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.container + ":" + mViewPager.getCurrentItem());
+        // based on the current position you can then cast the page to the correct
+        // class and call the method:
+        page.onSave();
+    }
+
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment {
+    public static class PlaceholderFragment extends BasicFragment {
         /**
          * The fragment argument representing the section number for this
          * fragment.
@@ -162,7 +148,7 @@ public class SettingActivity extends BasicActivity {
          * Variable flag get from SharePref
          */
         private int tmp_flag_region_radio = 0, tmp_province_code = 0;
-        private boolean tmp_flag_n = false, tmp_flag_c = false, tmp_flag_s = false;
+        private boolean tmp_flag_n = true, tmp_flag_c = true, tmp_flag_s = true, firs_save = false;
 
 
         /**
@@ -227,9 +213,13 @@ public class SettingActivity extends BasicActivity {
             chkNotifyNorth = (CheckBox) rootView.findViewById(R.id.checkNotifyNorth);
             chkNotifyCentral = (CheckBox) rootView.findViewById(R.id.checkNotifyCentral);
             chkNotifySouth = (CheckBox) rootView.findViewById(R.id.checkNotifySouth);
+            chkNotifyNorth.setChecked(true);
+            chkNotifyCentral.setChecked(true);
+            chkNotifySouth.setChecked(true);
 
             spinVibrate = (CheckBox) rootView.findViewById(R.id.checkVibrate);
             playMusic = (CheckBox) rootView.findViewById(R.id.checkPlay);
+            playMusic.setChecked(true);
 
             Log.e("Setting fragment", "province_code: " + SharedUtils.getInstance().getIntValue(Constants.PROVINCE_FAVORITE_CODE));
             Log.e("Setting fragment", "tmp_flag_region_radio: " + SharedUtils.getInstance().getIntValue(Constants.FLAG_RADIO_REGION));
@@ -238,15 +228,17 @@ public class SettingActivity extends BasicActivity {
             Log.e("Setting fragment", "tmp_flag_c: " + SharedUtils.getInstance().getBooleanValue(Constants.NOTIFY_C_FLAG));
             Log.e("Setting fragment", "tmp_flag_s: " + SharedUtils.getInstance().getBooleanValue(Constants.NOTIFY_S_FLAG));
 
-            tmp_province_code = SharedUtils.getInstance().getIntValue(Constants.PROVINCE_FAVORITE_CODE);
-            tmp_flag_region_radio = SharedUtils.getInstance().getIntValue(Constants.FLAG_RADIO_REGION);
+            if (!firs_save) {
+                tmp_province_code = SharedUtils.getInstance().getIntValue(Constants.PROVINCE_FAVORITE_CODE);
+                tmp_flag_region_radio = SharedUtils.getInstance().getIntValue(Constants.FLAG_RADIO_REGION);
 
-            tmp_flag_n = SharedUtils.getInstance().getBooleanValue(Constants.NOTIFY_N_FLAG);
-            tmp_flag_c = SharedUtils.getInstance().getBooleanValue(Constants.NOTIFY_C_FLAG);
-            tmp_flag_s = SharedUtils.getInstance().getBooleanValue(Constants.NOTIFY_S_FLAG);
+                tmp_flag_n = SharedUtils.getInstance().getBooleanDefaultTrueValue(Constants.NOTIFY_N_FLAG);
+                tmp_flag_c = SharedUtils.getInstance().getBooleanDefaultTrueValue(Constants.NOTIFY_C_FLAG);
+                tmp_flag_s = SharedUtils.getInstance().getBooleanDefaultTrueValue(Constants.NOTIFY_S_FLAG);
 
-            tmp_sound = SharedUtils.getInstance().getBooleanValue(Constants.SOUND_FLAG);
-            tmp_vibrate = SharedUtils.getInstance().getBooleanValue(Constants.ViBRATE_FLAG);
+                tmp_sound = SharedUtils.getInstance().getBooleanDefaultTrueValue(Constants.SOUND_FLAG);
+                tmp_vibrate = SharedUtils.getInstance().getBooleanValue(Constants.ViBRATE_FLAG);
+            }
         }
 
         private List<ProvinceEntity> getCategory() {
@@ -267,7 +259,8 @@ public class SettingActivity extends BasicActivity {
                     checkVibrateAndSound();
                     SharedUtils.getInstance().putIntValue(Constants.FLAG_RADIO_REGION, flag_region_radio);
                     SharedUtils.getInstance().putIntValue(Constants.PROVINCE_FAVORITE_CODE, province_code);
-                    Toast.makeText(getContext(), "Đã lưu cài đặt.", Toast.LENGTH_SHORT).show();
+                    Log.e("Saving setting...", "saved");
+                    firs_save = true;
                 }
             }
         }
@@ -297,34 +290,32 @@ public class SettingActivity extends BasicActivity {
                         radio_group_region.check(radio_s.getId());
                         break;
                 }
+            } else {
+                radio_group_region.check(radio_n.getId());
             }
 
             /**
              * Checkbox notify modified*/
-            if (tmp_flag_n)
-                chkNotifyNorth.setChecked(true);
-            else
+            if (!tmp_flag_n)
                 chkNotifyNorth.setChecked(false);
-
-            if (tmp_flag_c)
-                chkNotifyCentral.setChecked(true);
             else
+                chkNotifyNorth.setChecked(true);
+
+            if (!tmp_flag_c)
                 chkNotifyCentral.setChecked(false);
-
-            if (tmp_flag_s)
-                chkNotifySouth.setChecked(true);
             else
+                chkNotifyCentral.setChecked(true);
+
+            if (!tmp_flag_s)
                 chkNotifySouth.setChecked(false);
-
-            if (tmp_vibrate)
-                spinVibrate.setChecked(true);
             else
-                spinVibrate.setChecked(false);
+                chkNotifySouth.setChecked(true);
 
-            if (tmp_sound)
-                playMusic.setChecked(true);
-            else
+            if (!tmp_sound)
                 playMusic.setChecked(false);
+            else
+                playMusic.setChecked(true);
+
         }
 
         private void initCheckNotify() {
@@ -463,22 +454,25 @@ public class SettingActivity extends BasicActivity {
             return null;
         }
 
-        public Fragment setItem(int position, int type) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            if (position == 0) {
-                return PlaceholderFragment.newInstance(type);
-            } else if (position == 1) {
-                return PlaceholderFragmentTwo.newInstance(type);
-            } else {
-                return null;
-            }
-        }
-
         @Override
         public int getCount() {
             // Show 3 total pages.
             return 2;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            String title = "";
+            switch (position) {
+                case 0:
+                    title = "Cài đặt";
+                    break;
+                case 1:
+                    title = "Điều khoản";
+                    break;
+            }
+
+            return title;
         }
     }
 

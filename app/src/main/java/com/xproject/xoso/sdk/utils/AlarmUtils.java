@@ -24,7 +24,6 @@ public class AlarmUtils {
     public static int NOTIFY_TYPE = 1;
 
     private static Context context = ProjectApplication.context;
-    private static boolean flag_n = false, flag_c =false, flag_s = false;
 
     public static void startService(Context context, int type) {
         Intent intent = new Intent(context, SchedulingService.class);
@@ -32,6 +31,26 @@ public class AlarmUtils {
         context.startService(intent);
     }
 
+
+    public static void resetFlag(){
+        long start_time;
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        if (calendar.getTimeInMillis() > System.currentTimeMillis()) {
+            start_time = calendar.getTimeInMillis();
+        } else {
+            start_time = calendar.getTimeInMillis() + AlarmManager.INTERVAL_DAY;
+        }
+        Intent reset = new Intent(context, AlarmReceiver.class);
+        reset.putExtra(Constants.RESET, 1);
+        PendingIntent resetPending = PendingIntent.getBroadcast(context, 11, reset, PendingIntent.FLAG_CANCEL_CURRENT);
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        if (alarmManager != null) {
+            alarmManager.set(AlarmManager.RTC_WAKEUP, start_time, resetPending);
+        }
+    }
 
     public static void setNorthAlarm(boolean off) {
 
@@ -55,10 +74,11 @@ public class AlarmUtils {
         PendingIntent northPendingIntent = PendingIntent.getBroadcast(context, 11, notificationNorth, PendingIntent.FLAG_CANCEL_CURRENT);
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, startTime, northPendingIntent);
 
-        if (off){
+        if (off) {
             alarmManager.cancel(northPendingIntent);
+        } else {
+            alarmManager.set(AlarmManager.RTC_WAKEUP, startTime, northPendingIntent);
         }
     }
 
@@ -83,10 +103,11 @@ public class AlarmUtils {
         PendingIntent centralPendingIntent = PendingIntent.getBroadcast(context, 22, notificationCentral, PendingIntent.FLAG_CANCEL_CURRENT);
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, startTime, centralPendingIntent);
 
-        if (off){
+        if (off) {
             alarmManager.cancel(centralPendingIntent);
+        } else {
+            alarmManager.set(AlarmManager.RTC_WAKEUP, startTime, centralPendingIntent);
         }
     }
 
@@ -109,10 +130,11 @@ public class AlarmUtils {
         PendingIntent southPendingIntent = PendingIntent.getBroadcast(context, 33, notificationSouth, PendingIntent.FLAG_CANCEL_CURRENT);
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, startTime, southPendingIntent);
 
-        if (off){
+        if (off) {
             alarmManager.cancel(southPendingIntent);
+        } else {
+            alarmManager.set(AlarmManager.RTC_WAKEUP, startTime, southPendingIntent);
         }
     }
 
@@ -139,10 +161,11 @@ public class AlarmUtils {
         PendingIntent northPendingIntent = PendingIntent.getBroadcast(context, 101, notificationNorth, PendingIntent.FLAG_CANCEL_CURRENT);
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, startTime, northPendingIntent);
 
-        if (off){
+        if (off) {
             alarmManager.cancel(northPendingIntent);
+        } else {
+            alarmManager.set(AlarmManager.RTC_WAKEUP, startTime, northPendingIntent);
         }
     }
 
@@ -168,9 +191,10 @@ public class AlarmUtils {
         PendingIntent CentralPendingIntent = PendingIntent.getBroadcast(context, 102, notificationCentral, PendingIntent.FLAG_CANCEL_CURRENT);
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, startTime, CentralPendingIntent);
-        if (off){
+        if (off) {
             alarmManager.cancel(CentralPendingIntent);
+        } else {
+            alarmManager.set(AlarmManager.RTC_WAKEUP, startTime, CentralPendingIntent);
         }
     }
 
@@ -195,50 +219,62 @@ public class AlarmUtils {
         PendingIntent southPendingIntent = PendingIntent.getBroadcast(context, 103, notificationSouth, PendingIntent.FLAG_CANCEL_CURRENT);
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, startTime, southPendingIntent);
-        if (off){
+        if (off) {
             alarmManager.cancel(southPendingIntent);
+        } else {
+            alarmManager.set(AlarmManager.RTC_WAKEUP, startTime, southPendingIntent);
         }
     }
 
     /**
      * Set Alarm spin
+     *
      * @deprecated Flag on method
-     *             flag = false -> set on alarm
-     *             flag = true -> set off alarm */
+     * flag = false -> set on alarm
+     * flag = true -> set off alarm
+     */
     public static void setAlarm() {
-        flag_n = SharedUtils.getInstance().getBooleanValue(Constants.NOTIFY_N_FLAG);
-        if (flag_n){
-            Log.e(TAG, "setAlarm: N - ON");
-            setNorthAlarm(false);
-            setNorthAlarmIntoSpin(false);
-        } else {
-            Log.e(TAG, "setAlarm: N - OFF");
-            setNorthAlarm(true);
-            setNorthAlarmIntoSpin(true);
-        }
+        setNorthAlarm(false);
+        setNorthAlarmIntoSpin(false);
 
+        setAlarmCentral(false);
+        setAlarmCentralIntoSpin(false);
 
-        flag_c = SharedUtils.getInstance().getBooleanValue(Constants.NOTIFY_C_FLAG);
-        if (flag_c){
-            Log.e(TAG, "setAlarm: C - ON");
-            setAlarmCentral(false);
-            setAlarmCentralIntoSpin(false);
-        } else {
-            Log.e(TAG, "setAlarm: C - OFF");
-            setAlarmCentral(true);
-            setAlarmCentralIntoSpin(true);
-        }
+        setAlarmSouth(false);
+        setAlarmSouthIntoSpin(false);
 
-        flag_s = SharedUtils.getInstance().getBooleanValue(Constants.NOTIFY_S_FLAG);
-        if (flag_s){
-            Log.e(TAG, "setAlarm: S - ON");
-            setAlarmSouth(false);
-            setAlarmSouthIntoSpin(false);
-        } else {
-            Log.e(TAG, "setAlarm: S - OFF");
-            setAlarmSouth(true);
-            setAlarmSouthIntoSpin(true);
-        }
+//        flag_n = SharedUtils.getInstance().getBooleanValue(Constants.NOTIFY_N_FLAG);
+//        if (flag_n) {
+//            Log.e(TAG, "setAlarm: N - ON");
+//            setNorthAlarm(false);
+//            setNorthAlarmIntoSpin(false);
+//        } else {
+//            Log.e(TAG, "setAlarm: N - OFF");
+//            setNorthAlarm(true);
+//            setNorthAlarmIntoSpin(true);
+//        }
+//
+//
+//        flag_c = SharedUtils.getInstance().getBooleanValue(Constants.NOTIFY_C_FLAG);
+//        if (flag_c) {
+//            Log.e(TAG, "setAlarm: C - ON");
+//            setAlarmCentral(false);
+//            setAlarmCentralIntoSpin(false);
+//        } else {
+//            Log.e(TAG, "setAlarm: C - OFF");
+//            setAlarmCentral(true);
+//            setAlarmCentralIntoSpin(true);
+//        }
+//
+//        flag_s = SharedUtils.getInstance().getBooleanValue(Constants.NOTIFY_S_FLAG);
+//        if (flag_s) {
+//            Log.e(TAG, "setAlarm: S - ON");
+//            setAlarmSouth(false);
+//            setAlarmSouthIntoSpin(false);
+//        } else {
+//            Log.e(TAG, "setAlarm: S - OFF");
+//            setAlarmSouth(true);
+//            setAlarmSouthIntoSpin(true);
+//        }
     }
 }

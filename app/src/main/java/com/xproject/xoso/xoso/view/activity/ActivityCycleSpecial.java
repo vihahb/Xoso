@@ -33,7 +33,7 @@ public class ActivityCycleSpecial extends BasicActivity implements IActivityCycl
     private SpeedTemp temp;
     private AdapterSpinner provinceAdapter;
     private ActivityCycleSpecialPresenter presenter;
-    private int tmp_province_code = - 1;
+    private int tmp_province_code = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +61,7 @@ public class ActivityCycleSpecial extends BasicActivity implements IActivityCycl
 
     private void initSpinnerSelect() {
         tmp_province_code = SharedUtils.getInstance().getIntValue(Constants.PROVINCE_FAVORITE_CODE);
-        if (tmp_province_code > 0){
+        if (tmp_province_code > 0) {
             for (int i = 0; i < provinceList.size(); i++) {
                 if (provinceList.get(i).getMavung() == tmp_province_code) {
                     sp_province.setSelection(i);

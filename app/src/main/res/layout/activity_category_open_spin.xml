@@ -9,10 +9,11 @@
     <include layout="@layout/toolbar" />
 
     <android.support.v4.widget.NestedScrollView
-        android:layout_marginLeft="@dimen/size_16"
-        android:layout_marginRight="@dimen/size_16"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/size_16"
+        android:layout_marginRight="@dimen/size_16"
+        android:layout_marginBottom="@dimen/size_16"
         android:fillViewport="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -22,9 +23,9 @@
             android:orientation="vertical">
 
             <TextView
-                android:layout_marginTop="@dimen/size_16"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_16"
                 android:gravity="center"
                 android:text="Lịch quay thưởng"
                 android:textAllCaps="true"
@@ -33,65 +34,437 @@
 
 
             <LinearLayout
-                android:background="@drawable/bolder_table"
-                android:id="@+id/lntitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:minHeight="@dimen/size_36"
-                android:weightSum="4">
-
-                <TextView
-                    android:background="@drawable/bolder_table"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.7"
-                    android:gravity="top|center_horizontal"
-                    android:text="Thứ"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/font_16"
-                    android:padding="@dimen/size_4"/>
-                <TextView
-                    android:id="@+id/title_north"
-                    android:padding="@dimen/size_4"
-                    android:background="@drawable/bolder_table"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1.1"
-                    android:gravity="top|center_horizontal"
-                    android:text="Miền Bắc (18:05)"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/font_16" />
-                <TextView
-                    android:id="@+id/title_central"
-                    android:padding="@dimen/size_4"
-                    android:background="@drawable/bolder_table"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1.1"
-                    android:gravity="top|center_horizontal"
-                    android:text="Miền Trung (17:05)"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/font_16" />
-                <TextView
-                    android:id="@+id/title_south"
-                    android:padding="@dimen/size_4"
-                    android:background="@drawable/bolder_table"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1.1"
-                    android:gravity="top|center_horizontal"
-                    android:text="Miền Nam (16:05)"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/font_16" />
-            </LinearLayout>
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rcl_open_spin"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:nestedScrollingEnabled="false" />
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="@drawable/bolder_table">
+                <LinearLayout
+                    android:id="@+id/lntitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="@dimen/size_36"
+                    android:weightSum="4">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.7"
+                        android:background="@drawable/bolder_table"
+                        android:gravity="top|center_horizontal"
+                        android:padding="@dimen/size_4"
+                        android:text="Thứ"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/font_16" />
+
+                    <TextView
+                        android:id="@+id/title_north"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.1"
+                        android:background="@drawable/bolder_table"
+                        android:gravity="top|center_horizontal"
+                        android:padding="@dimen/size_4"
+                        android:text="Miền Bắc (18:05)"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/font_14" />
+
+                    <TextView
+                        android:id="@+id/title_central"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.1"
+                        android:background="@drawable/bolder_table"
+                        android:gravity="top|center_horizontal"
+                        android:padding="@dimen/size_4"
+                        android:text="Miền Trung (17:05)"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/font_14" />
+
+                    <TextView
+                        android:id="@+id/title_south"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.1"
+                        android:background="@drawable/bolder_table"
+                        android:gravity="top|center_horizontal"
+                        android:padding="@dimen/size_4"
+                        android:text="Miền Nam (16:05)"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/font_14" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/ln2_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bolder_table"
+                    android:minHeight="@dimen/size_36"
+                    android:weightSum="4">
+
+                    <TextView
+                        android:id="@+id/tv_title_2"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.7"
+                        android:background="@drawable/bolder_table"
+                        android:gravity="center"
+                        android:padding="@dimen/size_4"
+                        android:text="Hai"
+                        android:textColor="@color/black_75"
+                        android:textSize="@dimen/font_11" />
+
+                    <TextView
+                        android:id="@+id/tv_n_2"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.1"
+                        android:background="@drawable/bolder_table"
+                        android:gravity="left|center_vertical"
+                        android:padding="@dimen/size_4"
+                        android:textColor="@color/black_75"
+                        android:textSize="@dimen/font_11" />
+
+                    <TextView
+                        android:id="@+id/tv_c_2"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.1"
+                        android:background="@drawable/bolder_table"
+                        android:gravity="left|center_vertical"
+                        android:padding="@dimen/size_4"
+                        android:textColor="@color/black_75"
+                        android:textSize="@dimen/font_11" />
+
+                    <TextView
+                        android:id="@+id/tv_s_2"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.1"
+                        android:background="@drawable/bolder_table"
+                        android:gravity="left|center_vertical"
+                        android:padding="@dimen/size_4"
+                        android:textColor="@color/black_75"
+                        android:textSize="@dimen/font_11" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/ln_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bolder_table"
+                    android:minHeight="@dimen/size_36"
+                    android:weightSum="4">
+
+                    <TextView
+                        android:id="@+id/tv_title_3"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.7"
+                        android:background="@drawable/bolder_table"
+                        android:gravity="center"
+                        android:padding="@dimen/size_4"
+                        android:text="Hai"
+                        android:textColor="@color/black_75"
+                        android:textSize="@dimen/font_11" />
+
+                    <TextView
+                        android:id="@+id/tv_n_3"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.1"
+                        android:background="@drawable/bolder_table"
+                        android:gravity="left|center_vertical"
+                        android:padding="@dimen/size_4"
+                        android:textColor="@color/black_75"
+                        android:textSize="@dimen/font_11" />
+
+                    <TextView
+                        android:id="@+id/tv_c_3"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.1"
+                        android:background="@drawable/bolder_table"
+                        android:gravity="left|center_vertical"
+                        android:padding="@dimen/size_4"
+                        android:textColor="@color/black_75"
+                        android:textSize="@dimen/font_11" />
+
+                    <TextView
+                        android:id="@+id/tv_s_3"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.1"
+                        android:background="@drawable/bolder_table"
+                        android:gravity="left|center_vertical"
+                        android:padding="@dimen/size_4"
+                        android:textColor="@color/black_75"
+                        android:textSize="@dimen/font_11" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/ln_4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bolder_table"
+                    android:minHeight="@dimen/size_36"
+                    android:weightSum="4">
+
+                    <TextView
+                        android:id="@+id/tv_title_4"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.7"
+                        android:background="@drawable/bolder_table"
+                        android:gravity="center"
+                        android:padding="@dimen/size_4"
+                        android:text="Hai"
+                        android:textColor="@color/black_75"
+                        android:textSize="@dimen/font_11" />
+
+                    <TextView
+                        android:id="@+id/tv_n_4"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.1"
+                        android:background="@drawable/bolder_table"
+                        android:gravity="left|center_vertical"
+                        android:padding="@dimen/size_4"
+                        android:textColor="@color/black_75"
+                        android:textSize="@dimen/font_11" />
+
+                    <TextView
+                        android:id="@+id/tv_c_4"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.1"
+                        android:background="@drawable/bolder_table"
+                        android:gravity="left|center_vertical"
+                        android:padding="@dimen/size_4"
+                        android:textColor="@color/black_75"
+                        android:textSize="@dimen/font_11" />
+
+                    <TextView
+                        android:id="@+id/tv_s_4"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.1"
+                        android:background="@drawable/bolder_table"
+                        android:gravity="left|center_vertical"
+                        android:padding="@dimen/size_4"
+                        android:textColor="@color/black_75"
+                        android:textSize="@dimen/font_11" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/ln_5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bolder_table"
+                    android:minHeight="@dimen/size_36"
+                    android:weightSum="4">
+
+                    <TextView
+                        android:id="@+id/tv_title_5"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.7"
+                        android:background="@drawable/bolder_table"
+                        android:gravity="center"
+                        android:padding="@dimen/size_4"
+                        android:text="Hai"
+                        android:textColor="@color/black_75"
+                        android:textSize="@dimen/font_11" />
+
+                    <TextView
+                        android:id="@+id/tv_n_5"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.1"
+                        android:background="@drawable/bolder_table"
+                        android:gravity="left|center_vertical"
+                        android:padding="@dimen/size_4"
+                        android:textColor="@color/black_75"
+                        android:textSize="@dimen/font_11" />
+
+                    <TextView
+                        android:id="@+id/tv_c_5"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.1"
+                        android:background="@drawable/bolder_table"
+                        android:gravity="left|center_vertical"
+                        android:padding="@dimen/size_4"
+                        android:textColor="@color/black_75"
+                        android:textSize="@dimen/font_11" />
+
+                    <TextView
+                        android:id="@+id/tv_s_5"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.1"
+                        android:background="@drawable/bolder_table"
+                        android:gravity="left|center_vertical"
+                        android:padding="@dimen/size_4"
+                        android:textColor="@color/black_75"
+                        android:textSize="@dimen/font_11" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/ln_6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bolder_table"
+                    android:minHeight="@dimen/size_36"
+                    android:weightSum="4">
+
+                    <TextView
+                        android:id="@+id/tv_title_6"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.7"
+                        android:background="@drawable/bolder_table"
+                        android:gravity="center"
+                        android:padding="@dimen/size_4"
+                        android:text="Hai"
+                        android:textColor="@color/black_75"
+                        android:textSize="@dimen/font_11" />
+
+                    <TextView
+                        android:id="@+id/tv_n_6"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.1"
+                        android:background="@drawable/bolder_table"
+                        android:gravity="left|center_vertical"
+                        android:padding="@dimen/size_4"
+                        android:textColor="@color/black_75"
+                        android:textSize="@dimen/font_11" />
+
+                    <TextView
+                        android:id="@+id/tv_c_6"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.1"
+                        android:background="@drawable/bolder_table"
+                        android:gravity="left|center_vertical"
+                        android:padding="@dimen/size_4"
+                        android:textColor="@color/black_75"
+                        android:textSize="@dimen/font_11" />
+
+                    <TextView
+                        android:id="@+id/tv_s_6"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.1"
+                        android:background="@drawable/bolder_table"
+                        android:gravity="left|center_vertical"
+                        android:padding="@dimen/size_4"
+                        android:textColor="@color/black_75"
+                        android:textSize="@dimen/font_11" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/ln_7"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bolder_table"
+                    android:minHeight="@dimen/size_36"
+                    android:weightSum="4">
+
+                    <TextView
+                        android:id="@+id/tv_title_7"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.7"
+                        android:background="@drawable/bolder_table"
+                        android:gravity="center"
+                        android:padding="@dimen/size_4"
+                        android:text="Hai"
+                        android:textColor="@color/black_75"
+                        android:textSize="@dimen/font_11" />
+
+                    <TextView
+                        android:id="@+id/tv_n_7"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.1"
+                        android:background="@drawable/bolder_table"
+                        android:gravity="left|center_vertical"
+                        android:padding="@dimen/size_4"
+                        android:textColor="@color/black_75"
+                        android:textSize="@dimen/font_11" />
+
+                    <TextView
+                        android:id="@+id/tv_c_7"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.1"
+                        android:background="@drawable/bolder_table"
+                        android:gravity="left|center_vertical"
+                        android:padding="@dimen/size_4"
+                        android:textColor="@color/black_75"
+                        android:textSize="@dimen/font_11" />
+
+                    <TextView
+                        android:id="@+id/tv_s_7"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.1"
+                        android:background="@drawable/bolder_table"
+                        android:gravity="left|center_vertical"
+                        android:padding="@dimen/size_4"
+                        android:textColor="@color/black_75"
+                        android:textSize="@dimen/font_11" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/ln_cn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bolder_table"
+                    android:minHeight="@dimen/size_36"
+                    android:weightSum="4">
+
+                    <TextView
+                        android:id="@+id/tv_title_cn"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.7"
+                        android:background="@drawable/bolder_table"
+                        android:gravity="center"
+                        android:padding="@dimen/size_4"
+                        android:text="Hai"
+                        android:textColor="@color/black_75"
+                        android:textSize="@dimen/font_11" />
+
+                    <TextView
+                        android:id="@+id/tv_n_cn"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.1"
+                        android:background="@drawable/bolder_table"
+                        android:gravity="left|center_vertical"
+                        android:padding="@dimen/size_4"
+                        android:textColor="@color/black_75"
+                        android:textSize="@dimen/font_11" />
+
+                    <TextView
+                        android:id="@+id/tv_c_cn"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.1"
+                        android:background="@drawable/bolder_table"
+                        android:gravity="left|center_vertical"
+                        android:padding="@dimen/size_4"
+                        android:textColor="@color/black_75"
+                        android:textSize="@dimen/font_11" />
+
+                    <TextView
+                        android:id="@+id/tv_s_cn"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.1"
+                        android:background="@drawable/bolder_table"
+                        android:gravity="left|center_vertical"
+                        android:padding="@dimen/size_4"
+                        android:textColor="@color/black_75"
+                        android:textSize="@dimen/font_11" />
+                </LinearLayout>
+            </LinearLayout>
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>

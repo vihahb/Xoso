@@ -1,6 +1,5 @@
 package com.xproject.xoso.xoso.presenter.fragment;
 
-import android.os.AsyncTask;
 import android.util.Log;
 
 import com.github.nkzawa.emitter.Emitter;
@@ -44,7 +43,7 @@ public class FragmentNorthContentPresenter {
                             Log.e(TAG, "get_current_result: " + args[0].toString());
                             RESP_Result resp_result = JsonHelper.getObjectNoException(args[0].toString(), RESP_Result.class);
                             Log.e(TAG, "Helper: " + resp_result.toString());
-                            view.setDataSocket(resp_result);
+                            view.setDataSocket(resp_result.getData().get(0));
                         }
                     }
                 });
@@ -134,7 +133,6 @@ public class FragmentNorthContentPresenter {
                     public void run() {
                         Log.e(TAG, "connect success: " + Arrays.toString(args));
                         initAuthentSocket();
-//                        socket.emit("get_current_result");
                     }
                 });
             }
@@ -162,21 +160,22 @@ public class FragmentNorthContentPresenter {
                     });
                     break;
                 case 2:
-                    if (socket != null) {
-                        if (!socket.connected()) {
-                            socket.connect();
-                        } else {
-                            socket.io().reconnection();
+                    boolean toDay = (boolean) params[1];
+                    if (toDay) {
+                        if (socket != null) {
+                            if (!socket.connected()) {
+                                socket.open().connect();
+                            }
+                            socket.on(Socket.EVENT_CONNECT, onConnect);
+                            socket.on(Socket.EVENT_CONNECT_ERROR, onConnectError);
+                            socket.on(Socket.EVENT_CONNECT_TIMEOUT, onConnectError);
+                            socket.on(Socket.EVENT_DISCONNECT, onDisconnect);
+                            socket.on("authenticated", authenticate);
+                            socket.on("current_result", curentResult);
+                            socket.on("new_result", newResult);
+                            socket.on("liveloto", liveLoto);
+                            socket.on("done", doneLive);
                         }
-                        socket.on(Socket.EVENT_CONNECT, onConnect);
-                        socket.on(Socket.EVENT_CONNECT_ERROR, onConnectError);
-                        socket.on(Socket.EVENT_CONNECT_TIMEOUT, onConnectError);
-                        socket.on(Socket.EVENT_DISCONNECT, onDisconnect);
-                        socket.on("authenticated", authenticate);
-                        socket.on("current_result", curentResult);
-                        socket.on("new_result", newResult);
-                        socket.on("liveloto", liveLoto);
-                        socket.on("done", doneLive);
                     }
                     break;
             }
@@ -202,8 +201,8 @@ public class FragmentNorthContentPresenter {
         icmd.excute(1, date);
     }
 
-    public void socketConnect() {
-        icmd.excute(2);
+    public void socketConnect(boolean toDay) {
+        icmd.excute(2, toDay);
     }
 
     public void initAuthentSocket() {
@@ -226,7 +225,7 @@ public class FragmentNorthContentPresenter {
 
     public void checkSocket() {
         if (socket.connected()) {
-//            socket.disconnect();
+            socket.close().disconnect();
         }
     }
 }

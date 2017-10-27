@@ -15,6 +15,7 @@ import android.widget.Spinner;
 
 import com.xproject.xoso.sdk.common.Constants;
 import com.xproject.xoso.sdk.utils.SharedUtils;
+import com.xproject.xoso.sdk.utils.Utils;
 import com.xproject.xoso.xoso.model.entity.FrequencyEntity;
 import com.xproject.xoso.xoso.model.entity.ProvinceEntity;
 import com.xproject.xoso.xoso.model.entity.SpeedTemp;
@@ -23,6 +24,8 @@ import com.xproject.xoso.xoso.view.activity.inf.IAnalyticsFrequencyACtivity;
 import com.xproject.xoso.xoso.view.adapter.AdapterSpinner;
 import com.xtelsolution.xoso.R;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class AnalyticsFrequencyActivity extends BasicActivity implements IAnalyticsFrequencyACtivity, View.OnClickListener {
@@ -44,14 +47,6 @@ public class AnalyticsFrequencyActivity extends BasicActivity implements IAnalyt
         presenter = new AnalyticsFrequencyActivityPresenter(this);
         initToolbar(R.id.toolbar, "Thống kê tần suất bộ số");
         initView();
-        findViewById(R.id.onstraintLayout).setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-                return true;
-            }
-        });
     }
 
     private void initView() {
@@ -68,11 +63,13 @@ public class AnalyticsFrequencyActivity extends BasicActivity implements IAnalyt
         btnGetResult = findButton(R.id.btn_get_result);
         btnGetResult.setOnClickListener(this);
         initSpinnerSelect();
+        edt_number.requestFocus();
+        Utils.showKeyBoard(this, edt_number);
     }
 
     private void initSpinnerSelect() {
         tmp_province_code = SharedUtils.getInstance().getIntValue(Constants.PROVINCE_FAVORITE_CODE);
-        if (tmp_province_code > 0){
+        if (tmp_province_code > 0) {
             for (int i = 0; i < provinceEntityList.size(); i++) {
                 if (provinceEntityList.get(i).getMavung() == tmp_province_code) {
                     sp_province.setSelection(i);
@@ -128,6 +125,10 @@ public class AnalyticsFrequencyActivity extends BasicActivity implements IAnalyt
 
                     String result = edt_number.getText().toString();
 
+                    while (result.indexOf("..") >= 0) {
+                        result = result.replaceAll("\\.\\.", ".");
+                    }
+
                     String[] list_result = result.split("\\.");
                     Log.e("abc", "onClick: " + list_result.length);
 
@@ -146,7 +147,25 @@ public class AnalyticsFrequencyActivity extends BasicActivity implements IAnalyt
                         }
                     }
 
-                    result = result.replace(".", ",");
+                    HashMap<String, Boolean> stringMap = new HashMap<>();
+                    List<String> listResult = new ArrayList<>();
+
+                    for (String aList_result : list_result) {
+                        if (stringMap.get(aList_result) == null) {
+                            stringMap.put(aList_result, true);
+                            listResult.add(aList_result);
+                        }
+                    }
+
+                    result = "";
+
+                    for (int i = 0; i < listResult.size(); i++) {
+                        result += listResult.get(i) + ",";
+                        Log.e("Map String", "get i: " + listResult.get(i));
+                        Log.e("Map String", "checkRequirement: " + result);
+                    }
+
+                    result = result.substring(0, result.length() - 1);
                     temp.setNumber(result);
                     presenter.getFrequency(temp);
                 }

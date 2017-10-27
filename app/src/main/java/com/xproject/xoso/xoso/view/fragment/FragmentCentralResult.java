@@ -38,8 +38,7 @@ public class FragmentCentralResult extends BasicFragment implements OnLoadComple
     private ArrayList<Fragment> fragmentList;
 
     public static FragmentCentralResult newInstance() {
-        FragmentCentralResult fragment = new FragmentCentralResult();
-        return fragment;
+        return new FragmentCentralResult();
     }
 
     @Override
@@ -82,15 +81,15 @@ public class FragmentCentralResult extends BasicFragment implements OnLoadComple
         recyclerTabLayout.setUpWithViewPager(vpPager);
         recyclerTabLayout.setAdapter(adapterCalendar);
 
-        if (TimeUtils.checkTimeInMilisecondNorth(17, 15, 23, 58)) {
-            vpPager.setCurrentItem(TimeUtils.getPositionForDay(Calendar.getInstance()));
+        if (TimeUtils.checkTimeInMilisecondNorth(17, 10, 23, 58)) {
+            vpPager.setCurrentItem(fragmentList.size() - 1);
         } else {
-            vpPager.setCurrentItem(TimeUtils.getPositionForDay(Calendar.getInstance()) - 1);
+            vpPager.setCurrentItem(fragmentList.size() - 2);
         }
     }
 
     private boolean checkSelectedDay() {
-        if (vpPager.getCurrentItem() == TimeUtils.getPositionForDay(Calendar.getInstance())) {
+        if (vpPager.getCurrentItem() == fragmentList.size() - 1) {
             return true;
         } else {
             return false;
@@ -102,12 +101,11 @@ public class FragmentCentralResult extends BasicFragment implements OnLoadComple
     }
 
     public void setLive() {
+        int position = fragmentList.size() - 1;
         if (!checkSelectedDay()) {
-            int position = TimeUtils.getPositionForDay(Calendar.getInstance());
             ((FragmentCentralContent) adapterViewPager.getItem(position)).startLive();
             vpPager.setCurrentItem(position);
         } else {
-            int position = TimeUtils.getPositionForDay(Calendar.getInstance());
             ((FragmentCentralContent) adapterViewPager.getItem(position)).startLive();
         }
     }
@@ -118,12 +116,11 @@ public class FragmentCentralResult extends BasicFragment implements OnLoadComple
     }
 
     public void setEndLive() {
+        int position = fragmentList.size() - 1;
         if (!checkSelectedDay()) {
-            int position = TimeUtils.getPositionForDay(Calendar.getInstance());
             ((FragmentCentralContent) adapterViewPager.getItem(position)).setEndLive();
             vpPager.setCurrentItem(position);
         } else {
-            int position = TimeUtils.getPositionForDay(Calendar.getInstance());
             ((FragmentCentralContent) adapterViewPager.getItem(position)).setEndLive();
         }
     }

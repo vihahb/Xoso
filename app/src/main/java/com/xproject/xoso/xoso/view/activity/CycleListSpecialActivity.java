@@ -19,6 +19,7 @@ import com.xproject.xoso.sdk.callback.DateTimePickerListener;
 import com.xproject.xoso.sdk.common.Constants;
 import com.xproject.xoso.sdk.utils.SharedUtils;
 import com.xproject.xoso.sdk.utils.TimeUtils;
+import com.xproject.xoso.sdk.utils.Utils;
 import com.xproject.xoso.xoso.model.entity.ProvinceEntity;
 import com.xproject.xoso.xoso.model.entity.SpeedTemp;
 import com.xproject.xoso.xoso.model.respond.RESP_CycleLotoVip;
@@ -27,7 +28,9 @@ import com.xproject.xoso.xoso.view.activity.inf.IActivityCycleListSpecial;
 import com.xproject.xoso.xoso.view.adapter.AdapterSpinner;
 import com.xtelsolution.xoso.R;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
 public class CycleListSpecialActivity extends BasicActivity implements IActivityCycleListSpecial, View.OnClickListener {
@@ -50,14 +53,6 @@ public class CycleListSpecialActivity extends BasicActivity implements IActivity
         initToolbar(R.id.toolbar, "");
         presenter = new ActivityCycleListSpecialPresenter(this);
         initView();
-        findViewById(R.id.constraintLayout).setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-                return true;
-            }
-        });
         getData();
     }
 
@@ -85,12 +80,14 @@ public class CycleListSpecialActivity extends BasicActivity implements IActivity
         tv_gan_score = findTextView(R.id.tv_gan_score);
         initSpinnerSelect();
         setDefaultTime(edt_begin, edt_end);
+        edt_number_set.requestFocus();
+        Utils.showKeyBoard(this, edt_number_set);
     }
 
     private void initSpinnerSelect() {
 
         tmp_province_code = SharedUtils.getInstance().getIntValue(Constants.PROVINCE_FAVORITE_CODE);
-        if (tmp_province_code > 0){
+        if (tmp_province_code > 0) {
             for (int i = 0; i < provinceEntityList.size(); i++) {
                 if (provinceEntityList.get(i).getMavung() == tmp_province_code) {
                     sp_province.setSelection(i);
@@ -120,22 +117,33 @@ public class CycleListSpecialActivity extends BasicActivity implements IActivity
             tv_number_set.setText("");
             tv_title_result.setText(obj.getMessage());
         } else {
-            String description = "     Ngưỡng cực đại không xuất hiện dàn số là " + obj.getData().getMax_gan()
-                    + " ngày, tính cả ngày về, từ " + TimeUtils.getFormatTimeClient(obj.getData().getStart())
-                    + " đến " + TimeUtils.getFormatTimeClient(obj.getData().getEnd())
-                    + ". \n     Lần cuối cùng xuất hiện dàn số theo khoảng ngày bạn đã chọn là ngày: " + TimeUtils.getFormatTimeClient(obj.getData().getLast_appear());
+            String description;
+            if (obj.getData().getStart().equals(obj.getData().getEnd())) {
+                if (local_type == 1) {
+                    description = "     Chỉ xuất hiện cùng nhau một lần trong ngày " + TimeUtils.getFormatTimeClient(obj.getData().getEnd())
+                            + ". \n     Lần cuối cùng xuất hiện dàn số theo khoảng ngày bạn đã chọn là ngày: " + TimeUtils.getFormatTimeClient(obj.getData().getLast_appear());
+                } else {
+                    description = "     Chỉ xuất hiện cùng nhau một lần trong giải đặc biệt ngày " + TimeUtils.getFormatTimeClient(obj.getData().getEnd())
+                            + ". \n     Lần xuất hiện cuối cùng xuất hiện dàn số theo khoảng ngày bạn đã chọn là ngày: " + TimeUtils.getFormatTimeClient(obj.getData().getLast_appear());
+                }
+            } else {
+                description = "     Ngưỡng cực đại không xuất hiện dàn số là " + obj.getData().getMax_gan()
+                        + " ngày, tính cả ngày về, từ " + TimeUtils.getFormatTimeClient(obj.getData().getStart())
+                        + " đến " + TimeUtils.getFormatTimeClient(obj.getData().getEnd())
+                        + ". \n     Lần xuất hiện cuối cùng xuất hiện dàn số theo khoảng ngày bạn đã chọn là ngày: " + TimeUtils.getFormatTimeClient(obj.getData().getLast_appear());
+            }
             tv_description.setText(description);
 
             String gan_score = "     Điểm gan đến nay là " + obj.getData().getCurrent_gan()
                     + " ngày, không tính lần về gần nhất là ngày: " + TimeUtils.getFormatTimeClient(obj.getData().getLast_appear_not_between());
             tv_gan_score.setText(gan_score);
 
-
-            if (temp.getNumber().length() < 2) {
-                tv_number_set.setText(Html.fromHtml("Dàn số: <font color='#eb2227'>0" + temp.getNumber() + "</font>"));
-            } else {
-                tv_number_set.setText(Html.fromHtml("Dàn số: <font color='#eb2227'>" + temp.getNumber() + "</font>"));
-            }
+            tv_number_set.setText(Html.fromHtml("Dàn số: <font color='#eb2227'>" + temp.getNumber() + "</font>"));
+//            if (temp.getNumber().length() < 2) {
+//                tv_number_set.setText(Html.fromHtml("Dàn số: <font color='#eb2227'>0" + temp.getNumber() + "</font>"));
+//            } else {
+//
+//            }
             String title_result = "<b>Dữ liệu kết quả " + temp.getName_cat() + "</b>"
                     + "<br>từ ngày " + temp.getDate_format_begin()
                     + " đến ngày " + temp.getDate_format_end() + ":";
@@ -163,6 +171,10 @@ public class CycleListSpecialActivity extends BasicActivity implements IActivity
 
                     String result = edt_number_set.getText().toString();
 
+                    while (result.indexOf("..") >= 0) {
+                        result = result.replaceAll("\\.\\.", ".");
+                    }
+
                     String[] list_result = result.split("\\.");
                     Log.e("abc", "onClick: " + list_result.length);
 
@@ -176,7 +188,31 @@ public class CycleListSpecialActivity extends BasicActivity implements IActivity
                             }
                         }
                     }
-                    result = result.replace(".", ",");
+
+
+                    HashMap<String, Boolean> stringMap = new HashMap<>();
+                    List<String> listResult = new ArrayList<>();
+
+                    for (String aList_result : list_result) {
+                        if (stringMap.get(aList_result) == null) {
+                            stringMap.put(aList_result, true);
+                            listResult.add(aList_result);
+                        }
+                    }
+
+                    result = "";
+
+                    for (int i = 0; i < listResult.size(); i++) {
+                        if (listResult.get(i).length() == 1) {
+                            result += ("0" + listResult.get(i)) + ",";
+                        } else {
+                            result += listResult.get(i) + ",";
+                        }
+                        Log.e("Map String", "get i: " + listResult.get(i));
+                        Log.e("Map String", "checkRequirement: " + result);
+                    }
+
+                    result = result.substring(0, result.length() - 1);
                     temp.setNumber(result);
 
                     if (local_type == 1) {
@@ -312,7 +348,7 @@ public class CycleListSpecialActivity extends BasicActivity implements IActivity
                     initToolbar(R.id.toolbar, "Chu kỳ dàn lô tô");
                     break;
                 case 2:
-                    local_type = 1;
+                    local_type = 2;
                     initToolbar(R.id.toolbar, "Chu kỳ dàn đặc biệt");
                     checkAll.setVisibility(View.GONE);
                     break;

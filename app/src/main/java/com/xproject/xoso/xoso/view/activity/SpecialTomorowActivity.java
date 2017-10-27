@@ -33,7 +33,7 @@ public class SpecialTomorowActivity extends BasicActivity implements View.OnClic
     private Button btn_result;
     private SpeedTemp temp;
     private AdapterSpinner provinceAdapter;
-    private int tmp_province_code = - 1;
+    private int tmp_province_code = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +60,7 @@ public class SpecialTomorowActivity extends BasicActivity implements View.OnClic
 
     private void initSpinnerSelect() {
         tmp_province_code = SharedUtils.getInstance().getIntValue(Constants.PROVINCE_FAVORITE_CODE);
-        if (tmp_province_code > 0){
+        if (tmp_province_code > 0) {
             for (int i = 0; i < provinceList.size(); i++) {
                 if (provinceList.get(i).getMavung() == tmp_province_code) {
                     sp_province.setSelection(i);

@@ -17,6 +17,7 @@ import com.xproject.xoso.sdk.callback.DateTimePickerListener;
 import com.xproject.xoso.sdk.common.Constants;
 import com.xproject.xoso.sdk.utils.SharedUtils;
 import com.xproject.xoso.sdk.utils.TimeUtils;
+import com.xproject.xoso.sdk.utils.Utils;
 import com.xproject.xoso.xoso.model.entity.AnalyticsSetNumber;
 import com.xproject.xoso.xoso.model.entity.ProvinceEntity;
 import com.xproject.xoso.xoso.model.entity.SpeedTemp;
@@ -25,11 +26,10 @@ import com.xproject.xoso.xoso.view.activity.inf.IAnalyticsSpeedActivity;
 import com.xproject.xoso.xoso.view.adapter.AdapterSpinner;
 import com.xtelsolution.xoso.R;
 
+import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.LinkedHashSet;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
-import java.util.Set;
 
 public class AnalyticsSpeedActivity extends BasicActivity implements IAnalyticsSpeedActivity, View.OnClickListener {
 
@@ -50,14 +50,14 @@ public class AnalyticsSpeedActivity extends BasicActivity implements IAnalyticsS
         initToolbar(R.id.toolbar, "Thống kê nhanh");
         presenter = new AnalyticsSpeedActivityPresenter(this);
         initView();
-        findViewById(R.id.constraintLayout).setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-                return true;
-            }
-        });
+//        findViewById(R.id.constraintLayout).setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+//                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+//                return true;
+//            }
+//        });
     }
 
     private void initView() {
@@ -79,6 +79,8 @@ public class AnalyticsSpeedActivity extends BasicActivity implements IAnalyticsS
         btnResult.setOnClickListener(this);
         initSpinnerSelect();
         setDefaultTime(edt_begin, edt_end);
+        edt_number_set.requestFocus();
+        Utils.showKeyBoard(AnalyticsSpeedActivity.this, edt_number_set);
     }
 
     private void setDefaultTime(EditText edt_begin, EditText edt_end) {
@@ -116,7 +118,7 @@ public class AnalyticsSpeedActivity extends BasicActivity implements IAnalyticsS
 
     private void initSpinnerSelect() {
         tmp_province_code = SharedUtils.getInstance().getIntValue(Constants.PROVINCE_FAVORITE_CODE);
-        if (tmp_province_code > 0){
+        if (tmp_province_code > 0) {
             for (int i = 0; i < provinceEntityList.size(); i++) {
                 if (provinceEntityList.get(i).getMavung() == tmp_province_code) {
                     sp_province.setSelection(i);
@@ -158,7 +160,10 @@ public class AnalyticsSpeedActivity extends BasicActivity implements IAnalyticsS
                         temp.setOnly_special(false);
                     }
 
-                    String result = edt_number_set.getText().toString();
+                    String result = edt_number_set.getText().toString().trim();
+                    while (result.indexOf("..") >= 0) {
+                        result = result.replaceAll("\\.\\.", ".");
+                    }
 
                     String[] list_result = result.split("\\.");
                     Log.e("abc", "onClick: " + list_result.length);
@@ -178,7 +183,25 @@ public class AnalyticsSpeedActivity extends BasicActivity implements IAnalyticsS
                         }
                     }
 
-                    result = result.replace(".", ",");
+                    HashMap<String, Boolean> stringMap = new HashMap<>();
+                    List<String> listResult = new ArrayList<>();
+
+                    for (String aList_result : list_result) {
+                        if (stringMap.get(aList_result) == null) {
+                            stringMap.put(aList_result, true);
+                            listResult.add(aList_result);
+                        }
+                    }
+
+                    result = "";
+
+                    for (int i = 0; i < listResult.size(); i++) {
+                        result += listResult.get(i) + ",";
+                        Log.e("Map String", "get i: " + listResult.get(i));
+                        Log.e("Map String", "checkRequirement: " + result);
+                    }
+
+                    result = result.substring(0, result.length() - 1);
                     temp.setNumber(result);
 
                     presenter.getListSetNumber(temp);

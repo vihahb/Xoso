@@ -24,6 +24,7 @@ import java.util.List;
 
 public class BridgeForDayActivity extends BasicActivity implements View.OnClickListener {
 
+    int province_code = 0;
     private Spinner sp_province;
     private List<ProvinceEntity> provinceEntityList;
     private AdapterSpinner adapterSpinner;
@@ -31,13 +32,12 @@ public class BridgeForDayActivity extends BasicActivity implements View.OnClickL
     private CheckBox checkSpecial;
     private EditText edt_number_set;
     private List<String> dayList;
-
-    int province_code = 0;
     private Spinner sp_day;
     private AdapterStringCustom adapterDay;
     private String day_of_week;
     private int type_query = 0;
     private Toolbar toolbar;
+    String title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,7 +94,7 @@ public class BridgeForDayActivity extends BasicActivity implements View.OnClickL
         sp_day.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                switch (position){
+                switch (position) {
                     case 0:
                         day_of_week = "all";
                         break;
@@ -158,15 +158,13 @@ public class BridgeForDayActivity extends BasicActivity implements View.OnClickL
 //                        .webViewNeedInitialFocus(true)
 //                        .showIconBack(true)
 //                        .show(url);
-                Intent intent = new Intent(this, WebViewActivity.class);
-                intent.putExtra(Constants.URL, url);
-                startActivity(intent);
+                startActivity(WebViewActivity.class, Constants.TITLE, title, Constants.URL, url);
             }
         }
     }
 
     private boolean checkLengthNotNull() {
-        if (TextUtils.isEmpty(edt_number_set.getText())){
+        if (TextUtils.isEmpty(edt_number_set.getText())) {
             showShortToast("Vui lòng không để trống biên độ cầu chạy");
             return false;
         } else {
@@ -176,14 +174,16 @@ public class BridgeForDayActivity extends BasicActivity implements View.OnClickL
 
     public void getData() {
         type_query = getIntent().getIntExtra(Constants.ACTION_TYPE, -1);
-        switch (type_query){
+        switch (type_query) {
             case 1:
-                initToolbar("Cầu theo thứ");
+                title = "Cầu theo thứ";
+                initToolbar(title);
                 checkSpecial.setVisibility(View.GONE);
                 break;
             case 2:
+                title = "Cầu đặc biệt theo thứ";
                 checkSpecial.setVisibility(View.VISIBLE);
-                initToolbar("Cầu đặc biệt theo thứ");
+                initToolbar(title);
                 break;
         }
     }

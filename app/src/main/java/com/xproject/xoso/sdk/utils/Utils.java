@@ -5,6 +5,8 @@ import android.content.Context;
 import android.graphics.Point;
 import android.os.Vibrator;
 import android.view.Display;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 
 import com.xproject.xoso.xoso.ProjectApplication;
 
@@ -14,7 +16,7 @@ import com.xproject.xoso.xoso.ProjectApplication;
 
 public class Utils {
     public static int getWidth(Activity context) {
-        Display display =context.getWindowManager().getDefaultDisplay();
+        Display display = context.getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
         int width = size.x;
@@ -22,11 +24,14 @@ public class Utils {
         return width;
     }
 
-    public static void vibrateAction(){
-        long[] longs = new long[] {50, 50};
+    public static void vibrateAction() {
         Vibrator vibrator = (Vibrator) ProjectApplication.context.getSystemService(Context.VIBRATOR_SERVICE);
-        vibrator.vibrate(longs, 2);
+        vibrator.vibrate(50);
     }
 
+    public static void showKeyBoard(Context context, EditText editText){
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
+    }
 
 }

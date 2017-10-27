@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -77,14 +77,16 @@
         <item name="android:layout_weight">0.5</item>
         <item name="android:background">@drawable/bolder_table</item>
         <item name="android:gravity">center</item>
-        <item name="android:textColor">@color/black_40</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/black_65</item>
         <item name="android:textSize">@dimen/font_18</item>
     </style>
 
     <style name="TextLotoValueResult">
         <item name="android:layout_weight">1</item>
         <item name="android:background">@drawable/bolder_table</item>
-        <item name="android:gravity">center</item>
+        <item name="android:gravity">left|center_vertical</item>
+        <item name="android:paddingLeft">8dp</item>
         <item name="android:minHeight">@dimen/size_36</item>
         <item name="android:textColor">@color/black_75</item>
         <item name="android:textSize">@dimen/font_15</item>
@@ -107,7 +109,8 @@
         <item name="android:background">@drawable/bolder_table</item>
         <item name="android:gravity">center</item>
         <item name="android:lines">2</item>
-        <item name="android:textColor">@color/black_40</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/black_65</item>
         <item name="android:textSize">@dimen/font_18</item>
     </style>
 
@@ -171,12 +174,12 @@
     </style>
 
     <!--<style name="FinestWebViewTheme.Custom" parent="Theme.AppCompat.Light.NoActionBar">-->
-        <!--<item name="colorPrimary">@color/colorPrimary</item>-->
-        <!--<item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
-        <!--<item name="colorAccent">@android:color/white</item>-->
-        <!--<item name="android:textColorPrimary">@android:color/white</item>-->
-        <!--<item name="android:textColorSecondary">@color/finestSilver</item>-->
-        <!--<item name="windowActionModeOverlay">true</item>-->
+    <!--<item name="colorPrimary">@color/colorPrimary</item>-->
+    <!--<item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
+    <!--<item name="colorAccent">@android:color/white</item>-->
+    <!--<item name="android:textColorPrimary">@android:color/white</item>-->
+    <!--<item name="android:textColorSecondary">@color/finestSilver</item>-->
+    <!--<item name="windowActionModeOverlay">true</item>-->
     <!--</style>-->
 
     <style name="CustomTextAppearance" parent="TextAppearance.Design.Tab">

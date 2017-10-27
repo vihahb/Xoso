@@ -1,8 +1,8 @@
 package com.xproject.xoso.xoso.view.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -21,41 +21,31 @@ import java.util.Random;
 
 public class RandomSpinActivity extends BasicActivity {
 
+    Spinner sp_province;
+    LinearLayout include_north, include_south;
+    int type_state = 1;
+    int type_spin = 0;
     private TextView tvSpecial, tvFirst, tv_21, tv_22,
             tv_31, tv_32, tv_33, tv_34, tv_35, tv_36,
             tv_41, tv_42, tv_43, tv_44,
             tv_51, tv_52, tv_53, tv_54, tv_55, tv_56,
             tv_61, tv_62, tv_63,
             tv_71, tv_72, tv_73, tv_74;
-
-
     private TextView tvSpecial_1, tvFirstValue_1, tvSecondValue_1_1, tv3_1_1,
             tv3_2_1, tv4_1_1, tv4_2_1, tv4_3_1, tv4_4_1, tv4_5_1,
             tv4_6_1, tv4_7_1, tv5_1_1, tv6_1_1,
             tv6_2_1, tv6_3_1, tv7_1_1, tv8_1_1;
-
     private TextView tv_title;
-
     private Roller special, first, r71, r72, r73, r74,
             r61, r62, r63,
             r51, r52, r53, r54, r55, r56,
             r41, r42, r43, r44,
             r31, r32, r33, r34, r35, r36,
             r21, r22;
-
     private Roller special_1, first_1, second_1, r311, r321, r411, r421, r431, r441, r451, r461, r471,
             r511, r611, r621, r631, r711, r811;
-
     private TableLayout table;
-
     private Button btn_random;
-
-    Spinner sp_province;
-
-    LinearLayout include_north, include_south;
-
-    int type_state = 1;
-    int type_spin = 0;
     private List<ProvinceEntity> provinceEntityList;
     private AdapterSpinner adapterSpinner;
 
@@ -86,7 +76,7 @@ public class RandomSpinActivity extends BasicActivity {
                     || provinceEntityList.get(i).getMavung() == 19
                     || provinceEntityList.get(i).getMavung() == 20
                     || provinceEntityList.get(i).getMavung() == 28
-                    || provinceEntityList.get(i).getMavung() == 29){
+                    || provinceEntityList.get(i).getMavung() == 29) {
                 provinceEntityList.remove(i);
             }
         }
@@ -165,6 +155,18 @@ public class RandomSpinActivity extends BasicActivity {
     }
 
     private void initSpinnerSelect() {
+        sp_province.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                btn_random.setText("Quay thử");
+                type_state = 1;
+                stopRoller(type_spin);
+                return false;
+            }
+        });
+        if (sp_province.isShown()){
+
+        }
         sp_province.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -188,8 +190,9 @@ public class RandomSpinActivity extends BasicActivity {
     }
 
     private void reStartRoller(int type_spin) {
+        tv_title.setVisibility(View.VISIBLE);
         if (type_spin == 0) {
-            tv_title.setVisibility(View.VISIBLE);
+
             special.setRerun();
             first.setRerun();
             r71.setRerun();
@@ -217,7 +220,7 @@ public class RandomSpinActivity extends BasicActivity {
             r36.setRerun();
             r21.setRerun();
             r22.setRerun();
-        } else if (type_spin > 0){
+        } else if (type_spin > 0) {
 
             special_1.setRerun();
             first_1.setRerun();
@@ -327,7 +330,7 @@ public class RandomSpinActivity extends BasicActivity {
             r36 = new Roller(tv_36, 100000, 100, 99999, 11000);
 
         if (r41 == null)
-            r41 = new Roller(tv_41, 100000, 100, 99999, 11000);
+            r41 = new Roller(tv_41, 100000, 100, 9999, 1100);
 
         if (r42 == null)
             r42 = new Roller(tv_42, 100000, 100, 9999, 1100);
@@ -473,8 +476,8 @@ public class RandomSpinActivity extends BasicActivity {
             if (!shutdown) {
                 if (textRoll != null) {
                     Random rn = new Random();
-                    int range = max - min + 1;
-                    int randomNum = rn.nextInt(range);
+//                    int range = max - min + 1;
+                    int randomNum = rn.nextInt((max - min) + 1) + min;
                     String roll = String.valueOf(randomNum);
                     textRoll.setText(roll);
 

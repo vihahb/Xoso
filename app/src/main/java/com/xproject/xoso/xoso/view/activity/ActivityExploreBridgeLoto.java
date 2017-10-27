@@ -31,24 +31,20 @@ import java.util.List;
 
 public class ActivityExploreBridgeLoto extends BasicActivity implements ActivityExploreBridgeLotoView, View.OnClickListener {
 
-    private Spinner sp_province;
-    private AdapterSpinner adapterSpinner;
-    private List<ProvinceEntity> provinceEntityList;
-
-    private EditText edt_date_end, edt_number;
-    private Button btnResult;
     SpeedTemp temp;
-
     ActivityExploreBridgeLotoPresenter presenter;
     boolean loadingFinished = true;
     boolean redirect = false;
     int action;
-
-    private CheckBox checkSpecial;
-
     TextInputLayout input_number, input_end;
-
     Toolbar toolbar;
+    private Spinner sp_province;
+    private AdapterSpinner adapterSpinner;
+    private List<ProvinceEntity> provinceEntityList;
+    private EditText edt_date_end, edt_number;
+    private Button btnResult;
+    private CheckBox checkSpecial;
+    private String title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,37 +84,43 @@ public class ActivityExploreBridgeLoto extends BasicActivity implements Activity
         if (action > 0) {
             switch (action) {
                 case 1:
+                    title = "Cầu lô tô";
                     initToolbar("Cầu lô tô");
                     break;
 
                 case 2:
+                    title = "Cầu loại lô tô";
                     input_end.setHint("Ngày kết thúc");
                     input_number.setHint("Biên độ cầu chạy");
-                    initToolbar("Cầu loại lô tô");
+                    initToolbar(title);
                     break;
 
                 case 3:
+                    title = "Cầu bạch thủ";
                     input_end.setHint("Ngày kết thúc");
                     input_number.setHint("Biên độ cầu chạy");
-                    initToolbar("Cầu bạch thủ");
+                    initToolbar(title);
                     break;
 
                 case 4:
+                    title = "Cầu loại bạch thủ";
                     input_end.setHint("Ngày kết thúc");
                     input_number.setHint("Biên độ cầu chạy");
-                    initToolbar("Cầu loại bạch thủ");
+                    initToolbar(title);
                     break;
 
                 case 5:
+                    title = "Cầu giải đặc biệt";
                     input_end.setHint("Ngày kết thúc");
                     input_number.setHint("Biên độ cầu chạy");
-                    initToolbar("Cầu giải đặc biệt");
+                    initToolbar(title);
                     checkSpecial.setVisibility(View.VISIBLE);
                     break;
                 case 6:
+                    title = "Cầu ăn hai nháy";
                     input_end.setHint("Ngày kết thúc");
                     input_number.setHint("Biên độ cầu chạy");
-                    initToolbar("Cầu ăn hai nháy");
+                    initToolbar(title);
                     break;
             }
         }
@@ -134,7 +136,6 @@ public class ActivityExploreBridgeLoto extends BasicActivity implements Activity
 
         input_number = (TextInputLayout) findViewById(R.id.input_number);
         input_end = (TextInputLayout) findViewById(R.id.input_end);
-
 
 
         checkSpecial = findCheckBox(R.id.checkSpecial);
@@ -207,19 +208,7 @@ public class ActivityExploreBridgeLoto extends BasicActivity implements Activity
 
     @Override
     public void returnUrl(String url) {
-        Intent intent = new Intent(this, WebViewActivity.class);
-        intent.putExtra(Constants.URL, url);
-        startActivity(intent);
-//        webView.loadUrl(url);
-//        new FinestWebView.Builder(this)
-//                .updateTitleFromHtml(true)
-//                .webViewJavaScriptEnabled(true)
-//                .webViewAllowContentAccess(true)
-//                .webViewLoadWithOverviewMode(true)
-//                .webViewNeedInitialFocus(true)
-//                .showIconBack(true)
-//                .show(url);
-
+        startActivity(WebViewActivity.class, Constants.TITLE, title, Constants.URL, url);
     }
 
     @Override

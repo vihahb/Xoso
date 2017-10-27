@@ -1,11 +1,9 @@
 package com.xproject.xoso.xoso.presenter.activity;
 
 import com.xproject.xoso.sdk.callback.Icmd;
-import com.xproject.xoso.sdk.common.Constants;
 import com.xproject.xoso.sdk.utils.DatabaseHelper;
 import com.xproject.xoso.xoso.model.entity.ProvinceEntity;
 import com.xproject.xoso.xoso.model.entity.SpeedTemp;
-import com.xproject.xoso.xoso.view.activity.WebViewActivity;
 import com.xproject.xoso.xoso.view.activity.inf.ActivityExploreBridgeLotoView;
 
 import java.util.List;
@@ -17,11 +15,6 @@ import java.util.List;
 public class ActivityExploreBridgeLotoPresenter {
 
     private ActivityExploreBridgeLotoView view;
-
-    public ActivityExploreBridgeLotoPresenter(ActivityExploreBridgeLotoView view) {
-        this.view = view;
-    }
-
     private Icmd icmd = new Icmd() {
         @Override
         public void excute(Object... params) {
@@ -60,6 +53,10 @@ public class ActivityExploreBridgeLotoPresenter {
             }
         }
     };
+
+    public ActivityExploreBridgeLotoPresenter(ActivityExploreBridgeLotoView view) {
+        this.view = view;
+    }
 
     public List<ProvinceEntity> getCategory() {
         return DatabaseHelper.getInstance().getListOfObjects(ProvinceEntity.class);

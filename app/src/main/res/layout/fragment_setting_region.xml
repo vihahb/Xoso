@@ -1,68 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <LinearLayout android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <!-- Favorite -->
-        <LinearLayout
-            android:layout_marginTop="@dimen/size_16"
-            android:layout_marginLeft="@dimen/size_16"
-            android:layout_marginRight="@dimen/size_16"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="bottom"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="@dimen/size_30"
-                android:layout_height="@dimen/size_30"
-                android:contentDescription="@null"
-                android:src="@mipmap/ic_setting_favorite" />
-
-            <LinearLayout
-                android:id="@+id/linearLayout"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp"
-                android:orientation="vertical"
-                android:layout_weight="1">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="@dimen/size_4"
-                    android:text="@string/region"
-                    android:textSize="@dimen/font_12" />
-
-                <Spinner
-                    android:id="@+id/sp_province"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/size_36"
-                    android:background="@android:color/transparent" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="@dimen/size_5"
-                    android:layout_marginRight="@dimen/size_5"
-                    android:background="@color/black_20" />
-            </LinearLayout>
-        </LinearLayout>
 
         <!-- Favorite -->
         <LinearLayout
-            android:layout_marginTop="@dimen/size_16"
-            android:layout_marginLeft="@dimen/size_16"
-            android:layout_marginRight="@dimen/size_16"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/size_16"
+            android:layout_marginRight="@dimen/size_16"
+            android:layout_marginTop="@dimen/size_16"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -73,97 +29,164 @@
                 android:src="@mipmap/ic_setting_favorite" />
 
             <TextView
-                android:layout_marginLeft="@dimen/size_16"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Miền yêu thích"
+                android:layout_marginLeft="@dimen/size_16"
+                android:text="Tỉnh thành thống kê mặc định"
                 android:textColor="@color/black_75"
-                android:textStyle="bold"
-                android:textSize="@dimen/font_16"/>
+                android:textSize="@dimen/font_16"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
-            android:layout_marginLeft="@dimen/size_16"
-            android:layout_marginRight="@dimen/size_16"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/size_16"
+            android:layout_marginRight="@dimen/size_16"
             android:orientation="horizontal">
+
             <LinearLayout
-                android:layout_marginTop="@dimen/size_16"
-                android:layout_marginLeft="@dimen/size_48"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_48"
+                android:layout_marginTop="@dimen/size_16"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/linearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <Spinner
+                        android:id="@+id/sp_province"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/size_36"
+                        android:background="@android:color/transparent" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="@dimen/size_5"
+                        android:layout_marginRight="@dimen/size_5"
+                        android:background="@color/black_20" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Favorite -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/size_16"
+            android:layout_marginRight="@dimen/size_16"
+            android:layout_marginTop="@dimen/size_16"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/size_30"
+                android:layout_height="@dimen/size_30"
+                android:contentDescription="@null"
+                android:src="@mipmap/ic_setting_favorite" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_16"
+                android:text="Miền yêu thích"
+                android:textColor="@color/black_75"
+                android:textSize="@dimen/font_16"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/size_16"
+            android:layout_marginRight="@dimen/size_16"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_48"
+                android:layout_marginTop="@dimen/size_16"
+                android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical">
 
                 <TextView
-                    android:gravity="center_vertical"
-                    android:minHeight="@dimen/size_36"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:minHeight="@dimen/size_36"
                     android:text="Miền Bắc"
                     android:textColor="@color/black_75"
-                    android:textSize="@dimen/font_16"/>
-                <TextView
-                    android:gravity="center_vertical"
-                    android:minHeight="@dimen/size_36"
-                    android:layout_marginTop="@dimen/size_8"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Miền Trung"
-                    android:textColor="@color/black_75"
-                    android:textSize="@dimen/font_16"/>
+                    android:textSize="@dimen/font_16" />
 
                 <TextView
-                    android:gravity="center_vertical"
-                    android:minHeight="@dimen/size_36"
-                    android:layout_marginTop="@dimen/size_8"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_8"
+                    android:gravity="center_vertical"
+                    android:minHeight="@dimen/size_36"
+                    android:text="Miền Trung"
+                    android:textColor="@color/black_75"
+                    android:textSize="@dimen/font_16" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_8"
+                    android:gravity="center_vertical"
+                    android:minHeight="@dimen/size_36"
                     android:text="Miền Nam"
                     android:textColor="@color/black_75"
-                    android:textSize="@dimen/font_16"/>
+                    android:textSize="@dimen/font_16" />
             </LinearLayout>
+
             <RadioGroup
                 android:id="@+id/radio_group_region"
-                android:layout_marginTop="@dimen/size_16"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_16"
                 android:gravity="right"
                 android:orientation="vertical">
 
                 <RadioButton
-                    android:minHeight="@dimen/size_36"
-                    android:theme="@style/checkBoxStyle"
                     android:id="@+id/radio_n"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-                <RadioButton
+                    android:layout_height="wrap_content"
                     android:minHeight="@dimen/size_36"
-                    android:theme="@style/checkBoxStyle"
-                    android:layout_marginTop="@dimen/size_8"
-                    android:id="@+id/radio_c"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:theme="@style/checkBoxStyle" />
 
                 <RadioButton
-                    android:minHeight="@dimen/size_36"
-                    android:theme="@style/checkBoxStyle"
+                    android:id="@+id/radio_c"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/size_8"
+                    android:minHeight="@dimen/size_36"
+                    android:theme="@style/checkBoxStyle" />
+
+                <RadioButton
                     android:id="@+id/radio_s"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_8"
+                    android:minHeight="@dimen/size_36"
+                    android:theme="@style/checkBoxStyle" />
             </RadioGroup>
         </LinearLayout>
 
         <!-- Notify -->
         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/size_16"
             android:layout_marginRight="@dimen/size_16"
             android:layout_marginTop="@dimen/size_16"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -174,37 +197,38 @@
                 android:src="@mipmap/ic_setting_notify" />
 
             <TextView
-                android:layout_marginLeft="@dimen/size_16"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_16"
                 android:text="Thông báo"
                 android:textColor="@color/black_75"
-                android:textStyle="bold"
-                android:textSize="@dimen/font_16"/>
+                android:textSize="@dimen/font_16"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
-            android:layout_marginLeft="@dimen/size_16"
-            android:layout_marginRight="@dimen/size_16"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/size_16"
+            android:layout_marginRight="@dimen/size_16"
             android:orientation="vertical">
+
             <LinearLayout
-                android:layout_marginTop="@dimen/size_16"
-                android:layout_marginLeft="@dimen/size_32"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_32"
+                android:layout_marginTop="@dimen/size_16"
                 android:gravity="center"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_marginLeft="@dimen/size_16"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/size_16"
+                    android:layout_weight="1"
                     android:text="Miền Bắc"
                     android:textColor="@color/black_75"
-                    android:textSize="@dimen/font_16"/>
+                    android:textSize="@dimen/font_16" />
 
                 <CheckBox
                     android:id="@+id/checkNotifyNorth"
@@ -214,22 +238,23 @@
                     android:textSize="16sp"
                     android:theme="@style/checkBoxStyle" />
             </LinearLayout>
+
             <LinearLayout
-                android:layout_marginTop="@dimen/size_16"
-                android:layout_marginLeft="@dimen/size_32"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_32"
+                android:layout_marginTop="@dimen/size_16"
                 android:gravity="center"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_marginLeft="@dimen/size_16"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/size_16"
+                    android:layout_weight="1"
                     android:text="Miền Trung"
                     android:textColor="@color/black_75"
-                    android:textSize="@dimen/font_16"/>
+                    android:textSize="@dimen/font_16" />
 
                 <CheckBox
                     android:id="@+id/checkNotifyCentral"
@@ -239,22 +264,23 @@
                     android:textSize="16sp"
                     android:theme="@style/checkBoxStyle" />
             </LinearLayout>
+
             <LinearLayout
-                android:layout_marginTop="@dimen/size_16"
-                android:layout_marginLeft="@dimen/size_32"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_32"
+                android:layout_marginTop="@dimen/size_16"
                 android:gravity="center"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_marginLeft="@dimen/size_16"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/size_16"
+                    android:layout_weight="1"
                     android:text="Miền Nam"
                     android:textColor="@color/black_75"
-                    android:textSize="@dimen/font_16"/>
+                    android:textSize="@dimen/font_16" />
 
                 <CheckBox
                     android:id="@+id/checkNotifySouth"
@@ -268,11 +294,12 @@
 
         <!-- Vibrate -->
         <LinearLayout
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/size_16"
             android:layout_marginRight="@dimen/size_16"
             android:layout_marginTop="@dimen/size_16"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -283,14 +310,14 @@
                 android:src="@mipmap/ic_setting_notify" />
 
             <TextView
-                android:layout_marginLeft="@dimen/size_16"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_16"
+                android:layout_weight="1"
                 android:text="Rung khi có thông báo"
                 android:textColor="@color/black_75"
-                android:textStyle="bold"
-                android:textSize="@dimen/font_16"/>
+                android:textSize="@dimen/font_16"
+                android:textStyle="bold" />
 
             <CheckBox
                 android:id="@+id/checkVibrate"
@@ -303,11 +330,11 @@
 
         <!-- Play Music -->
         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/size_16"
             android:layout_marginRight="@dimen/size_16"
             android:layout_marginTop="@dimen/size_16"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -318,14 +345,14 @@
                 android:src="@mipmap/ic_play_music" />
 
             <TextView
-                android:layout_marginLeft="@dimen/size_16"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="Nghe nhạc khi quay số"
+                android:layout_marginLeft="@dimen/size_16"
+                android:layout_weight="1"
+                android:text="Âm thanh khi quay số"
                 android:textColor="@color/black_75"
-                android:textStyle="bold"
-                android:textSize="@dimen/font_16"/>
+                android:textSize="@dimen/font_16"
+                android:textStyle="bold" />
 
             <CheckBox
                 android:id="@+id/checkPlay"

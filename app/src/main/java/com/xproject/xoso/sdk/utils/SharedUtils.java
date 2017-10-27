@@ -69,6 +69,10 @@ public class SharedUtils {
         return sharedPreferences.getBoolean(name, false);
     }
 
+    public boolean getBooleanDefaultTrueValue(String name) {
+        return sharedPreferences.getBoolean(name, true);
+    }
+
     public void clearData() {
         if (editor == null)
             prepair();

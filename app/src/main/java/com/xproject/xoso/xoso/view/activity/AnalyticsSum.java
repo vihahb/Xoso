@@ -16,6 +16,7 @@ import com.xproject.xoso.sdk.callback.DateTimePickerListener;
 import com.xproject.xoso.sdk.common.Constants;
 import com.xproject.xoso.sdk.utils.SharedUtils;
 import com.xproject.xoso.sdk.utils.TimeUtils;
+import com.xproject.xoso.sdk.utils.Utils;
 import com.xproject.xoso.xoso.model.entity.AnalyticsSetNumber;
 import com.xproject.xoso.xoso.model.entity.ProvinceEntity;
 import com.xproject.xoso.xoso.model.entity.SpeedTemp;
@@ -46,14 +47,6 @@ public class AnalyticsSum extends BasicActivity implements IAnalyticsSumActivity
         initToolbar(R.id.toolbar, "Thống kê theo tổng");
         presenter = new AnalyticsSumActivityPresenter(this);
         initView();
-        findViewById(R.id.constraintLayout).setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-                return true;
-            }
-        });
     }
 
 
@@ -76,6 +69,8 @@ public class AnalyticsSum extends BasicActivity implements IAnalyticsSumActivity
         btnResult.setOnClickListener(this);
         initSpinnerSelect();
         setDefaultTime(edt_begin, edt_end);
+        edt_number_set.requestFocus();
+        Utils.showKeyBoard(this, edt_number_set);
     }
 
     private void setDefaultTime(EditText edt_begin, EditText edt_end) {
@@ -113,7 +108,7 @@ public class AnalyticsSum extends BasicActivity implements IAnalyticsSumActivity
 
     private void initSpinnerSelect() {
         tmp_province_code = SharedUtils.getInstance().getIntValue(Constants.PROVINCE_FAVORITE_CODE);
-        if (tmp_province_code > 0){
+        if (tmp_province_code > 0) {
             for (int i = 0; i < provinceEntityList.size(); i++) {
                 if (provinceEntityList.get(i).getMavung() == tmp_province_code) {
                     sp_province.setSelection(i);

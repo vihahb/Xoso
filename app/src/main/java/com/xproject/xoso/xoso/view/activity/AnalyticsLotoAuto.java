@@ -10,17 +10,20 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.xproject.xoso.sdk.utils.Utils;
 import com.xproject.xoso.xoso.view.adapter.AdapterRecyclerViewString;
 import com.xproject.xoso.xoso.view.adapter.AdapterStringCustom;
 import com.xtelsolution.xoso.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class AnalyticsLotoAuto extends BasicActivity implements View.OnClickListener {
@@ -34,6 +37,7 @@ public class AnalyticsLotoAuto extends BasicActivity implements View.OnClickList
     private RecyclerView rcl_loto_auto;
     private TextView tv_auto_1, tv_auto_2, tv_auto_3, tv_auto_4, tv_title_auto;
     private AdapterRecyclerViewString adapter;
+    private int type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,14 +45,6 @@ public class AnalyticsLotoAuto extends BasicActivity implements View.OnClickList
         setContentView(R.layout.activity_analytics_loto_auto);
         initToolbar(R.id.toolbar, getString(R.string.title_activity_analytics_loto_auto));
         initView();
-        findViewById(R.id.constraintLayout).setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-                return true;
-            }
-        });
     }
 
     private void initView() {
@@ -64,6 +60,8 @@ public class AnalyticsLotoAuto extends BasicActivity implements View.OnClickList
         ln_table.setVisibility(View.GONE);
         initSpinner();
         initList();
+        edt_number_set.requestFocus();
+        Utils.showKeyBoard(this, edt_number_set);
     }
 
     private void initList() {
@@ -76,29 +74,80 @@ public class AnalyticsLotoAuto extends BasicActivity implements View.OnClickList
     }
 
     private void initAutoLotoXien() {
+
+
         String result = edt_number_set.getText().toString();
         List<String> auto_list = new ArrayList<>();
 
+        while (result.indexOf("..") >= 0) {
+            result = result.replaceAll("\\.\\.", ".");
+        }
+        while (result.indexOf("00")>=0){
+            result = result.replaceAll("00", "0");
+        }
         String[] list_result = result.split("\\.");
         Log.e("abc", "onClick: " + list_result.length);
+        type = sp_number.getSelectedItemPosition() +2;
+        sp_number.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                type = i + 2;
+            }
 
-        if (list_result.length == 0 || TextUtils.isEmpty(edt_number_set.getText().toString())) {
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        HashMap<String, Boolean> stringMap = new HashMap<>();
+        List<String> listResult = new ArrayList<>();
+
+        for (String aList_result : list_result) {
+            if (stringMap.get(aList_result) == null) {
+                stringMap.put(aList_result, true);
+                listResult.add(aList_result);
+            }
+        }
+
+        result = "";
+
+        for (int i = 0; i < listResult.size(); i++) {
+            result += listResult.get(i) + ",";
+            Log.e("Map String", "get i: " + listResult.get(i));
+            Log.e("Map String", "checkRequirement: " + result);
+        }
+
+//        result = result.substring(0, result.length()-1);
+
+        if (listResult.size() == 0 || TextUtils.isEmpty(edt_number_set.getText().toString())) {
             // không nhập
             showShortToast("Vui lòng nhập đủ bộ số");
             Log.e("abc", "onClick: 2 " + list_result.length);
+            return;
         } else {
-            Log.e("abc", "onClick: 3 " + list_result.length);
-            for (int i = 0; i < list_result.length; i++) {
-                number_list.add(i, list_result[i]);
+            Log.e("abc", "onClick: 3 " + listResult.size());
+            for (int i = 0; i < listResult.size(); i++) {
+                if (listResult.get(i).length() > 2){
+                    showShortToast("Vui lòng đúng định dạng bộ số. Nhỏ hơn hoặc bằng 2 số!");
+                    Log.e("abc", "onClick: 4 " + list_result.length);
+                    return;
+                }
+                number_list.add(i, listResult.get(i));
             }
 
-            int type = sp_number.getSelectedItemPosition() + 2;
-
             if (number_list.size() < type) {
+                stringMap.clear();
                 showShortToast("Vui lòng nhập đủ bộ số");
+                listResult.clear();
+                number_list.clear();
+                return;
             } else {
                 switch (type) {
                     case 2:
+                        if (auto_list.size() > 0){
+                            auto_list.clear();
+                        }
                         for (int i = 0; i < number_list.size(); i++) {
                             for (int j = i + 1; j < number_list.size(); j++) {
                                 String result_number = number_list.get(i) + ", " + number_list.get(j);
@@ -107,6 +156,9 @@ public class AnalyticsLotoAuto extends BasicActivity implements View.OnClickList
                         }
                         break;
                     case 3:
+                        if (auto_list.size() > 0){
+                            auto_list.clear();
+                        }
                         for (int i = 0; i < number_list.size(); i++) {
                             for (int j = i + 1; j < number_list.size(); j++) {
                                 for (int x = j + 1; x < number_list.size(); x++) {
@@ -117,6 +169,9 @@ public class AnalyticsLotoAuto extends BasicActivity implements View.OnClickList
                         }
                         break;
                     case 4:
+                        if (auto_list.size() > 0){
+                            auto_list.clear();
+                        }
                         for (int i = 0; i < number_list.size(); i++) {
                             for (int j = i + 1; j < number_list.size(); j++) {
                                 for (int x = j + 1; x < number_list.size(); x++) {
@@ -137,7 +192,7 @@ public class AnalyticsLotoAuto extends BasicActivity implements View.OnClickList
                 ln_table.setVisibility(View.VISIBLE);
             }
             Log.e("De quy ", "List: " + auto_list.size());
-
+            type = 0;
         }
     }
 

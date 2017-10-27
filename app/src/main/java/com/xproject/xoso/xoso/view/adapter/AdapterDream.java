@@ -56,6 +56,11 @@ public class AdapterDream extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             ItemHolder itemHolder = (ItemHolder) holder;
             Dream dream = list.get(position);
             itemHolder.setData(dream);
+            if (position == list.size() -1){
+                itemHolder.itemView.setBackgroundResource(R.drawable.background_left_right_bot);
+            } else {
+                itemHolder.itemView.setBackgroundResource(R.drawable.border_without_top_bot);
+            }
         }
     }
 
@@ -83,7 +88,7 @@ public class AdapterDream extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
 
     public void updateList(List<Dream> list) {
-        if (this.list.size() > 0){
+        if (this.list.size() > 0) {
             this.list.clear();
         }
         this.list.addAll(list);

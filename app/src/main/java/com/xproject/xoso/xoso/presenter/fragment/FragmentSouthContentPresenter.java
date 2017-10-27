@@ -117,7 +117,7 @@ public class FragmentSouthContentPresenter {
                             view.setNewResult(newResult, 2);
                         } else if (newResult.getCat_id().equals(cat_area_3)) {
                             view.setNewResult(newResult, 3);
-                        }else if (newResult.getCat_id().equals(cat_area_4)) {
+                        } else if (newResult.getCat_id().equals(cat_area_4)) {
                             view.setNewResult(newResult, 4);
                         }
                     }
@@ -167,7 +167,7 @@ public class FragmentSouthContentPresenter {
                             view.setLiveLoto(liveLoto, 2);
                         } else if (liveLoto.getCat_id().equals(cat_area_3)) {
                             view.setLiveLoto(liveLoto, 3);
-                        }else if (liveLoto.getCat_id().equals(cat_area_4)) {
+                        } else if (liveLoto.getCat_id().equals(cat_area_4)) {
                             view.setLiveLoto(liveLoto, 4);
                         }
                     }
@@ -232,8 +232,6 @@ public class FragmentSouthContentPresenter {
                                 if (socket != null) {
                                     if (!socket.connected()) {
                                         socket.connect();
-                                    } else {
-                                        socket.io().reconnection();
                                     }
 
                                     socket.on(Socket.EVENT_CONNECT, onConnect);

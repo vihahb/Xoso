@@ -36,32 +36,34 @@ public class Constants {
     public static final String OBJECT = "object";
     public static final String START_LIVE = "start_live";
     public static final String NOTIFY = "notify";
-    private static final String TAG = "Constants";
     public static final String URL = "url";
+    //REGION
+    public static final String FLAG_RADIO_REGION = "FLAG_RADIO_REGION";
+    //CODE PROVINCE
+    public static final String PROVINCE_FAVORITE_CODE = "PROVINCE_FAVORITE_CODE";
+    private static final String TAG = "Constants";
     public static String SHARED_NAME = "xoso_pref";
     public static String DREAM_FLAG = "dream_flag";
     public static String CATEGORY_FLAG = "CATEGORY_FLAG";
-
-
     /**
-     * Setting configuration*/
+     * Setting configuration
+     */
     //Notification
     public static String NOTIFY_N_FLAG = "NOTIFY_N_FLAG";
     public static String NOTIFY_C_FLAG = "NOTIFY_C_FLAG";
     public static String NOTIFY_S_FLAG = "NOTIFY_S_FLAG";
-
-    //REGION
-    public static final String FLAG_RADIO_REGION = "FLAG_RADIO_REGION";
-
     //ViBRATE
     public static String ViBRATE_FLAG = "VIBRATE_FLAG";
-
     //SOUND
     public static String SOUND_FLAG = "SOUND_FLAG";
 
-    //CODE PROVINCE
-    public static final String PROVINCE_FAVORITE_CODE = "PROVINCE_FAVORITE_CODE";
+    public static final String RESET = "RESET";
 
+    /**
+     * Setting check live*/
+    public static final String CHECK_DONE_N = "check_done_n";
+    public static final String CHECK_DONE_C = "check_done_c";
+    public static final String CHECK_DONE_S = "check_done_s";
 
     public static Authent getAuthent() {
         Authent authent = new Authent();

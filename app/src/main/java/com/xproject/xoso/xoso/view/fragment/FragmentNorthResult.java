@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,8 +40,7 @@ public class FragmentNorthResult extends BasicFragment implements OnLoadComplete
     private List<Fragment> fragmentList;
 
     public static FragmentNorthResult newInstance() {
-        FragmentNorthResult fragment = new FragmentNorthResult();
-        return fragment;
+        return new FragmentNorthResult();
     }
 
     @Override
@@ -84,40 +83,34 @@ public class FragmentNorthResult extends BasicFragment implements OnLoadComplete
         recyclerTabLayout.setAdapter(adapterCalendar);
         // set pager to current date
 
-        if (TimeUtils.checkTimeInMilisecondNorth(18, 15, 23, 58)) {
-            vpPager.setCurrentItem(TimeUtils.getPositionForDay(Calendar.getInstance()));
+        if (TimeUtils.checkTimeInMilisecondNorth(18, 10, 23, 58)) {
+            vpPager.setCurrentItem(fragmentList.size() - 1);
         } else {
-            vpPager.setCurrentItem(TimeUtils.getPositionForDay(Calendar.getInstance()) - 1);
+            vpPager.setCurrentItem(fragmentList.size() - 2);
         }
     }
 
     private boolean checkSelectedDay() {
-        if (vpPager.getCurrentItem() == TimeUtils.getPositionForDay(Calendar.getInstance())) {
-            return true;
-        } else {
-            return false;
-        }
+        return vpPager.getCurrentItem() == fragmentList.size() - 1;
     }
 
 
     public void setLive() {
+        int position = fragmentList.size() - 1;
         if (!checkSelectedDay()) {
-            int position = TimeUtils.getPositionForDay(Calendar.getInstance());
-            ((FragmentNorthContent) adapterViewPager.getItem(position)).startLive();
             vpPager.setCurrentItem(position);
+            ((FragmentNorthContent) adapterViewPager.getItem(position)).startLive();
         } else {
-            int position = TimeUtils.getPositionForDay(Calendar.getInstance());
             ((FragmentNorthContent) adapterViewPager.getItem(position)).startLive();
         }
     }
 
-    public void setEndLive(){
+    public void setEndLive() {
+        int position = fragmentList.size() - 1;
         if (!checkSelectedDay()) {
-            int position = TimeUtils.getPositionForDay(Calendar.getInstance());
             ((FragmentNorthContent) adapterViewPager.getItem(position)).setEndLive();
             vpPager.setCurrentItem(position);
         } else {
-            int position = TimeUtils.getPositionForDay(Calendar.getInstance());
             ((FragmentNorthContent) adapterViewPager.getItem(position)).setEndLive();
         }
     }
@@ -131,7 +124,7 @@ public class FragmentNorthResult extends BasicFragment implements OnLoadComplete
         setLive();
     }
 
-    public static class MyPagerAdapter extends FragmentStatePagerAdapter {
+    public static class MyPagerAdapter extends FragmentPagerAdapter {
 
         private List<Fragment> list;
 
@@ -141,15 +134,17 @@ public class FragmentNorthResult extends BasicFragment implements OnLoadComplete
         }
 
         @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            return super.instantiateItem(container, position);
+        }
+
+        @Override
         public int getCount() {
             return list.size();
         }
 
         @Override
         public Fragment getItem(int position) {
-//            Log.e(TAG, "getItem: " + position);
-//            long timeForPosition = TimeUtils.getDayForPosition(position).getTimeInMillis();
-//            return FragmentNorthContent.newInstance(timeForPosition);
             return list.get(position);
         }
 

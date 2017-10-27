@@ -9,17 +9,19 @@ import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewStub;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.xproject.xoso.sdk.common.Constants;
 import com.xproject.xoso.sdk.utils.CalendarUtils;
 import com.xproject.xoso.sdk.utils.SharedUtils;
+import com.xproject.xoso.sdk.utils.TextUtils;
 import com.xproject.xoso.sdk.utils.TimeUtils;
 import com.xproject.xoso.sdk.utils.Utils;
 import com.xproject.xoso.xoso.model.entity.BeginResult;
@@ -43,17 +45,16 @@ import java.util.Random;
 public class FragmentSouthContent extends BasicFragment implements IFragmentSouthContent {
 
     private static final String KEY_DATE = "date";
-    boolean isLive = false;
+    boolean isLive = false, check_done = false;
     long millis;
-    private ViewStub viewStub;
+    View view;
     private FragmentSouthContentPresenter presenter;
     private String getDateTime;
     private TextView tvContent, tv_title;
-
-//    private OnLoadComplete loadComplete;
+    //    private OnLoadComplete loadComplete;
     private NestedScrollView scroll_south;
     private TableLayout table_1, table_2, table_3, table_4;
-
+    private LinearLayout loadingView;
     /**
      * Value table result lottery
      */
@@ -130,7 +131,11 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
     private Context context;
     private boolean isExistsBegin, isExistsBegin_2, isExistsBegin_3, isExistsBegin_4;
     private String LotoSpecial_1, LotoSpecial_2, LotoSpecial_3, LotoSpecial_4;
-    private boolean vibrate = false, sound = false;
+    private boolean vibrate = false, sound = true;
+    private String tmp_b0 = "", tmp_b1 = "", tmp_b2 = "", tmp_b3 = "", tmp_b4 = "", tmp_b5 = "", tmp_b6 = "", tmp_b7 = "", tmp_b8 = "", tmp_b9 = "";
+    private String tmp1_b0 = "", tmp1_b1 = "", tmp1_b2 = "", tmp1_b3 = "", tmp1_b4 = "", tmp1_b5 = "", tmp1_b6 = "", tmp1_b7 = "", tmp1_b8 = "", tmp1_b9 = "";
+    private String tmp2_b0 = "", tmp2_b1 = "", tmp2_b2 = "", tmp2_b3 = "", tmp2_b4 = "", tmp2_b5 = "", tmp2_b6 = "", tmp2_b7 = "", tmp2_b8 = "", tmp2_b9 = "";
+    private String tmp3_b0 = "", tmp3_b1 = "", tmp3_b2 = "", tmp3_b3 = "", tmp3_b4 = "", tmp3_b5 = "", tmp3_b6 = "", tmp3_b7 = "", tmp3_b8 = "", tmp3_b9 = "";
 
     public static FragmentSouthContent newInstance(long date) {
         FragmentSouthContent fragmentFirst = new FragmentSouthContent();
@@ -144,8 +149,7 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         presenter = new FragmentSouthContentPresenter(this);
-        player = MediaPlayer.create(getContext(), Settings.System.DEFAULT_NOTIFICATION_URI);
-        audioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
+
         millis = getArguments().getLong(KEY_DATE);
         if (millis > 0) {
             final Context context = getActivity();
@@ -157,36 +161,31 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-//        try {
-//            loadComplete = (OnLoadComplete) context;
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_south_content, container, false);
+        if (view == null) {
+            view = inflater.inflate(R.layout.fragment_south_content, container, false);
+        }
+        return view;
     }
 
     @Override
     public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         context = getContext();
+        player = MediaPlayer.create(getContext(), R.raw.text_notification);
+        audioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
+        check_done = SharedUtils.getInstance().getBooleanValue(Constants.CHECK_DONE_S);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                viewStub = (ViewStub) view.findViewById(R.id.view_stub_south);
-                viewStub.setVisibility(View.VISIBLE);
+                loadingView = (LinearLayout) view.findViewById(R.id.loadingView);
                 scroll_south = (NestedScrollView) view.findViewById(R.id.scroll_south);
                 tvContent = (TextView) view.findViewById(R.id.tvContent);
                 tv_title = (TextView) view.findViewById(R.id.tv_title);
                 TextView tv_not_yet = (TextView) view.findViewById(R.id.tv_not_yet);
                 img_mute = (ImageView) view.findViewById(R.id.img_mute);
 
-                sound = SharedUtils.getInstance().getBooleanValue(Constants.SOUND_FLAG);
+                sound = SharedUtils.getInstance().getBooleanDefaultTrueValue(Constants.SOUND_FLAG);
                 vibrate = SharedUtils.getInstance().getBooleanValue(Constants.ViBRATE_FLAG);
 
                 getTitle();
@@ -208,7 +207,11 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                 }
 
                 if (toDay && TimeUtils.checkTimeInMilisecondNorth(16, 10, 16, 40)) {
-                    presenter.connectSocket();
+                    if (!check_done) {
+                        presenter.connectSocket();
+                    } else {
+                        presenter.getResultLottery(getDateTime);
+                    }
                 } else {
                     presenter.getResultLottery(getDateTime);
                 }
@@ -230,7 +233,7 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
             img_mute.setVisibility(View.GONE);
         }
 
-        if (sound){
+        if (sound) {
             mute = false;
             img_mute.setImageResource(R.mipmap.ic_mute);
             audioManager.setStreamMute(AudioManager.STREAM_MUSIC, false);
@@ -717,369 +720,742 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
     }
 
     private void checkRandomTable1(List<String> special, List<String> first, List<String> second, List<String> third, List<String> fourd, List<String> five, List<String> six, List<String> seven, List<String> eight) {
-        if (eight.size() > 0) {
-            if (rl81 != null) {
-                rl81.shutdownThread(true);
+        if (toDay) {
+            if (eight != null) {
+                int size = eight.size();
+                if (size > 0) {
+                    if (eight.get(0) != null && !eight.get(0).isEmpty()) {
+                        rl81.shutdownThread(true);
+                    } else {
+                        rl81.run();
+                    }
+                }
             }
-        }
-        if (seven.size() > 0) {
-            if (rl71 != null) {
-                rl71.shutdownThread(false);
-            }
-        }
 
-        if (six.size() > 0) {
-            if (rl611 != null) {
-                rl611.shutdownThread(false);
+            if (seven != null) {
+                int size = seven.size();
+                if (size > 0) {
+                    if (seven.get(0) != null && !seven.get(0).isEmpty()) {
+                        rl71.shutdownThread(false);
+                    } else {
+                        rl71.run();
+                    }
+                }
             }
-        } else if (six.size() > 1) {
-            if (rl612 != null) {
-                rl612.shutdownThread(false);
-            }
-        } else if (six.size() > 2) {
-            if (rl613 != null) {
-                rl613.shutdownThread(false);
-            }
-        }
 
-        if (five.size() > 0) {
-            if (rl51 != null) {
-                rl51.shutdownThread(false);
+            /**
+             * Six*/
+            if (six != null) {
+                int size = six.size();
+                if (size > 0) {
+                    switch (size) {
+                        case 1:
+                            if (six.get(0) != null && !six.get(0).isEmpty()) {
+                                rl611.shutdownThread(false);
+                            } else {
+                                rl611.run();
+                            }
+                            break;
+                        case 2:
+                            if (six.get(1) != null && !six.get(1).isEmpty()) {
+                                rl612.shutdownThread(false);
+                            } else {
+                                rl612.run();
+                            }
+                            break;
+                        case 3:
+                            if (six.get(2) != null && !six.get(2).isEmpty()) {
+                                rl613.shutdownThread(false);
+                            } else {
+                                rl613.run();
+                            }
+                            break;
+                    }
+                }
             }
-        }
 
-        if (fourd.size() > 0) {
-            if (rl41 != null) {
-                rl41.shutdownThread(false);
+            if (five != null) {
+                int size = five.size();
+                if (size > 0) {
+                    if (five.get(0) != null && !five.get(0).isEmpty()) {
+                        rl51.shutdownThread(false);
+                    } else {
+                        rl51.run();
+                    }
+                }
             }
-        } else if (fourd.size() > 1) {
-            if (rl412 != null) {
-                rl412.shutdownThread(false);
-            }
-        } else if (fourd.size() > 2) {
-            if (rl413 != null) {
-                rl413.shutdownThread(false);
-            }
-        } else if (fourd.size() > 3) {
-            if (rl414 != null) {
-                rl414.shutdownThread(false);
-            }
-        } else if (fourd.size() > 4) {
-            if (rl415 != null) {
-                rl415.shutdownThread(false);
-            }
-        } else if (fourd.size() > 5) {
-            if (rl416 != null) {
-                rl416.shutdownThread(false);
-            }
-        } else if (fourd.size() > 6) {
-            if (rl417 != null) {
-                rl417.shutdownThread(false);
-            }
-        }
 
-        if (third.size() > 0) {
-            if (rl311 != null) {
-                rl311.shutdownThread(false);
+            /**
+             * Fourd*/
+            if (fourd != null) {
+                int size = fourd.size();
+                if (size > 0) {
+                    switch (size) {
+                        case 1:
+                            if (fourd.get(0) != null && !fourd.get(0).isEmpty()) {
+                                rl41.shutdownThread(false);
+                            } else {
+                                rl41.run();
+                            }
+                            break;
+                        case 2:
+                            if (fourd.get(1) != null && !fourd.get(1).isEmpty()) {
+                                rl412.shutdownThread(false);
+                            } else {
+                                rl412.run();
+                            }
+                            break;
+                        case 3:
+                            if (fourd.get(2) != null && !fourd.get(2).isEmpty()) {
+                                rl413.shutdownThread(false);
+                            } else {
+                                rl413.run();
+                            }
+                            break;
+                        case 4:
+                            if (fourd.get(3) != null && !fourd.get(3).isEmpty()) {
+                                rl414.shutdownThread(false);
+                            } else {
+                                rl414.run();
+                            }
+                            break;
+                        case 5:
+                            if (fourd.get(4) != null && !fourd.get(4).isEmpty()) {
+                                rl415.shutdownThread(false);
+                            } else {
+                                rl415.run();
+                            }
+                            break;
+                        case 6:
+                            if (fourd.get(5) != null && !fourd.get(5).isEmpty()) {
+                                rl416.shutdownThread(false);
+                            } else {
+                                rl416.run();
+                            }
+                            break;
+                        case 7:
+                            if (fourd.get(6) != null && !fourd.get(6).isEmpty()) {
+                                rl417.shutdownThread(false);
+                            } else {
+                                rl417.run();
+                            }
+                            break;
+                    }
+                }
             }
-        } else if (third.size() > 1) {
-            if (rl312 != null) {
-                rl312.shutdownThread(false);
-            }
-        }
 
-        if (second.size() > 0) {
-            if (rl_second_1 != null) {
-                rl_second_1.shutdownThread(false);
+            if (third != null) {
+                int size = third.size();
+                if (size > 0) {
+                    switch (size) {
+                        case 1:
+                            if (third.get(0) != null && !third.get(0).isEmpty()) {
+                                rl311.shutdownThread(false);
+                            } else {
+                                rl311.run();
+                            }
+                            break;
+                        case 2:
+                            if (third.get(1) != null && !third.get(1).isEmpty()) {
+                                rl312.shutdownThread(false);
+                            } else {
+                                rl312.run();
+                            }
+                            break;
+                    }
+                }
             }
-        }
 
-        if (first.size() > 0) {
-            if (rl_first_1 != null) {
-                rl_first_1.shutdownThread(false);
+            if (second != null) {
+                int size = second.size();
+                if (size > 0) {
+                    if (second.get(0) != null && !second.get(0).isEmpty()) {
+                        rl_second_1.shutdownThread(false);
+                    } else {
+                        rl_second_1.run();
+                    }
+                }
             }
-        }
-        if (special.size() > 0) {
-            if (rl_special_1 != null) {
-                rl_special_1.shutdownThread(true);
+
+
+            if (first != null) {
+                int size = first.size();
+                if (size > 0) {
+                    if (first.get(0) != null && !first.get(0).isEmpty()) {
+                        rl_first_1.shutdownThread(false);
+                    } else {
+                        rl_first_1.run();
+                    }
+                }
+            }
+
+            if (special != null) {
+                int size = special.size();
+                if (size > 0) {
+                    if (special.get(0) != null && !special.get(0).isEmpty()) {
+                        rl_special_1.shutdownThread(true);
+                    } else {
+                        rl_special_1.run();
+                    }
+                }
             }
         }
     }
 
     private void checkRandomTable2(List<String> special, List<String> first, List<String> second, List<String> third, List<String> fourd, List<String> five, List<String> six, List<String> seven, List<String> eight) {
-        if (eight.size() > 0) {
-            if (rl82 != null) {
-                rl82.shutdownThread(true);
+        if (toDay) {
+            if (eight != null) {
+                int size = eight.size();
+                if (size > 0) {
+                    if (eight.get(0) != null && !eight.get(0).isEmpty()) {
+                        rl82.shutdownThread(true);
+                    } else {
+                        rl82.run();
+                    }
+                }
             }
-        }
-        if (seven.size() > 0) {
-            if (rl72 != null) {
-                rl72.shutdownThread(false);
-            }
-        }
 
-        if (six.size() > 0) {
-            if (rl621 != null) {
-                rl621.shutdownThread(false);
+            if (seven != null) {
+                int size = seven.size();
+                if (size > 0) {
+                    if (seven.get(0) != null && !seven.get(0).isEmpty()) {
+                        rl72.shutdownThread(false);
+                    } else {
+                        rl72.run();
+                    }
+                }
             }
-        } else if (six.size() > 1) {
-            if (rl622 != null) {
-                rl622.shutdownThread(false);
-            }
-        } else if (six.size() > 2) {
-            if (rl623 != null) {
-                rl623.shutdownThread(false);
-            }
-        }
 
-        if (five.size() > 0) {
-            if (rl52 != null) {
-                rl52.shutdownThread(false);
+            /**
+             * Six*/
+            if (six != null) {
+                int size = six.size();
+                if (size > 0) {
+                    switch (size) {
+                        case 1:
+                            if (six.get(0) != null && !six.get(0).isEmpty()) {
+                                rl621.shutdownThread(false);
+                            } else {
+                                rl621.run();
+                            }
+                            break;
+                        case 2:
+                            if (six.get(1) != null && !six.get(1).isEmpty()) {
+                                rl622.shutdownThread(false);
+                            } else {
+                                rl622.run();
+                            }
+                            break;
+                        case 3:
+                            if (six.get(2) != null && !six.get(2).isEmpty()) {
+                                rl623.shutdownThread(false);
+                            } else {
+                                rl623.run();
+                            }
+                            break;
+                    }
+                }
             }
-        }
 
-        if (fourd.size() > 0) {
-            if (rl42 != null) {
-                rl42.shutdownThread(false);
+            if (five != null) {
+                int size = five.size();
+                if (size > 0) {
+                    if (five.get(0) != null && !five.get(0).isEmpty()) {
+                        rl52.shutdownThread(false);
+                    } else {
+                        rl52.run();
+                    }
+                }
             }
-        } else if (fourd.size() > 1) {
-            if (rl422 != null) {
-                rl422.shutdownThread(false);
-            }
-        } else if (fourd.size() > 2) {
-            if (rl423 != null) {
-                rl423.shutdownThread(false);
-            }
-        } else if (fourd.size() > 3) {
-            if (rl424 != null) {
-                rl424.shutdownThread(false);
-            }
-        } else if (fourd.size() > 4) {
-            if (rl425 != null) {
-                rl425.shutdownThread(false);
-            }
-        } else if (fourd.size() > 5) {
-            if (rl426 != null) {
-                rl426.shutdownThread(false);
-            }
-        } else if (fourd.size() > 6) {
-            if (rl427 != null) {
-                rl427.shutdownThread(false);
-            }
-        }
 
-        if (third.size() > 0) {
-            if (rl321 != null) {
-                rl321.shutdownThread(false);
+            /**
+             * Fourd*/
+            if (fourd != null) {
+                int size = fourd.size();
+                if (size > 0) {
+                    switch (size) {
+                        case 1:
+                            if (fourd.get(0) != null && !fourd.get(0).isEmpty()) {
+                                rl42.shutdownThread(false);
+                            } else {
+                                rl42.run();
+                            }
+                            break;
+                        case 2:
+                            if (fourd.get(1) != null && !fourd.get(1).isEmpty()) {
+                                rl422.shutdownThread(false);
+                            } else {
+                                rl422.run();
+                            }
+                            break;
+                        case 3:
+                            if (fourd.get(2) != null && !fourd.get(2).isEmpty()) {
+                                rl423.shutdownThread(false);
+                            } else {
+                                rl423.run();
+                            }
+                            break;
+                        case 4:
+                            if (fourd.get(3) != null && !fourd.get(3).isEmpty()) {
+                                rl424.shutdownThread(false);
+                            } else {
+                                rl424.run();
+                            }
+                            break;
+                        case 5:
+                            if (fourd.get(4) != null && !fourd.get(4).isEmpty()) {
+                                rl425.shutdownThread(false);
+                            } else {
+                                rl425.run();
+                            }
+                            break;
+                        case 6:
+                            if (fourd.get(5) != null && !fourd.get(5).isEmpty()) {
+                                rl426.shutdownThread(false);
+                            } else {
+                                rl426.run();
+                            }
+                            break;
+                        case 7:
+                            if (fourd.get(6) != null && !fourd.get(6).isEmpty()) {
+                                rl427.shutdownThread(false);
+                            } else {
+                                rl427.run();
+                            }
+                            break;
+                    }
+                }
             }
-        } else if (third.size() > 1) {
-            if (rl322 != null) {
-                rl322.shutdownThread(false);
-            }
-        }
 
-        if (second.size() > 0) {
-            if (rl_second_2 != null) {
-                rl_second_2.shutdownThread(false);
+            if (third != null) {
+                int size = third.size();
+                if (size > 0) {
+                    switch (size) {
+                        case 1:
+                            if (third.get(0) != null && !third.get(0).isEmpty()) {
+                                rl321.shutdownThread(false);
+                            } else {
+                                rl321.run();
+                            }
+                            break;
+                        case 2:
+                            if (third.get(1) != null && !third.get(1).isEmpty()) {
+                                rl322.shutdownThread(false);
+                            } else {
+                                rl322.run();
+                            }
+                            break;
+                    }
+                }
             }
-        }
 
-        if (first.size() > 0) {
-            if (rl_first_2 != null) {
-                rl_first_2.shutdownThread(false);
+            if (second != null) {
+                int size = second.size();
+                if (size > 0) {
+                    if (second.get(0) != null && !second.get(0).isEmpty()) {
+                        rl_second_2.shutdownThread(false);
+                    } else {
+                        rl_second_2.run();
+                    }
+                }
             }
-        }
-        if (special.size() > 0) {
-            if (rl_special_2 != null) {
-                rl_special_2.shutdownThread(true);
+
+
+            if (first != null) {
+                int size = first.size();
+                if (size > 0) {
+                    if (first.get(0) != null && !first.get(0).isEmpty()) {
+                        rl_first_2.shutdownThread(false);
+                    } else {
+                        rl_first_2.run();
+                    }
+                }
+            }
+
+            if (special != null) {
+                int size = special.size();
+                if (size > 0) {
+                    if (special.get(0) != null && !special.get(0).isEmpty()) {
+                        rl_special_2.shutdownThread(true);
+                    } else {
+                        rl_special_2.run();
+                    }
+                }
             }
         }
     }
 
     private void checkRandomTable3(List<String> special, List<String> first, List<String> second, List<String> third, List<String> fourd, List<String> five, List<String> six, List<String> seven, List<String> eight) {
-        if (eight.size() > 0) {
-            if (rl83 != null) {
-                rl83.shutdownThread(true);
-            }
-        }
-        if (seven.size() > 0) {
-            if (rl73 != null) {
-                rl73.shutdownThread(false);
-            }
-        }
 
-        if (six.size() > 0) {
-            if (rl631 != null) {
-                rl631.shutdownThread(false);
+        if (toDay) {
+            if (eight != null) {
+                int size = eight.size();
+                if (size > 0) {
+                    if (eight.get(0) != null && !eight.get(0).isEmpty()) {
+                        rl83.shutdownThread(true);
+                    } else {
+                        rl83.run();
+                    }
+                }
             }
-        } else if (six.size() > 1) {
-            if (rl632 != null) {
-                rl632.shutdownThread(false);
-            }
-        } else if (six.size() > 2) {
-            if (rl633 != null) {
-                rl633.shutdownThread(false);
-            }
-        }
 
-        if (five.size() > 0) {
-            if (rl53 != null) {
-                rl53.shutdownThread(false);
+            if (seven != null) {
+                int size = seven.size();
+                if (size > 0) {
+                    if (seven.get(0) != null && !seven.get(0).isEmpty()) {
+                        rl73.shutdownThread(false);
+                    } else {
+                        rl73.run();
+                    }
+                }
             }
-        }
 
-        if (fourd.size() > 0) {
-            if (rl43 != null) {
-                rl43.shutdownThread(false);
+            /**
+             * Six*/
+            if (six != null) {
+                int size = six.size();
+                if (size > 0) {
+                    switch (size) {
+                        case 1:
+                            if (six.get(0) != null && !six.get(0).isEmpty()) {
+                                rl631.shutdownThread(false);
+                            } else {
+                                rl631.run();
+                            }
+                            break;
+                        case 2:
+                            if (six.get(1) != null && !six.get(1).isEmpty()) {
+                                rl632.shutdownThread(false);
+                            } else {
+                                rl632.run();
+                            }
+                            break;
+                        case 3:
+                            if (six.get(2) != null && !six.get(2).isEmpty()) {
+                                rl633.shutdownThread(false);
+                            } else {
+                                rl633.run();
+                            }
+                            break;
+                    }
+                }
             }
-        } else if (fourd.size() > 1) {
-            if (rl432 != null) {
-                rl432.shutdownThread(false);
-            }
-        } else if (fourd.size() > 2) {
-            if (rl433 != null) {
-                rl433.shutdownThread(false);
-            }
-        } else if (fourd.size() > 3) {
-            if (rl434 != null) {
-                rl434.shutdownThread(false);
-            }
-        } else if (fourd.size() > 4) {
-            if (rl435 != null) {
-                rl435.shutdownThread(false);
-            }
-        } else if (fourd.size() > 5) {
-            if (rl436 != null) {
-                rl436.shutdownThread(false);
-            }
-        } else if (fourd.size() > 6) {
-            if (rl437 != null) {
-                rl437.shutdownThread(false);
-            }
-        }
 
-        if (third.size() > 0) {
-            if (rl331 != null) {
-                rl331.shutdownThread(false);
+            if (five != null) {
+                int size = five.size();
+                if (size > 0) {
+                    if (five.get(0) != null && !five.get(0).isEmpty()) {
+                        rl53.shutdownThread(false);
+                    } else {
+                        rl53.run();
+                    }
+                }
             }
-        } else if (third.size() > 1) {
-            if (rl332 != null) {
-                rl332.shutdownThread(false);
-            }
-        }
 
-        if (second.size() > 0) {
-            if (rl_second_3 != null) {
-                rl_second_3.shutdownThread(false);
+            /**
+             * Fourd*/
+            if (fourd != null) {
+                int size = fourd.size();
+                if (size > 0) {
+                    switch (size) {
+                        case 1:
+                            if (fourd.get(0) != null && !fourd.get(0).isEmpty()) {
+                                rl43.shutdownThread(false);
+                            } else {
+                                rl43.run();
+                            }
+                            break;
+                        case 2:
+                            if (fourd.get(1) != null && !fourd.get(1).isEmpty()) {
+                                rl432.shutdownThread(false);
+                            } else {
+                                rl432.run();
+                            }
+                            break;
+                        case 3:
+                            if (fourd.get(2) != null && !fourd.get(2).isEmpty()) {
+                                rl433.shutdownThread(false);
+                            } else {
+                                rl433.run();
+                            }
+                            break;
+                        case 4:
+                            if (fourd.get(3) != null && !fourd.get(3).isEmpty()) {
+                                rl434.shutdownThread(false);
+                            } else {
+                                rl434.run();
+                            }
+                            break;
+                        case 5:
+                            if (fourd.get(4) != null && !fourd.get(4).isEmpty()) {
+                                rl435.shutdownThread(false);
+                            } else {
+                                rl435.run();
+                            }
+                            break;
+                        case 6:
+                            if (fourd.get(5) != null && !fourd.get(5).isEmpty()) {
+                                rl436.shutdownThread(false);
+                            } else {
+                                rl436.run();
+                            }
+                            break;
+                        case 7:
+                            if (fourd.get(6) != null && !fourd.get(6).isEmpty()) {
+                                rl437.shutdownThread(false);
+                            } else {
+                                rl437.run();
+                            }
+                            break;
+                    }
+                }
             }
-        }
 
-        if (first.size() > 0) {
-            if (rl_first_3 != null) {
-                rl_first_3.shutdownThread(false);
+            if (third != null) {
+                int size = third.size();
+                if (size > 0) {
+                    switch (size) {
+                        case 1:
+                            if (third.get(0) != null && !third.get(0).isEmpty()) {
+                                rl331.shutdownThread(false);
+                            } else {
+                                rl331.run();
+                            }
+                            break;
+                        case 2:
+                            if (third.get(1) != null && !third.get(1).isEmpty()) {
+                                rl332.shutdownThread(false);
+                            } else {
+                                rl332.run();
+                            }
+                            break;
+                    }
+                }
             }
-        }
-        if (special.size() > 0) {
-            if (rl_special_3 != null) {
-                rl_special_3.shutdownThread(true);
+
+            if (second != null) {
+                int size = second.size();
+                if (size > 0) {
+                    if (second.get(0) != null && !second.get(0).isEmpty()) {
+                        rl_second_3.shutdownThread(false);
+                    } else {
+                        rl_second_3.run();
+                    }
+                }
+            }
+
+
+            if (first != null) {
+                int size = first.size();
+                if (size > 0) {
+                    if (first.get(0) != null && !first.get(0).isEmpty()) {
+                        rl_first_3.shutdownThread(false);
+                    } else {
+                        rl_first_3.run();
+                    }
+                }
+            }
+
+            if (special != null) {
+                int size = special.size();
+                if (size > 0) {
+                    if (special.get(0) != null && !special.get(0).isEmpty()) {
+                        rl_special_3.shutdownThread(true);
+                    } else {
+                        rl_special_3.run();
+                    }
+                }
             }
         }
     }
 
     private void checkRandomTable4(List<String> special, List<String> first, List<String> second, List<String> third, List<String> fourd, List<String> five, List<String> six, List<String> seven, List<String> eight) {
-        if (eight.size() > 0) {
-            if (rl84 != null) {
-                rl84.shutdownThread(true);
+        if (toDay) {
+            if (eight != null) {
+                int size = eight.size();
+                if (size > 0) {
+                    if (eight.get(0) != null && !eight.get(0).isEmpty()) {
+                        rl84.shutdownThread(true);
+                    } else {
+                        rl84.run();
+                    }
+                }
             }
-        }
-        if (seven.size() > 0) {
-            if (rl74 != null) {
-                rl74.shutdownThread(false);
-            }
-        }
 
-        if (six.size() > 0) {
-            if (rl641 != null) {
-                rl641.shutdownThread(false);
+            if (seven != null) {
+                int size = seven.size();
+                if (size > 0) {
+                    if (seven.get(0) != null && !seven.get(0).isEmpty()) {
+                        rl74.shutdownThread(false);
+                    } else {
+                        rl74.run();
+                    }
+                }
             }
-        } else if (six.size() > 1) {
-            if (rl642 != null) {
-                rl642.shutdownThread(false);
-            }
-        } else if (six.size() > 2) {
-            if (rl643 != null) {
-                rl643.shutdownThread(false);
-            }
-        }
 
-        if (five.size() > 0) {
-            if (rl43 != null) {
-                rl43.shutdownThread(false);
+            /**
+             * Six*/
+            if (six != null) {
+                int size = six.size();
+                if (size > 0) {
+                    switch (size) {
+                        case 1:
+                            if (six.get(0) != null && !six.get(0).isEmpty()) {
+                                rl641.shutdownThread(false);
+                            } else {
+                                rl641.run();
+                            }
+                            break;
+                        case 2:
+                            if (six.get(1) != null && !six.get(1).isEmpty()) {
+                                rl642.shutdownThread(false);
+                            } else {
+                                rl642.run();
+                            }
+                            break;
+                        case 3:
+                            if (six.get(2) != null && !six.get(2).isEmpty()) {
+                                rl643.shutdownThread(false);
+                            } else {
+                                rl643.run();
+                            }
+                            break;
+                    }
+                }
             }
-        }
 
-        if (fourd.size() > 0) {
-            if (rl44 != null) {
-                rl44.shutdownThread(false);
+            if (five != null) {
+                int size = five.size();
+                if (size > 0) {
+                    if (five.get(0) != null && !five.get(0).isEmpty()) {
+                        rl54.shutdownThread(false);
+                    } else {
+                        rl54.run();
+                    }
+                }
             }
-        } else if (fourd.size() > 1) {
-            if (rl442 != null) {
-                rl442.shutdownThread(false);
-            }
-        } else if (fourd.size() > 2) {
-            if (rl443 != null) {
-                rl443.shutdownThread(false);
-            }
-        } else if (fourd.size() > 3) {
-            if (rl444 != null) {
-                rl444.shutdownThread(false);
-            }
-        } else if (fourd.size() > 4) {
-            if (rl445 != null) {
-                rl445.shutdownThread(false);
-            }
-        } else if (fourd.size() > 5) {
-            if (rl446 != null) {
-                rl446.shutdownThread(false);
-            }
-        } else if (fourd.size() > 6) {
-            if (rl447 != null) {
-                rl447.shutdownThread(false);
-            }
-        }
 
-        if (third.size() > 0) {
-            if (rl341 != null) {
-                rl341.shutdownThread(false);
+            /**
+             * Fourd*/
+            if (fourd != null) {
+                int size = fourd.size();
+                if (size > 0) {
+                    switch (size) {
+                        case 1:
+                            if (fourd.get(0) != null && !fourd.get(0).isEmpty()) {
+                                rl44.shutdownThread(false);
+                            } else {
+                                rl44.run();
+                            }
+                            break;
+                        case 2:
+                            if (fourd.get(1) != null && !fourd.get(1).isEmpty()) {
+                                rl442.shutdownThread(false);
+                            } else {
+                                rl442.run();
+                            }
+                            break;
+                        case 3:
+                            if (fourd.get(2) != null && !fourd.get(2).isEmpty()) {
+                                rl443.shutdownThread(false);
+                            } else {
+                                rl443.run();
+                            }
+                            break;
+                        case 4:
+                            if (fourd.get(3) != null && !fourd.get(3).isEmpty()) {
+                                rl444.shutdownThread(false);
+                            } else {
+                                rl444.run();
+                            }
+                            break;
+                        case 5:
+                            if (fourd.get(4) != null && !fourd.get(4).isEmpty()) {
+                                rl445.shutdownThread(false);
+                            } else {
+                                rl445.run();
+                            }
+                            break;
+                        case 6:
+                            if (fourd.get(5) != null && !fourd.get(5).isEmpty()) {
+                                rl446.shutdownThread(false);
+                            } else {
+                                rl446.run();
+                            }
+                            break;
+                        case 7:
+                            if (fourd.get(6) != null && !fourd.get(6).isEmpty()) {
+                                rl447.shutdownThread(false);
+                            } else {
+                                rl447.run();
+                            }
+                            break;
+                    }
+                }
             }
-        } else if (third.size() > 1) {
-            if (rl342 != null) {
-                rl342.shutdownThread(false);
-            }
-        }
 
-        if (second.size() > 0) {
-            if (rl_second_4 != null) {
-                rl_second_4.shutdownThread(false);
+            if (third != null) {
+                int size = third.size();
+                if (size > 0) {
+                    switch (size) {
+                        case 1:
+                            if (third.get(0) != null && !third.get(0).isEmpty()) {
+                                rl341.shutdownThread(false);
+                            } else {
+                                rl341.run();
+                            }
+                            break;
+                        case 2:
+                            if (third.get(1) != null && !third.get(1).isEmpty()) {
+                                rl342.shutdownThread(false);
+                            } else {
+                                rl342.run();
+                            }
+                            break;
+                    }
+                }
             }
-        }
 
-        if (first.size() > 0) {
-            if (rl_first_4 != null) {
-                rl_first_4.shutdownThread(false);
+            if (second != null) {
+                int size = second.size();
+                if (size > 0) {
+                    if (second.get(0) != null && !second.get(0).isEmpty()) {
+                        rl_second_4.shutdownThread(false);
+                    } else {
+                        rl_second_4.run();
+                    }
+                }
             }
-        }
-        if (special.size() > 0) {
-            if (rl_special_4 != null) {
-                rl_special_4.shutdownThread(true);
+
+
+            if (first != null) {
+                int size = first.size();
+                if (size > 0) {
+                    if (first.get(0) != null && !first.get(0).isEmpty()) {
+                        rl_first_4.shutdownThread(false);
+                    } else {
+                        rl_first_4.run();
+                    }
+                }
+            }
+
+            if (special != null) {
+                int size = special.size();
+                if (size > 0) {
+                    if (special.get(0) != null && !special.get(0).isEmpty()) {
+                        rl_special_4.shutdownThread(true);
+                    } else {
+                        rl_special_4.run();
+                    }
+                }
             }
         }
     }
 
     @Override
     public void setDataSocket(RESP_Result resp_result) {
-        viewStub.setVisibility(View.INVISIBLE);
-        tvContent.setVisibility(View.INVISIBLE);
+        loadingView.setVisibility(View.GONE);
+        tvContent.setVisibility(View.GONE);
         switch (resp_result.getData().size()) {
             case 1:
                 setTable2Hidden();
@@ -1267,9 +1643,11 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
     @Override
     public void setVisibleTable(boolean isVisible) {
         if (isVisible) {
-            viewStub.setVisibility(View.INVISIBLE);
+            loadingView.setVisibility(View.GONE);
+            tvContent.setVisibility(View.GONE);
         } else {
-            viewStub.setVisibility(View.VISIBLE);
+            loadingView.setVisibility(View.GONE);
+            tvContent.setVisibility(View.VISIBLE);
         }
     }
 
@@ -1313,10 +1691,14 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
         }
     }
 
+    private static final String TAG = "FragmentSouthContent";
+
     @Override
     public void setNewResult(RESP_NewResult newResult, int position_table) {
-        player.start();
-        if (vibrate){
+        if (player != null) {
+            player.start();
+        }
+        if (vibrate) {
             Utils.vibrateAction();
         }
         switch (position_table) {
@@ -1480,12 +1862,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                 break;
 
 
-
-
-
-
-
-
             /**
              * Table 2*/
             case 2:
@@ -1646,10 +2022,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                 break;
 
 
-
-
-
-
             /**
              * Table 3*/
             case 3:
@@ -1808,9 +2180,6 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                         break;
                 }
                 break;
-
-
-
 
 
             /**
@@ -1979,22 +2348,23 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
         presenter.checkSocket();
         MainActivity mainActivity = (MainActivity) getActivity();
         mainActivity.setEndLive(3);
+        SharedUtils.getInstance().putBooleanValue(Constants.CHECK_DONE_S, true);
     }
 
     @Override
     public void setLiveLoto(RESP_LiveLoto liveLoto, int table) {
-        switch (table){
+        switch (table) {
             case 1:
-                setBegin1(liveLoto.getBegin_with());
+                setBeginLive(liveLoto.getBegin_with());
                 break;
             case 2:
-                setBegin2(liveLoto.getBegin_with());
+                setBeginLive2(liveLoto.getBegin_with());
                 break;
             case 3:
-                setBegin3(liveLoto.getBegin_with());
+                setBeginLive3(liveLoto.getBegin_with());
                 break;
             case 4:
-                setBegin4(liveLoto.getBegin_with());
+                setBeginLive4(liveLoto.getBegin_with());
                 break;
         }
     }
@@ -2124,6 +2494,7 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
     }
 
     public void setBegin1(BeginResult beginResult) {
+        isExistsBegin = false;
         if (beginResult != null) {
             if (beginResult.getB0().size() > 0) {
                 String begin_0 = "";
@@ -2281,7 +2652,229 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
         }
     }
 
+    private void setBeginLive(BeginResult beginResult) {
+        /**
+         * Dau loto*/
+        if (beginResult.getB0().size() > 0) {
+            String begin_0 = "";
+            for (int i = 0; i < beginResult.getB0().size(); i++) {
+                begin_0 += beginResult.getB0().get(i) + " - ";
+            }
+            if (begin_0.length() > 0) {
+                begin_0 = begin_0.substring(0, begin_0.length() - 3);
+                if (android.text.TextUtils.isEmpty(tmp_b0)) {
+                    tmp_b0 = begin_0;
+                    TextUtils.getInstance().setAnimationTextView(tvLoto0_1);
+                } else {
+                    if (tmp_b0.length() < begin_0.length()) {
+                        TextUtils.getInstance().setAnimationTextView(tvLoto0_1);
+                        tmp_b0 = begin_0;
+                    }
+                }
+            }
+            Log.e(TAG, "setBeginEndLoto: 0 - " + begin_0);
+            tvLoto0_1.setText(Html.fromHtml(begin_0));
+        }
+
+
+        if (beginResult.getB1().size() > 0) {
+            String begin_1 = "";
+            for (int i = 0; i < beginResult.getB1().size(); i++) {
+                begin_1 += beginResult.getB1().get(i) + " - ";
+            }
+            if (begin_1.length() > 0) {
+                begin_1 = begin_1.substring(0, begin_1.length() - 3);
+
+                if (android.text.TextUtils.isEmpty(tmp_b1)) {
+                    tmp_b1 = begin_1;
+                    TextUtils.getInstance().setAnimationTextView(tvLoto1_1);
+                } else {
+                    if (tmp_b1.length() < begin_1.length()) {
+                        TextUtils.getInstance().setAnimationTextView(tvLoto1_1);
+                        tmp_b1 = begin_1;
+                    }
+                }
+            }
+            Log.e(TAG, "setBeginEndLoto: 1 - " + begin_1);
+            tvLoto1_1.setText(Html.fromHtml(begin_1));
+        }
+
+        if (beginResult.getB2().size() > 0) {
+            String begin_2 = "";
+            for (int i = 0; i < beginResult.getB2().size(); i++) {
+                begin_2 += beginResult.getB2().get(i) + " - ";
+            }
+            if (begin_2.length() > 0) {
+                begin_2 = begin_2.substring(0, begin_2.length() - 3);
+
+                if (android.text.TextUtils.isEmpty(tmp_b2)) {
+                    tmp_b2 = begin_2;
+                    TextUtils.getInstance().setAnimationTextView(tvLoto2_1);
+                } else {
+                    if (tmp_b2.length() < begin_2.length()) {
+                        TextUtils.getInstance().setAnimationTextView(tvLoto2_1);
+                        tmp_b2 = begin_2;
+                    }
+                }
+            }
+            Log.e(TAG, "setBeginEndLoto: 2 - " + begin_2);
+            tvLoto2_1.setText(Html.fromHtml(begin_2));
+        }
+
+        if (beginResult.getB3().size() > 0) {
+            String begin_3 = "";
+            for (int i = 0; i < beginResult.getB3().size(); i++) {
+                begin_3 += beginResult.getB3().get(i) + " - ";
+            }
+            if (begin_3.length() > 0) {
+                begin_3 = begin_3.substring(0, begin_3.length() - 3);
+
+                if (android.text.TextUtils.isEmpty(tmp_b3)) {
+                    tmp_b3 = begin_3;
+                    TextUtils.getInstance().setAnimationTextView(tvLoto3_1);
+                } else {
+                    if (tmp_b3.length() < begin_3.length()) {
+                        TextUtils.getInstance().setAnimationTextView(tvLoto3_1);
+                        tmp_b3 = begin_3;
+                    }
+                }
+            }
+            Log.e(TAG, "setBeginEndLoto: 3 - " + begin_3);
+            tvLoto3_1.setText(Html.fromHtml(begin_3));
+        }
+
+        if (beginResult.getB4().size() > 0) {
+            String begin_4 = "";
+            for (int i = 0; i < beginResult.getB4().size(); i++) {
+                begin_4 += beginResult.getB4().get(i) + " - ";
+            }
+            if (begin_4.length() > 0) {
+                begin_4 = begin_4.substring(0, begin_4.length() - 3);
+
+                if (android.text.TextUtils.isEmpty(tmp_b4)) {
+                    tmp_b4 = begin_4;
+                    TextUtils.getInstance().setAnimationTextView(tvLoto4_1);
+                } else {
+                    if (tmp_b4.length() < begin_4.length()) {
+                        TextUtils.getInstance().setAnimationTextView(tvLoto4_1);
+                        tmp_b4 = begin_4;
+                    }
+                }
+            }
+            tvLoto4_1.setText(Html.fromHtml(begin_4));
+        }
+
+
+        if (beginResult.getB5().size() > 0) {
+            String begin_5 = "";
+            for (int i = 0; i < beginResult.getB5().size(); i++) {
+                begin_5 += beginResult.getB5().get(i) + " - ";
+            }
+            if (begin_5.length() > 0) {
+                begin_5 = begin_5.substring(0, begin_5.length() - 3);
+
+                if (android.text.TextUtils.isEmpty(tmp_b5)) {
+                    tmp_b5 = begin_5;
+                    TextUtils.getInstance().setAnimationTextView(tvLoto5_1);
+                } else {
+                    if (tmp_b5.length() < begin_5.length()) {
+                        TextUtils.getInstance().setAnimationTextView(tvLoto5_1);
+                        tmp_b5 = begin_5;
+                    }
+                }
+            }
+
+            tvLoto5_1.setText(Html.fromHtml(begin_5));
+        }
+
+        if (beginResult.getB6().size() > 0) {
+            String begin_6 = "";
+            for (int i = 0; i < beginResult.getB6().size(); i++) {
+                begin_6 += beginResult.getB6().get(i) + " - ";
+            }
+            if (begin_6.length() > 0) {
+                begin_6 = begin_6.substring(0, begin_6.length() - 3);
+
+                if (android.text.TextUtils.isEmpty(tmp_b6)) {
+                    tmp_b6 = begin_6;
+                    TextUtils.getInstance().setAnimationTextView(tvLoto6_1);
+                } else {
+                    if (tmp_b6.length() < begin_6.length()) {
+                        TextUtils.getInstance().setAnimationTextView(tvLoto6_1);
+                        tmp_b6 = begin_6;
+                    }
+                }
+            }
+            tvLoto6_1.setText(Html.fromHtml(begin_6));
+        }
+
+        if (beginResult.getB7().size() > 0) {
+            String begin_7 = "";
+            for (int i = 0; i < beginResult.getB7().size(); i++) {
+                begin_7 += beginResult.getB7().get(i) + " - ";
+            }
+            if (begin_7.length() > 0) {
+                begin_7 = begin_7.substring(0, begin_7.length() - 3);
+
+                if (android.text.TextUtils.isEmpty(tmp_b7)) {
+                    tmp_b7 = begin_7;
+                    TextUtils.getInstance().setAnimationTextView(tvLoto7_1);
+                } else {
+                    if (tmp_b7.length() < begin_7.length()) {
+                        TextUtils.getInstance().setAnimationTextView(tvLoto7_1);
+                        tmp_b7 = begin_7;
+                    }
+                }
+            }
+
+            tvLoto7_1.setText(Html.fromHtml(begin_7));
+        }
+
+        if (beginResult.getB8().size() > 0) {
+            String begin_8 = "";
+            for (int i = 0; i < beginResult.getB8().size(); i++) {
+                begin_8 += beginResult.getB8().get(i) + " - ";
+            }
+            if (begin_8.length() > 0) {
+                begin_8 = begin_8.substring(0, begin_8.length() - 3);
+
+                if (android.text.TextUtils.isEmpty(tmp_b8)) {
+                    tmp_b8 = begin_8;
+                    TextUtils.getInstance().setAnimationTextView(tvLoto8_1);
+                } else {
+                    if (tmp_b8.length() < begin_8.length()) {
+                        TextUtils.getInstance().setAnimationTextView(tvLoto8_1);
+                        tmp_b8 = begin_8;
+                    }
+                }
+            }
+            tvLoto8_1.setText(Html.fromHtml(begin_8));
+        }
+
+        if (beginResult.getB9().size() > 0) {
+            String begin_9 = "";
+            for (int i = 0; i < beginResult.getB9().size(); i++) {
+                begin_9 += beginResult.getB9().get(i) + " - ";
+            }
+            if (begin_9.length() > 0) {
+                begin_9 = begin_9.substring(0, begin_9.length() - 3);
+
+                if (android.text.TextUtils.isEmpty(tmp_b9)) {
+                    tmp_b9 = begin_9;
+                    TextUtils.getInstance().setAnimationTextView(tvLoto9_1);
+                } else {
+                    if (tmp_b9.length() < begin_9.length()) {
+                        TextUtils.getInstance().setAnimationTextView(tvLoto9_1);
+                        tmp_b9 = begin_9;
+                    }
+                }
+            }
+            tvLoto9_1.setText(Html.fromHtml(begin_9));
+        }
+    }
+
     public void setBegin2(BeginResult beginResult) {
+        isExistsBegin_2 = false;
         if (beginResult != null) {
             if (beginResult.getB0().size() > 0) {
                 String begin_0 = "";
@@ -2438,7 +3031,229 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
         }
     }
 
+    private void setBeginLive2(BeginResult beginResult) {
+        /**
+         * Dau loto*/
+        if (beginResult.getB0().size() > 0) {
+            String begin_0 = "";
+            for (int i = 0; i < beginResult.getB0().size(); i++) {
+                begin_0 += beginResult.getB0().get(i) + " - ";
+            }
+            if (begin_0.length() > 0) {
+                begin_0 = begin_0.substring(0, begin_0.length() - 3);
+                if (android.text.TextUtils.isEmpty(tmp1_b0)) {
+                    tmp1_b0 = begin_0;
+                    TextUtils.getInstance().setAnimationTextView(tvLoto0_2);
+                } else {
+                    if (tmp1_b0.length() < begin_0.length()) {
+                        TextUtils.getInstance().setAnimationTextView(tvLoto0_2);
+                        tmp1_b0 = begin_0;
+                    }
+                }
+            }
+            Log.e(TAG, "setBeginEndLoto: 0 - " + begin_0);
+            tvLoto0_2.setText(Html.fromHtml(begin_0));
+        }
+
+
+        if (beginResult.getB1().size() > 0) {
+            String begin_1 = "";
+            for (int i = 0; i < beginResult.getB1().size(); i++) {
+                begin_1 += beginResult.getB1().get(i) + " - ";
+            }
+            if (begin_1.length() > 0) {
+                begin_1 = begin_1.substring(0, begin_1.length() - 3);
+
+                if (android.text.TextUtils.isEmpty(tmp1_b1)) {
+                    tmp1_b1 = begin_1;
+                    TextUtils.getInstance().setAnimationTextView(tvLoto1_2);
+                } else {
+                    if (tmp1_b1.length() < begin_1.length()) {
+                        TextUtils.getInstance().setAnimationTextView(tvLoto1_2);
+                        tmp1_b1 = begin_1;
+                    }
+                }
+            }
+            Log.e(TAG, "setBeginEndLoto: 1 - " + begin_1);
+            tvLoto1_2.setText(Html.fromHtml(begin_1));
+        }
+
+        if (beginResult.getB2().size() > 0) {
+            String begin_2 = "";
+            for (int i = 0; i < beginResult.getB2().size(); i++) {
+                begin_2 += beginResult.getB2().get(i) + " - ";
+            }
+            if (begin_2.length() > 0) {
+                begin_2 = begin_2.substring(0, begin_2.length() - 3);
+
+                if (android.text.TextUtils.isEmpty(tmp1_b2)) {
+                    tmp1_b2 = begin_2;
+                    TextUtils.getInstance().setAnimationTextView(tvLoto2_2);
+                } else {
+                    if (tmp1_b2.length() < begin_2.length()) {
+                        TextUtils.getInstance().setAnimationTextView(tvLoto2_2);
+                        tmp1_b2 = begin_2;
+                    }
+                }
+            }
+            Log.e(TAG, "setBeginEndLoto: 2 - " + begin_2);
+            tvLoto2_2.setText(Html.fromHtml(begin_2));
+        }
+
+        if (beginResult.getB3().size() > 0) {
+            String begin_3 = "";
+            for (int i = 0; i < beginResult.getB3().size(); i++) {
+                begin_3 += beginResult.getB3().get(i) + " - ";
+            }
+            if (begin_3.length() > 0) {
+                begin_3 = begin_3.substring(0, begin_3.length() - 3);
+
+                if (android.text.TextUtils.isEmpty(tmp1_b3)) {
+                    tmp1_b3 = begin_3;
+                    TextUtils.getInstance().setAnimationTextView(tvLoto3_2);
+                } else {
+                    if (tmp1_b3.length() < begin_3.length()) {
+                        TextUtils.getInstance().setAnimationTextView(tvLoto3_2);
+                        tmp1_b3 = begin_3;
+                    }
+                }
+            }
+            Log.e(TAG, "setBeginEndLoto: 3 - " + begin_3);
+            tvLoto3_2.setText(Html.fromHtml(begin_3));
+        }
+
+        if (beginResult.getB4().size() > 0) {
+            String begin_4 = "";
+            for (int i = 0; i < beginResult.getB4().size(); i++) {
+                begin_4 += beginResult.getB4().get(i) + " - ";
+            }
+            if (begin_4.length() > 0) {
+                begin_4 = begin_4.substring(0, begin_4.length() - 3);
+
+                if (android.text.TextUtils.isEmpty(tmp1_b4)) {
+                    tmp1_b4 = begin_4;
+                    TextUtils.getInstance().setAnimationTextView(tvLoto4_2);
+                } else {
+                    if (tmp1_b4.length() < begin_4.length()) {
+                        TextUtils.getInstance().setAnimationTextView(tvLoto4_2);
+                        tmp1_b4 = begin_4;
+                    }
+                }
+            }
+            tvLoto4_2.setText(Html.fromHtml(begin_4));
+        }
+
+
+        if (beginResult.getB5().size() > 0) {
+            String begin_5 = "";
+            for (int i = 0; i < beginResult.getB5().size(); i++) {
+                begin_5 += beginResult.getB5().get(i) + " - ";
+            }
+            if (begin_5.length() > 0) {
+                begin_5 = begin_5.substring(0, begin_5.length() - 3);
+
+                if (android.text.TextUtils.isEmpty(tmp1_b5)) {
+                    tmp1_b5 = begin_5;
+                    TextUtils.getInstance().setAnimationTextView(tvLoto5_2);
+                } else {
+                    if (tmp1_b5.length() < begin_5.length()) {
+                        TextUtils.getInstance().setAnimationTextView(tvLoto5_2);
+                        tmp1_b5 = begin_5;
+                    }
+                }
+            }
+
+            tvLoto5_2.setText(Html.fromHtml(begin_5));
+        }
+
+        if (beginResult.getB6().size() > 0) {
+            String begin_6 = "";
+            for (int i = 0; i < beginResult.getB6().size(); i++) {
+                begin_6 += beginResult.getB6().get(i) + " - ";
+            }
+            if (begin_6.length() > 0) {
+                begin_6 = begin_6.substring(0, begin_6.length() - 3);
+
+                if (android.text.TextUtils.isEmpty(tmp1_b6)) {
+                    tmp1_b6 = begin_6;
+                    TextUtils.getInstance().setAnimationTextView(tvLoto6_2);
+                } else {
+                    if (tmp1_b6.length() < begin_6.length()) {
+                        TextUtils.getInstance().setAnimationTextView(tvLoto6_2);
+                        tmp1_b6 = begin_6;
+                    }
+                }
+            }
+            tvLoto6_2.setText(Html.fromHtml(begin_6));
+        }
+
+        if (beginResult.getB7().size() > 0) {
+            String begin_7 = "";
+            for (int i = 0; i < beginResult.getB7().size(); i++) {
+                begin_7 += beginResult.getB7().get(i) + " - ";
+            }
+            if (begin_7.length() > 0) {
+                begin_7 = begin_7.substring(0, begin_7.length() - 3);
+
+                if (android.text.TextUtils.isEmpty(tmp1_b7)) {
+                    tmp1_b7 = begin_7;
+                    TextUtils.getInstance().setAnimationTextView(tvLoto7_2);
+                } else {
+                    if (tmp1_b7.length() < begin_7.length()) {
+                        TextUtils.getInstance().setAnimationTextView(tvLoto7_2);
+                        tmp1_b7 = begin_7;
+                    }
+                }
+            }
+
+            tvLoto7_2.setText(Html.fromHtml(begin_7));
+        }
+
+        if (beginResult.getB8().size() > 0) {
+            String begin_8 = "";
+            for (int i = 0; i < beginResult.getB8().size(); i++) {
+                begin_8 += beginResult.getB8().get(i) + " - ";
+            }
+            if (begin_8.length() > 0) {
+                begin_8 = begin_8.substring(0, begin_8.length() - 3);
+
+                if (android.text.TextUtils.isEmpty(tmp1_b8)) {
+                    tmp1_b8 = begin_8;
+                    TextUtils.getInstance().setAnimationTextView(tvLoto8_2);
+                } else {
+                    if (tmp1_b8.length() < begin_8.length()) {
+                        TextUtils.getInstance().setAnimationTextView(tvLoto8_2);
+                        tmp1_b8 = begin_8;
+                    }
+                }
+            }
+            tvLoto8_2.setText(Html.fromHtml(begin_8));
+        }
+
+        if (beginResult.getB9().size() > 0) {
+            String begin_9 = "";
+            for (int i = 0; i < beginResult.getB9().size(); i++) {
+                begin_9 += beginResult.getB9().get(i) + " - ";
+            }
+            if (begin_9.length() > 0) {
+                begin_9 = begin_9.substring(0, begin_9.length() - 3);
+
+                if (android.text.TextUtils.isEmpty(tmp1_b9)) {
+                    tmp1_b9 = begin_9;
+                    TextUtils.getInstance().setAnimationTextView(tvLoto9_2);
+                } else {
+                    if (tmp1_b9.length() < begin_9.length()) {
+                        TextUtils.getInstance().setAnimationTextView(tvLoto9_2);
+                        tmp1_b9 = begin_9;
+                    }
+                }
+            }
+            tvLoto9_2.setText(Html.fromHtml(begin_9));
+        }
+    }
+
     public void setBegin3(BeginResult beginResult) {
+        isExistsBegin_3 = false;
         if (beginResult != null) {
             if (beginResult.getB0().size() > 0) {
                 String begin_0 = "";
@@ -2595,7 +3410,229 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
         }
     }
 
+    private void setBeginLive3(BeginResult beginResult) {
+        /**
+         * Dau loto*/
+        if (beginResult.getB0().size() > 0) {
+            String begin_0 = "";
+            for (int i = 0; i < beginResult.getB0().size(); i++) {
+                begin_0 += beginResult.getB0().get(i) + " - ";
+            }
+            if (begin_0.length() > 0) {
+                begin_0 = begin_0.substring(0, begin_0.length() - 3);
+                if (android.text.TextUtils.isEmpty(tmp1_b0)) {
+                    tmp2_b0 = begin_0;
+                    TextUtils.getInstance().setAnimationTextView(tvLoto0_3);
+                } else {
+                    if (tmp2_b0.length() < begin_0.length()) {
+                        TextUtils.getInstance().setAnimationTextView(tvLoto0_3);
+                        tmp2_b0 = begin_0;
+                    }
+                }
+            }
+            Log.e(TAG, "setBeginEndLoto: 0 - " + begin_0);
+            tvLoto0_3.setText(Html.fromHtml(begin_0));
+        }
+
+
+        if (beginResult.getB1().size() > 0) {
+            String begin_1 = "";
+            for (int i = 0; i < beginResult.getB1().size(); i++) {
+                begin_1 += beginResult.getB1().get(i) + " - ";
+            }
+            if (begin_1.length() > 0) {
+                begin_1 = begin_1.substring(0, begin_1.length() - 3);
+
+                if (android.text.TextUtils.isEmpty(tmp2_b1)) {
+                    tmp2_b1 = begin_1;
+                    TextUtils.getInstance().setAnimationTextView(tvLoto1_3);
+                } else {
+                    if (tmp2_b1.length() < begin_1.length()) {
+                        TextUtils.getInstance().setAnimationTextView(tvLoto1_3);
+                        tmp2_b1 = begin_1;
+                    }
+                }
+            }
+            Log.e(TAG, "setBeginEndLoto: 1 - " + begin_1);
+            tvLoto1_3.setText(Html.fromHtml(begin_1));
+        }
+
+        if (beginResult.getB2().size() > 0) {
+            String begin_2 = "";
+            for (int i = 0; i < beginResult.getB2().size(); i++) {
+                begin_2 += beginResult.getB2().get(i) + " - ";
+            }
+            if (begin_2.length() > 0) {
+                begin_2 = begin_2.substring(0, begin_2.length() - 3);
+
+                if (android.text.TextUtils.isEmpty(tmp2_b2)) {
+                    tmp2_b2 = begin_2;
+                    TextUtils.getInstance().setAnimationTextView(tvLoto2_3);
+                } else {
+                    if (tmp2_b2.length() < begin_2.length()) {
+                        TextUtils.getInstance().setAnimationTextView(tvLoto2_3);
+                        tmp2_b2 = begin_2;
+                    }
+                }
+            }
+            Log.e(TAG, "setBeginEndLoto: 2 - " + begin_2);
+            tvLoto2_3.setText(Html.fromHtml(begin_2));
+        }
+
+        if (beginResult.getB3().size() > 0) {
+            String begin_3 = "";
+            for (int i = 0; i < beginResult.getB3().size(); i++) {
+                begin_3 += beginResult.getB3().get(i) + " - ";
+            }
+            if (begin_3.length() > 0) {
+                begin_3 = begin_3.substring(0, begin_3.length() - 3);
+
+                if (android.text.TextUtils.isEmpty(tmp2_b3)) {
+                    tmp2_b3 = begin_3;
+                    TextUtils.getInstance().setAnimationTextView(tvLoto3_3);
+                } else {
+                    if (tmp2_b3.length() < begin_3.length()) {
+                        TextUtils.getInstance().setAnimationTextView(tvLoto3_3);
+                        tmp2_b3 = begin_3;
+                    }
+                }
+            }
+            Log.e(TAG, "setBeginEndLoto: 3 - " + begin_3);
+            tvLoto3_3.setText(Html.fromHtml(begin_3));
+        }
+
+        if (beginResult.getB4().size() > 0) {
+            String begin_4 = "";
+            for (int i = 0; i < beginResult.getB4().size(); i++) {
+                begin_4 += beginResult.getB4().get(i) + " - ";
+            }
+            if (begin_4.length() > 0) {
+                begin_4 = begin_4.substring(0, begin_4.length() - 3);
+
+                if (android.text.TextUtils.isEmpty(tmp2_b4)) {
+                    tmp2_b4 = begin_4;
+                    TextUtils.getInstance().setAnimationTextView(tvLoto4_3);
+                } else {
+                    if (tmp2_b4.length() < begin_4.length()) {
+                        TextUtils.getInstance().setAnimationTextView(tvLoto4_3);
+                        tmp2_b4 = begin_4;
+                    }
+                }
+            }
+            tvLoto4_3.setText(Html.fromHtml(begin_4));
+        }
+
+
+        if (beginResult.getB5().size() > 0) {
+            String begin_5 = "";
+            for (int i = 0; i < beginResult.getB5().size(); i++) {
+                begin_5 += beginResult.getB5().get(i) + " - ";
+            }
+            if (begin_5.length() > 0) {
+                begin_5 = begin_5.substring(0, begin_5.length() - 3);
+
+                if (android.text.TextUtils.isEmpty(tmp2_b5)) {
+                    tmp2_b5 = begin_5;
+                    TextUtils.getInstance().setAnimationTextView(tvLoto5_3);
+                } else {
+                    if (tmp2_b5.length() < begin_5.length()) {
+                        TextUtils.getInstance().setAnimationTextView(tvLoto5_3);
+                        tmp2_b5 = begin_5;
+                    }
+                }
+            }
+
+            tvLoto5_3.setText(Html.fromHtml(begin_5));
+        }
+
+        if (beginResult.getB6().size() > 0) {
+            String begin_6 = "";
+            for (int i = 0; i < beginResult.getB6().size(); i++) {
+                begin_6 += beginResult.getB6().get(i) + " - ";
+            }
+            if (begin_6.length() > 0) {
+                begin_6 = begin_6.substring(0, begin_6.length() - 3);
+
+                if (android.text.TextUtils.isEmpty(tmp2_b6)) {
+                    tmp2_b6 = begin_6;
+                    TextUtils.getInstance().setAnimationTextView(tvLoto6_3);
+                } else {
+                    if (tmp2_b6.length() < begin_6.length()) {
+                        TextUtils.getInstance().setAnimationTextView(tvLoto6_3);
+                        tmp2_b6 = begin_6;
+                    }
+                }
+            }
+            tvLoto6_3.setText(Html.fromHtml(begin_6));
+        }
+
+        if (beginResult.getB7().size() > 0) {
+            String begin_7 = "";
+            for (int i = 0; i < beginResult.getB7().size(); i++) {
+                begin_7 += beginResult.getB7().get(i) + " - ";
+            }
+            if (begin_7.length() > 0) {
+                begin_7 = begin_7.substring(0, begin_7.length() - 3);
+
+                if (android.text.TextUtils.isEmpty(tmp2_b7)) {
+                    tmp2_b7 = begin_7;
+                    TextUtils.getInstance().setAnimationTextView(tvLoto7_3);
+                } else {
+                    if (tmp2_b7.length() < begin_7.length()) {
+                        TextUtils.getInstance().setAnimationTextView(tvLoto7_3);
+                        tmp2_b7 = begin_7;
+                    }
+                }
+            }
+
+            tvLoto7_3.setText(Html.fromHtml(begin_7));
+        }
+
+        if (beginResult.getB8().size() > 0) {
+            String begin_8 = "";
+            for (int i = 0; i < beginResult.getB8().size(); i++) {
+                begin_8 += beginResult.getB8().get(i) + " - ";
+            }
+            if (begin_8.length() > 0) {
+                begin_8 = begin_8.substring(0, begin_8.length() - 3);
+
+                if (android.text.TextUtils.isEmpty(tmp2_b8)) {
+                    tmp2_b8 = begin_8;
+                    TextUtils.getInstance().setAnimationTextView(tvLoto8_3);
+                } else {
+                    if (tmp2_b8.length() < begin_8.length()) {
+                        TextUtils.getInstance().setAnimationTextView(tvLoto8_3);
+                        tmp2_b8 = begin_8;
+                    }
+                }
+            }
+            tvLoto8_3.setText(Html.fromHtml(begin_8));
+        }
+
+        if (beginResult.getB9().size() > 0) {
+            String begin_9 = "";
+            for (int i = 0; i < beginResult.getB9().size(); i++) {
+                begin_9 += beginResult.getB9().get(i) + " - ";
+            }
+            if (begin_9.length() > 0) {
+                begin_9 = begin_9.substring(0, begin_9.length() - 3);
+
+                if (android.text.TextUtils.isEmpty(tmp2_b9)) {
+                    tmp2_b9 = begin_9;
+                    TextUtils.getInstance().setAnimationTextView(tvLoto9_3);
+                } else {
+                    if (tmp2_b9.length() < begin_9.length()) {
+                        TextUtils.getInstance().setAnimationTextView(tvLoto9_3);
+                        tmp2_b9 = begin_9;
+                    }
+                }
+            }
+            tvLoto9_3.setText(Html.fromHtml(begin_9));
+        }
+    }
+
     public void setBegin4(BeginResult beginResult) {
+        isExistsBegin_4 = false;
         if (beginResult != null) {
             if (beginResult.getB0().size() > 0) {
                 String begin_0 = "";
@@ -2749,6 +3786,227 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                 }
                 tvLoto9_4.setText(Html.fromHtml(begin_9));
             }
+        }
+    }
+
+    private void setBeginLive4(BeginResult beginResult) {
+        /**
+         * Dau loto*/
+        if (beginResult.getB0().size() > 0) {
+            String begin_0 = "";
+            for (int i = 0; i < beginResult.getB0().size(); i++) {
+                begin_0 += beginResult.getB0().get(i) + " - ";
+            }
+            if (begin_0.length() > 0) {
+                begin_0 = begin_0.substring(0, begin_0.length() - 3);
+                if (android.text.TextUtils.isEmpty(tmp1_b0)) {
+                    tmp3_b0 = begin_0;
+                    TextUtils.getInstance().setAnimationTextView(tvLoto0_4);
+                } else {
+                    if (tmp3_b0.length() < begin_0.length()) {
+                        TextUtils.getInstance().setAnimationTextView(tvLoto0_4);
+                        tmp3_b0 = begin_0;
+                    }
+                }
+            }
+            Log.e(TAG, "setBeginEndLoto: 0 - " + begin_0);
+            tvLoto0_4.setText(Html.fromHtml(begin_0));
+        }
+
+
+        if (beginResult.getB1().size() > 0) {
+            String begin_1 = "";
+            for (int i = 0; i < beginResult.getB1().size(); i++) {
+                begin_1 += beginResult.getB1().get(i) + " - ";
+            }
+            if (begin_1.length() > 0) {
+                begin_1 = begin_1.substring(0, begin_1.length() - 3);
+
+                if (android.text.TextUtils.isEmpty(tmp3_b1)) {
+                    tmp3_b1 = begin_1;
+                    TextUtils.getInstance().setAnimationTextView(tvLoto1_4);
+                } else {
+                    if (tmp3_b1.length() < begin_1.length()) {
+                        TextUtils.getInstance().setAnimationTextView(tvLoto1_4);
+                        tmp3_b1 = begin_1;
+                    }
+                }
+            }
+            Log.e(TAG, "setBeginEndLoto: 1 - " + begin_1);
+            tvLoto1_4.setText(Html.fromHtml(begin_1));
+        }
+
+        if (beginResult.getB2().size() > 0) {
+            String begin_2 = "";
+            for (int i = 0; i < beginResult.getB2().size(); i++) {
+                begin_2 += beginResult.getB2().get(i) + " - ";
+            }
+            if (begin_2.length() > 0) {
+                begin_2 = begin_2.substring(0, begin_2.length() - 3);
+
+                if (android.text.TextUtils.isEmpty(tmp3_b2)) {
+                    tmp3_b2 = begin_2;
+                    TextUtils.getInstance().setAnimationTextView(tvLoto2_4);
+                } else {
+                    if (tmp3_b2.length() < begin_2.length()) {
+                        TextUtils.getInstance().setAnimationTextView(tvLoto2_4);
+                        tmp3_b2 = begin_2;
+                    }
+                }
+            }
+            Log.e(TAG, "setBeginEndLoto: 2 - " + begin_2);
+            tvLoto2_4.setText(Html.fromHtml(begin_2));
+        }
+
+        if (beginResult.getB3().size() > 0) {
+            String begin_3 = "";
+            for (int i = 0; i < beginResult.getB3().size(); i++) {
+                begin_3 += beginResult.getB3().get(i) + " - ";
+            }
+            if (begin_3.length() > 0) {
+                begin_3 = begin_3.substring(0, begin_3.length() - 3);
+
+                if (android.text.TextUtils.isEmpty(tmp3_b3)) {
+                    tmp3_b3 = begin_3;
+                    TextUtils.getInstance().setAnimationTextView(tvLoto3_4);
+                } else {
+                    if (tmp3_b3.length() < begin_3.length()) {
+                        TextUtils.getInstance().setAnimationTextView(tvLoto3_4);
+                        tmp3_b3 = begin_3;
+                    }
+                }
+            }
+            Log.e(TAG, "setBeginEndLoto: 3 - " + begin_3);
+            tvLoto3_4.setText(Html.fromHtml(begin_3));
+        }
+
+        if (beginResult.getB4().size() > 0) {
+            String begin_4 = "";
+            for (int i = 0; i < beginResult.getB4().size(); i++) {
+                begin_4 += beginResult.getB4().get(i) + " - ";
+            }
+            if (begin_4.length() > 0) {
+                begin_4 = begin_4.substring(0, begin_4.length() - 3);
+
+                if (android.text.TextUtils.isEmpty(tmp3_b4)) {
+                    tmp3_b4 = begin_4;
+                    TextUtils.getInstance().setAnimationTextView(tvLoto4_4);
+                } else {
+                    if (tmp3_b4.length() < begin_4.length()) {
+                        TextUtils.getInstance().setAnimationTextView(tvLoto4_4);
+                        tmp3_b4 = begin_4;
+                    }
+                }
+            }
+            tvLoto4_4.setText(Html.fromHtml(begin_4));
+        }
+
+
+        if (beginResult.getB5().size() > 0) {
+            String begin_5 = "";
+            for (int i = 0; i < beginResult.getB5().size(); i++) {
+                begin_5 += beginResult.getB5().get(i) + " - ";
+            }
+            if (begin_5.length() > 0) {
+                begin_5 = begin_5.substring(0, begin_5.length() - 3);
+
+                if (android.text.TextUtils.isEmpty(tmp3_b5)) {
+                    tmp3_b5 = begin_5;
+                    TextUtils.getInstance().setAnimationTextView(tvLoto5_4);
+                } else {
+                    if (tmp3_b5.length() < begin_5.length()) {
+                        TextUtils.getInstance().setAnimationTextView(tvLoto5_4);
+                        tmp3_b5 = begin_5;
+                    }
+                }
+            }
+
+            tvLoto5_4.setText(Html.fromHtml(begin_5));
+        }
+
+        if (beginResult.getB6().size() > 0) {
+            String begin_6 = "";
+            for (int i = 0; i < beginResult.getB6().size(); i++) {
+                begin_6 += beginResult.getB6().get(i) + " - ";
+            }
+            if (begin_6.length() > 0) {
+                begin_6 = begin_6.substring(0, begin_6.length() - 3);
+
+                if (android.text.TextUtils.isEmpty(tmp3_b6)) {
+                    tmp3_b6 = begin_6;
+                    TextUtils.getInstance().setAnimationTextView(tvLoto6_4);
+                } else {
+                    if (tmp3_b6.length() < begin_6.length()) {
+                        TextUtils.getInstance().setAnimationTextView(tvLoto6_4);
+                        tmp3_b6 = begin_6;
+                    }
+                }
+            }
+            tvLoto6_4.setText(Html.fromHtml(begin_6));
+        }
+
+        if (beginResult.getB7().size() > 0) {
+            String begin_7 = "";
+            for (int i = 0; i < beginResult.getB7().size(); i++) {
+                begin_7 += beginResult.getB7().get(i) + " - ";
+            }
+            if (begin_7.length() > 0) {
+                begin_7 = begin_7.substring(0, begin_7.length() - 3);
+
+                if (android.text.TextUtils.isEmpty(tmp3_b7)) {
+                    tmp3_b7 = begin_7;
+                    TextUtils.getInstance().setAnimationTextView(tvLoto7_4);
+                } else {
+                    if (tmp3_b7.length() < begin_7.length()) {
+                        TextUtils.getInstance().setAnimationTextView(tvLoto7_4);
+                        tmp3_b7 = begin_7;
+                    }
+                }
+            }
+
+            tvLoto7_4.setText(Html.fromHtml(begin_7));
+        }
+
+        if (beginResult.getB8().size() > 0) {
+            String begin_8 = "";
+            for (int i = 0; i < beginResult.getB8().size(); i++) {
+                begin_8 += beginResult.getB8().get(i) + " - ";
+            }
+            if (begin_8.length() > 0) {
+                begin_8 = begin_8.substring(0, begin_8.length() - 3);
+
+                if (android.text.TextUtils.isEmpty(tmp3_b8)) {
+                    tmp3_b8 = begin_8;
+                    TextUtils.getInstance().setAnimationTextView(tvLoto8_4);
+                } else {
+                    if (tmp3_b8.length() < begin_8.length()) {
+                        TextUtils.getInstance().setAnimationTextView(tvLoto8_4);
+                        tmp3_b8 = begin_8;
+                    }
+                }
+            }
+            tvLoto8_4.setText(Html.fromHtml(begin_8));
+        }
+
+        if (beginResult.getB9().size() > 0) {
+            String begin_9 = "";
+            for (int i = 0; i < beginResult.getB9().size(); i++) {
+                begin_9 += beginResult.getB9().get(i) + " - ";
+            }
+            if (begin_9.length() > 0) {
+                begin_9 = begin_9.substring(0, begin_9.length() - 3);
+
+                if (android.text.TextUtils.isEmpty(tmp3_b9)) {
+                    tmp3_b9 = begin_9;
+                    TextUtils.getInstance().setAnimationTextView(tvLoto9_4);
+                } else {
+                    if (tmp3_b9.length() < begin_9.length()) {
+                        TextUtils.getInstance().setAnimationTextView(tvLoto9_4);
+                        tmp3_b9 = begin_9;
+                    }
+                }
+            }
+            tvLoto9_4.setText(Html.fromHtml(begin_9));
         }
     }
 
@@ -3216,6 +4474,7 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
 
     @Override
     public void getResultLotteryError(String error) {
+        loadingView.setVisibility(View.GONE);
         tvContent.setText(error);
         tvContent.setVisibility(View.VISIBLE);
         setVisibleTable(false);
@@ -3303,8 +4562,8 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
                     textRoll.setTextColor(context.getResources().getColor(android.R.color.holo_blue_dark));
 
                     Random rn = new Random();
-                    int range = max - min + 1;
-                    int randomNum = rn.nextInt(range);
+//                    int range = max - min + 1;
+                    int randomNum = rn.nextInt((max - min) + 1) + min;
                     String roll = String.valueOf(randomNum);
                     textRoll.setText(roll);
 

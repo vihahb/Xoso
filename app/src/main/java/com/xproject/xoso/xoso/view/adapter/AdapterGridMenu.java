@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.xproject.xoso.xoso.model.entity.GridMenu;
 import com.xproject.xoso.xoso.view.adapter.inf.ViewGrid;
 import com.xtelsolution.xoso.R;
@@ -76,7 +77,9 @@ public class AdapterGridMenu extends RecyclerView.Adapter<RecyclerView.ViewHolde
             }
 
             if (data.getResource() != -1) {
-                img_icon.setImageResource(data.getResource());
+                Picasso.with(context)
+                        .load(data.getResource())
+                        .into(img_icon);
             }
         }
 

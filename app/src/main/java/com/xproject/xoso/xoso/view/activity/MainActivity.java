@@ -8,10 +8,10 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -29,13 +29,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 
-import com.crashlytics.android.Crashlytics;
-import com.google.firebase.messaging.FirebaseMessaging;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.xproject.xoso.sdk.common.Constants;
 import com.xproject.xoso.sdk.utils.AlarmUtils;
-import com.xproject.xoso.sdk.utils.MessageNotification;
 import com.xproject.xoso.sdk.utils.PermissionHelper;
+import com.xproject.xoso.sdk.utils.SharedUtils;
 import com.xproject.xoso.sdk.utils.TimeUtils;
 import com.xproject.xoso.xoso.model.entity.DrawerMenu;
 import com.xproject.xoso.xoso.presenter.activity.HomePresenter;
@@ -48,16 +46,16 @@ import com.xproject.xoso.xoso.view.fragment.FragmentMore;
 import com.xproject.xoso.xoso.view.fragment.FragmentResult;
 import com.xproject.xoso.xoso.view.fragment.inf.OnCompleteListener;
 import com.xproject.xoso.xoso.view.widget.LockableViewPager;
+import com.xproject.xoso.xoso.view.widget.PageTransformer;
 import com.xtelsolution.xoso.R;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import static com.xproject.xoso.xoso.ProjectApplication.context;
-
 public class MainActivity extends BasicActivity implements IHomeView, OnCompleteListener, onDateSelectListener {
 
+    BroadcastReceiver broadcastLive;
     private List<DrawerMenu> menuList;
     private RecyclerView rcl_menu;
     private AdapterMenu adapterMenu;
@@ -67,31 +65,78 @@ public class MainActivity extends BasicActivity implements IHomeView, OnComplete
     private BottomNavigationViewEx navigationBottom;
     private LockableViewPager viewPager;
     private FragmentPagerAdapter pagerAdapter;
-    BroadcastReceiver broadcastLive;
     private boolean isResultView = false;
-    private MenuItem item;
+    private MenuItem item_menu;
     private AppBarLayout.LayoutParams params;
+    private boolean chec_n = false;
+    private boolean chec_c = false;
+    private boolean chec_s = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        presenter = new HomePresenter(this);
+        initView();
+        listentNotification();
+        checkLive();
+        grandPermission();
+        registerReceiver(broadcastLive, new IntentFilter("ACTION_LIVE"));
+    }
+
+    private void grandPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            PermissionHelper.checkOnlyPermission(Manifest.permission.READ_EXTERNAL_STORAGE, this, 99);
+        }
+    }
+
+    private void checkLive() {
+
+        chec_n = SharedUtils.getInstance().getBooleanValue(Constants.CHECK_DONE_N);
+        chec_c = SharedUtils.getInstance().getBooleanValue(Constants.CHECK_DONE_C);
+        chec_s = SharedUtils.getInstance().getBooleanValue(Constants.CHECK_DONE_S);
+
+        if (TimeUtils.checkTimeInMilisecondNorth(18, 10, 18, 40)) {
+            if (!chec_n){
+                setFlagLive(true, 1);
+            } else {
+                setFlagLive(false, 1);
+            }
+        } else if (TimeUtils.checkTimeInMilisecondNorth(18, 40, 23, 58)) {
+            setFlagLive(false, 1);
+        }
+
+        if (TimeUtils.checkTimeInMilisecondNorth(17, 10, 17, 40)) {
+            if (!chec_c){
+                setFlagLive(true, 2);
+            } else {
+                setFlagLive(false, 2);
+            }
+        } else if (TimeUtils.checkTimeInMilisecondNorth(17, 40, 23, 58)) {
+            setFlagLive(false, 2);
+        }
+
+        if (TimeUtils.checkTimeInMilisecondNorth(16, 10, 16, 40)) {
+            if (!chec_s){
+                setFlagLive(true, 3);
+            } else {
+                setFlagLive(false, 3);
+            }
+        } else if (TimeUtils.checkTimeInMilisecondNorth(16, 40, 23, 58)) {
+            setFlagLive(false, 3);
+        }
+
+    }
+
+    private void initView() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle("Kết quả miền Bắc");
         params = (AppBarLayout.LayoutParams) toolbar.getLayoutParams();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            PermissionHelper.checkOnlyPermission(Manifest.permission.READ_EXTERNAL_STORAGE, this, 99);
-        }
-        handlerAction();
-        initAlarmManager();
-        FirebaseMessaging.getInstance().subscribeToTopic("mienbac");
-        presenter = new HomePresenter(this);
-        initProvinceDatabase();
-        initWidget();
         initDrawer();
-        logUser();
-        registerReceiver(broadcastLive, new IntentFilter("ACTION_LIVE"));
+        initWidget();
+//        setChangeLive();
+        AlarmUtils.setAlarm();
     }
 
     private void initDrawer() {
@@ -99,6 +144,7 @@ public class MainActivity extends BasicActivity implements IHomeView, OnComplete
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         toggle.setDrawerIndicatorEnabled(false);
+
         // mDrawerToggle.setHomeAsUpIndicator(R.drawable.menu_icon);
         toolbar.setNavigationIcon(R.drawable.ic_drawer);
 
@@ -112,7 +158,7 @@ public class MainActivity extends BasicActivity implements IHomeView, OnComplete
         toggle.syncState();
     }
 
-    public void handlerAction(){
+    public void listentNotification() {
         broadcastLive = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -142,7 +188,7 @@ public class MainActivity extends BasicActivity implements IHomeView, OnComplete
         };
     }
 
-    public void setFlagLive(boolean flag, int position){
+    public void setFlagLive(boolean flag, int position) {
         if (flag) {
             adapterMenu.changeLiveItem(position);
         } else {
@@ -150,29 +196,26 @@ public class MainActivity extends BasicActivity implements IHomeView, OnComplete
         }
     }
 
-    private void initProvinceDatabase() {
-        presenter.saveProvince();
-    }
-
     public void setChangeLive() {
-        if (TimeUtils.checkTimeInMilisecondNorth(18, 10, 18, 45)) {
+//        FragmentResult fragmentResult = (FragmentResult) getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.vpMain + ":" + 0);
+        FragmentResult fragmentResult = (FragmentResult) pagerAdapter.getItem(0);
+        if (TimeUtils.checkTimeInMilisecondNorth(18, 10, 18, 40)) {
             ((FragmentResult) pagerAdapter.getItem(0)).changeLive(0);
-        } else if (TimeUtils.checkTimeInMilisecondNorth(16, 45, 23, 58)) {
-            setEndLive(1);
+        } else if (TimeUtils.checkTimeInMilisecondNorth(18, 40, 23, 58)) {
+            fragmentResult.emulatorEndLive(0);
         }
 
-        if (TimeUtils.checkTimeInMilisecondNorth(17, 10, 17, 45)) {
+        if (TimeUtils.checkTimeInMilisecondNorth(17, 10, 17, 40)) {
             ((FragmentResult) pagerAdapter.getItem(0)).changeLive(1);
-        } else if (TimeUtils.checkTimeInMilisecondNorth(17, 45, 23, 58)) {
-            setEndLive(2);
+        } else if (TimeUtils.checkTimeInMilisecondNorth(17, 40, 23, 58)) {
+            fragmentResult.emulatorEndLive(1);
         }
 
-        if (TimeUtils.checkTimeInMilisecondNorth(16, 10, 16, 45)) {
+        if (TimeUtils.checkTimeInMilisecondNorth(16, 10, 16, 40)) {
             ((FragmentResult) pagerAdapter.getItem(0)).changeLive(2);
-        } else if (TimeUtils.checkTimeInMilisecondNorth(18, 45, 23, 58)) {
-            setEndLive(3);
+        } else if (TimeUtils.checkTimeInMilisecondNorth(16, 40, 23, 58)) {
+            fragmentResult.emulatorEndLive(2);
         }
-
     }
 
     public void setEndLive(int position_area) {
@@ -190,13 +233,6 @@ public class MainActivity extends BasicActivity implements IHomeView, OnComplete
                 setFlagLive(false, 3);
                 break;
         }
-    }
-
-    private void logUser() {
-        // TODO: Use the current user's information
-        // You can call any combination of these three methods
-        Crashlytics.setUserIdentifier(android.os.Build.MODEL);
-        Crashlytics.setUserName(Build.VERSION_CODES.class.getFields()[android.os.Build.VERSION.SDK_INT].getName());
     }
 
     private void getData() {
@@ -223,55 +259,11 @@ public class MainActivity extends BasicActivity implements IHomeView, OnComplete
         }
         viewPager = (LockableViewPager) findViewById(R.id.vpMain);
         pagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager());
-        viewPager.setOffscreenPageLimit(4);
+        viewPager.setOffscreenPageLimit(3);
         viewPager.setSwipeable(false);
         viewPager.setAdapter(pagerAdapter);
+        viewPager.setPageTransformer(false, new PageTransformer());
         viewPager.setCurrentItem(0);
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                switch (position) {
-                    case 0:
-                        params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL | AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS);
-                        if (item != null) {
-                            item.setVisible(true);
-                        }
-                        toolbar.setTitle("Kết quả");
-                        break;
-                    case 1:
-                        params.setScrollFlags(0);
-                        if (item != null) {
-                            item.setVisible(false);
-                        }
-                        toolbar.setTitle("Thống kê");
-                        break;
-                    case 2:
-                        params.setScrollFlags(0);
-                        if (item != null) {
-                            item.setVisible(false);
-                        }
-                        toolbar.setTitle("Soi Cầu");
-                        break;
-                    case 3:
-                        params.setScrollFlags(0);
-                        if (item != null) {
-                            item.setVisible(false);
-                        }
-                        toolbar.setTitle("Mở Rộng");
-                        break;
-                }
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
 
         navigationBottom = (BottomNavigationViewEx) findViewById(R.id.bottomTab);
         navigationBottom.enableAnimation(false);
@@ -288,26 +280,19 @@ public class MainActivity extends BasicActivity implements IHomeView, OnComplete
         adapterMenu = new AdapterMenu(menuList, this, this);
         rcl_menu.setAdapter(adapterMenu);
         presenter.initDrawerMenu();
-        presenter.getDream();
-        setChangeLive();
-    }
-
-//    private void setLiveDone() {
-//        if (TimeUtils.checkTimeInMilisecondNorth(16, 45, 23, 58)) {
-//            adapterMenu.changeLiveDone(3);
-//        }
-//
-//        if (TimeUtils.checkTimeInMilisecondNorth(17, 45, 23, 58)) {
-//            adapterMenu.changeLiveDone(2);
-//        }
-//
-//        if (TimeUtils.checkTimeInMilisecondNorth(18, 45, 23, 58)) {
-//            adapterMenu.changeLiveDone(1);
-//        }
-//    }
-
-    private void initAlarmManager() {
-        AlarmUtils.setAlarm();
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    sleep(1000L);
+                    presenter.saveProvince();
+                    presenter.getDream();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        thread.start();
     }
 
     private void initBottomNavigationListener() {
@@ -319,21 +304,37 @@ public class MainActivity extends BasicActivity implements IHomeView, OnComplete
                         isResultView = true;
                         viewPager.setCurrentItem(0);
                         toolbar.setTitle(item.getTitle());
+                        params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL | AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS);
+                        if (item_menu != null) {
+                            item_menu.setVisible(true);
+                        }
                         break;
                     case R.id.nav_analytics:
                         isResultView = false;
                         viewPager.setCurrentItem(1);
                         toolbar.setTitle(item.getTitle());
+                        params.setScrollFlags(0);
+                        if (item_menu != null) {
+                            item_menu.setVisible(false);
+                        }
                         break;
                     case R.id.nav_explore:
                         isResultView = false;
                         viewPager.setCurrentItem(2);
                         toolbar.setTitle(item.getTitle());
+                        params.setScrollFlags(0);
+                        if (item_menu != null) {
+                            item_menu.setVisible(false);
+                        }
                         break;
                     case R.id.nav_more:
                         isResultView = false;
                         viewPager.setCurrentItem(3);
                         toolbar.setTitle(item.getTitle());
+                        params.setScrollFlags(0);
+                        if (item_menu != null) {
+                            item_menu.setVisible(false);
+                        }
                         break;
                 }
                 return true;
@@ -355,7 +356,7 @@ public class MainActivity extends BasicActivity implements IHomeView, OnComplete
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
-        item = menu.findItem(R.id.action_select_date);
+        item_menu = menu.findItem(R.id.action_select_date);
         return true;
     }
 
@@ -380,9 +381,6 @@ public class MainActivity extends BasicActivity implements IHomeView, OnComplete
             }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
             datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
             datePickerDialog.show();
-
-            Intent intentLive = new Intent(context, MainActivity.class);
-            MessageNotification.notify(this, "Sắp đến giờ quay giải miền Nam", 3, intentLive);
         }
 
         return super.onOptionsItemSelected(item);
@@ -462,12 +460,6 @@ public class MainActivity extends BasicActivity implements IHomeView, OnComplete
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        PermissionHelper.checkResult(grantResults);
-    }
-
-    @Override
     public void onComplete() {
         getData();
     }
@@ -475,11 +467,6 @@ public class MainActivity extends BasicActivity implements IHomeView, OnComplete
     @Override
     public void onDateSelect(Calendar date) {
         ((FragmentResult) pagerAdapter.getItem(0)).queryDate(date);
-    }
-
-    public void setTitleToolbar(String s) {
-        if (s != null)
-            toolbar.setTitle(s);
     }
 
     public static class FragmentPagerAdapter extends FragmentStatePagerAdapter {
@@ -499,6 +486,11 @@ public class MainActivity extends BasicActivity implements IHomeView, OnComplete
         @Override
         public int getCount() {
             return fragmentList.size();
+        }
+
+        @Override
+        public int getItemPosition(Object object) {
+            return POSITION_NONE;
         }
 
         // Returns the fragment to display for that page
@@ -522,11 +514,18 @@ public class MainActivity extends BasicActivity implements IHomeView, OnComplete
                     title = "Soi cầu";
                     break;
                 case 3:
-                    title = "Mở rộng";
+                    title = "Thêm";
                     break;
             }
             return title;
         }
     }
-
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        boolean accepted = PermissionHelper.checkResult(grantResults);
+        if (!accepted){
+            finish();
+        }
+    }
 }

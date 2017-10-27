@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.xproject.xoso.xoso.model.entity.DrawerMenu;
 import com.xproject.xoso.xoso.view.activity.inf.IHomeView;
 import com.xtelsolution.xoso.R;
@@ -70,7 +71,9 @@ public class AdapterMenu extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             ItemHolder itemHolder = (ItemHolder) holder;
             DrawerMenu drawerMenu = menuList.get(position);
             itemHolder.tv_name.setText(drawerMenu.getItemName());
-            itemHolder.item_icon.setImageResource(drawerMenu.getResource());
+            Picasso.with(context)
+                    .load(drawerMenu.getResource())
+                    .into(itemHolder.item_icon);
             if (drawerMenu.getItemTime() != null) {
                 itemHolder.tv_time.setText(drawerMenu.getItemTime());
             }

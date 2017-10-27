@@ -11,6 +11,7 @@ import android.widget.Spinner;
 
 import com.xproject.xoso.sdk.common.Constants;
 import com.xproject.xoso.sdk.utils.SharedUtils;
+import com.xproject.xoso.sdk.utils.Utils;
 import com.xproject.xoso.xoso.model.entity.CycleLotoEntity;
 import com.xproject.xoso.xoso.model.entity.ProvinceEntity;
 import com.xproject.xoso.xoso.model.entity.SpeedTemp;
@@ -19,6 +20,8 @@ import com.xproject.xoso.xoso.view.activity.inf.IActivityCycleLotoView;
 import com.xproject.xoso.xoso.view.adapter.AdapterSpinner;
 import com.xtelsolution.xoso.R;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class ActivityLotoCycle extends BasicActivity implements View.OnClickListener, IActivityCycleLotoView {
@@ -52,14 +55,14 @@ public class ActivityLotoCycle extends BasicActivity implements View.OnClickList
         provinceEntityList = presenter.getCategory();
         adapterSpinner = new AdapterSpinner(provinceEntityList, this);
         sp_province.setAdapter(adapterSpinner);
-
-
         initSpinnerSelect();
+        edt_number.requestFocus();
+        Utils.showKeyBoard(this, edt_number);
     }
 
     private void initSpinnerSelect() {
         tmp_province_code = SharedUtils.getInstance().getIntValue(Constants.PROVINCE_FAVORITE_CODE);
-        if (tmp_province_code > 0){
+        if (tmp_province_code > 0) {
             for (int i = 0; i < provinceEntityList.size(); i++) {
                 if (provinceEntityList.get(i).getMavung() == tmp_province_code) {
                     sp_province.setSelection(i);
@@ -83,7 +86,9 @@ public class ActivityLotoCycle extends BasicActivity implements View.OnClickList
 
     private void checkRequirement() {
         String result = edt_number.getText().toString();
-
+        while (result.indexOf("..") >= 0) {
+            result = result.replaceAll("\\.\\.", ".");
+        }
         String[] list_result = result.split("\\.");
         Log.e("abc", "onClick: " + list_result.length);
 
@@ -103,7 +108,26 @@ public class ActivityLotoCycle extends BasicActivity implements View.OnClickList
             }
         }
 
-        result = result.replace(".", ",");
+        HashMap<String, Boolean> stringMap = new HashMap<>();
+        List<String> listResult = new ArrayList<>();
+
+        for (String aList_result : list_result) {
+            if (stringMap.get(aList_result) == null) {
+                stringMap.put(aList_result, true);
+                if (!aList_result.equals(",")) {
+                    listResult.add(aList_result);
+                }
+            }
+        }
+
+        result = "";
+        for (int i = 0; i < listResult.size(); i++) {
+            result += listResult.get(i) + ",";
+            Log.e("Map String", "get i: " + listResult.get(i));
+            Log.e("Map String", "checkRequirement: " + result);
+        }
+
+        result = result.substring(0, result.length() - 1);
         temp.setNumber(result);
         presenter.getCycleLoto(temp);
     }

@@ -1,12 +1,11 @@
 package com.xproject.xoso.xoso.view.activity;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.EditText;
 
@@ -18,11 +17,7 @@ import com.xproject.xoso.xoso.view.adapter.AdapterDream;
 import com.xtelsolution.xoso.R;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 public class DreamActivity extends BasicActivity implements IDream {
 
@@ -65,9 +60,9 @@ public class DreamActivity extends BasicActivity implements IDream {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 List<Dream> dreams_tmp = new ArrayList<>();
-                if (charSequence.length() >= 3) {
+                if (charSequence.length() >= 1) {
 //                    filter(searchView.toString());
-                    dreams_tmp = getFillterList1(charSequence);
+                    dreams_tmp = getFillterList(charSequence);
                     adapter.updateList(dreams_tmp);
                 } else {
                     presenter.getDreamList();
@@ -82,26 +77,23 @@ public class DreamActivity extends BasicActivity implements IDream {
     }
 
     private List<Dream> getFillterList(CharSequence charSequence) {
+        String result = TextUtils.getInstance().unicodeToKoDauLowerCase(charSequence.toString()).trim().replaceAll(" ", "");
         List<Dream> list = new ArrayList<>();
-        for (int i = 0; i < dreamList.size(); i++){
-            if(dreamList.get(i).getDreamed_unicoed() != null && dreamList.get(i).getDreamed_unicoed().contains(charSequence.toString())) {
+        for (int i = 0; i < dreamList.size(); i++) {
+            Log.e("filler", "getFillterList: " + dreamList.get(i).getDreamed_unicoed() + " - " + result);
+            if (dreamList.get(i).getDreamed_unicoed() != null && dreamList.get(i).getDreamed_unicoed().contains(result)) {
                 list.add(dreamList.get(i));
             }
         }
-
-        Set<Dream> dreamSet = new HashSet<>();
-        dreamSet.addAll(list);
-
-
         return list;
     }
 
     private List<Dream> getFillterList1(CharSequence charSequence) {
-        String searchKey =charSequence.toString();
+        String searchKey = charSequence.toString();
         List<Dream> list = new ArrayList<>();
 
-        for (Dream dream : dreamList){
-            if (dream.getDreamed_unicoed().contains(searchKey)){
+        for (Dream dream : dreamList) {
+            if (dream.getDreamed_unicoed().contains(searchKey)) {
                 list.add(dream);
             }
         }
@@ -112,7 +104,7 @@ public class DreamActivity extends BasicActivity implements IDream {
     @Override
     public void getDreamSuccess(List<Dream> list) {
         adapter.setData(list);
-        if (dreamList.size() > 0){
+        if (dreamList.size() > 0) {
             dreamList.clear();
         }
         dreamList = list;
@@ -130,7 +122,7 @@ public class DreamActivity extends BasicActivity implements IDream {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId()==android.R.id.home){
+        if (item.getItemId() == android.R.id.home) {
             finish();
         }
         return super.onOptionsItemSelected(item);

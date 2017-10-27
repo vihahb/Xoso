@@ -11,7 +11,9 @@ import android.view.ViewGroup;
 import com.xproject.xoso.sdk.common.Constants;
 import com.xproject.xoso.xoso.model.entity.GridMenu;
 import com.xproject.xoso.xoso.presenter.fragment.FragmentMorePresenter;
+import com.xproject.xoso.xoso.view.activity.CategoryOpenSpinActivity;
 import com.xproject.xoso.xoso.view.activity.DreamActivity;
+import com.xproject.xoso.xoso.view.activity.LuckyActivity;
 import com.xproject.xoso.xoso.view.activity.RandomSpinActivity;
 import com.xproject.xoso.xoso.view.activity.WebViewActivity;
 import com.xproject.xoso.xoso.view.adapter.AdapterGridMenu;
@@ -77,9 +79,13 @@ public class FragmentMore extends BasicFragment implements ViewGrid, IFragmentMo
             case 1:
                 startActivity(RandomSpinActivity.class);
                 break;
+            case 2:
+                startActivity(LuckyActivity.class);
+                break;
             case 3:
-                String url = "http://xoso.la/index.php?route=webview/lichquaythuong";
-                startActivity(WebViewActivity.class, Constants.URL, url);
+                startActivity(CategoryOpenSpinActivity.class);
+//                String url = "http://xoso.la/index.php?route=webview/lichquaythuong";
+//                startActivity(WebViewActivity.class, Constants.URL, url);
 //                new FinestWebView.Builder(getActivity())
 //                    .updateTitleFromHtml(true)
 //                    .webViewJavaScriptEnabled(true)

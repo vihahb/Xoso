@@ -60,8 +60,8 @@ public class SpeedListActivity extends BasicActivity {
         list = (List<AnalyticsSetNumber>) getIntent().getSerializableExtra(Constants.LIST_SPEED);
         if (list.size() > 0) {
             for (int i = 0; i < list.size(); i++) {
-                for (int j = list.size(); j ==0; j--) {
-                    if (list.get(i).getNumber().equals(list.get(j).getNumber())){
+                for (int j = list.size(); j == 0; j--) {
+                    if (list.get(i).getNumber().equals(list.get(j).getNumber())) {
                         list.remove(j);
                     }
                 }

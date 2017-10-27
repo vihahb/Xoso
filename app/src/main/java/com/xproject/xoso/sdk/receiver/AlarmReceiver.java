@@ -9,7 +9,10 @@ import com.xproject.xoso.sdk.common.Constants;
 import com.xproject.xoso.sdk.utils.AlarmUtils;
 import com.xproject.xoso.sdk.utils.Helper;
 import com.xproject.xoso.sdk.utils.MessageNotification;
+import com.xproject.xoso.sdk.utils.SharedUtils;
 import com.xproject.xoso.xoso.view.activity.MainActivity;
+
+import static com.xproject.xoso.sdk.utils.AlarmUtils.setNorthAlarmIntoSpin;
 
 /**
  * Created by vivhp on 9/13/2017.
@@ -18,6 +21,7 @@ import com.xproject.xoso.xoso.view.activity.MainActivity;
 public class AlarmReceiver extends BroadcastReceiver {
 
     private static final String TAG = "AlarmReceiver";
+    private boolean flag_n = true, flag_c = true, flag_s = true;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -63,8 +67,41 @@ public class AlarmReceiver extends BroadcastReceiver {
                 live_intent.putExtra(Constants.ACTION_TYPE, id_notify);
                 context.sendBroadcast(live_intent);
             }
-        } else {
+        }
+
+        /**
+         * Set Alarm spin
+         *
+         * @deprecated Flag on method
+         * flag = false -> set on alarm
+         * flag = true -> set off alarm
+         */
+        flag_n = SharedUtils.getInstance().getBooleanDefaultTrueValue(Constants.NOTIFY_N_FLAG);
+        if (flag_n) {
+            Log.e(TAG, "setAlarm: N - ON");
             MessageNotification.notify(context, content_notify, id_notify, intentLive);
+        }
+
+
+        flag_c = SharedUtils.getInstance().getBooleanDefaultTrueValue(Constants.NOTIFY_C_FLAG);
+        if (flag_c) {
+            Log.e(TAG, "setAlarm: C - ON");
+            MessageNotification.notify(context, content_notify, id_notify, intentLive);
+        }
+
+        flag_s = SharedUtils.getInstance().getBooleanDefaultTrueValue(Constants.NOTIFY_S_FLAG);
+        if (flag_s) {
+            Log.e(TAG, "setAlarm: S - ON");
+            MessageNotification.notify(context, content_notify, id_notify, intentLive);
+        }
+
+
+
+        int reset = intent.getIntExtra(Constants.RESET, 0);
+        if (reset > 0){
+            SharedUtils.getInstance().putBooleanValue(Constants.CHECK_DONE_N, false);
+            SharedUtils.getInstance().putBooleanValue(Constants.CHECK_DONE_C, false);
+            SharedUtils.getInstance().putBooleanValue(Constants.CHECK_DONE_S, false);
         }
 
 //        PendingIntent pendingIntent = PendingIntent.getService(context, 99, intentLive, PendingIntent.FLAG_UPDATE_CURRENT);

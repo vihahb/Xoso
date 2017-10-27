@@ -1,7 +1,5 @@
 package com.xproject.xoso.sdk.utils;
 
-import android.util.Log;
-
 import java.text.DateFormat;
 import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;

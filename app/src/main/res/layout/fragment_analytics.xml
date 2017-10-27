@@ -13,7 +13,7 @@
         app:elevation="0dp"
         app:tabBackground="@drawable/tab_select_color"
         app:tabGravity="fill"
-        app:tabIndicatorColor="@android:color/white"
+        app:tabIndicatorHeight="0dp"
         app:tabMaxWidth="0dp"
         app:tabMode="fixed"
         app:tabSelectedTextColor="@android:color/white"

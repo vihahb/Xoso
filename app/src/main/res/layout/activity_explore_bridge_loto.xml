@@ -7,25 +7,27 @@
     android:layout_height="match_parent"
     tools:context="com.xproject.xoso.xoso.view.activity.ActivityExploreBridgeLoto">
 
-    <include
-        layout="@layout/toolbar"/>
+    <include layout="@layout/toolbar" />
+
     <android.support.v4.widget.NestedScrollView
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <include layout="@layout/invoke_bridge_loto" />
 
             <WebView
                 android:id="@+id/web_view"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
                 android:layout_marginBottom="16dp"
                 android:layout_marginTop="16dp"
+                android:layout_weight="1"
                 android:visibility="visible" />
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>

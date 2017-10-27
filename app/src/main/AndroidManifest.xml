@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL" />
 
     <application
         android:name="com.xproject.xoso.xoso.ProjectApplication"
@@ -68,16 +69,19 @@
             </intent-filter>
         </service>
 
-        <activity android:name="com.xproject.xoso.xoso.view.activity.AnalyticsSpeedActivity" />
+        <activity android:name="com.xproject.xoso.xoso.view.activity.AnalyticsSpeedActivity"
+            android:windowSoftInputMode="stateAlwaysVisible"/>
         <activity android:name="com.xproject.xoso.xoso.view.activity.SpeedListActivity" />
         <activity
             android:name="com.xproject.xoso.xoso.view.activity.AnalyticsSum"
             android:label="@string/title_activity_analytics_sum"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateAlwaysVisible"/>
         <activity
             android:name="com.xproject.xoso.xoso.view.activity.AnalyticsFrequencyActivity"
             android:label="@string/title_activity_analytics_frequency"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateAlwaysVisible"/>
         <activity
             android:name="com.xproject.xoso.xoso.view.activity.ActivityFrequencyInfo"
             android:label="@string/title_activity_frequency_info"
@@ -91,6 +95,7 @@
             android:label="@string/title_activity_important_info"
             android:theme="@style/AppTheme" />
         <activity
+            android:windowSoftInputMode="stateAlwaysVisible"
             android:name="com.xproject.xoso.xoso.view.activity.AnalyticsLotoAuto"
             android:label="@string/title_activity_analytics_loto_auto"
             android:theme="@style/AppTheme" />
@@ -101,12 +106,15 @@
         <activity android:name="com.xproject.xoso.xoso.view.activity.SyntheticListActivity" />
         <activity android:name="com.xproject.xoso.xoso.view.activity.AnalyticsDayActivity" />
         <activity android:name="com.xproject.xoso.xoso.view.activity.AnalyticsDayInfo" />
-        <activity android:name="com.xproject.xoso.xoso.view.activity.ActivityLotoCycle" />
+        <activity android:name="com.xproject.xoso.xoso.view.activity.ActivityLotoCycle"
+            android:windowSoftInputMode="stateAlwaysVisible"/>
         <activity android:name="com.xproject.xoso.xoso.view.activity.CycleLotoListInfo" />
         <activity android:name="com.xproject.xoso.xoso.view.activity.ActivityCycleSpecial" />
         <activity android:name="com.xproject.xoso.xoso.view.activity.ActivityCycleSpecialInfo" />
-        <activity android:name="com.xproject.xoso.xoso.view.activity.FrequencyLotoActivity" />
-        <activity android:name="com.xproject.xoso.xoso.view.activity.CycleListSpecialActivity" />
+        <activity android:name="com.xproject.xoso.xoso.view.activity.FrequencyLotoActivity"
+            android:windowSoftInputMode="stateAlwaysVisible"/>
+        <activity android:name="com.xproject.xoso.xoso.view.activity.CycleListSpecialActivity"
+            android:windowSoftInputMode="stateAlwaysVisible"/>
         <activity android:name="com.xproject.xoso.xoso.view.activity.FrequencyLotoInfoActivity" />
         <activity android:name="com.xproject.xoso.xoso.view.activity.SpecialTomorowActivity" />
         <activity android:name="com.xproject.xoso.xoso.view.activity.SpecialTomorowInfoActivity" />
@@ -118,7 +126,9 @@
             android:label="@string/title_activity_setting"
             android:theme="@style/AppTheme" />
         <activity android:name="com.xproject.xoso.xoso.view.activity.WebViewActivity" />
-        <activity android:name="com.xproject.xoso.xoso.view.activity.AppIntroActivity"></activity>
+        <activity android:name="com.xproject.xoso.xoso.view.activity.AppIntroActivity" />
+        <activity android:name="com.xproject.xoso.xoso.view.activity.LuckyActivity" />
+        <activity android:name="com.xproject.xoso.xoso.view.activity.CategoryOpenSpinActivity"/>
     </application>
 
 </manifest>

@@ -8,4 +8,4 @@
     android:paddingBottom="@dimen/list_item_spacing_half"
     android:paddingTop="@dimen/list_item_spacing_half"
     tools:context="com.xproject.xoso.xoso.view.activity.ItemListDialogFragment"
-    tools:listitem="@layout/fragment_item_list_dialog_item"/>
+    tools:listitem="@layout/fragment_item_list_dialog_item" />

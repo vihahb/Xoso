@@ -1,6 +1,5 @@
 package com.xproject.xoso.sdk.utils;
 
-import android.annotation.TargetApi;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -9,7 +8,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Build;
+import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 
 import com.xtelsolution.xoso.R;
@@ -61,6 +60,9 @@ public class MessageNotification {
                 break;
         }
 
+        String uri_parse = "android.resource://" + context.getPackageName() + "/" + R.raw.notification11;
+
+        Uri uri = Uri.parse(uri_parse);
 
         final String ticker = MessageString;
         final String title = "Thông báo";
@@ -70,8 +72,8 @@ public class MessageNotification {
 
                 // Set appropriate defaults for the notification light, sound,
                 // and vibration.
-                .setDefaults(Notification.DEFAULT_ALL)
-
+//                .setDefaults(Notification.DEFAULT_ALL)
+                .setVibrate(new long[]{50,100,150})
                 // Set required fields, including the small icon, the
                 // notification title, and text.
                 .setSmallIcon(R.mipmap.ic_launcher)
@@ -89,10 +91,7 @@ public class MessageNotification {
                 // Set ticker text (preview) information for this notification.
                 .setTicker(ticker)
 
-                // Show a number. This is useful when stacking notifications of
-                // a single type.
-                //.setNumber(number)
-
+                .setVibrate(new long[]{50})
                 // If this notification relates to a past or upcoming event, you
                 // should set the relevant time information using the setWhen
                 // method below. If this call is omitted, the notification's
@@ -125,12 +124,14 @@ public class MessageNotification {
                                 0,
                                 intent,
                                 PendingIntent.FLAG_UPDATE_CURRENT))
-
                 // Automatically dismiss the notification when it is touched.
+                .setSound(uri)
                 .setAutoCancel(true);
         if (picture != null) {
             builder.setLargeIcon(picture);
         }
+
+
         notify(context, builder.build(), id_notify);
     }
 
@@ -148,5 +149,10 @@ public class MessageNotification {
         final NotificationManager nm = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
         nm.cancel(NOTIFICATION_TAG, id_notify);
+    }
+
+    static int changeAlpha(int origColor, int userInputedAlpha) {
+        origColor = origColor & 0x00ffffff; //drop the previous alpha value
+        return (userInputedAlpha << 24) | origColor; //add the one the user inputted
     }
 }

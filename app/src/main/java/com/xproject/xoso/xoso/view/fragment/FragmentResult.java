@@ -38,6 +38,7 @@ public class FragmentResult extends BasicFragment {
     private OnCompleteListener listener;
     private FragmentPagerAdapter pagerAdapter;
     private boolean live_one = false, live_two = false, live_three = false;
+    private boolean check_done_n = false, check_done_c = false, check_done_s = false;
     private int tmp_flag_region_radio;
 
     public static FragmentResult newInstance() {
@@ -88,34 +89,50 @@ public class FragmentResult extends BasicFragment {
         tabLayout = (TabLayout) view.findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
 
+        check_done_n = SharedUtils.getInstance().getBooleanValue(Constants.CHECK_DONE_N);
+        check_done_c = SharedUtils.getInstance().getBooleanValue(Constants.CHECK_DONE_C);
+        check_done_s = SharedUtils.getInstance().getBooleanValue(Constants.CHECK_DONE_S);
+
         /**
          * Check live north*/
-        if (TimeUtils.checkTimeInMilisecondNorth(18, 15, 18, 50)) {
-            setViewTab1(true);
+        if (TimeUtils.checkTimeInMilisecondNorth(18, 10, 18, 40)) {
+            if (!check_done_n){
+                setViewTab1(true);
+            } else {
+                setViewTab1(false);
+            }
         } else {
             setViewTab1(false);
         }
 
         /**
          * Check live central*/
-        if (TimeUtils.checkTimeInMilisecondNorth(17, 15, 17, 50)) {
-            setViewTab2(true);
+        if (TimeUtils.checkTimeInMilisecondNorth(17, 10, 17, 40)) {
+            if (!check_done_c){
+                setViewTab2(true);
+            } else {
+                setViewTab2(false);
+            }
         } else {
             setViewTab2(false);
         }
 
         /**
          * Check live south*/
-        if (TimeUtils.checkTimeInMilisecondNorth(16, 15, 16, 50)) {
-            setViewTab3(true);
+        if (TimeUtils.checkTimeInMilisecondNorth(16, 10, 16, 40)) {
+            if (!check_done_s){
+                setViewTab3(true);
+            } else {
+                setViewTab3(false);
+            }
         } else {
             setViewTab3(false);
         }
 //        setViewTab4();
 
         tmp_flag_region_radio = SharedUtils.getInstance().getIntValue(Constants.FLAG_RADIO_REGION);
-        if (tmp_flag_region_radio > 0){
-            switch (tmp_flag_region_radio){
+        if (tmp_flag_region_radio > 0) {
+            switch (tmp_flag_region_radio) {
                 case 1:
                     viewPager.setCurrentItem(0);
                     break;
@@ -259,14 +276,14 @@ public class FragmentResult extends BasicFragment {
 
                     /**
                      * End live if central exists*/
-                    if (live_two){
+                    if (live_two) {
                         reSetViewTab2(false);
                         mainActivity.setFlagLive(false, 2);
                     }
 
                     /**
                      * End live if south exists*/
-                    if (live_three){
+                    if (live_three) {
                         reSetViewTab3(false);
                         mainActivity.setFlagLive(false, 3);
                     }
@@ -282,14 +299,14 @@ public class FragmentResult extends BasicFragment {
 
                     /**
                      * End live if south exists*/
-                    if (live_three){
+                    if (live_three) {
                         reSetViewTab3(false);
                         mainActivity.setFlagLive(false, 3);
                     }
 
                     /**
                      * End live if north exists*/
-                    if (live_one){
+                    if (live_one) {
                         reSetViewTab1(false);
                         mainActivity.setFlagLive(false, 1);
                     }
@@ -305,14 +322,14 @@ public class FragmentResult extends BasicFragment {
                 case 2:
                     /**
                      * End live if north exists*/
-                    if (live_one){
+                    if (live_one) {
                         reSetViewTab1(false);
                         mainActivity.setFlagLive(false, 1);
                     }
 
                     /**
                      * End live if central exists*/
-                    if (live_two){
+                    if (live_two) {
                         reSetViewTab2(false);
                         mainActivity.setFlagLive(false, 2);
                     }
@@ -407,7 +424,7 @@ public class FragmentResult extends BasicFragment {
 
 
     public void emulatorEndLive(int i) {
-        switch (i){
+        switch (i) {
             case 0:
                 ((FragmentNorthResult) pagerAdapter.getItem(0)).setEndLive();
                 break;

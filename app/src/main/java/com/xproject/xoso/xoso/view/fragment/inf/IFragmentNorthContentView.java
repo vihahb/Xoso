@@ -1,9 +1,9 @@
 package com.xproject.xoso.xoso.view.fragment.inf;
 
+import com.xproject.xoso.xoso.model.entity.CurentResult;
 import com.xproject.xoso.xoso.model.entity.ResultLottery;
 import com.xproject.xoso.xoso.model.respond.RESP_LiveLoto;
 import com.xproject.xoso.xoso.model.respond.RESP_NewResult;
-import com.xproject.xoso.xoso.model.respond.RESP_Result;
 import com.xproject.xoso.xoso.view.activity.inf.BasicView;
 
 /**
@@ -16,7 +16,7 @@ public interface IFragmentNorthContentView extends BasicView {
 
     void getResultLotteryError(String error);
 
-    void setDataSocket(RESP_Result resp_result);
+    void setDataSocket(CurentResult data);
 
     void setNewResult(RESP_NewResult newResult);
 

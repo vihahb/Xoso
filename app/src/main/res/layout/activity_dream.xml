@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
     tools:context="com.xproject.xoso.xoso.view.activity.DreamActivity">
 
     <include layout="@layout/toolbar" />
@@ -36,7 +37,8 @@
                     style="@style/EditTextAccent"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="@string/input_dream" />
+                    android:hint="@string/input_dream"
+                    android:inputType="textCapWords" />
             </android.support.design.widget.TextInputLayout>
 
 
@@ -87,7 +89,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@drawable/bolder_table"
                     android:gravity="center"
                     android:paddingBottom="@dimen/size_4"
                     android:paddingTop="@dimen/size_4"
@@ -104,8 +105,7 @@
                 android:layout_marginBottom="16dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/bolder_table"
+                android:layout_marginTop="0dp"
                 android:nestedScrollingEnabled="true"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"

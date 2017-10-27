@@ -19,22 +19,23 @@
         android:textSize="@dimen/font_18" />
 
     <android.support.v7.widget.RecyclerView
-        android:nestedScrollingEnabled="false"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1.1"
+        android:nestedScrollingEnabled="false"
         tools:targetApi="lollipop" />
 
     <android.support.v7.widget.RecyclerView
-        android:nestedScrollingEnabled="false"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1.1"
+        android:nestedScrollingEnabled="false"
         tools:targetApi="lollipop" />
+
     <android.support.v7.widget.RecyclerView
-        android:nestedScrollingEnabled="false"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1.1"
+        android:nestedScrollingEnabled="false"
         tools:targetApi="lollipop" />
 </LinearLayout>

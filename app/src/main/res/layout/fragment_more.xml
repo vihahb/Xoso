@@ -5,8 +5,8 @@
     android:orientation="vertical">
 
     <android.support.v7.widget.RecyclerView
-        android:layout_marginTop="@dimen/size_16"
         android:id="@+id/rcl_more"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/size_16" />
 </LinearLayout>

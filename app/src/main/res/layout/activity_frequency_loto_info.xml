@@ -20,11 +20,13 @@
             android:descendantFocusability="blocksDescendants">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:layout_marginBottom="8dp"
+                android:layout_marginEnd="16dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -133,6 +135,7 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:paddingLeft="@dimen/size_8"
+                        android:text="0 lần"
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/font_14"
                         android:textStyle="bold" />

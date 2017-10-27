@@ -84,10 +84,10 @@ public class FragmentSouthResult extends BasicFragment {
         recyclerTabLayout.setUpWithViewPager(vpPager);
         recyclerTabLayout.setAdapter(adapterCalendar);
         // set pager to current date
-        if (TimeUtils.checkTimeInMilisecondNorth(16, 15, 23, 58)) {
-            vpPager.setCurrentItem(TimeUtils.getPositionForDay(Calendar.getInstance()));
+        if (TimeUtils.checkTimeInMilisecondNorth(16, 10, 23, 58)) {
+            vpPager.setCurrentItem(fragmentList.size() - 1);
         } else {
-            vpPager.setCurrentItem(TimeUtils.getPositionForDay(Calendar.getInstance()) - 1);
+            vpPager.setCurrentItem(fragmentList.size() - 2);
         }
     }
 
@@ -96,31 +96,25 @@ public class FragmentSouthResult extends BasicFragment {
     }
 
     private boolean checkSelectedDay() {
-        if (vpPager.getCurrentItem() == TimeUtils.getPositionForDay(Calendar.getInstance())) {
-            return true;
-        } else {
-            return false;
-        }
+        return vpPager.getCurrentItem() == fragmentList.size() - 1;
     }
 
     public void setLive() {
+        int position = fragmentList.size() - 1;
         if (!checkSelectedDay()) {
-            int position = TimeUtils.getPositionForDay(Calendar.getInstance());
             ((FragmentSouthContent) adapterViewPager.getItem(position)).startLive();
             vpPager.setCurrentItem(position);
         } else {
-            int position = TimeUtils.getPositionForDay(Calendar.getInstance());
             ((FragmentSouthContent) adapterViewPager.getItem(position)).startLive();
         }
     }
 
     public void setEndLive() {
+        int position = fragmentList.size() - 1;
         if (!checkSelectedDay()) {
-            int position = TimeUtils.getPositionForDay(Calendar.getInstance());
             ((FragmentSouthContent) adapterViewPager.getItem(position)).setEndLive();
             vpPager.setCurrentItem(position);
         } else {
-            int position = TimeUtils.getPositionForDay(Calendar.getInstance());
             ((FragmentSouthContent) adapterViewPager.getItem(position)).setEndLive();
         }
     }

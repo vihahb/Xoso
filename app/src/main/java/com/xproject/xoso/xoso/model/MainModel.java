@@ -69,4 +69,12 @@ public class MainModel extends BasicModel {
         Log.e(TAG, "url_category_result: " + url_lottery_result);
         requestServer.getApi(url_lottery_result, basic_authent, responseHandle);
     }
+
+    public void getLucky(String birth_day, ResponseHandle responseHandle) {
+        Authent authent = Constants.getAuthent();
+        String url_lucky_result = "http://xoso.la/index.php?route=api/luckynumber&birthday=" + birth_day;
+        String basic_authent = "Basic " + HttpRequest.Base64.encode("XtelSolution:xoso.Xtel.123!@#");
+        Log.e(TAG, "url_lucky_result: " + url_lucky_result);
+        requestServer.getApi(url_lucky_result, basic_authent, responseHandle);
+    }
 }

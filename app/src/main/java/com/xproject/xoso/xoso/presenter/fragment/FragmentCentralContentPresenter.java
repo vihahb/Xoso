@@ -70,6 +70,7 @@ public class FragmentCentralContentPresenter {
                                             Log.e(TAG, "get_current_result: " + args[0].toString());
                                             RESP_Result resp_result = JsonHelper.getObjectNoException(args[0].toString(), RESP_Result.class);
                                             Log.e(TAG, "Helper: " + resp_result.toString());
+                                            view.setVisibleTable(true);
                                             switch (resp_result.getData().size()) {
                                                 case 1:
                                                     view.random(1);
@@ -213,7 +214,9 @@ public class FragmentCentralContentPresenter {
                         view.getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                socket.connect();
+                                if (!socket.connected()) {
+                                    socket.connect();
+                                }
                                 socket.on(Socket.EVENT_CONNECT, onConnect);
                                 socket.on(Socket.EVENT_CONNECT_ERROR, onConnectError);
                                 socket.on(Socket.EVENT_CONNECT_TIMEOUT, onConnectError);

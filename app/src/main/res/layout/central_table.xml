@@ -12,6 +12,7 @@
 
     <!-- Table title -->
     <TableLayout
+        android:background="@drawable/bolder_table"
         android:layout_width="@dimen/size_36"
         android:layout_height="wrap_content">
 
@@ -36,7 +37,7 @@
                 android:layout_width="0dp"
                 android:layout_height="36dp"
                 android:layout_weight="0.3"
-                android:background="@drawable/bolder_table"
+                android:background="@drawable/border_without_top_bot"
                 android:gravity="center"
                 android:src="@mipmap/ic_g8" />
         </TableRow>
@@ -46,14 +47,13 @@
             android:id="@+id/tableRowSeven"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bolder_with_background">
+            android:background="@drawable/border_without_top_bot_background">
 
             <ImageView
                 android:id="@+id/icSevenTitle"
                 android:layout_width="0dp"
                 android:layout_height="36dp"
                 android:layout_weight="0.3"
-                android:background="@drawable/bolder_table"
                 android:gravity="center"
                 android:src="@mipmap/ic_g7" />
         </TableRow>
@@ -63,7 +63,7 @@
             android:id="@+id/tableRowSix"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bolder_table">
+            android:background="@drawable/border_without_top_bot">
 
             <ImageView
                 android:id="@+id/icSixTitle"
@@ -79,7 +79,7 @@
             android:id="@+id/tableRowFive"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bolder_with_background">
+            android:background="@drawable/border_without_top_bot_background">
 
             <ImageView
                 android:id="@+id/icFiveTitle"
@@ -95,7 +95,7 @@
             android:id="@+id/tableRowFourd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bolder_table">
+            android:background="@drawable/border_without_top_bot">
 
             <ImageView
                 android:id="@+id/icFourdTitle"
@@ -111,7 +111,7 @@
             android:id="@+id/tableRowThird"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/bolder_with_background">
+            android:background="@drawable/border_without_top_bot_background">
 
             <ImageView
                 android:id="@+id/icThirdTitle"
@@ -135,7 +135,7 @@
                 android:layout_width="0dp"
                 android:layout_height="36dp"
                 android:layout_weight="0.3"
-                android:background="@drawable/bolder_table"
+                android:background="@drawable/border_without_top_bot"
                 android:gravity="center"
                 android:src="@mipmap/ic_g2" />
         </TableRow>
@@ -145,14 +145,14 @@
             android:id="@+id/tableRowFirst"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bolder_with_background">
+            android:background="@drawable/border_without_top_bot_background">
 
             <ImageView
                 android:id="@+id/icFirstTitle"
                 android:layout_width="0dp"
                 android:layout_height="36dp"
                 android:layout_weight="0.3"
-                android:background="@drawable/bolder_table"
+                android:background="@drawable/border_without_top_bot_background"
                 android:gravity="center"
                 android:src="@mipmap/ic_g1" />
         </TableRow>
@@ -168,7 +168,7 @@
                 android:layout_width="0dp"
                 android:layout_height="36dp"
                 android:layout_weight="0.3"
-                android:background="@drawable/bolder_table"
+                android:background="@drawable/border_without_top_bot"
                 android:gravity="center"
                 android:src="@mipmap/ic_gdb" />
         </TableRow>
@@ -197,7 +197,7 @@
             android:id="@+id/tableRowEightVl1"
             android:layout_width="match_parent"
             android:layout_height="@dimen/size_36"
-            android:background="@drawable/bolder_table">
+            android:background="@drawable/border_without_top_bot">
 
             <TextView
                 android:id="@+id/tv8_1"
@@ -214,7 +214,7 @@
             android:id="@+id/tableRowSevenVl1"
             android:layout_width="match_parent"
             android:layout_height="@dimen/size_36"
-            android:background="@drawable/bolder_with_background">
+            android:background="@drawable/border_without_top_bot_background">
 
             <TextView
                 android:id="@+id/tv7_1"
@@ -232,7 +232,7 @@
             android:id="@+id/tableRowSixVl1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bolder_table"
+            android:background="@drawable/border_without_top_bot"
             android:weightSum="1">
 
             <TableLayout
@@ -297,7 +297,7 @@
             android:id="@+id/tableRowFiveVl1"
             android:layout_width="match_parent"
             android:layout_height="@dimen/size_36"
-            android:background="@drawable/bolder_with_background"
+            android:background="@drawable/border_without_top_bot_background"
             android:gravity="center">
 
             <TextView
@@ -316,7 +316,7 @@
             android:id="@+id/tableRowFourdVl1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bolder_table"
+            android:background="@drawable/border_without_top_bot"
             android:weightSum="1">
 
             <TableLayout
@@ -448,7 +448,7 @@
             android:id="@+id/tableRowThirdVl1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/bolder_with_background">
+            android:background="@drawable/border_without_top_bot_background">
 
             <TableLayout
                 android:layout_width="match_parent"
@@ -495,7 +495,7 @@
             android:id="@+id/tableRowSecondVl1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bolder_table"
+            android:background="@drawable/border_without_top_bot"
             android:gravity="center">
 
             <TextView
@@ -514,7 +514,7 @@
             android:id="@+id/tableRowFirstVl1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bolder_with_background"
+            android:background="@drawable/border_without_top_bot_background"
             android:gravity="center">
 
             <TextView
@@ -533,7 +533,7 @@
             android:id="@+id/tableRowDBVl1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bolder_table"
+            android:background="@drawable/border_without_top_bot"
             android:gravity="center"
             android:weightSum="1">
 
@@ -554,7 +554,8 @@
         android:id="@+id/central_region_2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:background="@drawable/bolder_table">
 
         <TextView
             android:id="@+id/tvRegionTitle2"
@@ -571,7 +572,7 @@
             android:id="@+id/tableRowEightVl2"
             android:layout_width="match_parent"
             android:layout_height="@dimen/size_24"
-            android:background="@drawable/bolder_table">
+            android:background="@drawable/border_without_top_bot">
 
             <TextView
                 android:id="@+id/tv8_2"
@@ -588,7 +589,7 @@
             android:id="@+id/tableRowSevenVl2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bolder_with_background">
+            android:background="@drawable/border_without_top_bot_background">
 
             <TextView
                 android:id="@+id/tv7_2"
@@ -606,7 +607,7 @@
             android:id="@+id/tableRowSixVl2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bolder_table"
+            android:background="@drawable/border_without_top_bot"
             android:weightSum="1">
 
             <TableLayout
@@ -668,7 +669,7 @@
             android:id="@+id/tableRowFiveVl2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/bolder_with_background"
+            android:background="@drawable/border_without_top_bot_background"
             android:gravity="center">
 
             <TextView
@@ -687,7 +688,7 @@
             android:id="@+id/tableRowFourdVl2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bolder_table"
+            android:background="@drawable/border_without_top_bot"
             android:weightSum="1">
 
             <TableLayout
@@ -813,7 +814,7 @@
             android:id="@+id/tableRowThirdVl2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/bolder_with_background">
+            android:background="@drawable/border_without_top_bot_background">
 
             <TableLayout
                 android:layout_width="match_parent"
@@ -858,7 +859,7 @@
             android:id="@+id/tableRowSecondVl2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bolder_table"
+            android:background="@drawable/border_without_top_bot"
             android:gravity="center">
 
             <TextView
@@ -877,7 +878,7 @@
             android:id="@+id/tableRowFirstVl2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bolder_with_background"
+            android:background="@drawable/border_without_top_bot_background"
             android:gravity="center">
 
             <TextView
@@ -896,7 +897,7 @@
             android:id="@+id/tableRowDBVl2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bolder_table"
+            android:background="@drawable/border_without_top_bot"
             android:gravity="center">
 
             <TextView
@@ -916,7 +917,8 @@
         android:id="@+id/central_region_3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:background="@drawable/bolder_table">
 
         <TextView
             android:id="@+id/tvRegionTitle3"
@@ -933,7 +935,7 @@
             android:id="@+id/tableRowEightVl3"
             android:layout_width="match_parent"
             android:layout_height="@dimen/size_24"
-            android:background="@drawable/bolder_table">
+            android:background="@drawable/border_without_top_bot">
 
             <TextView
                 android:id="@+id/tv8_3"
@@ -950,7 +952,7 @@
             android:id="@+id/tableRowSevenVl3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bolder_with_background">
+            android:background="@drawable/border_without_top_bot_background">
 
             <TextView
                 android:id="@+id/tv7_3"
@@ -968,14 +970,13 @@
             android:id="@+id/tableRowSixVl3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bolder_table"
+            android:background="@drawable/border_without_top_bot"
             android:weightSum="1">
 
             <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/bolder_table">
+                android:layout_weight="1">
 
                 <TableRow
                     android:layout_width="0dp"
@@ -1031,7 +1032,7 @@
             android:id="@+id/tableRowFiveVl3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bolder_with_background"
+            android:background="@drawable/border_without_top_bot_background"
             android:gravity="center">
 
             <TextView
@@ -1050,7 +1051,7 @@
             android:id="@+id/tableRowFourdVl3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bolder_table"
+            android:background="@drawable/border_without_top_bot"
             android:weightSum="1">
 
             <TableLayout
@@ -1176,7 +1177,7 @@
             android:id="@+id/tableRowThirdVl3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/bolder_with_background">
+            android:background="@drawable/border_without_top_bot_background">
 
             <TableLayout
                 android:layout_width="match_parent"
@@ -1221,7 +1222,7 @@
             android:id="@+id/tableRowSecondVl3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bolder_table"
+            android:background="@drawable/border_without_top_bot"
             android:gravity="center">
 
             <TextView
@@ -1240,7 +1241,7 @@
             android:id="@+id/tableRowFirstVl3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bolder_with_background"
+            android:background="@drawable/border_without_top_bot_background"
             android:gravity="center">
 
             <TextView
@@ -1259,7 +1260,7 @@
             android:id="@+id/tableRowDBVl3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bolder_table"
+            android:background="@drawable/border_without_top_bot"
             android:gravity="center"
             android:weightSum="1">
 

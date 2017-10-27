@@ -244,6 +244,7 @@
                     android:textColor="#000000"
                     android:textSize="@dimen/font_18"
                     android:textStyle="bold" />
+
                 <TextView
                     android:id="@+id/tv4_7_1"
                     android:layout_height="@dimen/size_36"

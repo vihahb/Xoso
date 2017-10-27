@@ -63,15 +63,15 @@ public class CloudMessageService extends FirebaseMessagingService {
                 intentLive.putExtra(Constants.START_LIVE, 3);
                 content_notify = "Đang quay giải miền Nam";
                 id_notify = 3;
-            }else if (notify_id_value == 7) {
+            } else if (notify_id_value == 7) {
                 intentLive.putExtra(Constants.START_LIVE, 1);
                 content_notify = "Kết thúc quay giải miền Bắc";
                 id_notify = 4;
-            }else if (notify_id_value == 8) {
+            } else if (notify_id_value == 8) {
                 intentLive.putExtra(Constants.START_LIVE, 2);
                 content_notify = "Kết thúc quay giải miền Trung";
                 id_notify = 5;
-            }else if (notify_id_value == 9) {
+            } else if (notify_id_value == 9) {
                 intentLive.putExtra(Constants.START_LIVE, 3);
                 content_notify = "Kết thúc quay giải miền Nam";
                 id_notify = 6;

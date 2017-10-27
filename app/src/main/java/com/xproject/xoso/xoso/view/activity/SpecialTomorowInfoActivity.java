@@ -276,6 +276,7 @@ public class SpecialTomorowInfoActivity extends BasicActivity {
         rcl_loto_db = findRecyclerView(R.id.rcl_loto_db);
         rcl_loto_db.setLayoutManager(new LinearLayoutManager(this));
         adapterToday = new AdapterLotoDb(list_today, this);
+        rcl_loto_db.setNestedScrollingEnabled(false);
         rcl_loto_db.setAdapter(adapterToday);
 
         /**
@@ -285,6 +286,7 @@ public class SpecialTomorowInfoActivity extends BasicActivity {
         rcl_number_freq = findRecyclerView(R.id.rcl_number_freq);
         rcl_number_freq.setLayoutManager(new GridLayoutManager(this, 3));
         adapterFreqLoto = new AdapterFreqLoto(list_freq, this);
+        rcl_number_freq.setNestedScrollingEnabled(false);
         rcl_number_freq.setAdapter(adapterFreqLoto);
         /**
          * --------------------------------*/
@@ -302,16 +304,19 @@ public class SpecialTomorowInfoActivity extends BasicActivity {
         rcl_touch_begin = findRecyclerView(R.id.rcl_touch_begin);
         rcl_touch_begin.setLayoutManager(new LinearLayoutManager(this));
         adapterBegin = new AdapterBeginEndSum(this);
+        rcl_touch_begin.setNestedScrollingEnabled(false);
         rcl_touch_begin.setAdapter(adapterBegin);
 
         rcl_touch_end = findRecyclerView(R.id.rcl_touch_end);
         rcl_touch_end.setLayoutManager(new LinearLayoutManager(this));
         adapterEnd = new AdapterBeginEndSum(this);
+        rcl_touch_end.setNestedScrollingEnabled(false);
         rcl_touch_end.setAdapter(adapterEnd);
 
         rcl_touch_sum = findRecyclerView(R.id.rcl_touch_sum);
         rcl_touch_sum.setLayoutManager(new LinearLayoutManager(this));
         adapterSum = new AdapterBeginEndSum(this);
+        rcl_touch_sum.setNestedScrollingEnabled(false);
         rcl_touch_sum.setAdapter(adapterSum);
 
         /**
@@ -325,6 +330,7 @@ public class SpecialTomorowInfoActivity extends BasicActivity {
         rcl_loto_db_yester_day = findRecyclerView(R.id.rcl_loto_db_yester_day);
         rcl_loto_db_yester_day.setLayoutManager(new LinearLayoutManager(this));
         adapterYester_day = new AdapterLotoDb(list_yester_day, this);
+        rcl_loto_db_yester_day.setNestedScrollingEnabled(false);
         rcl_loto_db_yester_day.setAdapter(adapterYester_day);
 
         /**
@@ -334,6 +340,7 @@ public class SpecialTomorowInfoActivity extends BasicActivity {
         rcl_special_all_year = findRecyclerView(R.id.rcl_special_all_year);
         rcl_special_all_year.setLayoutManager(new LinearLayoutManager(this));
         adapterAllDayYear = new AdapterAllDayYear(list_same_day, this);
+        rcl_special_all_year.setNestedScrollingEnabled(false);
         rcl_special_all_year.setAdapter(adapterAllDayYear);
     }
 

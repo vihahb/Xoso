@@ -1,6 +1,5 @@
 package com.xproject.xoso.xoso.view.fragment.inf;
 
-import com.github.nkzawa.emitter.Emitter;
 import com.xproject.xoso.xoso.model.entity.ResultLottery;
 import com.xproject.xoso.xoso.model.respond.RESP_LiveLoto;
 import com.xproject.xoso.xoso.model.respond.RESP_NewResult;

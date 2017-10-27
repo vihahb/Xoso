@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.xproject.xoso.xoso.view.activity.SettingActivity">
     <item
+        android:visible="false"
         android:id="@+id/action_save"
         android:orderInCategory="100"
         android:title="Lưu"

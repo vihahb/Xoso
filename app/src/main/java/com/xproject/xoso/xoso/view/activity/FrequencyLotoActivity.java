@@ -13,6 +13,7 @@ import com.xproject.xoso.sdk.callback.DateTimePickerListener;
 import com.xproject.xoso.sdk.common.Constants;
 import com.xproject.xoso.sdk.utils.SharedUtils;
 import com.xproject.xoso.sdk.utils.TimeUtils;
+import com.xproject.xoso.sdk.utils.Utils;
 import com.xproject.xoso.xoso.model.entity.ProvinceEntity;
 import com.xproject.xoso.xoso.model.entity.SpeedTemp;
 import com.xproject.xoso.xoso.model.respond.RESP_FrequencyLoto;
@@ -65,6 +66,9 @@ public class FrequencyLotoActivity extends BasicActivity implements View.OnClick
         sp_province = findSpinner(R.id.sp_province);
         provinceAdapter = new AdapterSpinner(provinceEntityList, this);
         sp_province.setAdapter(provinceAdapter);
+
+        edt_number.requestFocus();
+        Utils.showKeyBoard(this, edt_number);
 
         sp_day = findSpinner(R.id.sp_day);
         dayList = new ArrayList<>();
@@ -156,7 +160,7 @@ public class FrequencyLotoActivity extends BasicActivity implements View.OnClick
 
     private void initSpinnerSelect() {
         tmp_province_code = SharedUtils.getInstance().getIntValue(Constants.PROVINCE_FAVORITE_CODE);
-        if (tmp_province_code > 0){
+        if (tmp_province_code > 0) {
             for (int i = 0; i < provinceEntityList.size(); i++) {
                 if (provinceEntityList.get(i).getMavung() == tmp_province_code) {
                     sp_province.setSelection(i);
