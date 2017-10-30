@@ -202,29 +202,59 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rcl_touch_begin"
+        <FrameLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:nestedScrollingEnabled="false"
-            android:overScrollMode="never" />
+            android:layout_weight="2">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rcl_touch_end"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:nestedScrollingEnabled="false"
-            android:overScrollMode="never" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/border_without_top_bot" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rcl_touch_sum"
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rcl_touch_begin"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:nestedScrollingEnabled="false"
+                android:overScrollMode="never" />
+        </FrameLayout>
+
+        <FrameLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:nestedScrollingEnabled="false"
-            android:overScrollMode="never" />
+            android:layout_weight="2">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/border_without_top_bot" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rcl_touch_end"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:nestedScrollingEnabled="false"
+                android:overScrollMode="never" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/border_without_top_bot" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rcl_touch_sum"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:nestedScrollingEnabled="false"
+                android:overScrollMode="never" />
+        </FrameLayout>
     </LinearLayout>
 
 </LinearLayout>

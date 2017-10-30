@@ -59,7 +59,7 @@ public class BasicActivity extends IActivity {
 
             dialogProgress = new Dialog(BasicActivity.this, R.style.Theme_Transparents);
             dialogProgress.setContentView(R.layout.dialog_progressview);
-            dialogProgress.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            dialogProgress.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
             dialogProgress.setCanceledOnTouchOutside(isTouchOutside);
             dialogProgress.setCancelable(isCancel);
 
@@ -89,7 +89,7 @@ public class BasicActivity extends IActivity {
                     public void run() {
                         dialogProgress.dismiss();
                     }
-                }, 1500);
+                }, 2000);
             }
 
         } catch (Exception e) {

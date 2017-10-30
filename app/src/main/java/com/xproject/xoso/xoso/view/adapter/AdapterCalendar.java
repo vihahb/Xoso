@@ -13,6 +13,7 @@ import com.xproject.xoso.xoso.model.entity.MyCalendar;
 import com.xproject.xoso.xoso.view.widget.RecyclerTabLayout;
 import com.xtelsolution.xoso.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,10 +27,10 @@ public class AdapterCalendar extends RecyclerTabLayout.Adapter<AdapterCalendar.C
     private List<MyCalendar> calendarList;
     private ViewPager viewPager;
 
-    public AdapterCalendar(ViewPager viewPager, Context context, List<MyCalendar> calendarList) {
+    public AdapterCalendar(ViewPager viewPager, Context context) {
         super(viewPager);
         this.context = context;
-        this.calendarList = calendarList;
+        this.calendarList = new ArrayList<>();
         this.viewPager = viewPager;
     }
 
@@ -62,6 +63,14 @@ public class AdapterCalendar extends RecyclerTabLayout.Adapter<AdapterCalendar.C
     }
 
     public void refreshList(List<MyCalendar> calendarList) {
+        if (this.calendarList.size() > 0){
+            this.calendarList.clear();
+        }
+        this.calendarList.addAll(calendarList);
+        notifyDataSetChanged();
+    }
+
+    public void addAllData(List<MyCalendar> calendarList){
         this.calendarList.addAll(calendarList);
         notifyDataSetChanged();
     }

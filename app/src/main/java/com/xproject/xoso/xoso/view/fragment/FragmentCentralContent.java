@@ -55,7 +55,7 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
     private TextView tvContent;
     private NestedScrollView scroll_central;
     private TableLayout table_1, table_2, table_3;
-    private boolean vibrate = false, sound = true, check_done = false;
+    private boolean vibrate = false, sound = true, check_done = false, spined = false;
 
     private String tmp_b0 = "", tmp_b1 = "", tmp_b2 = "", tmp_b3 = "", tmp_b4 = "", tmp_b5 = "", tmp_b6 = "", tmp_b7 = "", tmp_b8 = "", tmp_b9 = "";
     private String tmp1_b0 = "", tmp1_b1 = "", tmp1_b2 = "", tmp1_b3 = "", tmp1_b4 = "", tmp1_b5 = "", tmp1_b6 = "", tmp1_b7 = "", tmp1_b8 = "", tmp1_b9 = "";
@@ -158,7 +158,7 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
     public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         context = getContext();
-        player = MediaPlayer.create(getContext(), R.raw.text_notification);
+        player = MediaPlayer.create(getContext(), R.raw.notification11);
         audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
         check_done = SharedUtils.getInstance().getBooleanValue(Constants.CHECK_DONE_C);
         vibrate = SharedUtils.getInstance().getBooleanValue(Constants.ViBRATE_FLAG);
@@ -215,7 +215,11 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(millis);
         String date_label = CalendarUtils.getDayName(calendar);
-        tv_title.setText(date_label + ", ngày " + calendar.get(Calendar.DAY_OF_MONTH) + " tháng " + (calendar.get(Calendar.MONTH) + 1) + " năm " + calendar.get(Calendar.YEAR));
+        if (date_label != null && !date_label.equals("")){
+            tv_title.setText(date_label + ", ngày " + calendar.get(Calendar.DAY_OF_MONTH) + " tháng " + (calendar.get(Calendar.MONTH) + 1) + " năm " + calendar.get(Calendar.YEAR));
+        } else {
+            tv_title.setText("Ngày " + calendar.get(Calendar.DAY_OF_MONTH) + " tháng " + (calendar.get(Calendar.MONTH) + 1) + " năm " + calendar.get(Calendar.YEAR));
+        }
     }
 
     private void setMute() {
@@ -582,8 +586,12 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
         if (rl81 == null) {
             rl81 = new Roller(tv8_1, 100000, 80, 99, 10);
         }
-        rl82 = new Roller(tv8_2, 100000, 80, 99, 10);
-        rl83 = new Roller(tv8_3, 100000, 80, 99, 10);
+        if (rl82 == null){
+            rl82 = new Roller(tv8_2, 100000, 80, 99, 10);
+        }
+        if (rl83 == null){
+            rl83 = new Roller(tv8_3, 100000, 80, 99, 10);
+        }
 
         /**
          * 7
@@ -803,13 +811,13 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
          * DB
          * Random number table all*/
         if (rl_special_1 == null) {
-            rl_special_1 = new Roller(tvDb, 10000, 80, 99999, 10000);
+            rl_special_1 = new Roller(tvDb, 10000, 80, 999999, 100000);
         }
         if (rl_special_2 == null) {
-            rl_special_2 = new Roller(tvDb_2, 10000, 80, 99999, 10000);
+            rl_special_2 = new Roller(tvDb_2, 10000, 80, 999999, 100000);
         }
         if (rl_special_3 == null) {
-            rl_special_3 = new Roller(tvDb_3, 10000, 80, 99999, 10000);
+            rl_special_3 = new Roller(tvDb_3, 10000, 80, 999999, 100000);
         }
     }
 
@@ -856,6 +864,7 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
 
     @Override
     public void setNewResult(RESP_NewResult newResult, int position_table) {
+        spined = true;
         if (player != null) {
             player.start();
         }
@@ -1405,13 +1414,30 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
             isLive = false;
             presenter.connectSocket();
         }
+
+        sound = SharedUtils.getInstance().getBooleanDefaultTrueValue(Constants.SOUND_FLAG);
+        if (!sound){
+            mute = false;
+            if (audioManager!=null){
+                audioManager.setStreamMute(AudioManager.STREAM_MUSIC, true);
+            }
+            if (img_mute !=null){
+                img_mute.setImageResource(R.mipmap.ic_mute_on);
+            }
+        } else {
+            mute = true;
+            if (img_mute != null){
+                img_mute.setImageResource(R.mipmap.ic_mute);
+            }
+            audioManager.setStreamMute(AudioManager.STREAM_MUSIC, false);
+        }
     }
 
     @Override
     public void onPause() {
         super.onPause();
         if (toDay && TimeUtils.checkTimeInMilisecondNorth(17, 10, 17, 45)) {
-            presenter.disconnectSocket();
+//            presenter.disconnectSocket();
         }
     }
 

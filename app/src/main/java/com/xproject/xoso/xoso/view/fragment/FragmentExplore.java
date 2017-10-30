@@ -12,6 +12,7 @@ import com.xproject.xoso.sdk.common.Constants;
 import com.xproject.xoso.xoso.model.entity.GridMenu;
 import com.xproject.xoso.xoso.presenter.fragment.FragmentExplorePresenter;
 import com.xproject.xoso.xoso.view.activity.ActivityExploreBridgeLoto;
+import com.xproject.xoso.xoso.view.activity.BridHistorygeActivity;
 import com.xproject.xoso.xoso.view.activity.BridgeForDayActivity;
 import com.xproject.xoso.xoso.view.adapter.AdapterGridMenu;
 import com.xproject.xoso.xoso.view.adapter.inf.ViewGrid;
@@ -98,6 +99,10 @@ public class FragmentExplore extends BasicFragment implements IFragmentExplore, 
                 break;
             case 7:
                 startActivity(BridgeForDayActivity.class, Constants.ACTION_TYPE, 2);
+                break;
+
+            case 8:
+                startActivity(BridHistorygeActivity.class);
                 break;
         }
     }

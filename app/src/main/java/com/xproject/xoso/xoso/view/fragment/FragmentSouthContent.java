@@ -5,7 +5,6 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
 import android.text.Html;
@@ -23,7 +22,6 @@ import com.xproject.xoso.sdk.utils.CalendarUtils;
 import com.xproject.xoso.sdk.utils.SharedUtils;
 import com.xproject.xoso.sdk.utils.TextUtils;
 import com.xproject.xoso.sdk.utils.TimeUtils;
-import com.xproject.xoso.sdk.utils.Utils;
 import com.xproject.xoso.xoso.model.entity.BeginResult;
 import com.xproject.xoso.xoso.model.entity.ResultLottery;
 import com.xproject.xoso.xoso.model.respond.RESP_LiveLoto;
@@ -42,7 +40,7 @@ import java.util.Random;
  * Created by vivhp on 9/13/2017.
  */
 
-public class FragmentSouthContent extends BasicFragment implements IFragmentSouthContent {
+public class FragmentSouthContent extends CustomFragment implements IFragmentSouthContent {
 
     private static final String KEY_DATE = "date";
     boolean isLive = false, check_done = false;
@@ -55,6 +53,9 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
     private NestedScrollView scroll_south;
     private TableLayout table_1, table_2, table_3, table_4;
     private LinearLayout loadingView;
+    RESP_NewResult resp_newResult;
+    RESP_Result resp_result;
+
     /**
      * Value table result lottery
      */
@@ -126,7 +127,8 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
             rl341, rl342, rl_second_4, rl_first_4, rl_special_4;
     private MediaPlayer player;
     private boolean toDay;
-    private boolean mute = false;
+    String date_select = "";
+    private boolean mute = false, keepConnect = false;
     private AudioManager audioManager;
     private Context context;
     private boolean isExistsBegin, isExistsBegin_2, isExistsBegin_3, isExistsBegin_4;
@@ -137,20 +139,38 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
     private String tmp2_b0 = "", tmp2_b1 = "", tmp2_b2 = "", tmp2_b3 = "", tmp2_b4 = "", tmp2_b5 = "", tmp2_b6 = "", tmp2_b7 = "", tmp2_b8 = "", tmp2_b9 = "";
     private String tmp3_b0 = "", tmp3_b1 = "", tmp3_b2 = "", tmp3_b3 = "", tmp3_b4 = "", tmp3_b5 = "", tmp3_b6 = "", tmp3_b7 = "", tmp3_b8 = "", tmp3_b9 = "";
     TextView tv_not_yet;
-    public static FragmentSouthContent newInstance(long date) {
+    boolean createdView = false;
+
+    public static FragmentSouthContent newInstance(long date, String day_string) {
         FragmentSouthContent fragmentFirst = new FragmentSouthContent();
         Bundle args = new Bundle();
         args.putLong(KEY_DATE, date);
+        args.putString("StringDate", day_string);
         fragmentFirst.setArguments(args);
         return fragmentFirst;
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        presenter = new FragmentSouthContentPresenter(this);
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return onCreateView(inflater.inflate(R.layout.fragment_south_content, container, false));
+    }
+
+    @Override
+    public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
+        resp_newResult = new RESP_NewResult();
+        resp_result = new RESP_Result();
+        context = getContext();
+        onViewCreated();
+    }
+
+
+    @Override
+    protected void onCreateViewFirst(final View view) {
+        presenter = new FragmentSouthContentPresenter(this);
         millis = getArguments().getLong(KEY_DATE);
+        date_select = getArguments().getString("StringDate");
+
         if (millis > 0) {
             final Context context = getActivity();
             getDateTime = TimeUtils.getFormattedDate(context, millis);
@@ -158,21 +178,8 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
 
             toDay = todays.trim().equals(getDateTime.trim());
         }
-    }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (view == null) {
-            view = inflater.inflate(R.layout.fragment_south_content, container, false);
-        }
-        return view;
-    }
-
-    @Override
-    public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        context = getContext();
-        player = MediaPlayer.create(getContext(), R.raw.text_notification);
+        player = MediaPlayer.create(getContext(), R.raw.notification11);
         audioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
         check_done = SharedUtils.getInstance().getBooleanValue(Constants.CHECK_DONE_S);
         new Handler().postDelayed(new Runnable() {
@@ -219,11 +226,22 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
         }, 100);
     }
 
+    @Override
+    protected void onCreateViewAgain(View view) {
+
+    }
+
+
     private void getTitle() {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(millis);
         String date_label = CalendarUtils.getDayName(calendar);
-        tv_title.setText(date_label + ", ngày " + calendar.get(Calendar.DAY_OF_MONTH) + " tháng " + (calendar.get(Calendar.MONTH) + 1) + " năm " + calendar.get(Calendar.YEAR));
+        if (date_label != null && !date_label.equals("")) {
+            tv_title.setText(date_label + ", ngày " + calendar.get(Calendar.DAY_OF_MONTH) + " tháng " + (calendar.get(Calendar.MONTH) + 1) + " năm " + calendar.get(Calendar.YEAR));
+        } else {
+            tv_title.setText("Ngày " + calendar.get(Calendar.DAY_OF_MONTH) + " tháng " + (calendar.get(Calendar.MONTH) + 1) + " năm " + calendar.get(Calendar.YEAR));
+        }
+
     }
 
     private void setMute() {
@@ -404,21 +422,21 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
          * 8
          * Random number table all*/
         if (rl81 == null) {
-            rl81 = new Roller(tv8_1, 100000, 80, 99, 10);
+            rl81 = new Roller(tv8_1, 100000, 150, 99, 10);
         }
 
         if (rl82 == null) {
-            rl82 = new Roller(tv8_2, 100000, 80, 99, 10);
+            rl82 = new Roller(tv8_2, 100000, 150, 99, 10);
 
         }
 
         if (rl83 == null) {
-            rl83 = new Roller(tv8_3, 100000, 80, 99, 10);
+            rl83 = new Roller(tv8_3, 100000, 150, 99, 10);
 
         }
 
         if (rl84 == null) {
-            rl84 = new Roller(tv8_4, 100000, 80, 99, 10);
+            rl84 = new Roller(tv8_4, 100000, 150, 99, 10);
         }
 
 
@@ -426,16 +444,16 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
          * 7
          * Random number table all*/
         if (rl71 == null) {
-            rl71 = new Roller(tv7_1, 10000, 80, 999, 100);
+            rl71 = new Roller(tv7_1, 10000, 150, 999, 100);
         }
         if (rl72 == null) {
-            rl72 = new Roller(tv7_2, 10000, 80, 999, 100);
+            rl72 = new Roller(tv7_2, 10000, 150, 999, 100);
         }
         if (rl73 == null) {
-            rl73 = new Roller(tv7_3, 10000, 80, 999, 100);
+            rl73 = new Roller(tv7_3, 10000, 150, 999, 100);
         }
         if (rl74 == null) {
-            rl74 = new Roller(tv7_4, 10000, 80, 999, 100);
+            rl74 = new Roller(tv7_4, 10000, 150, 999, 100);
         }
 
         /**
@@ -444,13 +462,13 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
 
 
         if (rl611 == null) {
-            rl611 = new Roller(tv6_1, 10000, 80, 9999, 1000);
+            rl611 = new Roller(tv6_1, 10000, 150, 9999, 1000);
         }
         if (rl612 == null) {
-            rl612 = new Roller(tv6_2, 10000, 80, 9999, 1000);
+            rl612 = new Roller(tv6_2, 10000, 150, 9999, 1000);
         }
         if (rl613 == null) {
-            rl613 = new Roller(tv6_3, 10000, 80, 9999, 1000);
+            rl613 = new Roller(tv6_3, 10000, 150, 9999, 1000);
 
         }
 
@@ -459,14 +477,14 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
          * 6
          * Random number table 2*/
         if (rl621 == null) {
-            rl621 = new Roller(tv6_1_2, 10000, 80, 9999, 1000);
+            rl621 = new Roller(tv6_1_2, 10000, 150, 9999, 1000);
         }
         if (rl622 == null) {
-            rl622 = new Roller(tv6_2_2, 10000, 80, 9999, 1000);
+            rl622 = new Roller(tv6_2_2, 10000, 150, 9999, 1000);
 
         }
         if (rl623 == null) {
-            rl623 = new Roller(tv6_3_2, 10000, 80, 9999, 1000);
+            rl623 = new Roller(tv6_3_2, 10000, 150, 9999, 1000);
         }
 
 
@@ -474,13 +492,13 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
          * 6
          * Random number table 3*/
         if (rl631 == null) {
-            rl631 = new Roller(tv6_1_3, 10000, 80, 9999, 1000);
+            rl631 = new Roller(tv6_1_3, 10000, 150, 9999, 1000);
         }
         if (rl632 == null) {
-            rl632 = new Roller(tv6_2_3, 10000, 80, 9999, 1000);
+            rl632 = new Roller(tv6_2_3, 10000, 150, 9999, 1000);
         }
         if (rl633 == null) {
-            rl633 = new Roller(tv6_3_3, 10000, 80, 9999, 1000);
+            rl633 = new Roller(tv6_3_3, 10000, 150, 9999, 1000);
         }
 
 
@@ -489,13 +507,13 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
          * Random number table 4*/
 
         if (rl641 == null) {
-            rl641 = new Roller(tv6_1_4, 10000, 80, 9999, 1000);
+            rl641 = new Roller(tv6_1_4, 10000, 150, 9999, 1000);
         }
         if (rl642 == null) {
-            rl642 = new Roller(tv6_2_4, 10000, 80, 9999, 1000);
+            rl642 = new Roller(tv6_2_4, 10000, 150, 9999, 1000);
         }
         if (rl643 == null) {
-            rl643 = new Roller(tv6_3_4, 10000, 80, 9999, 1000);
+            rl643 = new Roller(tv6_3_4, 10000, 150, 9999, 1000);
         }
 
 
@@ -504,19 +522,19 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
          * Random number table all*/
 
         if (rl51 == null) {
-            rl51 = new Roller(tv5_1, 10000, 80, 9999, 1000);
+            rl51 = new Roller(tv5_1, 10000, 150, 9999, 1000);
         }
 
         if (rl52 == null) {
-            rl52 = new Roller(tv5_2, 10000, 80, 9999, 1000);
+            rl52 = new Roller(tv5_2, 10000, 150, 9999, 1000);
         }
 
         if (rl53 == null) {
-            rl53 = new Roller(tv5_3, 10000, 80, 9999, 1000);
+            rl53 = new Roller(tv5_3, 10000, 150, 9999, 1000);
         }
 
         if (rl54 == null) {
-            rl54 = new Roller(tv5_4, 10000, 80, 9999, 1000);
+            rl54 = new Roller(tv5_4, 10000, 150, 9999, 1000);
         }
 
 
@@ -524,25 +542,25 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
          * 4
          * Random number table 1*/
         if (rl41 == null) {
-            rl41 = new Roller(tv4_1, 10000, 80, 99999, 10000);
+            rl41 = new Roller(tv4_1, 10000, 150, 99999, 10000);
         }
         if (rl412 == null) {
-            rl412 = new Roller(tv4_2, 10000, 80, 99999, 10000);
+            rl412 = new Roller(tv4_2, 10000, 150, 99999, 10000);
         }
         if (rl413 == null) {
-            rl413 = new Roller(tv4_3, 10000, 80, 99999, 10000);
+            rl413 = new Roller(tv4_3, 10000, 150, 99999, 10000);
         }
         if (rl414 == null) {
-            rl414 = new Roller(tv4_4, 10000, 80, 99999, 10000);
+            rl414 = new Roller(tv4_4, 10000, 150, 99999, 10000);
         }
         if (rl415 == null) {
-            rl415 = new Roller(tv4_5, 10000, 80, 99999, 10000);
+            rl415 = new Roller(tv4_5, 10000, 150, 99999, 10000);
         }
         if (rl416 == null) {
-            rl416 = new Roller(tv4_6, 10000, 80, 99999, 10000);
+            rl416 = new Roller(tv4_6, 10000, 150, 99999, 10000);
         }
         if (rl417 == null) {
-            rl417 = new Roller(tv4_7, 10000, 80, 99999, 10000);
+            rl417 = new Roller(tv4_7, 10000, 150, 99999, 10000);
         }
 
         /**
@@ -550,25 +568,25 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
          * Random number table 2*/
 
         if (rl42 == null) {
-            rl42 = new Roller(tv4_1_2, 10000, 80, 99999, 10000);
+            rl42 = new Roller(tv4_1_2, 10000, 150, 99999, 10000);
         }
         if (rl422 == null) {
-            rl422 = new Roller(tv4_2_2, 10000, 80, 99999, 10000);
+            rl422 = new Roller(tv4_2_2, 10000, 150, 99999, 10000);
         }
         if (rl423 == null) {
-            rl423 = new Roller(tv4_3_2, 10000, 80, 99999, 10000);
+            rl423 = new Roller(tv4_3_2, 10000, 150, 99999, 10000);
         }
         if (rl424 == null) {
-            rl424 = new Roller(tv4_4_2, 10000, 80, 99999, 10000);
+            rl424 = new Roller(tv4_4_2, 10000, 150, 99999, 10000);
         }
         if (rl425 == null) {
-            rl425 = new Roller(tv4_5_2, 10000, 80, 99999, 10000);
+            rl425 = new Roller(tv4_5_2, 10000, 150, 99999, 10000);
         }
         if (rl426 == null) {
-            rl426 = new Roller(tv4_6_2, 10000, 80, 99999, 10000);
+            rl426 = new Roller(tv4_6_2, 10000, 150, 99999, 10000);
         }
         if (rl427 == null) {
-            rl427 = new Roller(tv4_7_2, 10000, 80, 99999, 10000);
+            rl427 = new Roller(tv4_7_2, 10000, 150, 99999, 10000);
         }
 
 
@@ -576,70 +594,70 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
          * 4
          * Random number table 3*/
         if (rl43 == null) {
-            rl43 = new Roller(tv4_1_3, 10000, 80, 99999, 10000);
+            rl43 = new Roller(tv4_1_3, 10000, 150, 99999, 10000);
         }
         if (rl432 == null) {
-            rl432 = new Roller(tv4_2_3, 10000, 80, 99999, 10000);
+            rl432 = new Roller(tv4_2_3, 10000, 150, 99999, 10000);
         }
         if (rl433 == null) {
-            rl433 = new Roller(tv4_3_3, 10000, 80, 99999, 10000);
+            rl433 = new Roller(tv4_3_3, 10000, 150, 99999, 10000);
         }
         if (rl434 == null) {
-            rl434 = new Roller(tv4_4_3, 10000, 80, 99999, 10000);
+            rl434 = new Roller(tv4_4_3, 10000, 150, 99999, 10000);
         }
         if (rl435 == null) {
-            rl435 = new Roller(tv4_5_3, 10000, 80, 99999, 10000);
+            rl435 = new Roller(tv4_5_3, 10000, 150, 99999, 10000);
         }
         if (rl436 == null) {
-            rl436 = new Roller(tv4_6_3, 10000, 80, 99999, 10000);
+            rl436 = new Roller(tv4_6_3, 10000, 150, 99999, 10000);
         }
         if (rl437 == null) {
-            rl437 = new Roller(tv4_7_3, 10000, 80, 99999, 10000);
+            rl437 = new Roller(tv4_7_3, 10000, 150, 99999, 10000);
         }
 
         /**
          * 4
          * Random number table 4*/
         if (rl44 == null) {
-            rl44 = new Roller(tv4_1_4, 10000, 80, 99999, 10000);
+            rl44 = new Roller(tv4_1_4, 10000, 150, 99999, 10000);
         }
         if (rl442 == null) {
-            rl442 = new Roller(tv4_2_4, 10000, 80, 99999, 10000);
+            rl442 = new Roller(tv4_2_4, 10000, 150, 99999, 10000);
         }
         if (rl443 == null) {
-            rl443 = new Roller(tv4_3_4, 10000, 80, 99999, 10000);
+            rl443 = new Roller(tv4_3_4, 10000, 150, 99999, 10000);
         }
         if (rl444 == null) {
-            rl444 = new Roller(tv4_4_4, 10000, 80, 99999, 10000);
+            rl444 = new Roller(tv4_4_4, 10000, 150, 99999, 10000);
         }
         if (rl445 == null) {
-            rl445 = new Roller(tv4_5_4, 10000, 80, 99999, 10000);
+            rl445 = new Roller(tv4_5_4, 10000, 150, 99999, 10000);
         }
         if (rl446 == null) {
-            rl446 = new Roller(tv4_6_4, 10000, 80, 99999, 10000);
+            rl446 = new Roller(tv4_6_4, 10000, 150, 99999, 10000);
         }
         if (rl447 == null) {
-            rl447 = new Roller(tv4_7_4, 10000, 80, 99999, 10000);
+            rl447 = new Roller(tv4_7_4, 10000, 150, 99999, 10000);
         }
 
         /**
          * 3
          * Random number table 1*/
         if (rl311 == null) {
-            rl311 = new Roller(tv3_1, 10000, 80, 99999, 10000);
+            rl311 = new Roller(tv3_1, 10000, 150, 99999, 10000);
         }
         if (rl312 == null) {
-            rl312 = new Roller(tv3_2, 10000, 80, 99999, 10000);
+            rl312 = new Roller(tv3_2, 10000, 150, 99999, 10000);
         }
 
         /**
          * 3
          * Random number table 2*/
         if (rl321 == null) {
-            rl321 = new Roller(tv3_1_2, 10000, 80, 99999, 10000);
+            rl321 = new Roller(tv3_1_2, 10000, 150, 99999, 10000);
         }
         if (rl322 == null) {
-            rl322 = new Roller(tv3_2_2, 10000, 80, 99999, 10000);
+            rl322 = new Roller(tv3_2_2, 10000, 150, 99999, 10000);
         }
 
 
@@ -647,10 +665,10 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
          * 3
          * Random number table 3*/
         if (rl331 == null) {
-            rl331 = new Roller(tv3_1_3, 10000, 80, 99999, 10000);
+            rl331 = new Roller(tv3_1_3, 10000, 150, 99999, 10000);
         }
         if (rl332 == null) {
-            rl332 = new Roller(tv3_2_3, 10000, 80, 99999, 10000);
+            rl332 = new Roller(tv3_2_3, 10000, 150, 99999, 10000);
         }
 
 
@@ -658,10 +676,10 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
          * 3
          * Random number table 4*/
         if (rl341 == null) {
-            rl341 = new Roller(tv3_1_4, 10000, 80, 99999, 10000);
+            rl341 = new Roller(tv3_1_4, 10000, 150, 99999, 10000);
         }
         if (rl342 == null) {
-            rl342 = new Roller(tv3_2_4, 10000, 80, 99999, 10000);
+            rl342 = new Roller(tv3_2_4, 10000, 150, 99999, 10000);
         }
 
 
@@ -670,16 +688,16 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
          * Random number table all*/
 
         if (rl_second_1 == null) {
-            rl_second_1 = new Roller(tv2_1, 10000, 80, 99999, 10000);
+            rl_second_1 = new Roller(tv2_1, 10000, 150, 99999, 10000);
         }
         if (rl_second_2 == null) {
-            rl_second_2 = new Roller(tv2_2, 10000, 80, 99999, 10000);
+            rl_second_2 = new Roller(tv2_2, 10000, 150, 99999, 10000);
         }
         if (rl_second_3 == null) {
-            rl_second_3 = new Roller(tv2_3, 10000, 80, 99999, 10000);
+            rl_second_3 = new Roller(tv2_3, 10000, 150, 99999, 10000);
         }
         if (rl_second_4 == null) {
-            rl_second_4 = new Roller(tv2_4, 10000, 80, 99999, 10000);
+            rl_second_4 = new Roller(tv2_4, 10000, 150, 99999, 10000);
         }
 
         /**
@@ -687,16 +705,16 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
          * Random number table all*/
 
         if (rl_first_1 == null) {
-            rl_first_1 = new Roller(tv1_1, 10000, 80, 99999, 10000);
+            rl_first_1 = new Roller(tv1_1, 10000, 150, 99999, 10000);
         }
         if (rl_first_2 == null) {
-            rl_first_2 = new Roller(tv1_2, 10000, 80, 99999, 10000);
+            rl_first_2 = new Roller(tv1_2, 10000, 150, 99999, 10000);
         }
         if (rl_first_3 == null) {
-            rl_first_3 = new Roller(tv1_3, 10000, 80, 99999, 10000);
+            rl_first_3 = new Roller(tv1_3, 10000, 150, 99999, 10000);
         }
         if (rl_first_4 == null) {
-            rl_first_4 = new Roller(tv1_4, 10000, 80, 99999, 10000);
+            rl_first_4 = new Roller(tv1_4, 10000, 150, 99999, 10000);
         }
 
 
@@ -704,16 +722,16 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
          * DB
          * Random number table all*/
         if (rl_special_1 == null) {
-            rl_special_1 = new Roller(tvDb, 10000, 80, 99999, 10000);
+            rl_special_1 = new Roller(tvDb, 10000, 150, 999999, 100000);
         }
         if (rl_special_2 == null) {
-            rl_special_2 = new Roller(tvDb_2, 10000, 80, 99999, 10000);
+            rl_special_2 = new Roller(tvDb_2, 10000, 150, 999999, 100000);
         }
         if (rl_special_3 == null) {
-            rl_special_3 = new Roller(tvDb_3, 10000, 80, 99999, 10000);
+            rl_special_3 = new Roller(tvDb_3, 10000, 150, 999999, 100000);
         }
         if (rl_special_4 == null) {
-            rl_special_4 = new Roller(tvDb_4, 10000, 80, 99999, 10000);
+            rl_special_4 = new Roller(tvDb_4, 10000, 150, 999999, 100000);
         }
 
 
@@ -1457,6 +1475,14 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
         loadingView.setVisibility(View.GONE);
         tvContent.setVisibility(View.GONE);
         tv_not_yet.setVisibility(View.GONE);
+        keepConnect = true;
+        if (this.resp_result != resp_result) {
+            setData(resp_result);
+        }
+
+    }
+
+    private void setData(RESP_Result resp_result) {
         switch (resp_result.getData().size()) {
             case 1:
                 setTable2Hidden();
@@ -1654,41 +1680,50 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
 
     @Override
     public void random(int random_table) {
-        switch (random_table) {
-            case 1:
-                rl81 = new Roller(tv8_1, 100000, 80, 99, 10);
-                rl81.run();
-                break;
-            case 2:
-                rl81 = new Roller(tv8_1, 100000, 80, 99, 10);
-                rl81.run();
+        if (toDay) {
+            switch (random_table) {
+                case 1:
+                    if (rl81 != null) {
+                        rl81.run();
+                    }
+                    break;
+                case 2:
+                    if (rl81 != null) {
+                        rl81.run();
+                    }
 
-                rl82 = new Roller(tv8_2, 100000, 80, 99, 10);
-                rl82.run();
-                break;
-            case 3:
-                rl81 = new Roller(tv8_1, 100000, 80, 99, 10);
-                rl81.run();
+                    if (rl82 != null) {
+                        rl82.run();
+                    }
+                    break;
+                case 3:
+                    if (rl81 != null) {
+                        rl81.run();
+                    }
 
-                rl82 = new Roller(tv8_2, 100000, 80, 99, 10);
-                rl82.run();
+                    if (rl82 != null) {
+                        rl82.run();
+                    }
+                    if (rl83 != null) {
+                        rl83.run();
+                    }
+                    break;
+                case 4:
+                    if (rl81 != null) {
+                        rl81.run();
+                    }
 
-                rl83 = new Roller(tv8_3, 100000, 80, 99, 10);
-                rl83.run();
-                break;
-            case 4:
-                rl81 = new Roller(tv8_1, 100000, 80, 99, 10);
-                rl81.run();
-
-                rl82 = new Roller(tv8_2, 100000, 80, 99, 10);
-                rl82.run();
-
-                rl83 = new Roller(tv8_3, 100000, 80, 99, 10);
-                rl83.run();
-
-                rl84 = new Roller(tv8_4, 100000, 80, 99, 10);
-                rl84.run();
-                break;
+                    if (rl82 != null) {
+                        rl82.run();
+                    }
+                    if (rl83 != null) {
+                        rl83.run();
+                    }
+                    if (rl84 != null) {
+                        rl84.run();
+                    }
+                    break;
+            }
         }
     }
 
@@ -1697,649 +1732,675 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
     @Override
     public void setNewResult(RESP_NewResult newResult, int position_table) {
         if (player != null) {
+            if (player.isPlaying()) {
+                player.stop();
+            }
             player.start();
         }
-        if (vibrate) {
-            Utils.vibrateAction();
+
+        Log.e(TAG, "setNewResult: " + date_select);
+        keepConnect = true;
+        if (toDay) {
+            configRoller(newResult, position_table);
         }
-        switch (position_table) {
-            /**
-             * Table 1*/
-            case 1:
-                switch (newResult.getResult_name()) {
-                    case "res_eight":
-                        if (newResult.getValue() != null) {
-                            if (rl81 != null) {
-                                rl81.shutdownThread(true);
-                            }
-                            rl71.run();
-                            tv8_1.setText(newResult.getValue());
-                        }
-                        break;
-                    case "res_seventh":
-                        if (newResult.getValue() != null) {
-                            if (rl71 != null) {
-                                rl71.shutdownThread(false);
-                            }
-                            rl611.run();
-                            tv7_1.setText(newResult.getValue());
-                        }
-                        break;
-                    case "res_sixth":
-                        if (newResult.getValue() != null) {
-                            switch (newResult.getIndex()) {
-                                case "0":
-                                    if (rl611 != null) {
-                                        rl611.shutdownThread(false);
-                                    }
-                                    rl612.run();
-                                    tv6_1.setText(newResult.getValue());
-                                    break;
-                                case "1":
-                                    if (rl612 != null) {
-                                        rl612.shutdownThread(false);
-                                    }
-                                    rl613.run();
-                                    tv6_2.setText(newResult.getValue());
-                                    break;
-                                case "2":
-                                    if (rl613 != null) {
-                                        rl613.shutdownThread(false);
-                                    }
-                                    rl51.run();
-                                    tv6_3.setText(newResult.getValue());
-                                    break;
-                            }
+    }
 
-                        }
-                        break;
-                    case "res_fifth":
-                        if (rl51 != null) {
-                            rl51.shutdownThread(false);
-                        }
-                        rl41.run();
-                        tv5_1.setText(newResult.getValue());
-                        break;
-                    case "res_fourth":
-                        if (newResult.getValue() != null) {
-                            switch (newResult.getIndex()) {
-                                case "0":
-                                    if (rl41 != null) {
-                                        rl41.shutdownThread(false);
-                                    }
-                                    rl412.run();
-                                    tv4_1.setText(newResult.getValue());
-                                    break;
-                                case "1":
-                                    if (rl412 != null) {
-                                        rl412.shutdownThread(false);
-                                    }
-                                    rl413.run();
-                                    tv4_2.setText(newResult.getValue());
-                                    break;
-                                case "2":
-                                    if (rl413 != null) {
-                                        rl413.shutdownThread(false);
-                                    }
-                                    rl414.run();
-                                    tv4_3.setText(newResult.getValue());
-                                    break;
+    private void configRoller(RESP_NewResult newResult, int position_table) {
+        Log.e(TAG, "configRoller: " + resp_newResult);
+        if (resp_newResult != newResult) {
+            resp_newResult = newResult;
+            switch (position_table) {
 
-                                case "3":
-                                    if (rl414 != null) {
-                                        rl414.shutdownThread(false);
-                                    }
-                                    rl415.run();
-                                    tv4_4.setText(newResult.getValue());
-                                    break;
-                                case "4":
-                                    if (rl415 != null) {
-                                        rl415.shutdownThread(false);
-                                    }
-                                    rl416.run();
-                                    tv4_5.setText(newResult.getValue());
-                                    break;
-                                case "5":
-                                    if (rl416 != null) {
-                                        rl416.shutdownThread(false);
-                                    }
-                                    rl417.run();
-                                    tv4_6.setText(newResult.getValue());
-                                    break;
-                                case "6":
-                                    if (rl417 != null) {
-                                        rl417.shutdownThread(false);
-                                    }
-                                    rl311.run();
-                                    tv4_7.setText(newResult.getValue());
-                                    break;
-                            }
+                /**
+                 * Table 1*/
+                case 1:
+                    setNewResultTable1(newResult);
+                    break;
+                /**
+                 * Table 2*/
+                case 2:
+                    setNewResultTable2(newResult);
+                    break;
+                /**
+                 * Table 3*/
+                case 3:
+                    setNewResultTable3(newResult);
+                    break;
+                /**
+                 * Table 4*/
+                case 4:
+                    setNewResultTable4(newResult);
+                    break;
+            }
+        } else {
+            return;
+        }
+    }
 
-                        }
-                        break;
-                    case "res_third":
-                        if (newResult.getValue() != null) {
-                            switch (newResult.getIndex()) {
-                                case "0":
-                                    if (rl311 != null) {
-                                        rl311.shutdownThread(false);
-                                    }
-                                    rl312.run();
-                                    tv3_1.setText(newResult.getValue());
-                                    break;
-                                case "1":
-                                    if (rl312 != null) {
-                                        rl312.shutdownThread(false);
-                                    }
-                                    rl_second_1.run();
-                                    tv3_2.setText(newResult.getValue());
-                                    break;
-                            }
-                        }
-                        break;
-                    case "res_second":
-                        if (rl_second_1 != null) {
-                            rl_second_1.shutdownThread(false);
-                        }
-                        rl_first_1.run();
-                        tv2_1.setText(newResult.getValue());
-                        break;
-                    case "res_first":
-                        if (rl_first_1 != null) {
-                            rl_first_1.shutdownThread(false);
-                        }
-                        rl_special_1.run();
-                        tv1_1.setText(newResult.getValue());
-                        break;
-                    case "res_special":
-                        if (rl_special_1 != null) {
-                            rl_special_1.shutdownThread(true);
-                        }
-                        special_value = newResult.getValue();
-                        LotoSpecial_1 = newResult.getValue();
-                        tvDb.setText(newResult.getValue());
-                        break;
+    private void setNewResultTable4(RESP_NewResult newResult) {
+        switch (newResult.getResult_name()) {
+            case "res_eight":
+                if (newResult.getValue() != null) {
+                    if (rl84 != null) {
+                        rl84.shutdownThread(true);
+                    }
+                    rl74.run();
+                    tv8_4.setText(newResult.getValue());
                 }
                 break;
-
-
-            /**
-             * Table 2*/
-            case 2:
-                switch (newResult.getResult_name()) {
-                    case "res_eight":
-                        if (newResult.getValue() != null) {
-                            if (rl82 != null) {
-                                rl82.shutdownThread(true);
-                            }
-                            rl72.run();
-                            tv8_2.setText(newResult.getValue());
-                        }
-                        break;
-                    case "res_seventh":
-                        if (newResult.getValue() != null) {
-                            if (rl72 != null) {
-                                rl72.shutdownThread(false);
-                            }
-                            rl621.run();
-                            tv7_2.setText(newResult.getValue());
-                        }
-                        break;
-                    case "res_sixth":
-                        if (newResult.getValue() != null) {
-                            switch (newResult.getIndex()) {
-                                case "0":
-                                    if (rl621 != null) {
-                                        rl621.shutdownThread(false);
-                                    }
-                                    rl622.run();
-                                    tv6_1_2.setText(newResult.getValue());
-                                    break;
-                                case "1":
-                                    if (rl622 != null) {
-                                        rl622.shutdownThread(false);
-                                    }
-                                    rl623.run();
-                                    tv6_2_2.setText(newResult.getValue());
-                                    break;
-                                case "2":
-                                    if (rl623 != null) {
-                                        rl623.shutdownThread(false);
-                                    }
-                                    rl52.run();
-                                    tv6_3_2.setText(newResult.getValue());
-                                    break;
-                            }
-
-                        }
-                        break;
-                    case "res_fifth":
-                        if (rl52 != null) {
-                            rl52.shutdownThread(false);
-                        }
-                        rl42.run();
-                        tv5_2.setText(newResult.getValue());
-                        break;
-                    case "res_fourth":
-                        if (newResult.getValue() != null) {
-                            switch (newResult.getIndex()) {
-                                case "0":
-                                    if (rl42 != null) {
-                                        rl42.shutdownThread(false);
-                                    }
-                                    rl422.run();
-                                    tv4_1_2.setText(newResult.getValue());
-                                    break;
-                                case "1":
-                                    if (rl422 != null) {
-                                        rl422.shutdownThread(false);
-                                    }
-                                    rl423.run();
-                                    tv4_2_2.setText(newResult.getValue());
-                                    break;
-                                case "2":
-                                    if (rl423 != null) {
-                                        rl423.shutdownThread(false);
-                                    }
-                                    rl424.run();
-                                    tv4_3_2.setText(newResult.getValue());
-                                    break;
-
-                                case "3":
-                                    if (rl424 != null) {
-                                        rl424.shutdownThread(false);
-                                    }
-                                    rl425.run();
-                                    tv4_4_2.setText(newResult.getValue());
-                                    break;
-                                case "4":
-                                    if (rl425 != null) {
-                                        rl425.shutdownThread(false);
-                                    }
-                                    rl426.run();
-                                    tv4_5_2.setText(newResult.getValue());
-                                    break;
-                                case "5":
-                                    if (rl426 != null) {
-                                        rl426.shutdownThread(false);
-                                    }
-                                    rl427.run();
-                                    tv4_6_2.setText(newResult.getValue());
-                                    break;
-                                case "6":
-                                    if (rl427 != null) {
-                                        rl427.shutdownThread(false);
-                                    }
-                                    rl321.run();
-                                    tv4_7_2.setText(newResult.getValue());
-                                    break;
-                            }
-
-                        }
-                        break;
-                    case "res_third":
-                        if (newResult.getValue() != null) {
-                            switch (newResult.getIndex()) {
-                                case "0":
-                                    if (rl321 != null) {
-                                        rl321.shutdownThread(false);
-                                    }
-                                    rl322.run();
-                                    tv3_1_2.setText(newResult.getValue());
-                                    break;
-                                case "1":
-                                    if (rl322 != null) {
-                                        rl322.shutdownThread(false);
-                                    }
-                                    rl_second_2.run();
-                                    tv3_2_2.setText(newResult.getValue());
-                                    break;
-                            }
-                        }
-                        break;
-                    case "res_second":
-                        if (rl_second_2 != null) {
-                            rl_second_2.shutdownThread(false);
-                        }
-                        rl_first_2.run();
-                        tv2_2.setText(newResult.getValue());
-                        break;
-                    case "res_first":
-                        if (rl_first_2 != null) {
-                            rl_first_2.shutdownThread(false);
-                        }
-                        rl_special_2.run();
-                        tv1_2.setText(newResult.getValue());
-                        break;
-                    case "res_special":
-                        if (rl_special_2 != null) {
-                            rl_special_2.shutdownThread(true);
-                        }
-                        special_value = newResult.getValue();
-                        LotoSpecial_2 = newResult.getValue();
-                        tvDb_2.setText(newResult.getValue());
-                        break;
+            case "res_seventh":
+                if (newResult.getValue() != null) {
+                    if (rl74 != null) {
+                        rl74.shutdownThread(false);
+                    }
+                    rl641.run();
+                    tv7_4.setText(newResult.getValue());
                 }
                 break;
-
-
-            /**
-             * Table 3*/
-            case 3:
-                switch (newResult.getResult_name()) {
-                    case "res_eight":
-                        if (newResult.getValue() != null) {
-                            if (rl83 != null) {
-                                rl83.shutdownThread(true);
+            case "res_sixth":
+                if (newResult.getValue() != null) {
+                    switch (newResult.getIndex()) {
+                        case "0":
+                            if (rl641 != null) {
+                                rl641.shutdownThread(false);
                             }
-                            rl73.run();
-                            tv8_3.setText(newResult.getValue());
-                        }
-                        break;
-                    case "res_seventh":
-                        if (newResult.getValue() != null) {
-                            if (rl73 != null) {
-                                rl73.shutdownThread(false);
+                            rl642.run();
+                            tv6_1_4.setText(newResult.getValue());
+                            break;
+                        case "1":
+                            if (rl642 != null) {
+                                rl642.shutdownThread(false);
                             }
-                            rl631.run();
-                            tv7_3.setText(newResult.getValue());
-                        }
-                        break;
-                    case "res_sixth":
-                        if (newResult.getValue() != null) {
-                            switch (newResult.getIndex()) {
-                                case "0":
-                                    if (rl631 != null) {
-                                        rl631.shutdownThread(false);
-                                    }
-                                    rl632.run();
-                                    tv6_1_3.setText(newResult.getValue());
-                                    break;
-                                case "1":
-                                    if (rl632 != null) {
-                                        rl632.shutdownThread(false);
-                                    }
-                                    rl633.run();
-                                    tv6_2_3.setText(newResult.getValue());
-                                    break;
-                                case "2":
-                                    if (rl633 != null) {
-                                        rl633.shutdownThread(false);
-                                    }
-                                    rl53.run();
-                                    tv6_3_3.setText(newResult.getValue());
-                                    break;
+                            rl643.run();
+                            tv6_2_4.setText(newResult.getValue());
+                            break;
+                        case "2":
+                            if (rl643 != null) {
+                                rl643.shutdownThread(false);
                             }
+                            rl54.run();
+                            tv6_3_4.setText(newResult.getValue());
+                            break;
+                    }
 
-                        }
-                        break;
-                    case "res_fifth":
-                        if (rl53 != null) {
-                            rl53.shutdownThread(false);
-                        }
-                        rl43.run();
-                        tv5_3.setText(newResult.getValue());
-                        break;
-                    case "res_fourth":
-                        if (newResult.getValue() != null) {
-                            switch (newResult.getIndex()) {
-                                case "0":
-                                    if (rl43 != null) {
-                                        rl43.shutdownThread(false);
-                                    }
-                                    rl432.run();
-                                    tv4_1_3.setText(newResult.getValue());
-                                    break;
-                                case "1":
-                                    if (rl432 != null) {
-                                        rl432.shutdownThread(false);
-                                    }
-                                    rl433.run();
-                                    tv4_2_3.setText(newResult.getValue());
-                                    break;
-                                case "2":
-                                    if (rl433 != null) {
-                                        rl433.shutdownThread(false);
-                                    }
-                                    rl434.run();
-                                    tv4_3_3.setText(newResult.getValue());
-                                    break;
-
-                                case "3":
-                                    if (rl434 != null) {
-                                        rl434.shutdownThread(false);
-                                    }
-                                    rl435.run();
-                                    tv4_4_3.setText(newResult.getValue());
-                                    break;
-                                case "4":
-                                    if (rl435 != null) {
-                                        rl435.shutdownThread(false);
-                                    }
-                                    rl436.run();
-                                    tv4_5_3.setText(newResult.getValue());
-                                    break;
-                                case "5":
-                                    if (rl436 != null) {
-                                        rl436.shutdownThread(false);
-                                    }
-                                    rl437.run();
-                                    tv4_6_3.setText(newResult.getValue());
-                                    break;
-                                case "6":
-                                    if (rl437 != null) {
-                                        rl437.shutdownThread(false);
-                                    }
-                                    rl331.run();
-                                    tv4_7_3.setText(newResult.getValue());
-                                    break;
-                            }
-
-                        }
-                        break;
-                    case "res_third":
-                        if (newResult.getValue() != null) {
-                            switch (newResult.getIndex()) {
-                                case "0":
-                                    if (rl331 != null) {
-                                        rl331.shutdownThread(false);
-                                    }
-                                    rl332.run();
-                                    tv3_1_3.setText(newResult.getValue());
-                                    break;
-                                case "1":
-                                    if (rl332 != null) {
-                                        rl332.shutdownThread(false);
-                                    }
-                                    rl_second_3.run();
-                                    tv3_2_3.setText(newResult.getValue());
-                                    break;
-                            }
-                        }
-                        break;
-                    case "res_second":
-                        if (rl_second_3 != null) {
-                            rl_second_3.shutdownThread(false);
-                        }
-                        rl_first_3.run();
-                        tv2_3.setText(newResult.getValue());
-                        break;
-                    case "res_first":
-                        if (rl_first_3 != null) {
-                            rl_first_3.shutdownThread(false);
-                        }
-                        rl_special_3.run();
-                        tv1_3.setText(newResult.getValue());
-                        break;
-                    case "res_special":
-                        if (rl_special_3 != null) {
-                            rl_special_3.shutdownThread(true);
-                        }
-                        special_value = newResult.getValue();
-                        LotoSpecial_3 = newResult.getValue();
-                        tvDb_3.setText(newResult.getValue());
-                        break;
                 }
                 break;
-
-
-            /**
-             * Table 4*/
-            case 4:
-                switch (newResult.getResult_name()) {
-                    case "res_eight":
-                        if (newResult.getValue() != null) {
-                            if (rl84 != null) {
-                                rl84.shutdownThread(true);
-                            }
-                            rl74.run();
-                            tv8_4.setText(newResult.getValue());
-                        }
-                        break;
-                    case "res_seventh":
-                        if (newResult.getValue() != null) {
-                            if (rl74 != null) {
-                                rl74.shutdownThread(false);
-                            }
-                            rl641.run();
-                            tv7_4.setText(newResult.getValue());
-                        }
-                        break;
-                    case "res_sixth":
-                        if (newResult.getValue() != null) {
-                            switch (newResult.getIndex()) {
-                                case "0":
-                                    if (rl641 != null) {
-                                        rl641.shutdownThread(false);
-                                    }
-                                    rl642.run();
-                                    tv6_1_4.setText(newResult.getValue());
-                                    break;
-                                case "1":
-                                    if (rl642 != null) {
-                                        rl642.shutdownThread(false);
-                                    }
-                                    rl643.run();
-                                    tv6_2_4.setText(newResult.getValue());
-                                    break;
-                                case "2":
-                                    if (rl642 != null) {
-                                        rl642.shutdownThread(false);
-                                    }
-                                    rl54.run();
-                                    tv6_3_4.setText(newResult.getValue());
-                                    break;
-                            }
-
-                        }
-                        break;
-                    case "res_fifth":
-                        if (rl54 != null) {
-                            rl54.shutdownThread(false);
-                        }
-                        rl44.run();
-                        tv5_4.setText(newResult.getValue());
-                        break;
-                    case "res_fourth":
-                        if (newResult.getValue() != null) {
-                            switch (newResult.getIndex()) {
-                                case "0":
-                                    if (rl44 != null) {
-                                        rl44.shutdownThread(false);
-                                    }
-                                    rl442.run();
-                                    tv4_1_4.setText(newResult.getValue());
-                                    break;
-                                case "1":
-                                    if (rl442 != null) {
-                                        rl442.shutdownThread(false);
-                                    }
-                                    rl443.run();
-                                    tv4_2_4.setText(newResult.getValue());
-                                    break;
-                                case "2":
-                                    if (rl443 != null) {
-                                        rl443.shutdownThread(false);
-                                    }
-                                    rl444.run();
-                                    tv4_3_4.setText(newResult.getValue());
-                                    break;
-
-                                case "3":
-                                    if (rl444 != null) {
-                                        rl444.shutdownThread(false);
-                                    }
-                                    rl445.run();
-                                    tv4_4_4.setText(newResult.getValue());
-                                    break;
-                                case "4":
-                                    if (rl445 != null) {
-                                        rl445.shutdownThread(false);
-                                    }
-                                    rl446.run();
-                                    tv4_5_4.setText(newResult.getValue());
-                                    break;
-                                case "5":
-                                    if (rl446 != null) {
-                                        rl446.shutdownThread(false);
-                                    }
-                                    rl447.run();
-                                    tv4_6_4.setText(newResult.getValue());
-                                    break;
-                                case "6":
-                                    if (rl447 != null) {
-                                        rl447.shutdownThread(false);
-                                    }
-                                    rl341.run();
-                                    tv4_7_4.setText(newResult.getValue());
-                                    break;
-                            }
-
-                        }
-                        break;
-                    case "res_third":
-                        if (newResult.getValue() != null) {
-                            switch (newResult.getIndex()) {
-                                case "0":
-                                    if (rl341 != null) {
-                                        rl341.shutdownThread(false);
-                                    }
-                                    rl342.run();
-                                    tv3_1_4.setText(newResult.getValue());
-                                    break;
-                                case "1":
-                                    if (rl342 != null) {
-                                        rl342.shutdownThread(false);
-                                    }
-                                    rl_second_4.run();
-                                    tv3_2_4.setText(newResult.getValue());
-                                    break;
-                            }
-                        }
-                        break;
-                    case "res_second":
-                        if (rl_second_4 != null) {
-                            rl_second_4.shutdownThread(false);
-                        }
-                        rl_first_4.run();
-                        tv2_4.setText(newResult.getValue());
-                        break;
-                    case "res_first":
-                        if (rl_first_4 != null) {
-                            rl_first_4.shutdownThread(false);
-                        }
-                        rl_special_4.run();
-                        tv1_4.setText(newResult.getValue());
-                        break;
-                    case "res_special":
-                        if (rl_special_4 != null) {
-                            rl_special_4.shutdownThread(true);
-                        }
-                        special_value = newResult.getValue();
-                        LotoSpecial_4 = newResult.getValue();
-                        tvDb_4.setText(newResult.getValue());
-                        break;
+            case "res_fifth":
+                if (rl54 != null) {
+                    rl54.shutdownThread(false);
                 }
+                rl44.run();
+                tv5_4.setText(newResult.getValue());
+                break;
+            case "res_fourth":
+                if (newResult.getValue() != null) {
+                    switch (newResult.getIndex()) {
+                        case "0":
+                            if (rl44 != null) {
+                                rl44.shutdownThread(false);
+                            }
+                            rl442.run();
+                            tv4_1_4.setText(newResult.getValue());
+                            break;
+                        case "1":
+                            if (rl442 != null) {
+                                rl442.shutdownThread(false);
+                            }
+                            rl443.run();
+                            tv4_2_4.setText(newResult.getValue());
+                            break;
+                        case "2":
+                            if (rl443 != null) {
+                                rl443.shutdownThread(false);
+                            }
+                            rl444.run();
+                            tv4_3_4.setText(newResult.getValue());
+                            break;
+
+                        case "3":
+                            if (rl444 != null) {
+                                rl444.shutdownThread(false);
+                            }
+                            rl445.run();
+                            tv4_4_4.setText(newResult.getValue());
+                            break;
+                        case "4":
+                            if (rl445 != null) {
+                                rl445.shutdownThread(false);
+                            }
+                            rl446.run();
+                            tv4_5_4.setText(newResult.getValue());
+                            break;
+                        case "5":
+                            if (rl446 != null) {
+                                rl446.shutdownThread(false);
+                            }
+                            rl447.run();
+                            tv4_6_4.setText(newResult.getValue());
+                            break;
+                        case "6":
+                            if (rl447 != null) {
+                                rl447.shutdownThread(false);
+                            }
+                            rl341.run();
+                            tv4_7_4.setText(newResult.getValue());
+                            break;
+                    }
+
+                }
+                break;
+            case "res_third":
+                if (newResult.getValue() != null) {
+                    switch (newResult.getIndex()) {
+                        case "0":
+                            if (rl341 != null) {
+                                rl341.shutdownThread(false);
+                            }
+                            rl342.run();
+                            tv3_1_4.setText(newResult.getValue());
+                            break;
+                        case "1":
+                            if (rl342 != null) {
+                                rl342.shutdownThread(false);
+                            }
+                            rl_second_4.run();
+                            tv3_2_4.setText(newResult.getValue());
+                            break;
+                    }
+                }
+                break;
+            case "res_second":
+                if (rl_second_4 != null) {
+                    rl_second_4.shutdownThread(false);
+                }
+                rl_first_4.run();
+                tv2_4.setText(newResult.getValue());
+                break;
+            case "res_first":
+                if (rl_first_4 != null) {
+                    rl_first_4.shutdownThread(false);
+                }
+                rl_special_4.run();
+                tv1_4.setText(newResult.getValue());
+                break;
+            case "res_special":
+                if (rl_special_4 != null) {
+                    rl_special_4.shutdownThread(true);
+                }
+                special_value = newResult.getValue();
+                LotoSpecial_4 = newResult.getValue();
+                tvDb_4.setText(newResult.getValue());
+                break;
+        }
+    }
+
+    private void setNewResultTable3(RESP_NewResult newResult) {
+        switch (newResult.getResult_name()) {
+            case "res_eight":
+                if (newResult.getValue() != null) {
+                    if (rl83 != null) {
+                        rl83.shutdownThread(true);
+                    }
+                    rl73.run();
+                    tv8_3.setText(newResult.getValue());
+                }
+                break;
+            case "res_seventh":
+                if (newResult.getValue() != null) {
+                    if (rl73 != null) {
+                        rl73.shutdownThread(false);
+                    }
+                    rl631.run();
+                    tv7_3.setText(newResult.getValue());
+                }
+                break;
+            case "res_sixth":
+                if (newResult.getValue() != null) {
+                    switch (newResult.getIndex()) {
+                        case "0":
+                            if (rl631 != null) {
+                                rl631.shutdownThread(false);
+                            }
+                            rl632.run();
+                            tv6_1_3.setText(newResult.getValue());
+                            break;
+                        case "1":
+                            if (rl632 != null) {
+                                rl632.shutdownThread(false);
+                            }
+                            rl633.run();
+                            tv6_2_3.setText(newResult.getValue());
+                            break;
+                        case "2":
+                            if (rl633 != null) {
+                                rl633.shutdownThread(false);
+                            }
+                            rl53.run();
+                            tv6_3_3.setText(newResult.getValue());
+                            break;
+                    }
+
+                }
+                break;
+            case "res_fifth":
+                if (rl53 != null) {
+                    rl53.shutdownThread(false);
+                }
+                rl43.run();
+                tv5_3.setText(newResult.getValue());
+                break;
+            case "res_fourth":
+                if (newResult.getValue() != null) {
+                    switch (newResult.getIndex()) {
+                        case "0":
+                            if (rl43 != null) {
+                                rl43.shutdownThread(false);
+                            }
+                            rl432.run();
+                            tv4_1_3.setText(newResult.getValue());
+                            break;
+                        case "1":
+                            if (rl432 != null) {
+                                rl432.shutdownThread(false);
+                            }
+                            rl433.run();
+                            tv4_2_3.setText(newResult.getValue());
+                            break;
+                        case "2":
+                            if (rl433 != null) {
+                                rl433.shutdownThread(false);
+                            }
+                            rl434.run();
+                            tv4_3_3.setText(newResult.getValue());
+                            break;
+
+                        case "3":
+                            if (rl434 != null) {
+                                rl434.shutdownThread(false);
+                            }
+                            rl435.run();
+                            tv4_4_3.setText(newResult.getValue());
+                            break;
+                        case "4":
+                            if (rl435 != null) {
+                                rl435.shutdownThread(false);
+                            }
+                            rl436.run();
+                            tv4_5_3.setText(newResult.getValue());
+                            break;
+                        case "5":
+                            if (rl436 != null) {
+                                rl436.shutdownThread(false);
+                            }
+                            rl437.run();
+                            tv4_6_3.setText(newResult.getValue());
+                            break;
+                        case "6":
+                            if (rl437 != null) {
+                                rl437.shutdownThread(false);
+                            }
+                            rl331.run();
+                            tv4_7_3.setText(newResult.getValue());
+                            break;
+                    }
+
+                }
+                break;
+            case "res_third":
+                if (newResult.getValue() != null) {
+                    switch (newResult.getIndex()) {
+                        case "0":
+                            if (rl331 != null) {
+                                rl331.shutdownThread(false);
+                            }
+                            rl332.run();
+                            tv3_1_3.setText(newResult.getValue());
+                            break;
+                        case "1":
+                            if (rl332 != null) {
+                                rl332.shutdownThread(false);
+                            }
+                            rl_second_3.run();
+                            tv3_2_3.setText(newResult.getValue());
+                            break;
+                    }
+                }
+                break;
+            case "res_second":
+                if (rl_second_3 != null) {
+                    rl_second_3.shutdownThread(false);
+                }
+                rl_first_3.run();
+                tv2_3.setText(newResult.getValue());
+                break;
+            case "res_first":
+                if (rl_first_3 != null) {
+                    rl_first_3.shutdownThread(false);
+                }
+                rl_special_3.run();
+                tv1_3.setText(newResult.getValue());
+                break;
+            case "res_special":
+                if (rl_special_3 != null) {
+                    rl_special_3.shutdownThread(true);
+                }
+                special_value = newResult.getValue();
+                LotoSpecial_3 = newResult.getValue();
+                tvDb_3.setText(newResult.getValue());
+                break;
+        }
+    }
+
+    private void setNewResultTable2(RESP_NewResult newResult) {
+        switch (newResult.getResult_name()) {
+            case "res_eight":
+                if (newResult.getValue() != null) {
+                    if (rl82 != null) {
+                        rl82.shutdownThread(true);
+                    }
+                    rl72.run();
+                    tv8_2.setText(newResult.getValue());
+                }
+                break;
+            case "res_seventh":
+                if (newResult.getValue() != null) {
+                    if (rl72 != null) {
+                        rl72.shutdownThread(false);
+                    }
+                    rl621.run();
+                    tv7_2.setText(newResult.getValue());
+                }
+                break;
+            case "res_sixth":
+                if (newResult.getValue() != null) {
+                    switch (newResult.getIndex()) {
+                        case "0":
+                            if (rl621 != null) {
+                                rl621.shutdownThread(false);
+                            }
+                            rl622.run();
+                            tv6_1_2.setText(newResult.getValue());
+                            break;
+                        case "1":
+                            if (rl622 != null) {
+                                rl622.shutdownThread(false);
+                            }
+                            rl623.run();
+                            tv6_2_2.setText(newResult.getValue());
+                            break;
+                        case "2":
+                            if (rl623 != null) {
+                                rl623.shutdownThread(false);
+                            }
+                            rl52.run();
+                            tv6_3_2.setText(newResult.getValue());
+                            break;
+                    }
+
+                }
+                break;
+            case "res_fifth":
+                if (rl52 != null) {
+                    rl52.shutdownThread(false);
+                }
+                rl42.run();
+                tv5_2.setText(newResult.getValue());
+                break;
+            case "res_fourth":
+                if (newResult.getValue() != null) {
+                    switch (newResult.getIndex()) {
+                        case "0":
+                            if (rl42 != null) {
+                                rl42.shutdownThread(false);
+                            }
+                            rl422.run();
+                            tv4_1_2.setText(newResult.getValue());
+                            break;
+                        case "1":
+                            if (rl422 != null) {
+                                rl422.shutdownThread(false);
+                            }
+                            rl423.run();
+                            tv4_2_2.setText(newResult.getValue());
+                            break;
+                        case "2":
+                            if (rl423 != null) {
+                                rl423.shutdownThread(false);
+                            }
+                            rl424.run();
+                            tv4_3_2.setText(newResult.getValue());
+                            break;
+
+                        case "3":
+                            if (rl424 != null) {
+                                rl424.shutdownThread(false);
+                            }
+                            rl425.run();
+                            tv4_4_2.setText(newResult.getValue());
+                            break;
+                        case "4":
+                            if (rl425 != null) {
+                                rl425.shutdownThread(false);
+                            }
+                            rl426.run();
+                            tv4_5_2.setText(newResult.getValue());
+                            break;
+                        case "5":
+                            if (rl426 != null) {
+                                rl426.shutdownThread(false);
+                            }
+                            rl427.run();
+                            tv4_6_2.setText(newResult.getValue());
+                            break;
+                        case "6":
+                            if (rl427 != null) {
+                                rl427.shutdownThread(false);
+                            }
+                            rl321.run();
+                            tv4_7_2.setText(newResult.getValue());
+                            break;
+                    }
+
+                }
+                break;
+            case "res_third":
+                if (newResult.getValue() != null) {
+                    switch (newResult.getIndex()) {
+                        case "0":
+                            if (rl321 != null) {
+                                rl321.shutdownThread(false);
+                            }
+                            rl322.run();
+                            tv3_1_2.setText(newResult.getValue());
+                            break;
+                        case "1":
+                            if (rl322 != null) {
+                                rl322.shutdownThread(false);
+                            }
+                            rl_second_2.run();
+                            tv3_2_2.setText(newResult.getValue());
+                            break;
+                    }
+                }
+                break;
+            case "res_second":
+                if (rl_second_2 != null) {
+                    rl_second_2.shutdownThread(false);
+                }
+                rl_first_2.run();
+                tv2_2.setText(newResult.getValue());
+                break;
+            case "res_first":
+                if (rl_first_2 != null) {
+                    rl_first_2.shutdownThread(false);
+                }
+                rl_special_2.run();
+                tv1_2.setText(newResult.getValue());
+                break;
+            case "res_special":
+                if (rl_special_2 != null) {
+                    rl_special_2.shutdownThread(true);
+                }
+                special_value = newResult.getValue();
+                LotoSpecial_2 = newResult.getValue();
+                tvDb_2.setText(newResult.getValue());
+                break;
+        }
+    }
+
+    private void setNewResultTable1(RESP_NewResult newResult) {
+        switch (newResult.getResult_name()) {
+            case "res_eight":
+                if (newResult.getValue() != null) {
+                    if (rl81 != null) {
+                        rl81.shutdownThread(true);
+                    }
+                    rl71.run();
+                    tv8_1.setText(newResult.getValue());
+                }
+                break;
+            case "res_seventh":
+                if (newResult.getValue() != null) {
+                    if (rl71 != null) {
+                        rl71.shutdownThread(false);
+                    }
+                    rl611.run();
+                    tv7_1.setText(newResult.getValue());
+                }
+                break;
+            case "res_sixth":
+                if (newResult.getValue() != null) {
+                    switch (newResult.getIndex()) {
+                        case "0":
+                            if (rl611 != null) {
+                                rl611.shutdownThread(false);
+                            }
+                            rl612.run();
+                            tv6_1.setText(newResult.getValue());
+                            break;
+                        case "1":
+                            if (rl612 != null) {
+                                rl612.shutdownThread(false);
+                            }
+                            rl613.run();
+                            tv6_2.setText(newResult.getValue());
+                            break;
+                        case "2":
+                            if (rl613 != null) {
+                                rl613.shutdownThread(false);
+                            }
+                            rl51.run();
+                            tv6_3.setText(newResult.getValue());
+                            break;
+                    }
+
+                }
+                break;
+            case "res_fifth":
+                if (rl51 != null) {
+                    rl51.shutdownThread(false);
+                }
+                rl41.run();
+                tv5_1.setText(newResult.getValue());
+                break;
+            case "res_fourth":
+                if (newResult.getValue() != null) {
+                    switch (newResult.getIndex()) {
+                        case "0":
+                            if (rl41 != null) {
+                                rl41.shutdownThread(false);
+                            }
+                            rl412.run();
+                            tv4_1.setText(newResult.getValue());
+                            break;
+                        case "1":
+                            if (rl412 != null) {
+                                rl412.shutdownThread(false);
+                            }
+                            rl413.run();
+                            tv4_2.setText(newResult.getValue());
+                            break;
+                        case "2":
+                            if (rl413 != null) {
+                                rl413.shutdownThread(false);
+                            }
+                            rl414.run();
+                            tv4_3.setText(newResult.getValue());
+                            break;
+
+                        case "3":
+                            if (rl414 != null) {
+                                rl414.shutdownThread(false);
+                            }
+                            rl415.run();
+                            tv4_4.setText(newResult.getValue());
+                            break;
+                        case "4":
+                            if (rl415 != null) {
+                                rl415.shutdownThread(false);
+                            }
+                            rl416.run();
+                            tv4_5.setText(newResult.getValue());
+                            break;
+                        case "5":
+                            if (rl416 != null) {
+                                rl416.shutdownThread(false);
+                            }
+                            rl417.run();
+                            tv4_6.setText(newResult.getValue());
+                            break;
+                        case "6":
+                            if (rl417 != null) {
+                                rl417.shutdownThread(false);
+                            }
+                            rl311.run();
+                            tv4_7.setText(newResult.getValue());
+                            break;
+                    }
+
+                }
+                break;
+            case "res_third":
+                if (newResult.getValue() != null) {
+                    switch (newResult.getIndex()) {
+                        case "0":
+                            if (rl311 != null) {
+                                rl311.shutdownThread(false);
+                            }
+                            rl312.run();
+                            tv3_1.setText(newResult.getValue());
+                            break;
+                        case "1":
+                            if (rl312 != null) {
+                                rl312.shutdownThread(false);
+                            }
+                            rl_second_1.run();
+                            tv3_2.setText(newResult.getValue());
+                            break;
+                    }
+                }
+                break;
+            case "res_second":
+                if (rl_second_1 != null) {
+                    rl_second_1.shutdownThread(false);
+                }
+                rl_first_1.run();
+                tv2_1.setText(newResult.getValue());
+                break;
+            case "res_first":
+                if (rl_first_1 != null) {
+                    rl_first_1.shutdownThread(false);
+                }
+                rl_special_1.run();
+                tv1_1.setText(newResult.getValue());
+                break;
+            case "res_special":
+                if (rl_special_1 != null) {
+                    rl_special_1.shutdownThread(true);
+                }
+                special_value = newResult.getValue();
+                LotoSpecial_1 = newResult.getValue();
+                tvDb.setText(newResult.getValue());
                 break;
         }
     }
@@ -2373,12 +2434,31 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
     @Override
     public void onResume() {
         super.onResume();
-
 //        if ((toDay && TimeUtils.checkTimeInMilisecondNorth(16, 10, 16, 40)) || isLive) {
 
-        if ((toDay && TimeUtils.checkTimeInMilisecondNorth(16, 10, 16, 40)) || isLive) {
+        if (isLive) {
             isLive = false;
             presenter.connectSocket();
+        }
+        if (keepConnect){
+            presenter.connectSocket();
+        }
+        if (toDay && TimeUtils.checkTimeInMilisecondNorth(16, 10, 16, 40)) {
+            presenter.connectSocket();
+        }
+        sound = SharedUtils.getInstance().getBooleanDefaultTrueValue(Constants.SOUND_FLAG);
+        if (!sound) {
+            if (audioManager != null) {
+                audioManager.setStreamMute(AudioManager.STREAM_MUSIC, true);
+            }
+            if (img_mute != null) {
+                img_mute.setImageResource(R.mipmap.ic_mute_on);
+            }
+        } else {
+            if (img_mute != null) {
+                img_mute.setImageResource(R.mipmap.ic_mute);
+            }
+            audioManager.setStreamMute(AudioManager.STREAM_MUSIC, false);
         }
 
     }
@@ -2386,9 +2466,7 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (toDay && TimeUtils.checkTimeInMilisecondNorth(16, 10, 16, 40)) {
-            presenter.disconnectSocket();
-        }
+        presenter.checkSocket();
 
         if (player != null) {
             player.release();
@@ -2403,7 +2481,7 @@ public class FragmentSouthContent extends BasicFragment implements IFragmentSout
 
     private void destroyView() {
         if (player != null)
-            player.stop();
+            player.release();
     }
 
     private boolean getExistsBegin() {

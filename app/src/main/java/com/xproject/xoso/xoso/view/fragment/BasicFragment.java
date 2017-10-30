@@ -33,7 +33,7 @@ public abstract class BasicFragment extends IFragment implements BasicView {
 
             dialogProgress = new Dialog(getContext(), R.style.Theme_Transparents);
             dialogProgress.setContentView(R.layout.dialog_progressview);
-            dialogProgress.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            dialogProgress.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
             dialogProgress.setCanceledOnTouchOutside(isTouchOutside);
             dialogProgress.setCancelable(isCancel);
 

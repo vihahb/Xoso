@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -93,10 +94,12 @@ public class SettingActivity extends BasicActivity {
         if (id == R.id.action_save) {
 
         } else if (id == android.R.id.home) {
-            PlaceholderFragment page = (PlaceholderFragment) getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.container + ":" + mViewPager.getCurrentItem());
-            // based on the current position you can then cast the page to the correct
-            // class and call the method:
-            page.onSave();
+            if (mViewPager.getCurrentItem() == 0) {
+                PlaceholderFragment page = (PlaceholderFragment) getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.container + ":" + mViewPager.getCurrentItem());
+                // based on the current position you can then cast the page to the correct
+                // class and call the method:
+                page.onSave();
+            }
             finish();
         }
 
@@ -115,10 +118,12 @@ public class SettingActivity extends BasicActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        PlaceholderFragment page = (PlaceholderFragment) getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.container + ":" + mViewPager.getCurrentItem());
-        // based on the current position you can then cast the page to the correct
-        // class and call the method:
-        page.onSave();
+        if (mViewPager.getCurrentItem() == 0) {
+            PlaceholderFragment page = (PlaceholderFragment) getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.container + ":" + mViewPager.getCurrentItem());
+            // based on the current position you can then cast the page to the correct
+            // class and call the method:
+            page.onSave();
+        }
     }
 
     /**
@@ -142,6 +147,8 @@ public class SettingActivity extends BasicActivity {
         private RadioButton radio_n, radio_c, radio_s;
         private RadioGroup radio_group_region;
         private boolean viewCreated = false;
+
+        private TextView tv_content, tv_content_1;
 
 
         /**
@@ -182,9 +189,41 @@ public class SettingActivity extends BasicActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_setting_region, container, false);
-            initView(rootView);
-            return rootView;
+
+            if (type_action == 0) {
+                View rootView = inflater.inflate(R.layout.fragment_setting_region, container, false);
+                initView(rootView);
+                return rootView;
+            } else if (type_action == 1) {
+                View rootView = inflater.inflate(R.layout.fragment_setting, container, false);
+                initView2(rootView);
+                return rootView;
+            }
+            return null;
+        }
+
+
+        void initView2(View rootView){
+            tv_content = (TextView) rootView.findViewById(R.id.tv_content);
+            tv_content_1 = (TextView) rootView.findViewById(R.id.tv_content_1);
+            String result = "Vui lòng đọc kỹ Thoả Thuận Sử Dụng trước khi bạn tiến hành tải và cải đặt ứng dụng XosoVIP.\n" +
+                    "Bằng việc tải và cài đặt ứng dụng, bạn đã chấp nhận và đồng ý bị ràng buộc bởi các điều khoản của chúng tôi. Trường hợp bạn không đồng ý với bất kỳ điều khoản sử dụng nào của chúng tôi, vui lòng không tải, cài đặt và sử dụng ứng dụng hoặc tháo gỡ ứng dụng khỏi thiết bị di động của bạn." +
+                    "<br>" +
+                    "<br>" +
+                    "<br><b>1.\tCập nhật điều khoản:</b><br>" +
+                    "Thoả thuận này có thể được cập nhật thường xuyên bởi công ty quản lý ứng dụng (XTL). Phiên bản cập nhật sẽ hiển thị trên phiên bản ứng dụng mới nhất. Phiên bản cập nhật sẽ thay thế cho các quy định và điều kiện thoản thuận ban đầu. Vui lòng truy cập vào ứng dụng Cài đặt – Điều khoản để xem nội dung chi tiết.<br>" +
+                    "<br><b>2.\tGiới thiệu về Ứng dụng</b><br>" +
+                    "XosoVIP là ứng dụng tra cứu kết quả xổ số 3 miền (Bắc – Trung - Nam). Dành riêng cho người dùng di động tại Việt Nam. Ứng dụng không yêu cầu bất kỳ thông tin của người dùng ngoài việc sử dụng mạng Internet để truy xuất dữ liệu. Các tính năng chính của ứng dụng là: Thống kê lô tô nhanh, Thống kê lô tô Vip, Truy xuất kết quả 3 miền Bắc – Trung – Nam, Tường thuật trực tiếp khi quay số 3 miền, Soi cầu lô tô, Quay thử, Theo dõi lịch quay thưởng. Ứng dụng hỗ trợ trên các nên tảng là Android, iOS.<br>" +
+                    "<br><b>3.\tQuyền sở hữu ứng dụng:</b><br>" +
+                    "Ứng dụng này được phát triển và sở hữu bởi XTL, tất cả các quyền sở hữu trí tuệ liên quan đến ứng dụng bao gồm (nhưng không giới hạn): Mã nguồn, hình ảnh, dữ liệu, thông tin, nội dung chứa đựng trong ứng dụng.<br>" +
+                    "<br><b>4.\tThông tin dữ liệu:</b><br>" +
+                    "Mọi thông tin trên ứng dụng được xây dựng nhằm mục đích tham khảo. Chúng tôi không chịu trách nhiệm khi người dung sử dụng thông tin ứng dụng vào mục đích cá nhân và vi phạm pháp luật. \n";
+            tv_content.setText(Html.fromHtml(result));
+
+            String bold = "Lưu ý: Thông tin dữ liệu trong ứng dụng chỉ mang tính chất tham khảo. <br>" +
+                    "<br>" +
+                    "Trân trọng cảm ơn bạn đã sử dụng sản phẩm và dịch vụ của chúng tôi.";
+            tv_content_1.setText(Html.fromHtml(bold));
         }
 
         private void initView(View rootView) {
@@ -248,8 +287,10 @@ public class SettingActivity extends BasicActivity {
         @Override
         public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
             super.onViewCreated(view, savedInstanceState);
-            viewCreated = true;
-            getData();
+            if (type_action == 0){
+                viewCreated = true;
+                getData();
+            }
         }
 
         public void onSave() {
@@ -372,66 +413,22 @@ public class SettingActivity extends BasicActivity {
         public void onResume() {
             super.onResume();
         }
-    }
-
-    public static class PlaceholderFragmentTwo extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-        private int section;
-
-        /**
-         * Variable flag get from SharePref
-         */
-        private int tmp_flag_region_radio = 0;
-        private boolean tmp_flag_n = false, tmp_flag_c = false, tmp_flag_s = false;
-
-
-        /**
-         * Variable flag save to SharePref
-         */
-        private int flag_region_radio = 0;
-        private boolean flag_n = false, flag_c = false, flag_s = false;
-        private int province_code = -1;
-
-        public PlaceholderFragmentTwo() {
-        }
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragmentTwo newInstance(int sectionNumber) {
-            PlaceholderFragmentTwo fragment = new PlaceholderFragmentTwo();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
 
         @Override
-        public void onCreate(@Nullable Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            section = getArguments().getInt(ARG_SECTION_NUMBER);
+        public void onPause() {
+            super.onPause();
+            if (type_action == 0){
+                onSave();
+            }
         }
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_setting, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
-            return rootView;
+        public void onDestroy() {
+            super.onDestroy();
+            if (type_action == 0){
+                onSave();
+            }
         }
-
-        @Override
-        public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-            super.onViewCreated(view, savedInstanceState);
-        }
-
     }
 
     /**
@@ -449,7 +446,7 @@ public class SettingActivity extends BasicActivity {
             if (position == 0) {
                 return PlaceholderFragment.newInstance(0);
             } else if (position == 1) {
-                return PlaceholderFragmentTwo.newInstance(position + 1);
+                return PlaceholderFragment.newInstance(1);
             }
             return null;
         }

@@ -2,11 +2,13 @@ package com.xproject.xoso.xoso.view.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,9 +79,10 @@ public class FragmentCentralResult extends BasicFragment implements OnLoadComple
         // set pager to current date
 
         recyclerTabLayout = (RecyclerTabLayout) view.findViewById(R.id.recycler_tab_layout);
-        adapterCalendar = new AdapterCalendar(vpPager, getContext(), calendarList);
+        adapterCalendar = new AdapterCalendar(vpPager, getContext());
         recyclerTabLayout.setUpWithViewPager(vpPager);
         recyclerTabLayout.setAdapter(adapterCalendar);
+        adapterCalendar.refreshList(calendarList);
 
         if (TimeUtils.checkTimeInMilisecondNorth(17, 10, 23, 58)) {
             vpPager.setCurrentItem(fragmentList.size() - 1);
@@ -97,7 +100,46 @@ public class FragmentCentralResult extends BasicFragment implements OnLoadComple
     }
 
     public void queryResult(Calendar calendar) {
-        vpPager.setCurrentItem(TimeUtils.getPositionForDay(calendar));
+        showProgressBar(false, false, null, "Loading...");
+
+        long one_month = 2629746000L;
+
+        Calendar last_calendar = Calendar.getInstance();
+        last_calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+        Log.e(TAG, "last_calendar: " + last_calendar.get(Calendar.YEAR) + "-" + last_calendar.get(Calendar.MONTH) + "-" + last_calendar.get(Calendar.DAY_OF_MONTH));
+
+        final Calendar first_calendar = Calendar.getInstance();
+        first_calendar.setTimeInMillis(last_calendar.getTimeInMillis() - one_month);
+        Log.e(TAG, "first_calendar: " + first_calendar.get(Calendar.YEAR) + "-" + first_calendar.get(Calendar.MONTH) + "-" + first_calendar.get(Calendar.DAY_OF_MONTH));
+
+
+        int DAYS_OF_TIME = (int) ((last_calendar.getTimeInMillis() - first_calendar.getTimeInMillis()) / (24 * 60 * 60 * 1000)) + 1;
+        Log.e(TAG, "DAYS_OF_TIME: " + DAYS_OF_TIME);
+
+        fragmentList.clear();
+        calendarList.clear();
+        for (int i = 0; i < DAYS_OF_TIME; i++) {
+            MyCalendar set_calendar = new MyCalendar();
+            set_calendar.setDateLabel(CalendarUtils.getDayNameTitle(getDayForPosition(first_calendar, i)));
+            set_calendar.setDateValue(CalendarUtils.getDay(getDayForPosition(first_calendar, i)));
+            set_calendar.setMonthLabel(CalendarUtils.getMonthName(getDayForPosition(first_calendar, i)));
+            set_calendar.setMonthValue(CalendarUtils.getMonthValue(getDayForPosition(first_calendar, i)));
+            calendarList.add(i, set_calendar);
+            fragmentList.add(i, FragmentCentralContent.newInstance(getDayForPosition(first_calendar,i).getTimeInMillis()));
+        }
+        adapterCalendar.refreshList(calendarList);
+        adapterViewPager.notifyDataSetChanged();
+
+        if (fragmentList.size() > 0){
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    vpPager.setCurrentItem(fragmentList.size()-1);
+                    closeProgressBar();
+
+                }
+            }, 1500);
+        }
     }
 
     public void setLive() {
@@ -140,6 +182,16 @@ public class FragmentCentralResult extends BasicFragment implements OnLoadComple
         }
 
         @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            return super.instantiateItem(container, position);
+        }
+
+        @Override
+        public int getItemPosition(Object object) {
+            return POSITION_NONE;
+        }
+
+        @Override
         public Fragment getItem(int position) {
             return list.get(position);
         }
@@ -149,5 +201,15 @@ public class FragmentCentralResult extends BasicFragment implements OnLoadComple
             Calendar cal = TimeUtils.getDayForPosition(position);
             return TimeUtils.getTitleTime(mContext, cal.getTimeInMillis());
         }
+    }
+
+    public Calendar getDayForPosition(Calendar FIRST_DAY_OF_TIME, int position) throws IllegalArgumentException {
+        if (position < 0) {
+            throw new IllegalArgumentException("position cannot be negative");
+        }
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(FIRST_DAY_OF_TIME.getTimeInMillis());
+        cal.add(Calendar.DAY_OF_YEAR, position);
+        return cal;
     }
 }

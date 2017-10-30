@@ -25,6 +25,8 @@ public class SpeedTemp implements Serializable {
     private String day_name;
     private String week;
 
+    private int position_1, position_2;
+
     private String AllOrOne;
 
     public SpeedTemp() {
@@ -149,6 +151,22 @@ public class SpeedTemp implements Serializable {
 
     public void setAllOrOne(String allOrOne) {
         AllOrOne = allOrOne;
+    }
+
+    public int getPosition_1() {
+        return position_1;
+    }
+
+    public void setPosition_1(int position_1) {
+        this.position_1 = position_1;
+    }
+
+    public int getPosition_2() {
+        return position_2;
+    }
+
+    public void setPosition_2(int position_2) {
+        this.position_2 = position_2;
     }
 
     @Override

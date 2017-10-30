@@ -85,14 +85,20 @@ public class LuckyActivity extends BasicActivity implements ILuckyActivityView, 
         tv_number.setVisibility(View.VISIBLE);
         tv_result_1.setVisibility(View.VISIBLE);
 
+//        String result = "Ngày sinh: "
+//                + tv_date.getText().toString() + "/"
+//                + tv_month.getText().toString() + "/"
+//                + tv_year.getText().toString()
+//                + ". Ngày " + luckyEntity.getCanchingay()
+//                + ", tháng " + luckyEntity.getCanchithang()
+//                + ", năm " + luckyEntity.getCanchi()
+//                + "\nTheo ngũ hành tương sinh (Kim - mộc - thuỷ - hoả - thổ) các số may mắn của bạn là:";
+
         String result = "Ngày sinh: "
                 + tv_date.getText().toString() + "/"
                 + tv_month.getText().toString() + "/"
-                + tv_year.getText().toString()
-                + ". Ngày " + luckyEntity.getCanchingay()
-                + ", tháng " + luckyEntity.getCanchithang()
-                + ", năm " + luckyEntity.getCanchi()
-                + "\nTheo ngũ hành tương sinh (Kim - mộc - thuỷ - hoả - thổ) các số may mắn của bạn là:";
+                + tv_year.getText().toString() + ". \n" +
+                "Theo ngũ hành tương sinh (Kim - mộc - thuỷ - hoả - thổ) các số may mắn của bạn là:";
         tv_result.setText(result);
         List<String> number = luckyEntity.getData();
         Collections.sort(number);

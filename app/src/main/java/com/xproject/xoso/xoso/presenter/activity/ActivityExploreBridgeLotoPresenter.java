@@ -50,6 +50,15 @@ public class ActivityExploreBridgeLotoPresenter {
                     url = "http://xoso.la/index.php?route=webview/lotohainhay&proviceCode=" + speedTemp.getId_cat() + "&endDate=" + speedTemp.getDate_format_end() + "&day_count=" + speedTemp.getDate_count();
                     view.returnUrl(url);
                     break;
+
+                case 9:
+                    if (speedTemp.isOnly_special()){
+                        url = "http://xoso.la/index.php?route=webview/chitietlsc&proviceCode=" + speedTemp.getId_cat() + "&start_date="+ speedTemp.getDate_begin() + "&end_date=" + speedTemp.getDate_end() + "&start=" + speedTemp.getPosition_1() + "&end=" + speedTemp.getPosition_2() + "type=bach_thu";
+                    } else {
+                        url = "http://xoso.la/index.php?route=webview/chitietlsc&proviceCode=" + speedTemp.getId_cat() + "&start_date="+ speedTemp.getDate_begin() + "&end_date=" + speedTemp.getDate_end() + "&start=" + speedTemp.getPosition_1() + "&end=" + speedTemp.getPosition_2() + "type=loto";
+                    }
+                    view.returnUrl(url);
+                    break;
             }
         }
     };
@@ -84,5 +93,9 @@ public class ActivityExploreBridgeLotoPresenter {
 
     public void getTypeBachthu(SpeedTemp temp) {
         icmd.excute(4, temp);
+    }
+
+    public void getHistory(SpeedTemp temp){
+        icmd.excute(9, temp);
     }
 }

@@ -32,7 +32,7 @@
         <shape>
             <solid android:color="@android:color/transparent" />
             <stroke
-                android:width="0.5dp"
+                android:width="1.5dp"
                 android:color="@color/black_40"
                 android:dashWidth="10px" />
         </shape>

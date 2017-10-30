@@ -36,8 +36,9 @@ public class ActivityExploreBridgeLoto extends BasicActivity implements Activity
     boolean loadingFinished = true;
     boolean redirect = false;
     int action;
-    TextInputLayout input_number, input_end;
+
     Toolbar toolbar;
+    TextInputLayout input_number, input_end;
     private Spinner sp_province;
     private AdapterSpinner adapterSpinner;
     private List<ProvinceEntity> provinceEntityList;

@@ -232,17 +232,9 @@ public class FragmentSouthContentPresenter {
                                 if (socket != null) {
                                     if (!socket.connected()) {
                                         socket.connect();
+                                    } else {
+                                        socket.io().open().reconnection(true);
                                     }
-
-                                    socket.on(Socket.EVENT_CONNECT, onConnect);
-                                    socket.on(Socket.EVENT_CONNECT_ERROR, onConnectError);
-                                    socket.on(Socket.EVENT_CONNECT_TIMEOUT, onConnectError);
-                                    socket.on(Socket.EVENT_DISCONNECT, onDisconnect);
-                                    socket.on("authenticated", authenticate);
-                                    socket.on("current_result", currentResult);
-                                    socket.on("new_result", newResult);
-                                    socket.on("liveloto", liveLoto);
-                                    socket.on("done", done);
                                 }
                             }
                         });
@@ -263,6 +255,16 @@ public class FragmentSouthContentPresenter {
                 throw new RuntimeException(e);
             }
         }
+
+        socket.on(Socket.EVENT_CONNECT, onConnect);
+        socket.on(Socket.EVENT_CONNECT_ERROR, onConnectError);
+        socket.on(Socket.EVENT_CONNECT_TIMEOUT, onConnectError);
+        socket.on(Socket.EVENT_DISCONNECT, onDisconnect);
+        socket.on("authenticated", authenticate);
+        socket.on("current_result", currentResult);
+        socket.on("new_result", newResult);
+        socket.on("liveloto", liveLoto);
+        socket.on("done", done);
     }
 
     public void getResultLottery(String date) {

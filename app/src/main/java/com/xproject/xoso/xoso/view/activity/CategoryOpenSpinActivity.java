@@ -57,37 +57,37 @@ public class CategoryOpenSpinActivity extends BasicActivity {
         switch (dayOfWeek){
             case 1:
                 ln_cn.setBackgroundColor(getResources().getColor(R.color.table_x));
-                String result_cn ="Chủ nhật\n<font color='#eb2227'>(Hôm nay)</font>";
+                String result_cn ="Chủ nhật\n<br><font color='#eb2227'>(Hôm nay)</font>";
                 tv_title_cn.setText(Html.fromHtml(result_cn));
                 break;
             case 2:
                 ln_2.setBackgroundColor(getResources().getColor(R.color.table_x));
-                String result_2 ="Hai\n<font color='#eb2227'>(Hôm nay)</font>";
+                String result_2 ="Hai\n<br><font color='#eb2227'>(Hôm nay)</font>";
                 tv_title_2.setText(Html.fromHtml(result_2));
                 break;
             case 3:
                 ln_3.setBackgroundColor(getResources().getColor(R.color.table_x));
-                String result_3 ="Ba\n<font color='#eb2227'>(Hôm nay)</font>";
+                String result_3 ="Ba\n<br><font color='#eb2227'>(Hôm nay)</font>";
                 tv_title_3.setText(Html.fromHtml(result_3));
                 break;
             case 4:
                 ln_4.setBackgroundColor(getResources().getColor(R.color.table_x));
-                String result_4 ="Bốn\n<font color='#eb2227'>(Hôm nay)</font>";
+                String result_4 ="Bốn\n<br><font color='#eb2227'>(Hôm nay)</font>";
                 tv_title_4.setText(Html.fromHtml(result_4));
                 break;
             case 5:
                 ln_5.setBackgroundColor(getResources().getColor(R.color.table_x));
-                String result_5 ="Năm\n<font color='#eb2227'>(Hôm nay)</font>";
+                String result_5 ="Năm\n<br><font color='#eb2227'>(Hôm nay)</font>";
                 tv_title_5.setText(Html.fromHtml(result_5));
                 break;
             case 6:
                 ln_6.setBackgroundColor(getResources().getColor(R.color.table_x));
-                String result_6 ="Sáu\n<font color='#eb2227'>(Hôm nay)</font>";
+                String result_6 ="Sáu\n<br><font color='#eb2227'>(Hôm nay)</font>";
                 tv_title_6.setText(Html.fromHtml(result_6));
                 break;
             case 7:
                 ln_7.setBackgroundColor(getResources().getColor(R.color.table_x));
-                String result_7 ="Bảy\n<font color='#eb2227'>(Hôm nay)</font>";
+                String result_7 ="Bảy\n<br><font color='#eb2227'>(Hôm nay)</font>";
                 tv_title_7.setText(Html.fromHtml(result_7));
                 break;
 

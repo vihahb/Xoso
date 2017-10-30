@@ -127,7 +127,7 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
         context = getContext();
         check_done = SharedUtils.getInstance().getBooleanValue(Constants.CHECK_DONE_N);
         audioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
-        player = MediaPlayer.create(getContext(), R.raw.text_notification);
+        player = MediaPlayer.create(getContext(), R.raw.notification11);
         tv_not_yet = findTextView(R.id.tv_not_yet);
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -265,7 +265,11 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(millis);
         String date_label = CalendarUtils.getDayName(calendar);
-        tv_title.setText(date_label + ", ngày " + calendar.get(Calendar.DAY_OF_MONTH) + " tháng " + (calendar.get(Calendar.MONTH) + 1) + " năm " + calendar.get(Calendar.YEAR));
+        if (date_label != null && !date_label.equals("")){
+            tv_title.setText(date_label + ", ngày " + calendar.get(Calendar.DAY_OF_MONTH) + " tháng " + (calendar.get(Calendar.MONTH) + 1) + " năm " + calendar.get(Calendar.YEAR));
+        } else {
+            tv_title.setText("Ngày " + calendar.get(Calendar.DAY_OF_MONTH) + " tháng " + (calendar.get(Calendar.MONTH) + 1) + " năm " + calendar.get(Calendar.YEAR));
+        }
     }
 
     @Override
@@ -754,7 +758,7 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
                 r36 = new Roller(tv_36, 100000, 100, 99999, 10000);
 
             if (r41 == null)
-                r41 = new Roller(tv_41, 100000, 100, 99999, 10000);
+                r41 = new Roller(tv_41, 100000, 100, 9999, 1000);
 
             if (r42 == null)
                 r42 = new Roller(tv_42, 100000, 100, 9999, 1000);
@@ -2014,6 +2018,21 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
         if (isLive) {
             isLive = false;
             presenter.socketConnect(toDay);
+        }
+
+        sound = SharedUtils.getInstance().getBooleanDefaultTrueValue(Constants.SOUND_FLAG);
+        if (!sound){
+            if (audioManager!=null){
+                audioManager.setStreamMute(AudioManager.STREAM_MUSIC, true);
+            }
+            if (img_mute !=null){
+                img_mute.setImageResource(R.mipmap.ic_mute_on);
+            }
+        } else {
+            if (img_mute != null){
+                img_mute.setImageResource(R.mipmap.ic_mute);
+            }
+            audioManager.setStreamMute(AudioManager.STREAM_MUSIC, false);
         }
     }
 
