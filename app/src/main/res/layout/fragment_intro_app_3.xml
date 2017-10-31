@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/red_dark"
+    android:background="@drawable/intro_2"
     android:orientation="vertical">
 
     <ImageView
@@ -16,36 +16,65 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:layout_marginBottom="@dimen/size_64"
         android:orientation="vertical"
         android:paddingLeft="@dimen/size_16"
-        android:paddingRight="@dimen/size_16">
+        android:paddingRight="@dimen/size_16"
+        android:gravity="center">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Vui lòng chọn tỉnh thành mặc định mà bạn yêu thích."
+            android:text="Vui lòng chọn vùng miền mặc định mà bạn muốn xem"
             android:textColor="@android:color/white"
             android:textSize="@dimen/font_16" />
 
         <LinearLayout
-            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
-            android:background="@drawable/border_white"
-            android:orientation="vertical">
+            android:layout_marginLeft="@dimen/size_8"
+            android:layout_marginRight="@dimen/size_8"
+            android:orientation="horizontal">
 
-            <Spinner
-                android:id="@+id/sp_province"
+            <RadioGroup
+                android:id="@+id/radio_group_region"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/size_36"
-                android:layout_gravity="center"
-                android:background="@android:color/transparent" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_16"
+                android:gravity="right"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radio_n"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:minHeight="@dimen/size_36"
+                    android:text="Miền Bắc"
+                    android:textSize="@dimen/font_11"
+                    android:theme="@style/checkBoxStyleIntro" />
+
+                <RadioButton
+                    android:id="@+id/radio_c"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:minHeight="@dimen/size_36"
+                    android:text="Miền Trung"
+                    android:textSize="@dimen/font_11"
+                    android:theme="@style/checkBoxStyleIntro" />
+
+                <RadioButton
+                    android:id="@+id/radio_s"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:minHeight="@dimen/size_36"
+                    android:text="Miền Nam"
+                    android:textSize="@dimen/font_11"
+                    android:theme="@style/checkBoxStyleIntro" />
+            </RadioGroup>
         </LinearLayout>
     </LinearLayout>
 

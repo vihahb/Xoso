@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusableInTouchMode="true"
-    tools:context="com.xproject.xoso.xoso.view.activity.DreamActivity">
+    tools:context="com.xProject.XosoVIP.xoso.view.activity.DreamActivity">
 
     <include layout="@layout/toolbar" />
 

@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.xproject.xoso.xoso.view.activity.SyntheticListActivity">
+    tools:context="com.xProject.XosoVIP.xoso.view.activity.SyntheticListActivity">
 
     <include layout="@layout/toolbar" />
 

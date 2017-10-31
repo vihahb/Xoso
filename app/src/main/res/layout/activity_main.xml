@@ -39,7 +39,7 @@
 
             </android.support.design.widget.AppBarLayout>
 
-            <com.xproject.xoso.xoso.view.widget.LockableViewPager
+            <com.xProject.XosoVIP.xoso.view.widget.LockableViewPager
                 android:id="@+id/vpMain"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

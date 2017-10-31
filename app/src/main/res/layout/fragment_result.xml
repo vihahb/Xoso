@@ -17,7 +17,7 @@
         app:tabSelectedTextColor="@android:color/white"
         app:tabTextColor="@android:color/white" />
 
-    <com.xproject.xoso.xoso.view.widget.LockableViewPager
+    <com.xProject.XosoVIP.xoso.view.widget.LockableViewPager
         android:id="@+id/vp_result"
         android:layout_width="match_parent"
         android:layout_height="0dp"

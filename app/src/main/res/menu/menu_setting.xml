@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.xproject.xoso.xoso.view.activity.SettingActivity">
+    tools:context="com.xProject.XosoVIP.xoso.view.activity.SettingActivity">
     <item
         android:visible="false"
         android:id="@+id/action_save"

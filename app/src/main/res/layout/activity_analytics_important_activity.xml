@@ -4,7 +4,7 @@
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.xproject.xoso.xoso.view.activity.AnalyticsImportantActivity">
+    tools:context="com.xProject.XosoVIP.xoso.view.activity.AnalyticsImportantActivity">
 
     <include
         android:id="@+id/include2"

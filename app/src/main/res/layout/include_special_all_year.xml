@@ -6,7 +6,7 @@
     android:layout_marginTop="@dimen/size_16"
     android:background="@drawable/bolder_table"
     android:orientation="vertical"
-    tools:context="com.xproject.xoso.xoso.view.activity.SpecialTomorowInfoActivity">
+    tools:context="com.xProject.XosoVIP.xoso.view.activity.SpecialTomorowInfoActivity">
 
     <TextView
         android:id="@+id/tv_title_special_all_year"
