@@ -11,7 +11,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.xproject.xoso.sdk.common.Constants;
-import com.xtelsolution.xoso.R;
+import com.xproject.xoso.R;
 
 public class WebViewActivity extends BasicActivity {
 

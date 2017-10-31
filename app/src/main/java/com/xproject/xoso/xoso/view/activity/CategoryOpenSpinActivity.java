@@ -1,13 +1,12 @@
 package com.xproject.xoso.xoso.view.activity;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.xtelsolution.xoso.R;
+import com.xproject.xoso.R;
 
 import java.util.Calendar;
 

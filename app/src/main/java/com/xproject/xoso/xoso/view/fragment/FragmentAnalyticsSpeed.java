@@ -20,7 +20,7 @@ import com.xproject.xoso.xoso.view.activity.AnalyticsSynthetic;
 import com.xproject.xoso.xoso.view.adapter.AdapterGridMenu;
 import com.xproject.xoso.xoso.view.adapter.inf.ViewGrid;
 import com.xproject.xoso.xoso.view.fragment.inf.IAnalyticsSpeed;
-import com.xtelsolution.xoso.R;
+import com.xproject.xoso.R;
 
 import java.util.ArrayList;
 import java.util.List;

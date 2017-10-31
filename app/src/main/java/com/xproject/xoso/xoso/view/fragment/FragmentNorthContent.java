@@ -6,7 +6,6 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -34,7 +33,7 @@ import com.xproject.xoso.xoso.presenter.fragment.FragmentNorthContentPresenter;
 import com.xproject.xoso.xoso.view.activity.MainActivity;
 import com.xproject.xoso.xoso.view.adapter.AdapterLoto;
 import com.xproject.xoso.xoso.view.fragment.inf.IFragmentNorthContentView;
-import com.xtelsolution.xoso.R;
+import com.xproject.xoso.R;
 
 import java.util.ArrayList;
 import java.util.Calendar;

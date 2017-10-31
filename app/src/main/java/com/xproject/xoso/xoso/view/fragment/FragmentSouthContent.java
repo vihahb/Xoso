@@ -30,7 +30,7 @@ import com.xproject.xoso.xoso.model.respond.RESP_Result;
 import com.xproject.xoso.xoso.presenter.fragment.FragmentSouthContentPresenter;
 import com.xproject.xoso.xoso.view.activity.MainActivity;
 import com.xproject.xoso.xoso.view.fragment.inf.IFragmentSouthContent;
-import com.xtelsolution.xoso.R;
+import com.xproject.xoso.R;
 
 import java.util.Calendar;
 import java.util.List;

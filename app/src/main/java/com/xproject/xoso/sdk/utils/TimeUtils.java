@@ -6,7 +6,7 @@ import android.util.Log;
 import android.widget.DatePicker;
 
 import com.xproject.xoso.sdk.callback.DateTimePickerListener;
-import com.xtelsolution.xoso.R;
+import com.xproject.xoso.R;
 
 import java.text.DateFormat;
 import java.text.ParseException;

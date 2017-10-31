@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import com.github.paolorotolo.appintro.AppIntro;
 import com.xproject.xoso.xoso.view.fragment.BasicFragment;
-import com.xtelsolution.xoso.R;
+import com.xproject.xoso.R;
 
 public class AppIntroActivity extends AppIntro {
 

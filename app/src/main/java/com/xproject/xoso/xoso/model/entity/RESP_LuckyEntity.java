@@ -11,11 +11,9 @@ import java.util.List;
 
 public class RESP_LuckyEntity extends RESP_Basic {
     @Expose
-    List<String> data;
-
+    private List<String> data;
     @Expose
-    CunmenhEntity cungmenh;
-
+    private CunmenhEntity cungmenh;
     @Expose
     private String canchi;
     @Expose

@@ -21,7 +21,7 @@ import com.xproject.xoso.xoso.presenter.activity.FrequencyLotoActivityPresenter;
 import com.xproject.xoso.xoso.view.activity.inf.IFrequencyLotoActivity;
 import com.xproject.xoso.xoso.view.adapter.AdapterSpinner;
 import com.xproject.xoso.xoso.view.adapter.AdapterStringCustom;
-import com.xtelsolution.xoso.R;
+import com.xproject.xoso.R;
 
 import java.util.ArrayList;
 import java.util.Calendar;

@@ -16,7 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.xtelsolution.xoso.R;
+import com.xproject.xoso.R;
 
 import java.io.Serializable;
 

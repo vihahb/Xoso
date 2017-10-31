@@ -1,6 +1,5 @@
 package com.xproject.xoso.xoso.view.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.ActionBar;
@@ -24,7 +23,7 @@ import com.xproject.xoso.xoso.model.entity.SpeedTemp;
 import com.xproject.xoso.xoso.presenter.activity.ActivityExploreBridgeLotoPresenter;
 import com.xproject.xoso.xoso.view.activity.inf.ActivityExploreBridgeLotoView;
 import com.xproject.xoso.xoso.view.adapter.AdapterSpinner;
-import com.xtelsolution.xoso.R;
+import com.xproject.xoso.R;
 
 import java.util.Calendar;
 import java.util.List;

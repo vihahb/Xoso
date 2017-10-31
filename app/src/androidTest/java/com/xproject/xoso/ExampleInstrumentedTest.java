@@ -1,4 +1,4 @@
-package com.xtelsolution.xoso;
+package com.xproject.xoso;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

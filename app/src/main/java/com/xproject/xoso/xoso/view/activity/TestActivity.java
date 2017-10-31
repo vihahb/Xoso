@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import com.xtelsolution.xoso.R;
+import com.xproject.xoso.R;
 
 public class TestActivity extends AppCompatActivity {
 

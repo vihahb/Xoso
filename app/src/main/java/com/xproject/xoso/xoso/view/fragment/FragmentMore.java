@@ -8,18 +8,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.xproject.xoso.sdk.common.Constants;
 import com.xproject.xoso.xoso.model.entity.GridMenu;
 import com.xproject.xoso.xoso.presenter.fragment.FragmentMorePresenter;
 import com.xproject.xoso.xoso.view.activity.CategoryOpenSpinActivity;
 import com.xproject.xoso.xoso.view.activity.DreamActivity;
 import com.xproject.xoso.xoso.view.activity.LuckyActivity;
 import com.xproject.xoso.xoso.view.activity.RandomSpinActivity;
-import com.xproject.xoso.xoso.view.activity.WebViewActivity;
 import com.xproject.xoso.xoso.view.adapter.AdapterGridMenu;
 import com.xproject.xoso.xoso.view.adapter.inf.ViewGrid;
 import com.xproject.xoso.xoso.view.fragment.inf.IFragmentMore;
-import com.xtelsolution.xoso.R;
+import com.xproject.xoso.R;
 
 import java.util.ArrayList;
 import java.util.List;

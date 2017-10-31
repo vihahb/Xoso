@@ -6,7 +6,7 @@ import android.util.Log;
 import com.xproject.xoso.xoso.ProjectApplication;
 import com.xproject.xoso.xoso.model.entity.Error;
 import com.xproject.xoso.xoso.model.respond.RESP_Basic;
-import com.xtelsolution.xoso.R;
+import com.xproject.xoso.R;
 
 public abstract class ResponseHandle<T extends RESP_Basic> {
     private Class<T> clazz;

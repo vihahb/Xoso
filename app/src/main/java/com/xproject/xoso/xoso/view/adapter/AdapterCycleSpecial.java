@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.xproject.xoso.sdk.utils.TimeUtils;
 import com.xproject.xoso.xoso.model.entity.SpecialCycleEntity;
-import com.xtelsolution.xoso.R;
+import com.xproject.xoso.R;
 
 import java.util.ArrayList;
 import java.util.List;

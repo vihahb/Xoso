@@ -19,7 +19,7 @@ import com.xproject.xoso.xoso.view.activity.SpecialTomorowActivity;
 import com.xproject.xoso.xoso.view.adapter.AdapterGridMenu;
 import com.xproject.xoso.xoso.view.adapter.inf.ViewGrid;
 import com.xproject.xoso.xoso.view.fragment.inf.IAnalyticsNormal;
-import com.xtelsolution.xoso.R;
+import com.xproject.xoso.R;
 
 import java.util.ArrayList;
 import java.util.List;

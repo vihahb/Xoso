@@ -4,7 +4,7 @@ import android.os.AsyncTask;
 
 import com.xproject.xoso.xoso.ProjectApplication;
 import com.xproject.xoso.xoso.model.entity.Error;
-import com.xtelsolution.xoso.R;
+import com.xproject.xoso.R;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;

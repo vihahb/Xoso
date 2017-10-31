@@ -6,7 +6,6 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,7 +18,7 @@ import com.xproject.xoso.xoso.model.entity.MyCalendar;
 import com.xproject.xoso.xoso.view.adapter.AdapterCalendar;
 import com.xproject.xoso.xoso.view.adapter.CachingFragmentStatePagerAdapter;
 import com.xproject.xoso.xoso.view.widget.RecyclerTabLayout;
-import com.xtelsolution.xoso.R;
+import com.xproject.xoso.R;
 
 import java.util.ArrayList;
 import java.util.Calendar;

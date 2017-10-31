@@ -30,7 +30,7 @@ import com.xproject.xoso.sdk.utils.SharedUtils;
 import com.xproject.xoso.xoso.model.entity.ProvinceEntity;
 import com.xproject.xoso.xoso.view.adapter.AdapterSpinner;
 import com.xproject.xoso.xoso.view.fragment.BasicFragment;
-import com.xtelsolution.xoso.R;
+import com.xproject.xoso.R;
 
 import java.util.List;
 

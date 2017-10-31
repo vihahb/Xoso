@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.xtelsolution.xoso.R;
+import com.xproject.xoso.R;
 
 /**
  * <p>A fragment that shows a list of items as a modal bottom sheet.</p>

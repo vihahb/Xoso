@@ -19,7 +19,7 @@ import com.xproject.xoso.xoso.model.entity.ProvinceEntity;
 import com.xproject.xoso.xoso.model.respond.RESP_Category;
 import com.xproject.xoso.xoso.model.respond.RESP_Dream;
 import com.xproject.xoso.xoso.view.activity.inf.IHomeView;
-import com.xtelsolution.xoso.R;
+import com.xproject.xoso.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;

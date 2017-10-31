@@ -18,7 +18,7 @@ import com.xproject.xoso.xoso.model.entity.SpeedTemp;
 import com.xproject.xoso.xoso.presenter.activity.ActivityCycleLotoPresenter;
 import com.xproject.xoso.xoso.view.activity.inf.IActivityCycleLotoView;
 import com.xproject.xoso.xoso.view.adapter.AdapterSpinner;
-import com.xtelsolution.xoso.R;
+import com.xproject.xoso.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;

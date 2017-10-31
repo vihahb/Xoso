@@ -1,6 +1,5 @@
 package com.xproject.xoso.xoso.view.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
@@ -18,7 +17,7 @@ import com.xproject.xoso.sdk.utils.DatabaseHelper;
 import com.xproject.xoso.xoso.model.entity.ProvinceEntity;
 import com.xproject.xoso.xoso.view.adapter.AdapterSpinner;
 import com.xproject.xoso.xoso.view.adapter.AdapterStringCustom;
-import com.xtelsolution.xoso.R;
+import com.xproject.xoso.R;
 
 import java.util.ArrayList;
 import java.util.List;

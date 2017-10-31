@@ -1,4 +1,4 @@
-package com.xtelsolution.xoso;
+package com.xproject.xoso;
 
 import org.junit.Test;
 

@@ -5,7 +5,6 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
 import android.text.Html;
@@ -32,7 +31,7 @@ import com.xproject.xoso.xoso.model.respond.RESP_Result;
 import com.xproject.xoso.xoso.presenter.fragment.FragmentCentralContentPresenter;
 import com.xproject.xoso.xoso.view.activity.MainActivity;
 import com.xproject.xoso.xoso.view.fragment.inf.IFragmentCentralContent;
-import com.xtelsolution.xoso.R;
+import com.xproject.xoso.R;
 
 import java.util.Calendar;
 import java.util.List;

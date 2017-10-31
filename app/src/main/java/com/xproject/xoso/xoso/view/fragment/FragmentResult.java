@@ -18,7 +18,7 @@ import com.xproject.xoso.sdk.utils.TimeUtils;
 import com.xproject.xoso.xoso.view.activity.MainActivity;
 import com.xproject.xoso.xoso.view.fragment.inf.OnCompleteListener;
 import com.xproject.xoso.xoso.view.widget.LockableViewPager;
-import com.xtelsolution.xoso.R;
+import com.xproject.xoso.R;
 
 import java.util.ArrayList;
 import java.util.Calendar;

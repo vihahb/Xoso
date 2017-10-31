@@ -19,7 +19,7 @@ import com.xproject.xoso.xoso.model.entity.SpeedTemp;
 import com.xproject.xoso.xoso.presenter.activity.SpecialTomorowActivityPresenter;
 import com.xproject.xoso.xoso.view.activity.inf.ISpecialTomorowActivity;
 import com.xproject.xoso.xoso.view.adapter.AdapterSpinner;
-import com.xtelsolution.xoso.R;
+import com.xproject.xoso.R;
 
 import java.util.Calendar;
 import java.util.List;

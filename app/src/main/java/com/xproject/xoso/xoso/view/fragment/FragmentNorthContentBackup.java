@@ -35,7 +35,7 @@ import com.xproject.xoso.xoso.presenter.fragment.FragmentNorthContentPresenter;
 import com.xproject.xoso.xoso.view.activity.MainActivity;
 import com.xproject.xoso.xoso.view.adapter.AdapterLoto;
 import com.xproject.xoso.xoso.view.fragment.inf.IFragmentNorthContentView;
-import com.xtelsolution.xoso.R;
+import com.xproject.xoso.R;
 
 import java.util.ArrayList;
 import java.util.Calendar;

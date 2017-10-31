@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.xproject.xoso.xoso.model.entity.ProvinceEntity;
-import com.xtelsolution.xoso.R;
+import com.xproject.xoso.R;
 
 import java.util.List;
 

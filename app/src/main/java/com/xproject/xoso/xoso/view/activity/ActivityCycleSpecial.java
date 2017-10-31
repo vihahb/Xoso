@@ -19,7 +19,7 @@ import com.xproject.xoso.xoso.model.respond.RESP_CycleSpecial;
 import com.xproject.xoso.xoso.presenter.activity.ActivityCycleSpecialPresenter;
 import com.xproject.xoso.xoso.view.activity.inf.IActivityCycleSpecial;
 import com.xproject.xoso.xoso.view.adapter.AdapterSpinner;
-import com.xtelsolution.xoso.R;
+import com.xproject.xoso.R;
 
 import java.util.Calendar;
 import java.util.List;

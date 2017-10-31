@@ -19,7 +19,7 @@ import com.xproject.xoso.xoso.model.entity.MyCalendar;
 import com.xproject.xoso.xoso.view.adapter.AdapterCalendar;
 import com.xproject.xoso.xoso.view.fragment.inf.OnLoadComplete;
 import com.xproject.xoso.xoso.view.widget.RecyclerTabLayout;
-import com.xtelsolution.xoso.R;
+import com.xproject.xoso.R;
 
 import java.util.ArrayList;
 import java.util.Calendar;

@@ -13,7 +13,7 @@ import com.xproject.xoso.sdk.utils.JsonHelper;
 import com.xproject.xoso.xoso.model.entity.SpeedTemp;
 import com.xproject.xoso.xoso.model.respond.RESP_CycleSpecial;
 import com.xproject.xoso.xoso.view.adapter.AdapterCycleSpecial;
-import com.xtelsolution.xoso.R;
+import com.xproject.xoso.R;
 
 public class ActivityCycleSpecialInfo extends BasicActivity {
 

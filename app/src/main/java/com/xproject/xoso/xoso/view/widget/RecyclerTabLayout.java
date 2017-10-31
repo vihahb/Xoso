@@ -35,7 +35,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.xtelsolution.xoso.R;
+import com.xproject.xoso.R;
 
 public class RecyclerTabLayout extends RecyclerView {
 

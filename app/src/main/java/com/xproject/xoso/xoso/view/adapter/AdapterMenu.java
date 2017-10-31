@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.xproject.xoso.xoso.model.entity.DrawerMenu;
 import com.xproject.xoso.xoso.view.activity.inf.IHomeView;
-import com.xtelsolution.xoso.R;
+import com.xproject.xoso.R;
 
 import java.util.List;
 

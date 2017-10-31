@@ -21,7 +21,7 @@ import com.xproject.xoso.xoso.view.adapter.AdapterAllDayYear;
 import com.xproject.xoso.xoso.view.adapter.AdapterBeginEndSum;
 import com.xproject.xoso.xoso.view.adapter.AdapterFreqLoto;
 import com.xproject.xoso.xoso.view.adapter.AdapterLotoDb;
-import com.xtelsolution.xoso.R;
+import com.xproject.xoso.R;
 
 import java.util.ArrayList;
 import java.util.Calendar;

@@ -10,7 +10,7 @@ import com.xproject.xoso.sdk.common.Constants;
 import com.xproject.xoso.xoso.model.entity.CycleLotoEntity;
 import com.xproject.xoso.xoso.model.entity.SpeedTemp;
 import com.xproject.xoso.xoso.view.adapter.AdapterCycleLoto;
-import com.xtelsolution.xoso.R;
+import com.xproject.xoso.R;
 
 import java.util.ArrayList;
 import java.util.List;

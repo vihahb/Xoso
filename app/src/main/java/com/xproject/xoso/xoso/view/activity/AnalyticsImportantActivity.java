@@ -16,7 +16,7 @@ import com.xproject.xoso.xoso.presenter.activity.AnalyticsImportantActivityPrese
 import com.xproject.xoso.xoso.view.activity.inf.IAnalyticsImportantActivity;
 import com.xproject.xoso.xoso.view.adapter.AdapterSpinner;
 import com.xproject.xoso.xoso.view.adapter.AdapterStringCustom;
-import com.xtelsolution.xoso.R;
+import com.xproject.xoso.R;
 
 import java.util.ArrayList;
 import java.util.List;

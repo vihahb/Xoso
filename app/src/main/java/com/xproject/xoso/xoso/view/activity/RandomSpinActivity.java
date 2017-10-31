@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.xproject.xoso.sdk.utils.DatabaseHelper;
 import com.xproject.xoso.xoso.model.entity.ProvinceEntity;
 import com.xproject.xoso.xoso.view.adapter.AdapterSpinner;
-import com.xtelsolution.xoso.R;
+import com.xproject.xoso.R;
 
 import java.util.List;
 import java.util.Random;

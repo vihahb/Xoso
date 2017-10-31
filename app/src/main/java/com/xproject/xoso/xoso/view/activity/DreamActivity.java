@@ -14,7 +14,7 @@ import com.xproject.xoso.xoso.model.entity.Dream;
 import com.xproject.xoso.xoso.presenter.activity.DreamPresenter;
 import com.xproject.xoso.xoso.view.activity.inf.IDream;
 import com.xproject.xoso.xoso.view.adapter.AdapterDream;
-import com.xtelsolution.xoso.R;
+import com.xproject.xoso.R;
 
 import java.util.ArrayList;
 import java.util.List;

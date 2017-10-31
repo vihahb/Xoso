@@ -1,9 +1,8 @@
 package com.xproject.xoso.xoso.view.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.xtelsolution.xoso.R;
+import com.xproject.xoso.R;
 
 public class ListSpinActivity extends BasicActivity {
 

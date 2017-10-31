@@ -11,7 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.xtelsolution.xoso.R;
+import com.xproject.xoso.R;
 
 /**
  * Created by vivhp on 9/6/2017
