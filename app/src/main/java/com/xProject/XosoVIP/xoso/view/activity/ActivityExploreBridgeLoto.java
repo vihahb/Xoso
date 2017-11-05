@@ -5,6 +5,7 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -49,6 +50,7 @@ public class ActivityExploreBridgeLoto extends BasicActivity implements Activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setBackgroundDrawableResource(R.mipmap.background_home);
         setContentView(R.layout.activity_explore_bridge_loto);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -59,7 +61,9 @@ public class ActivityExploreBridgeLoto extends BasicActivity implements Activity
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+                if (imm != null) {
+                    imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+                }
                 return true;
             }
         });
@@ -168,12 +172,29 @@ public class ActivityExploreBridgeLoto extends BasicActivity implements Activity
         int oldMonth = (calendarOldDay.get(Calendar.MONTH)) + 1;
         int oldYear = calendarOldDay.get(Calendar.YEAR);
 
-
-        String begin_date = oldYear + "-" + oldMonth + "-" + oldDay;
+        String begin_date = "";
+        String old_month = String.valueOf(oldMonth);
+        String old_day = String.valueOf(oldDay);
+        if (old_month.length() == 1) {
+            old_month = "0" + old_month;
+        }
+        if (old_day.length() == 1) {
+            old_day = "0" + old_day;
+        }
+        begin_date = oldYear + "-" + old_month + "-" + old_day;
         String begin_date_form = oldDay + "/" + oldMonth + "/" + oldYear;
 
-        String end_date = year + "-" + month + "-" + toDay;
-        String end_date_form = toDay + "/" + month + "/" + year;
+        String end_date = "";
+        String n_month = String.valueOf(month);
+        String n_day = String.valueOf(toDay);
+        if (n_month.length() == 1) {
+            n_month = "0" + n_month;
+        }
+        if (n_day.length() == 1) {
+            n_day = "0" + n_day;
+        }
+        end_date = year + "-" + n_month + "-" + n_day;
+        String end_date_form = toDay + "/" + n_month + "/" + year;
 
         temp.setDate_begin(begin_date);
         temp.setDate_format_begin(begin_date_form);
@@ -208,6 +229,7 @@ public class ActivityExploreBridgeLoto extends BasicActivity implements Activity
 
     @Override
     public void returnUrl(String url) {
+        Log.e("URL", "returnUrl: " + url);
         startActivity(WebViewActivity.class, Constants.TITLE, title, Constants.URL, url);
     }
 
@@ -216,28 +238,6 @@ public class ActivityExploreBridgeLoto extends BasicActivity implements Activity
         switch (view.getId()) {
             case R.id.btn_result:
                 if (checkEndNotNull() && checNumberNotNull()) {
-//                    String result = edt_number_set.getText().toString();
-//
-//                    String[] list_result = result.split("\\.");
-//                    Log.e("abc", "onClick: " + list_result.length);
-//
-//                    if (list_result.length == 0) {
-//                        // không nhập
-//                        Log.e("abc", "onClick: 2 " + list_result.length);
-//                        return;
-//                    } else {
-//                        Log.e("abc", "onClick: 3 " + list_result.length);
-//                        for (int i = list_result.length - 1; i >= 0; i--) {
-//                            if (list_result[i].length() > 2) {
-//                                // Nhập nhiều hơn 2 số
-//                                showShortToast("Sai định dạng bộ số. Vui lòng nhập đúng định dạng.");
-//                                return;
-//                            }
-//                        }
-//                    }
-
-//                    result = result.replace(".", ",");
-//                    temp.setNumber(result);
                     switch (action) {
                         case 1:
                             presenter.getBridgeLoto(temp);
@@ -259,7 +259,6 @@ public class ActivityExploreBridgeLoto extends BasicActivity implements Activity
                             }
                             presenter.getSpecialBridge(temp);
                             break;
-
                         case 6:
                             presenter.getLoto2Nhay(temp);
                             break;
@@ -270,8 +269,17 @@ public class ActivityExploreBridgeLoto extends BasicActivity implements Activity
                 TimeUtils.showDateTimePickerDialog(this, new DateTimePickerListener() {
                     @Override
                     public void onDateTimePickerListener(int year, int month, int day) {
-                        temp.setDate_end(year + "-" + (month + 1) + "-" + day);
-                        temp.setDate_format_end(day + "/" + (month + 1) + "/" + year);
+                        String s_month = String.valueOf(month + 1);
+                        String s_day = String.valueOf(day);
+                        if (s_month.length() == 1){
+                            s_month = "0"+s_month;
+                        }
+
+                        if (s_day.length() == 1){
+                            s_day = "0" + s_day;
+                        }
+                        temp.setDate_end(year + "-" + s_month + "-" + s_day);
+                        temp.setDate_format_end(day + "/" + s_month + "/" + s_day);
                         edt_date_end.setText(day + "/" + (month + 1) + "/" + year);
                     }
                 }, false);

@@ -29,7 +29,7 @@ public class ProjectApplication extends Application {
     }
 
     private void initTypeFace() {
-        TypefaceUtil.overrideFont(context, "NORMAL", "fonts/OpenSans-Light.ttf");
+        TypefaceUtil.overrideFont(context, "SERIF", "fonts/OpenSans-Light.ttf");
     }
 
 //    private void initLeakCanary() {

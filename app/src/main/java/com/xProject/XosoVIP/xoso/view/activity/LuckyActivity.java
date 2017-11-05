@@ -31,6 +31,7 @@ public class LuckyActivity extends BasicActivity implements ILuckyActivityView, 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setBackgroundDrawableResource(R.mipmap.background_home);
         setContentView(R.layout.activity_lucky);
         number = new ArrayList<>();
         presenter = new LuckyActivityPresenter(this);
@@ -58,8 +59,18 @@ public class LuckyActivity extends BasicActivity implements ILuckyActivityView, 
 
         Calendar calendar = TimeUtils.getCalendarFromString(TimeUtils.getToday());
         if (calendar != null) {
-            tv_date.setText(String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)));
-            tv_month.setText(String.valueOf(calendar.get(Calendar.MONTH) + 1));
+            String n_day = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
+            String n_month = String.valueOf(calendar.get(Calendar.MONTH) + 1);
+
+            if (n_day.length() == 1){
+                n_day = "0"+n_day;
+            }
+
+            if (n_month.length() == 1){
+                n_month = "0"+n_month;
+            }
+            tv_date.setText(n_day);
+            tv_month.setText(n_month);
             tv_year.setText(String.valueOf(calendar.get(Calendar.YEAR)));
         }
 

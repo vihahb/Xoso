@@ -27,6 +27,7 @@ public class ImportantInfoActivity extends BasicActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setBackgroundDrawableResource(R.mipmap.background_home);
         setContentView(R.layout.activity_important_info);
         initToolbar(R.id.toolbar, getString(R.string.title_activity_important_info));
         initView();

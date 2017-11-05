@@ -35,6 +35,7 @@ public class AnalyticsImportantActivity extends BasicActivity implements View.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setBackgroundDrawableResource(R.mipmap.background_home);
         setContentView(R.layout.activity_analytics_important_activity);
         initToolbar(R.id.toolbar, getString(R.string.title_activity_analytics_important_activity));
         presenter = new AnalyticsImportantActivityPresenter(this);

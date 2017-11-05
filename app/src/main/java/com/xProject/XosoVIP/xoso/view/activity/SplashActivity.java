@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.xProject.XosoVIP.R;
 import com.xProject.XosoVIP.sdk.common.Constants;
@@ -20,40 +21,32 @@ import java.util.List;
 public class SplashActivity extends Activity implements AppIntroView {
 
     AppIntroPresenter presenter;
-    ProgressDialog progressDialog;
+    ProgressBar progressBar;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        progressBar = (ProgressBar) findViewById(R.id.progressView);
         presenter = new AppIntroPresenter(this);
-        presenter.getProvinceAPI();
 
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Đang tải dữ liệu tỉnh thành...");
-        progressDialog.setTitle("Loading");
+
         if (!SharedUtils.getInstance().getBooleanValue(Constants.CATEGORY_FLAG)){
-            progressDialog.show();
+            presenter.getProvinceAPI();
         } else {
             navigateToMain();
         }
     }
 
     private void navigateToMain(){
-        if (!SharedUtils.getInstance().getBooleanValue(Constants.APP_INTRO)){
-            Intent intent = new Intent(this, AppIntroActivity.class);
-            startActivity(intent);
-        } else {
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-        }
+        final Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
         finish();
     }
 
     @Override
     public void getProvinceListSuccess(List<ProvinceEntity> provinceEntityList) {
-        progressDialog.dismiss();
         navigateToMain();
     }
 

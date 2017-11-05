@@ -71,6 +71,7 @@ public class SpecialTomorowInfoActivity extends BasicActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setBackgroundDrawableResource(R.mipmap.background_home);
         setContentView(R.layout.activity_special_tomorow_info);
         initToolbar(R.id.toolbar, "Chi tiết chu kỳ dàn ĐB ngày mai");
         initView();

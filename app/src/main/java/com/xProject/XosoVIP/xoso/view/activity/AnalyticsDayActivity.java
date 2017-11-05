@@ -39,6 +39,7 @@ public class AnalyticsDayActivity extends BasicActivity implements IAnalyticsDay
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_analytics_day);
+        getWindow().setBackgroundDrawableResource(R.mipmap.background_home);
         temp = new SpeedTemp();
         presenter = new AnalyticsDayPresenter(this);
         initToolbar(R.id.toolbar, "Thống kê theo ngày");

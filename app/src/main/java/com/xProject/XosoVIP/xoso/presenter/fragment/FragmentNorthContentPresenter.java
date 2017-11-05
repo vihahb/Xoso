@@ -5,6 +5,7 @@ import android.util.Log;
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
+import com.xProject.XosoVIP.R;
 import com.xProject.XosoVIP.sdk.callback.Icmd;
 import com.xProject.XosoVIP.sdk.common.Constants;
 import com.xProject.XosoVIP.sdk.utils.JsonHelper;

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:background="#000000">
+
+    <ImageView
+        android:layout_marginTop="57dp"
+        android:layout_marginLeft="50dp"
+        android:id="@+id/image_tap"
+        android:src="@mipmap/ic_tap_left"
+        android:layout_width="@dimen/size_64"
+        android:layout_height="@dimen/size_64"
+        android:layout_marginStart="50dp" />
+
+    <TextView
+        android:layout_below="@id/image_tap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="Nhấn vào đây để xem menu"
+        android:layout_marginLeft="@dimen/size_36"
+        android:textColor="@android:color/white"
+        android:textSize="12sp"/>
+
+</RelativeLayout>

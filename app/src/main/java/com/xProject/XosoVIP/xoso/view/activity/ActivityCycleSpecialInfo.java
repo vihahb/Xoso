@@ -24,6 +24,7 @@ public class ActivityCycleSpecialInfo extends BasicActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setBackgroundDrawableResource(R.mipmap.background_home);
         setContentView(R.layout.activity_cycle_special_info);
         initToolbar(R.id.toolbar, "Chi tiết chu kỳ đặc biệt");
         initView();

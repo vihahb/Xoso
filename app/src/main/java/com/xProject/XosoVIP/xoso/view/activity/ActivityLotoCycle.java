@@ -40,6 +40,7 @@ public class ActivityLotoCycle extends BasicActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loto_cycle);
+        getWindow().setBackgroundDrawableResource(R.mipmap.background_home);
         presenter = new ActivityCycleLotoPresenter(this);
         initToolbar(R.id.toolbar, "Chu kỳ lô tô");
         initView();

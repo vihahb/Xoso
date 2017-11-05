@@ -52,6 +52,7 @@ public class RandomSpinActivity extends BasicActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setBackgroundDrawableResource(R.mipmap.background_home);
         setContentView(R.layout.activity_random_spin);
         initToolbar(R.id.toolbar, "Quay thử");
         initView();

@@ -32,8 +32,6 @@ public interface IFragmentSouthContent extends BasicView {
 
     void setVisibleTable(boolean isVisible);
 
-    void random(int i);
-
     void setNewResult(RESP_NewResult newResult, int i);
 
     void setEndLive();

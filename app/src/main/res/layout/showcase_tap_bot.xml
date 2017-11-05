@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:background="#000000"
+    android:gravity="bottom|center">
+
+    <TextView
+        android:id="@+id/tv_des"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="Và còn nhiều chức năng khác tại đây..."
+        android:textColor="@android:color/white"
+        android:textSize="12sp"/>
+
+    <ImageView
+        android:id="@+id/image_tap"
+        android:layout_width="@dimen/size_64"
+        android:layout_height="@dimen/size_64"
+        android:layout_below="@+id/tv_des"
+        android:layout_centerHorizontal="true"
+        android:src="@mipmap/ic_tap_bot"
+        android:layout_marginBottom="64dp"/>
+
+</RelativeLayout>

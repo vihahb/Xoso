@@ -31,6 +31,7 @@ public class DreamActivity extends BasicActivity implements IDream {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setBackgroundDrawableResource(R.mipmap.background_home);
         setContentView(R.layout.activity_dream);
         presenter = new DreamPresenter(this);
         initToolbar(R.id.toolbar, getString(R.string.title_activity_dream));

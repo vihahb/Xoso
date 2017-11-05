@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.xProject.XosoVIP.R;
 import com.xProject.XosoVIP.sdk.common.Constants;
 import com.xProject.XosoVIP.sdk.utils.CalendarUtils;
 import com.xProject.XosoVIP.sdk.utils.SharedUtils;
@@ -33,7 +34,8 @@ import com.xProject.XosoVIP.xoso.presenter.fragment.FragmentNorthContentPresente
 import com.xProject.XosoVIP.xoso.view.activity.MainActivity;
 import com.xProject.XosoVIP.xoso.view.adapter.AdapterLoto;
 import com.xProject.XosoVIP.xoso.view.fragment.inf.IFragmentNorthContentView;
-import com.xProject.XosoVIP.R;
+
+import org.jetbrains.annotations.Contract;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -49,7 +51,7 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
 
     private static final String TAG = "FragmentNorthContent";
     private static final String KEY_DATE = "date";
-    private boolean check_done = false;
+    private static FragmentNorthContent instance;
     long millis;
     String getDateTime;
     View rootView;
@@ -60,7 +62,6 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
     private ImageView img_mute;
     private boolean isExistsBegin = false;
     private boolean isExistsEnd = false;
-    private boolean vibrate = false;
     /**
      * Value table result lottery
      */
@@ -72,8 +73,12 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
             tv_51, tv_52, tv_53, tv_54, tv_55, tv_56,
             tv_61, tv_62, tv_63,
             tv_71, tv_72, tv_73, tv_74;
+
+
     private TextView tvLoto0, tvLoto1, tvLoto2, tvLoto3, tvLoto4, tvLoto5, tvLoto6, tvLoto7, tvLoto8, tvLoto9,
             tvLotoDuoi0, tvLotoDuoi1, tvLotoDuoi2, tvLotoDuoi3, tvLotoDuoi4, tvLotoDuoi5, tvLotoDuoi6, tvLotoDuoi7, tvLotoDuoi8, tvLotoDuoi9;
+
+
     private MediaPlayer player;
     private boolean toDay, mute = false;
     private AudioManager audioManager;
@@ -90,7 +95,7 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
     private String tmp_e0 = "", tmp_e1 = "", tmp_e2 = "", tmp_e3 = "", tmp_e4 = "", tmp_e5 = "", tmp_e6 = "", tmp_e7 = "", tmp_e8 = "", tmp_e9 = "";
 
     public static FragmentNorthContent newInstance(long date) {
-        FragmentNorthContent instance = new FragmentNorthContent();
+        instance = new FragmentNorthContent();
         Bundle args = new Bundle();
         args.putLong(KEY_DATE, date);
         instance.setArguments(args);
@@ -124,7 +129,7 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
     public void onViewCreated(final View rootView, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(rootView, savedInstanceState);
         context = getContext();
-        check_done = SharedUtils.getInstance().getBooleanValue(Constants.CHECK_DONE_N);
+        boolean check_done = SharedUtils.getInstance().getBooleanValue(Constants.CHECK_DONE_N);
         audioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
         player = MediaPlayer.create(getContext(), R.raw.notification11);
         tv_not_yet = findTextView(R.id.tv_not_yet);
@@ -232,7 +237,6 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
             img_mute.setVisibility(View.GONE);
         }
 
-        vibrate = SharedUtils.getInstance().getBooleanValue(Constants.ViBRATE_FLAG);
         sound = SharedUtils.getInstance().getBooleanDefaultTrueValue(Constants.SOUND_FLAG);
         if (sound) {
             mute = false;
@@ -264,7 +268,7 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(millis);
         String date_label = CalendarUtils.getDayName(calendar);
-        if (date_label != null && !date_label.equals("")){
+        if (date_label != null && !date_label.equals("")) {
             tv_title.setText(date_label + ", ngày " + calendar.get(Calendar.DAY_OF_MONTH) + " tháng " + (calendar.get(Calendar.MONTH) + 1) + " năm " + calendar.get(Calendar.YEAR));
         } else {
             tv_title.setText("Ngày " + calendar.get(Calendar.DAY_OF_MONTH) + " tháng " + (calendar.get(Calendar.MONTH) + 1) + " năm " + calendar.get(Calendar.YEAR));
@@ -821,14 +825,14 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
         if (toDay) {
             if (first != null) {
                 int size = first.size();
-                if (size != 0) {
+                if (size > 0) {
                     if (first.get(0) != null && !first.get(0).isEmpty()) {
-                        this.first.shutdownThread(false);
-                    } else {
-                        this.first.run();
+                        if (this.first.isRun())
+                            this.first.shutdownThread(false);
                     }
                 } else {
-                    this.first.run();
+                    if (!this.first.isRun())
+                        this.first.run();
                 }
             }
 
@@ -837,26 +841,23 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
              * Second*/
             if (second != null) {
                 int size = second.size();
-                if (size > 0) {
-                    switch (size) {
-                        case 1:
-                            if (second.get(0) != null && !second.get(0).isEmpty()) {
-                                r21.shutdownThread(false);
-                            } else {
-                                r21.run();
-                            }
-                            break;
-                        case 2:
-                            if (second.get(1) != null && !second.get(1).isEmpty()) {
-                                r22.shutdownThread(false);
-                            } else {
-                                r22.run();
-                            }
-                            break;
+                if (size == 0) {
+                    if (first != null && first.size() > 0) {
+                        if (!r21.isRun())
+                            r21.run();
                     }
-                } else {
-                    if (first != null && first.size() == 1) {
-                        r21.run();
+                }
+                if (size == 1) {
+                    if (r21.isRun()) {
+                        r21.shutdownThread(false);
+                    }
+
+                    if (!r22.isRun())
+                        r22.run();
+                }
+                if (size == 2) {
+                    if (r22.isRun()) {
+                        r22.shutdownThread(false);
                     }
                 }
             }
@@ -864,455 +865,226 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
 
             /**
              * Third*/
-            if (third != null) {
-                int size = third.size();
-                if (size > 0) {
-                    switch (size) {
-                        case 1:
-                            if (third.get(0) != null && !third.get(0).isEmpty()) {
-                                r31.shutdownThread(false);
-                            } else {
-                                r31.run();
-                            }
-                            break;
-                        case 2:
-                            if (third.get(1) != null && !third.get(1).isEmpty()) {
-                                r32.shutdownThread(false);
-                            } else {
-                                r32.run();
-                            }
-                            break;
-                        case 3:
-                            if (third.get(2) != null && !third.get(2).isEmpty()) {
-                                r33.shutdownThread(false);
-                            } else {
-                                r33.run();
-                            }
-                            break;
-                        case 4:
-                            if (third.get(3) != null && !third.get(3).isEmpty()) {
-                                r34.shutdownThread(false);
-                            } else {
-                                r34.run();
-                            }
-                            break;
-                        case 5:
-                            if (third.get(4) != null && !third.get(4).isEmpty()) {
-                                r35.shutdownThread(false);
-                            } else {
-                                r35.run();
-                            }
-                            break;
-                        case 6:
-                            if (third.get(5) != null && !third.get(5).isEmpty()) {
-                                r36.shutdownThread(false);
-                            } else {
-                                r36.run();
-                            }
-                            break;
-                    }
-                } else {
-                    if (second != null && second.size() == 2) {
-                        r31.run();
-                    }
+            if (second != null && third != null && second.size() == 2) {
+                switch (third.size()) {
+                    case 0:
+                        if (!r31.isRun())
+                            r31.run();
+                        break;
+                    case 1:
+                        if (r31.isRun()) {
+                            r31.shutdownThread(false);
+                        }
+                        if (!r32.isRun())
+                            r32.run();
+                        break;
+                    case 2:
+                        if (r32.isRun()) {
+                            r32.shutdownThread(false);
+                        }
+                        if (!r33.isRun())
+                            r33.run();
+                        break;
+                    case 3:
+                        if (r33.isRun()) {
+                            r33.shutdownThread(false);
+                        }
+                        if (!r34.isRun())
+                            r34.run();
+                        break;
+                    case 4:
+                        if (r34.isRun()) {
+                            r34.shutdownThread(false);
+                        }
+                        if (!r35.isRun())
+                            r35.run();
+                        break;
+                    case 5:
+                        if (r35.isRun()) {
+                            r35.shutdownThread(false);
+                        }
+                        if (!r36.isRun())
+                            r36.run();
+                        break;
+                    case 6:
+                        if (r36.isRun()) {
+                            r36.shutdownThread(false);
+                        }
+                        break;
                 }
             }
 
             /**
              * Fourd*/
 
-            if (fourd != null) {
-                int size = fourd.size();
-                if (size > 0) {
-                    switch (size) {
-                        case 1:
-                            if (fourd.get(0) != null && !fourd.get(0).isEmpty()) {
-                                r41.shutdownThread(false);
-                            } else {
-                                r41.run();
-                            }
-                            break;
-                        case 2:
-                            if (fourd.get(1) != null && !fourd.get(1).isEmpty()) {
-                                r42.shutdownThread(false);
-                            } else {
-                                r42.run();
-                            }
-                            break;
-                        case 3:
-                            if (fourd.get(2) != null && !fourd.get(2).isEmpty()) {
-                                r43.shutdownThread(false);
-                            } else {
-                                r43.run();
-                            }
-                            break;
-                        case 4:
-                            if (fourd.get(3) != null && !fourd.get(3).isEmpty()) {
-                                r44.shutdownThread(false);
-                            } else {
-                                r44.run();
-                            }
-                            break;
-                    }
-                }
-            } else {
-                if (third != null && third.size() == 6) {
-                    r41.run();
+            if (third != null && fourd != null && third.size() == 6) {
+                switch (fourd.size()) {
+                    case 0:
+                        if (!r41.isRun())
+                            r41.run();
+                        break;
+                    case 1:
+                        if (r41.isRun()) {
+                            r41.shutdownThread(false);
+                        }
+                        if (!r42.isRun())
+                            r42.run();
+                        break;
+                    case 2:
+                        if (r42.isRun()) {
+                            r42.shutdownThread(false);
+                        }
+                        if (!r43.isRun())
+                            r43.run();
+                        break;
+                    case 3:
+                        if (r43.isRun()) {
+                            r43.shutdownThread(false);
+                        }
+                        if (!r44.isRun())
+                            r44.run();
+                        break;
+                    case 4:
+                        if (r44.isRun()) {
+                            r44.shutdownThread(false);
+                        }
+                        break;
                 }
             }
 
             /**
              * Five*/
-            if (five != null) {
+            if (fourd != null && five != null && fourd.size() == 4) {
                 int size = five.size();
-                if (size > 0) {
-                    switch (size) {
-                        case 1:
-                            if (five.get(0) != null && !five.get(0).isEmpty()) {
-                                r51.shutdownThread(false);
-                            } else {
-                                r51.run();
-                            }
-                            break;
-                        case 2:
-                            if (five.get(1) != null && !five.get(1).isEmpty()) {
-                                r52.shutdownThread(false);
-                            } else {
-                                r52.run();
-                            }
-                            break;
-                        case 3:
-                            if (five.get(2) != null && !five.get(2).isEmpty()) {
-                                r53.shutdownThread(false);
-                            } else {
-                                r53.run();
-                            }
-                            break;
-                        case 4:
-                            if (five.get(3) != null && !five.get(3).isEmpty()) {
-                                r54.shutdownThread(false);
-                            } else {
-                                r54.run();
-                            }
-                            break;
-                        case 5:
-                            if (five.get(4) != null && !five.get(4).isEmpty()) {
-                                r55.shutdownThread(false);
-                            } else {
-                                r55.run();
-                            }
-                            break;
-                        case 6:
-                            if (five.get(5) != null && !five.get(5).isEmpty()) {
-                                r56.shutdownThread(false);
-                            } else {
-                                r56.run();
-                            }
-                            break;
-                    }
-                } else {
-                    if (fourd != null && fourd.size() == 4) {
-                        r51.run();
-                    }
+                switch (size) {
+                    case 0:
+                        if (!r51.isRun())
+                            r51.run();
+                        break;
+                    case 1:
+                        if (r51.isRun()) {
+                            r51.shutdownThread(false);
+                        }
+                        if (!r52.isRun())
+                            r52.run();
+                        break;
+                    case 2:
+                        if (r52.isRun()) {
+                            r52.shutdownThread(false);
+                        }
+                        if (!r53.isRun())
+                            r53.run();
+                        break;
+                    case 3:
+                        if (r53.isRun()) {
+                            r53.shutdownThread(false);
+                        }
+                        if (!r54.isRun())
+                            r54.run();
+                        break;
+                    case 4:
+                        if (r54.isRun()) {
+                            r54.shutdownThread(false);
+                        }
+                        if (!r55.isRun())
+                            r55.run();
+                        break;
+                    case 5:
+                        if (r55.isRun()) {
+                            r55.shutdownThread(false);
+                        }
+                        if (!r56.isRun())
+                            r56.run();
+                        break;
+                    case 6:
+                        if (r56.isRun()) {
+                            r56.shutdownThread(false);
+                        }
+                        break;
                 }
             }
-
-//            if (five != null && five.size() > 0) {
-//                if (five.get(0) != null) {
-//                    r51.shutdownThread(false);
-//                } else {
-//                    if (second.get(1) != null)
-//                        r51.run();
-//                }
-//                if (five.get(1) != null) {
-//                    r52.shutdownThread(false);
-//                } else {
-//                    if (five.get(0) != null)
-//                        r52.run();
-//                }
-//                if (five.get(2) != null) {
-//                    r53.shutdownThread(false);
-//                } else {
-//                    if (five.get(1) != null)
-//                        r53.run();
-//                }
-//                if (five.get(3) != null) {
-//                    r54.shutdownThread(false);
-//                } else {
-//                    if (five.get(2) != null)
-//                        r53.run();
-//                }
-//                if (five.get(4) != null) {
-//                    r55.shutdownThread(false);
-//                } else {
-//                    if (five.get(3) != null)
-//                        r55.run();
-//                }
-//                if (five.get(5) != null) {
-//                    r56.shutdownThread(false);
-//                } else {
-//                    if (five.get(4) != null)
-//                        r56.run();
-//                }
-//            }
-
             /**
              * Six*/
-            if (six != null) {
-                int size = six.size();
-                if (size > 0) {
-                    switch (size) {
-                        case 1:
-                            if (six.get(0) != null && !six.get(0).isEmpty()) {
-                                r61.shutdownThread(false);
-                            } else {
-                                r61.run();
-                            }
-                            break;
-                        case 2:
-                            if (six.get(1) != null && !six.get(1).isEmpty()) {
-                                r62.shutdownThread(false);
-                            } else {
-                                r62.run();
-                            }
-                            break;
-                        case 3:
-                            if (six.get(2) != null && !six.get(2).isEmpty()) {
-                                r63.shutdownThread(false);
-                            } else {
-                                r63.run();
-                            }
-                            break;
-                    }
-                } else {
-                    if (five != null && five.size() == 6) {
-                        r61.run();
-                    }
+            if (five != null && six != null && five.size() == 6) {
+                switch (six.size()) {
+                    case 0:
+                        if (!r61.isRun())
+                            r61.run();
+                        break;
+                    case 1:
+                        if (r61.isRun()) {
+                            r61.shutdownThread(false);
+                        }
+                        if (!r62.isRun())
+                            r62.run();
+                        break;
+                    case 2:
+                        if (r62.isRun()) {
+                            r62.shutdownThread(false);
+                        }
+                        if (!r63.isRun())
+                            r63.run();
+                        break;
+                    case 3:
+                        if (r63.isRun()) {
+                            r63.shutdownThread(false);
+                        }
+                        break;
                 }
             }
-//            if (six != null && six.size() > 0) {
-//                if (six.get(0) != null) {
-//                    r61.shutdownThread(false);
-//                } else {
-//                    if (five.get(5) != null) {
-//                        r61.run();
-//                    }
-//                }
-//                if (six.get(1) != null) {
-//                    r62.shutdownThread(false);
-//                } else {
-//                    if (six.get(0) != null) {
-//                        r62.run();
-//                    }
-//                }
-//                if (six.get(2) != null) {
-//                    r63.shutdownThread(false);
-//                } else {
-//                    if (six.get(1) != null)
-//                        r63.run();
-//                }
-//            }
 
             /**
              * Sevent*/
-            if (seven != null) {
-                int size = seven.size();
-                if (size > 0) {
-                    switch (size) {
-                        case 1:
-                            if (seven.get(0) != null && !seven.get(0).isEmpty()) {
-                                r71.shutdownThread(false);
-                            } else {
-                                r71.run();
-                            }
-                            break;
-                        case 2:
-                            if (seven.get(1) != null && !seven.get(1).isEmpty()) {
-                                r72.shutdownThread(false);
-                            } else {
-                                r72.run();
-                            }
-                            break;
-                        case 3:
-                            if (seven.get(2) != null && !seven.get(2).isEmpty()) {
-                                r73.shutdownThread(false);
-                            } else {
-                                r73.run();
-                            }
-                            break;
-                        case 4:
-                            if (seven.get(3) != null && !seven.get(3).isEmpty()) {
-                                r74.shutdownThread(false);
-                            } else {
-                                r74.run();
-                            }
-                            break;
-                    }
-                } else {
-                    if (six != null && six.size() == 3) {
-                        r71.run();
-                    }
+            if (six != null && seven != null && six.size() == 3) {
+
+                switch (seven.size()) {
+                    case 0:
+                        if (!r71.isRun())
+                            r71.run();
+                        break;
+                    case 1:
+                        if (r71.isRun()) {
+                            r71.shutdownThread(false);
+                        }
+                        if (!r72.isRun())
+                            r72.run();
+                        break;
+                    case 2:
+                        if (r72.isRun()) {
+                            r72.shutdownThread(false);
+                        }
+                        if (!r73.isRun())
+                            r73.run();
+                        break;
+                    case 3:
+                        if (r73.isRun()) {
+                            r73.shutdownThread(false);
+                        }
+                        if (!r74.isRun())
+                            r74.run();
+                        break;
+                    case 4:
+                        if (r74.isRun()) {
+                            r74.shutdownThread(false);
+                        }
+                        break;
                 }
             }
-//            if (seven != null && seven.size() > 0) {
-//                if (seven.get(0) != null) {
-//                    r71.shutdownThread(false);
-//                } else {
-//                    if (six.get(2) != null)
-//                        r71.run();
-//                }
-//                if (seven.get(0) != null) {
-//                    r72.shutdownThread(false);
-//                } else {
-//                    if (seven.get(0) != null)
-//                        r72.run();
-//                }
-//                if (seven.get(0) != null) {
-//                    r73.shutdownThread(false);
-//                } else {
-//                    if (seven.get(1) != null)
-//                        r73.run();
-//                }
-//                if (seven.get(0) != null) {
-//                    r74.shutdownThread(false);
-//                } else {
-//                    if (seven.get(2) != null)
-//                        r74.run();
-//                }
         }
 
-        if (res_special != null) {
-            int size = res_special.size();
-            if (size > 0) {
-                if (res_special.get(0) != null && !res_special.get(0).isEmpty()) {
-                    if (this.special != null) {
+        if (seven != null && res_special != null && seven.size() == 4) {
+            switch (res_special.size()) {
+                case 0:
+                    if (!this.special.isRun())
+                        this.special.run();
+                    break;
+                case 1:
+                    if (this.special.isRun()) {
                         this.special.shutdownThread(true);
                     }
-                } else {
-                    if (this.special != null) {
-                        if (seven != null && seven.size() == 4)
-                            this.special.run();
-                    }
-                }
-            } else {
-                if (seven != null && seven.size() == 4) {
-                    special.run();
-                }
+                    break;
             }
         }
-//
-//        if (second.size() > 0) {
-//            if (r21 != null) {
-//                r21.shutdownThread(false);
-//            }
-//        } else if (second.size() > 1) {
-//            if (r22 != null) {
-//                r22.shutdownThread(false);
-//            }
-//        }
-//
-//        if (third.size() > 0) {
-//            if (r31 != null) {
-//                r31.shutdownThread(false);
-//            }
-//        } else if (third.size() > 1) {
-//            if (r32 != null) {
-//                r32.shutdownThread(false);
-//            }
-//        } else if (third.size() > 2) {
-//            if (r33 != null) {
-//                r33.shutdownThread(false);
-//            }
-//        } else if (third.size() > 3) {
-//            if (r34 != null) {
-//                r34.shutdownThread(false);
-//            }
-//        } else if (third.size() > 4) {
-//            if (r35 != null) {
-//                r35.shutdownThread(false);
-//            }
-//        } else if (third.size() > 5) {
-//            if (r36 != null) {
-//                r36.shutdownThread(false);
-//            }
-//        }
-//
-//        if (fourd.size() > 0) {
-//            if (r41 != null) {
-//                r41.shutdownThread(false);
-//            }
-//        } else if (fourd.size() > 1) {
-//            if (r42 != null) {
-//                r42.shutdownThread(false);
-//            }
-//        } else if (fourd.size() > 2) {
-//            if (r43 != null) {
-//                r43.shutdownThread(false);
-//            }
-//        } else if (fourd.size() > 3) {
-//            if (r44 != null) {
-//                r44.shutdownThread(false);
-//            }
-//        }
-//
-//        if (five.size() > 0) {
-//            if (r51 != null) {
-//                r51.shutdownThread(false);
-//            }
-//        } else if (five.size() > 1) {
-//            if (r52 != null) {
-//                r52.shutdownThread(false);
-//            }
-//        } else if (five.size() > 2) {
-//            if (r53 != null) {
-//                r53.shutdownThread(false);
-//            }
-//        } else if (five.size() > 3) {
-//            if (r54 != null) {
-//                r54.shutdownThread(false);
-//            }
-//        } else if (five.size() > 4) {
-//            if (r55 != null) {
-//                r55.shutdownThread(false);
-//            }
-//        } else if (five.size() > 5) {
-//            if (r56 != null) {
-//                r56.shutdownThread(false);
-//            }
-//        }
-//
-//
-//        if (six.size() > 0) {
-//            if (r61 != null) {
-//                r61.shutdownThread(false);
-//            }
-//        } else if (six.size() > 1) {
-//            if (r62 != null) {
-//                r62.shutdownThread(false);
-//            }
-//        } else if (six.size() > 2) {
-//            if (r63 != null) {
-//                r63.shutdownThread(false);
-//            }
-//        }
-//
-//        if (seven.size() > 0) {
-//            if (r71 != null) {
-//                r71.shutdownThread(false);
-//            }
-//        } else if (seven.size() > 1) {
-//            if (r72 != null) {
-//                r72.shutdownThread(false);
-//            }
-//        } else if (seven.size() > 2) {
-//            if (r73 != null) {
-//                r73.shutdownThread(false);
-//            }
-//        } else if (seven.size() > 3) {
-//            if (r74 != null) {
-//                r74.shutdownThread(false);
-//            }
-//        }
     }
 
     @Override
@@ -1348,7 +1120,7 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
 
     @Override
     public void setNewResult(RESP_NewResult newResult) {
-        if (player!=null){
+        if (player != null) {
             player.start();
         }
         configRoller(newResult);
@@ -1358,9 +1130,12 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
         switch (newResult.getResult_name()) {
             case "res_first":
                 if (newResult.getValue() != null) {
-                    if (first != null)
-                        first.shutdownThread(false);
-                    r21.run();
+                    if (first != null) {
+                        if (first.isRun())
+                            first.shutdownThread(false);
+                    }
+                    if (!r21.isRun())
+                        r21.run();
                     tvFirst.setText(newResult.getValue());
                 }
                 break;
@@ -1368,16 +1143,22 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
                 if (newResult.getValue() != null) {
                     switch (newResult.getIndex()) {
                         case "0":
-                            if (r21 != null)
-                                r21.shutdownThread(false);
-                            r22.run();
+                            if (r21 != null) {
+                                if (r21.isRun())
+                                    r21.shutdownThread(false);
+                            }
+                            if (!r22.isRun())
+                                r22.run();
                             tv_21.setText(newResult.getValue());
                             break;
                         case "1":
-                            if (r22 != null)
-                                r22.shutdownThread(false);
+                            if (r22 != null) {
+                                if (r22.isRun())
+                                    r22.shutdownThread(false);
+                            }
                             tv_22.setText(newResult.getValue());
-                            r31.run();
+                            if (!r31.isRun())
+                                r31.run();
                             break;
                     }
                 }
@@ -1386,39 +1167,57 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
                 if (newResult.getValue() != null) {
                     switch (newResult.getIndex()) {
                         case "0":
-                            if (r31 != null)
-                                r31.shutdownThread(false);
-                            r32.run();
+                            if (r31 != null) {
+                                if (r31.isRun())
+                                    r31.shutdownThread(false);
+                            }
+                            if (!r32.isRun())
+                                r32.run();
                             tv_31.setText(newResult.getValue());
                             break;
                         case "1":
-                            if (r32 != null)
-                                r32.shutdownThread(false);
-                            r33.run();
+                            if (r32 != null) {
+                                if (r32.isRun())
+                                    r32.shutdownThread(false);
+                            }
+                            if (!r33.isRun())
+                                r33.run();
                             tv_32.setText(newResult.getValue());
                             break;
                         case "2":
-                            if (r33 != null)
-                                r33.shutdownThread(false);
-                            r34.run();
+                            if (r33 != null) {
+                                if (r33.isRun())
+                                    r33.shutdownThread(false);
+                            }
+                            if (!r34.isRun())
+                                r34.run();
                             tv_33.setText(newResult.getValue());
                             break;
                         case "3":
-                            if (r34 != null)
-                                r34.shutdownThread(false);
-                            r35.run();
+                            if (r34 != null) {
+                                if (r34.isRun())
+                                    r34.shutdownThread(false);
+                            }
+                            if (!r35.isRun())
+                                r35.run();
                             tv_34.setText(newResult.getValue());
                             break;
                         case "4":
-                            if (r35 != null)
-                                r35.shutdownThread(false);
-                            r36.run();
+                            if (r35 != null) {
+                                if (r35.isRun())
+                                    r35.shutdownThread(false);
+                            }
+                            if (!r36.isRun())
+                                r36.run();
                             tv_35.setText(newResult.getValue());
                             break;
                         case "5":
-                            if (r36 != null)
-                                r36.shutdownThread(false);
-                            r41.run();
+                            if (r36 != null) {
+                                if (r36.isRun())
+                                    r36.shutdownThread(false);
+                            }
+                            if (!r41.isRun())
+                                r41.run();
                             tv_36.setText(newResult.getValue());
                             break;
                     }
@@ -1428,27 +1227,39 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
                 if (newResult.getValue() != null) {
                     switch (newResult.getIndex()) {
                         case "0":
-                            if (r41 != null)
-                                r41.shutdownThread(false);
-                            r42.run();
+                            if (r41 != null) {
+                                if (r41.isRun())
+                                    r41.shutdownThread(false);
+                            }
+                            if (!r42.isRun())
+                                r42.run();
                             tv_41.setText(newResult.getValue());
                             break;
                         case "1":
-                            if (r42 != null)
-                                r42.shutdownThread(false);
-                            r43.run();
+                            if (r42 != null) {
+                                if (r42.isRun())
+                                    r42.shutdownThread(false);
+                            }
+                            if (!r43.isRun())
+                                r43.run();
                             tv_42.setText(newResult.getValue());
                             break;
                         case "2":
-                            if (r43 != null)
-                                r43.shutdownThread(false);
-                            r44.run();
+                            if (r43 != null) {
+                                if (r43.isRun())
+                                    r43.shutdownThread(false);
+                            }
+                            if (!r44.isRun())
+                                r44.run();
                             tv_43.setText(newResult.getValue());
                             break;
                         case "3":
-                            if (r44 != null)
-                                r44.shutdownThread(false);
-                            r51.run();
+                            if (r44 != null) {
+                                if (r44.isRun())
+                                    r44.shutdownThread(false);
+                            }
+                            if (!r51.isRun())
+                                r51.run();
                             tv_44.setText(newResult.getValue());
                             break;
                     }
@@ -1459,39 +1270,56 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
                     switch (newResult.getIndex()) {
                         case "0":
                             if (r51 != null) {
-                                r51.shutdownThread(false);
+                                if (r51.isRun())
+                                    r51.shutdownThread(false);
                             }
-                            r52.run();
+                            if (!r52.isRun())
+                                r52.run();
                             tv_51.setText(newResult.getValue());
                             break;
                         case "1":
-                            if (r52 != null)
-                                r52.shutdownThread(false);
-                            r53.run();
+                            if (r52 != null) {
+                                if (r52.isRun())
+                                    r52.shutdownThread(false);
+                            }
+                            if (!r53.isRun())
+                                r53.run();
                             tv_52.setText(newResult.getValue());
                             break;
                         case "2":
-                            if (r53 != null)
-                                r53.shutdownThread(false);
-                            r54.run();
+                            if (r53 != null) {
+                                if (r53.isRun())
+                                    r53.shutdownThread(false);
+                            }
+                            if (!r54.isRun())
+                                r54.run();
                             tv_53.setText(newResult.getValue());
                             break;
                         case "3":
-                            if (r54 != null)
-                                r54.shutdownThread(false);
-                            r55.run();
+                            if (r54 != null) {
+                                if (r54.isRun())
+                                    r54.shutdownThread(false);
+                            }
+                            if (!r55.isRun())
+                                r55.run();
                             tv_54.setText(newResult.getValue());
                             break;
                         case "4":
-                            if (r55 != null)
-                                r55.shutdownThread(false);
-                            r56.run();
+                            if (r55 != null) {
+                                if (r55.isRun())
+                                    r55.shutdownThread(false);
+                            }
+                            if (!r56.isRun())
+                                r56.run();
                             tv_55.setText(newResult.getValue());
                             break;
                         case "5":
-                            if (r56 != null)
-                                r56.shutdownThread(false);
-                            r61.run();
+                            if (r56 != null) {
+                                if (r56.isRun())
+                                    r56.shutdownThread(false);
+                            }
+                            if (!r61.isRun())
+                                r61.run();
                             tv_56.setText(newResult.getValue());
                             break;
                     }
@@ -1502,23 +1330,29 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
                     switch (newResult.getIndex()) {
                         case "0":
                             if (r61 != null) {
-                                r61.shutdownThread(false);
+                                if (r61.isRun())
+                                    r61.shutdownThread(false);
                             }
-                            r62.run();
+                            if (!r62.isRun())
+                                r62.run();
                             tv_61.setText(newResult.getValue());
                             break;
                         case "1":
                             if (r62 != null) {
-                                r62.shutdownThread(false);
+                                if (r62.isRun())
+                                    r62.shutdownThread(false);
                             }
-                            r63.run();
+                            if (!r63.isRun())
+                                r63.run();
                             tv_62.setText(newResult.getValue());
                             break;
                         case "2":
                             if (r63 != null) {
-                                r63.shutdownThread(false);
+                                if (r63.isRun())
+                                    r63.shutdownThread(false);
                             }
-                            r71.run();
+                            if (!r71.isRun())
+                                r71.run();
                             tv_63.setText(newResult.getValue());
                             break;
                     }
@@ -1529,30 +1363,38 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
                     switch (newResult.getIndex()) {
                         case "0":
                             if (r71 != null) {
-                                r71.shutdownThread(false);
+                                if (r71.isRun())
+                                    r71.shutdownThread(false);
                             }
                             tv_71.setText(newResult.getValue());
-                            r72.run();
+                            if (!r72.isRun())
+                                r72.run();
                             break;
                         case "1":
                             if (r72 != null) {
-                                r72.shutdownThread(false);
+                                if (r72.isRun())
+                                    r72.shutdownThread(false);
                             }
-                            r73.run();
+                            if (!r73.isRun())
+                                r73.run();
                             tv_72.setText(newResult.getValue());
                             break;
                         case "2":
                             if (r73 != null) {
-                                r73.shutdownThread(false);
+                                if (r73.isRun())
+                                    r73.shutdownThread(false);
                             }
-                            r74.run();
+                            if (!r74.isRun())
+                                r74.run();
                             tv_73.setText(newResult.getValue());
                             break;
                         case "3":
                             if (r74 != null) {
-                                r74.shutdownThread(false);
+                                if (r74.isRun())
+                                    r74.shutdownThread(false);
                             }
-                            special.run();
+                            if (!special.isRun())
+                                special.run();
                             tv_74.setText(newResult.getValue());
                             break;
                     }
@@ -1561,7 +1403,8 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
             case "res_special":
                 if (newResult.getValue() != null) {
                     if (special != null) {
-                        special.shutdownThread(true);
+                        if (special.isRun())
+                            special.shutdownThread(true);
                     }
                     LotoSpecial = newResult.getValue().substring(3);
                     tvSpecial.setText(newResult.getValue());
@@ -1589,11 +1432,11 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
                 data.getRes_sixth(),
                 data.getRes_seventh());
         adapterLoto.refreshLotoList(data.getLoto());
-        if (data.getBegin_with() !=null){
+        if (data.getBegin_with() != null) {
             setBeginResult(data.getBegin_with());
         }
 
-        if (data.getEnd_with()!=null){
+        if (data.getEnd_with() != null) {
             setEndResult(data.getEnd_with());
         }
     }
@@ -1634,7 +1477,6 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
                     begin_1 = begin_1.substring(0, begin_1.length() - 3);
                 }
                 Log.e(TAG, "setBeginEndLoto: 1 - " + begin_1);
-//                b1 = begin_1;
                 tvLoto1.setText(Html.fromHtml(begin_1));
             }
         }
@@ -1653,7 +1495,6 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
                     begin_2 = begin_2.substring(0, begin_2.length() - 3);
                 }
                 Log.e(TAG, "setBeginEndLoto: 2 - " + begin_2);
-//                b2 = begin_2;
                 tvLoto2.setText(Html.fromHtml(begin_2));
             }
         }
@@ -1995,6 +1836,7 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
     /**
      * Set - End
      */
+    @Contract(pure = true)
     private boolean getExistsEnd() {
         return isExistsEnd;
     }
@@ -2020,15 +1862,15 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
         }
 
         sound = SharedUtils.getInstance().getBooleanDefaultTrueValue(Constants.SOUND_FLAG);
-        if (!sound){
-            if (audioManager!=null){
+        if (!sound) {
+            if (audioManager != null) {
                 audioManager.setStreamMute(AudioManager.STREAM_MUSIC, true);
             }
-            if (img_mute !=null){
+            if (img_mute != null) {
                 img_mute.setImageResource(R.mipmap.ic_mute_on);
             }
         } else {
-            if (img_mute != null){
+            if (img_mute != null) {
                 img_mute.setImageResource(R.mipmap.ic_mute);
             }
             audioManager.setStreamMute(AudioManager.STREAM_MUSIC, false);
@@ -2242,7 +2084,8 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
         private long delayMillis;
         private int max, min;
 
-        private volatile boolean shutdown;
+        private boolean shutdown;
+        private boolean running;
 
         public Roller(TextView textView, int numTimes, long delayMillis, int max, int min) {
             this.textRoll = textView;
@@ -2256,6 +2099,7 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
         public void run() {
             if (!shutdown) {
                 if (textRoll != null) {
+                    running = true;
                     textRoll.setTextColor(context.getResources().getColor(android.R.color.holo_blue_dark));
                     Random rn = new Random();
 //                    int range = max - min + 1;
@@ -2281,6 +2125,11 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
                 }
             }
             shutdown = true;
+            running = false;
+        }
+
+        public boolean isRun() {
+            return running;
         }
     }
 }

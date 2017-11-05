@@ -47,6 +47,7 @@ public class CycleListSpecialActivity extends BasicActivity implements IActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setBackgroundDrawableResource(R.mipmap.background_home);
         setContentView(R.layout.activity_cycle_list_special);
         initToolbar(R.id.toolbar, "");
         presenter = new ActivityCycleListSpecialPresenter(this);

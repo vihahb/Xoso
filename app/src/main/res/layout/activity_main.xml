@@ -6,55 +6,81 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <android.support.design.widget.CoordinatorLayout
+        android:layout_height="match_parent">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            app:elevation="0dp">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <android.support.design.widget.AppBarLayout
-                android:id="@+id/appBarLayout"
+            <android.support.design.widget.CoordinatorLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:overScrollMode="ifContentScrolls"
-                android:theme="@style/AppTheme.AppBarOverlay"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
                 app:elevation="0dp">
 
-                <android.support.v7.widget.Toolbar
-                    android:id="@+id/toolbar"
+                <android.support.design.widget.AppBarLayout
+                    android:id="@+id/appBarLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:background="?attr/colorPrimary"
-                    app:elevation="0dp"
-                    app:layout_scrollFlags="scroll|enterAlways"
-                    app:popupTheme="@style/AppTheme.PopupOverlay"
-                    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                    app:titleTextAppearance="@style/Toolbar.TitleText" />
+                    android:layout_height="wrap_content"
+                    android:overScrollMode="ifContentScrolls"
+                    android:theme="@style/AppTheme.AppBarOverlay"
+                    app:elevation="0dp">
 
-            </android.support.design.widget.AppBarLayout>
+                    <android.support.v7.widget.Toolbar
+                        android:id="@+id/toolbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="?attr/actionBarSize"
+                        android:background="?attr/colorPrimary"
+                        app:elevation="0dp"
+                        app:layout_scrollFlags="scroll|enterAlways"
+                        app:popupTheme="@style/AppTheme.PopupOverlay"
+                        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                        app:titleTextAppearance="@style/Toolbar.TitleText" />
 
-            <com.xProject.XosoVIP.xoso.view.widget.LockableViewPager
-                android:id="@+id/vpMain"
+                </android.support.design.widget.AppBarLayout>
+
+                <com.xProject.XosoVIP.xoso.view.widget.LockableViewPager
+                    android:id="@+id/vpMain"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+            </android.support.design.widget.CoordinatorLayout>
+
+            <com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
+                android:id="@+id/bottomTab"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-        </android.support.design.widget.CoordinatorLayout>
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                app:itemIconTint="@drawable/selector_bottom_navigation"
+                app:itemTextColor="@drawable/selector_bottom_navigation"
+                app:menu="@menu/activity_bottom_menu" />
+        </LinearLayout>
 
-        <com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
-            android:id="@+id/bottomTab"
+        <LinearLayout
+            android:layout_marginBottom="?attr/actionBarSize"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/white"
-            app:itemIconTint="@drawable/selector_bottom_navigation"
-            app:itemTextColor="@drawable/selector_bottom_navigation"
-            app:menu="@menu/activity_bottom_menu" />
-    </LinearLayout>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <View
+                android:id="@+id/drawer_btn"
+                android:layout_width="@dimen/size_48"
+                android:layout_height="?attr/actionBarSize"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@android:color/transparent"/>
+
+            <View
+                android:id="@+id/rcl_calender_view"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_36"
+                android:background="@android:color/transparent"/>
+        </LinearLayout>
+    </FrameLayout>
+
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"

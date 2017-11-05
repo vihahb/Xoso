@@ -44,6 +44,7 @@ public class AnalyticsSpeedActivity extends BasicActivity implements IAnalyticsS
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setBackgroundDrawableResource(R.mipmap.background_home);
         setContentView(R.layout.activity_analytics_speed);
         initToolbar(R.id.toolbar, "Thống kê nhanh");
         presenter = new AnalyticsSpeedActivityPresenter(this);

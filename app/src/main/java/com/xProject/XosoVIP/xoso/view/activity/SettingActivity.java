@@ -55,7 +55,7 @@ public class SettingActivity extends BasicActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
-
+        getWindow().setBackgroundDrawableResource(R.mipmap.background_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle("Cài đặt và điều khoản");

@@ -1,0 +1,62 @@
+{
+  "project_info": {
+    "project_number": "250326424847",
+    "firebase_url": "https://xoso-eb4e2.firebaseio.com",
+    "project_id": "xoso-eb4e2",
+    "storage_bucket": "xoso-eb4e2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:250326424847:android:084eab41b7a3e83d",
+        "android_client_info": {
+          "package_name": "com.xProject.XosoVIP"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "250326424847-vosnfuh0rbb017jk6tot07qu0ml2eupd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.xProject.XosoVIP",
+            "certificate_hash": "fbd236eaff1abd5557fb8cc2830569f05e23d637"
+          }
+        },
+        {
+          "client_id": "250326424847-iog0k6gjatu596odn98lubv4f60hqlpl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMfe2s5qyP2jRZXdk_wpk-95XZYzxrBPI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "250326424847-23511ij78ol05egojo8s9vpis5r8ut8j.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.xtel.XoSo"
+              }
+            },
+            {
+              "client_id": "250326424847-iog0k6gjatu596odn98lubv4f60hqlpl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

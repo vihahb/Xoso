@@ -15,6 +15,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,10 +26,16 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.DatePicker;
 
+import com.github.florent37.tutoshowcase.TutoShowcase;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
+import com.xProject.XosoVIP.R;
+import com.xProject.XosoVIP.sdk.callback.DialogListener;
 import com.xProject.XosoVIP.sdk.common.Constants;
+import com.xProject.XosoVIP.sdk.service.SocketService;
 import com.xProject.XosoVIP.sdk.utils.AlarmUtils;
 import com.xProject.XosoVIP.sdk.utils.PermissionHelper;
 import com.xProject.XosoVIP.sdk.utils.SharedUtils;
@@ -45,7 +52,6 @@ import com.xProject.XosoVIP.xoso.view.fragment.FragmentResult;
 import com.xProject.XosoVIP.xoso.view.fragment.inf.OnCompleteListener;
 import com.xProject.XosoVIP.xoso.view.widget.LockableViewPager;
 import com.xProject.XosoVIP.xoso.view.widget.PageTransformer;
-import com.xProject.XosoVIP.R;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -54,6 +60,7 @@ import java.util.List;
 public class MainActivity extends BasicActivity implements IHomeView, OnCompleteListener, onDateSelectListener {
 
     BroadcastReceiver broadcastLive;
+    BroadcastReceiver broadcastClose;
     private List<DrawerMenu> menuList;
     private RecyclerView rcl_menu;
     private AdapterMenu adapterMenu;
@@ -69,17 +76,27 @@ public class MainActivity extends BasicActivity implements IHomeView, OnComplete
     private boolean chec_n = false;
     private boolean chec_c = false;
     private boolean chec_s = false;
+    private boolean showGuide = false;
+    public static boolean mainStory = true;
+    private BroadcastReceiver broadcastChange;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setBackgroundDrawableResource(R.mipmap.background_home);
         setContentView(R.layout.activity_main);
         presenter = new HomePresenter(this);
         initView();
+        listentClose();
         listentNotification();
+        listentChange();
         checkLive();
         grandPermission();
         registerReceiver(broadcastLive, new IntentFilter("ACTION_LIVE"));
+        registerReceiver(broadcastChange, new IntentFilter("ACTION_CHANGE"));
+        registerReceiver(broadcastClose, new IntentFilter("ACTION_CLOSE"));
+        displayShowCase();
     }
 
     private void grandPermission() {
@@ -95,7 +112,7 @@ public class MainActivity extends BasicActivity implements IHomeView, OnComplete
         chec_s = SharedUtils.getInstance().getBooleanValue(Constants.CHECK_DONE_S);
 
         if (TimeUtils.checkTimeInMilisecondNorth(18, 10, 18, 40)) {
-            if (!chec_n){
+            if (!chec_n) {
                 setFlagLive(true, 1);
             } else {
                 setFlagLive(false, 1);
@@ -105,7 +122,7 @@ public class MainActivity extends BasicActivity implements IHomeView, OnComplete
         }
 
         if (TimeUtils.checkTimeInMilisecondNorth(17, 10, 17, 40)) {
-            if (!chec_c){
+            if (!chec_c) {
                 setFlagLive(true, 2);
             } else {
                 setFlagLive(false, 2);
@@ -115,7 +132,7 @@ public class MainActivity extends BasicActivity implements IHomeView, OnComplete
         }
 
         if (TimeUtils.checkTimeInMilisecondNorth(16, 10, 16, 40)) {
-            if (!chec_s){
+            if (!chec_s) {
                 setFlagLive(true, 3);
             } else {
                 setFlagLive(false, 3);
@@ -127,6 +144,16 @@ public class MainActivity extends BasicActivity implements IHomeView, OnComplete
     }
 
     private void initView() {
+        /* setup enter and exit animation */
+        final Animation enterAnimation = new AlphaAnimation(0f, 1f);
+        enterAnimation.setDuration(600);
+        enterAnimation.setFillAfter(true);
+
+        final Animation exitAnimation = new AlphaAnimation(1f, 0f);
+        exitAnimation.setDuration(600);
+        exitAnimation.setFillAfter(true);
+
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle("Kết quả miền Bắc");
@@ -145,7 +172,6 @@ public class MainActivity extends BasicActivity implements IHomeView, OnComplete
 
         // mDrawerToggle.setHomeAsUpIndicator(R.drawable.menu_icon);
         toolbar.setNavigationIcon(R.drawable.ic_drawer);
-
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -156,11 +182,51 @@ public class MainActivity extends BasicActivity implements IHomeView, OnComplete
         toggle.syncState();
     }
 
+    public void listentClose(){
+        broadcastClose = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if(intent.getAction().equals("ACTION_CLOSE")){
+                    forceExit();
+                }
+            }
+        };
+    }
+
+    public void listentChange(){
+        broadcastChange = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                int action_type =intent.getIntExtra(Constants.ACTION_TYPE, -1);
+
+                if (action_type > 0){
+                    if (viewPager.getCurrentItem() > 0){
+                        showDialogLive(false, false, action_type, new DialogListener() {
+                            @Override
+                            public void negativeClicked() {
+
+                            }
+
+                            @Override
+                            public void positiveClicked() {
+                                viewPager.setCurrentItem(0);
+                            }
+                        });
+                    }
+                }
+            }
+        };
+    }
+
     public void listentNotification() {
         broadcastLive = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 int action_type = intent.getIntExtra(Constants.ACTION_TYPE, -1);
+                Intent socket_intent = new Intent(context, SocketService.class);
+                socket_intent.putExtra(Constants.ACTION_TYPE, action_type);
+                context.startService(socket_intent);
+
                 switch (action_type) {
                     case 1:
                         ((FragmentResult) pagerAdapter.getItem(0)).changeLive(0);
@@ -262,6 +328,25 @@ public class MainActivity extends BasicActivity implements IHomeView, OnComplete
         viewPager.setAdapter(pagerAdapter);
         viewPager.setPageTransformer(false, new PageTransformer());
         viewPager.setCurrentItem(0);
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position != 0) {
+                    mainStory = false;
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
         navigationBottom = (BottomNavigationViewEx) findViewById(R.id.bottomTab);
         navigationBottom.enableAnimation(false);
@@ -455,6 +540,9 @@ public class MainActivity extends BasicActivity implements IHomeView, OnComplete
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(broadcastLive);
+        unregisterReceiver(broadcastChange);
+        unregisterReceiver(broadcastClose);
+        stopService(new Intent(this, SocketService.class));
     }
 
     @Override
@@ -518,12 +606,83 @@ public class MainActivity extends BasicActivity implements IHomeView, OnComplete
             return title;
         }
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         boolean accepted = PermissionHelper.checkResult(grantResults);
-        if (!accepted){
+        if (!accepted) {
             finish();
         }
+    }
+
+    protected void displayShowCase() {
+        final TutoShowcase showcase = TutoShowcase.from(this);
+        showcase.setListener(new TutoShowcase.Listener() {
+            @Override
+            public void onDismissed() {
+                showCase2();
+            }
+        });
+        showcase.setContentView(R.layout.showcase_tap_left);
+        showcase.setFitsSystemWindows(true);
+        showcase.on(R.id.drawer_btn).addCircle().onClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showcase.dismiss();
+            }
+        });
+        showcase.showOnce("One");
+    }
+
+    private void showCase2() {
+        final TutoShowcase showcase = TutoShowcase.from(this);
+        showcase.setListener(new TutoShowcase.Listener() {
+            @Override
+            public void onDismissed() {
+                showCase3();
+            }
+        });
+        showcase.setContentView(R.layout.showcase_tap_right);
+        showcase.setFitsSystemWindows(true);
+        showcase.on(R.id.action_select_date).addCircle().onClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showcase.dismiss();
+            }
+        });
+        showcase.showOnce("Two");
+    }
+
+    private void showCase3() {
+        final TutoShowcase showcase = TutoShowcase.from(this);
+        showcase.setListener(new TutoShowcase.Listener() {
+            @Override
+            public void onDismissed() {
+                showCase4();
+            }
+        });
+        showcase.setContentView(R.layout.showcase_swipe);
+        showcase.setFitsSystemWindows(true);
+        showcase.on(R.id.rcl_calender_view).addRoundRect().onClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showcase.dismiss();
+            }
+        });
+        showcase.showOnce("Three");
+    }
+
+    private void showCase4() {
+        final TutoShowcase showcase = TutoShowcase.from(this);
+        showcase.setContentView(R.layout.showcase_tap_bot);
+        showcase.setFitsSystemWindows(true);
+        showcase.on(R.id.bottomTab).addRoundRect().onClick(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showcase.dismiss();
+            }
+        });
+        showcase.showOnce("Fourd");
     }
 }

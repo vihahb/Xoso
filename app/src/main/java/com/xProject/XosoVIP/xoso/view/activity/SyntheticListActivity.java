@@ -26,6 +26,7 @@ public class SyntheticListActivity extends BasicActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setBackgroundDrawableResource(R.mipmap.background_home);
         setContentView(R.layout.activity_synthetic_list);
         initToolbar(R.id.toolbar, "Chi tiết TK tổng hợp");
         initView();

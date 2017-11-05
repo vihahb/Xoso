@@ -1,7 +1,7 @@
 package com.xProject.XosoVIP.xoso.view.activity;
 
-import android.support.design.widget.TextInputLayout;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,6 +11,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.xProject.XosoVIP.R;
 import com.xProject.XosoVIP.sdk.callback.DateTimePickerListener;
 import com.xProject.XosoVIP.sdk.common.Constants;
 import com.xProject.XosoVIP.sdk.utils.DatabaseHelper;
@@ -22,7 +23,6 @@ import com.xProject.XosoVIP.xoso.model.entity.SpeedTemp;
 import com.xProject.XosoVIP.xoso.presenter.activity.ActivityExploreBridgeLotoPresenter;
 import com.xProject.XosoVIP.xoso.view.activity.inf.ActivityExploreBridgeLotoView;
 import com.xProject.XosoVIP.xoso.view.adapter.AdapterSpinner;
-import com.xProject.XosoVIP.R;
 
 import java.util.Calendar;
 import java.util.List;
@@ -45,6 +45,7 @@ public class BridHistorygeActivity extends BasicActivity implements View.OnClick
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setBackgroundDrawableResource(R.mipmap.background_home);
         title = "Lịch sử cầu";
         setContentView(R.layout.activity_brid_historyge);
         initToolbar(R.id.toolbar, title);
@@ -98,19 +99,28 @@ public class BridHistorygeActivity extends BasicActivity implements View.OnClick
 
 
         String begin_date = "";
-        if (String.valueOf(oldMonth).length() == 1){
-            begin_date = oldYear + "-0" + oldMonth + "-" + oldDay;
-        } else {
-            begin_date = oldYear + "-" + oldMonth + "-" + oldDay;
+        String old_month = String.valueOf(oldMonth);
+        String old_day = String.valueOf(oldDay);
+        if (old_month.length() == 1) {
+            old_month = "0" + old_month;
         }
+        if (old_day.length() == 1) {
+            old_day = "0" + old_day;
+        }
+        begin_date = oldYear + "-" + old_month + "-" + old_day;
         String begin_date_form = oldDay + "/" + oldMonth + "/" + oldYear;
 
+
         String end_date = "";
-        if (String.valueOf(month).length() == 1){
-            end_date = year + "-0" + month + "-" + toDay;
-        } else {
-            end_date = year + "-" + month + "-" + toDay;
+        String n_month = String.valueOf(month);
+        String n_day = String.valueOf(toDay);
+        if (n_month.length() == 1) {
+            n_month = "0" + n_month;
         }
+        if (n_day.length() == 1) {
+            n_day = "0" + n_day;
+        }
+        end_date = year + "-" + n_month + "-" + n_day;
         String end_date_form = toDay + "/" + month + "/" + year;
 
         temp.setDate_begin(begin_date);
@@ -149,7 +159,6 @@ public class BridHistorygeActivity extends BasicActivity implements View.OnClick
     }
 
 
-
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -157,7 +166,7 @@ public class BridHistorygeActivity extends BasicActivity implements View.OnClick
                 if (checkBeginNotNull() && checkEndNotNull() && checPositionNotNull() && checkBeginEqualEnd()) {
                     temp.setPosition_1(Integer.parseInt(edt_position_1.getText().toString()));
                     temp.setPosition_2(Integer.parseInt(edt_position_2.getText().toString()));
-                    if (checkSpecial.isChecked()){
+                    if (checkSpecial.isChecked()) {
                         temp.setOnly_special(true);
                     } else {
                         temp.setOnly_special(false);
@@ -189,12 +198,12 @@ public class BridHistorygeActivity extends BasicActivity implements View.OnClick
     }
 
     private boolean checPositionNotNull() {
-        if (edt_position_1.getText().toString().length() == 0){
+        if (edt_position_1.getText().toString().length() == 0) {
             showShortToast("Vị trí 1 không được để trống");
             return false;
         }
 
-        if (edt_position_2.getText().toString().length() == 0){
+        if (edt_position_2.getText().toString().length() == 0) {
             showShortToast("Vị trí 2 không được để trống");
             return false;
         }
@@ -248,7 +257,7 @@ public class BridHistorygeActivity extends BasicActivity implements View.OnClick
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if (item.getItemId() == android.R.id.home){
+        if (item.getItemId() == android.R.id.home) {
             finish();
         }
         return super.onOptionsItemSelected(item);

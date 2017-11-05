@@ -46,6 +46,7 @@ public class AnalyticsSynthetic extends BasicActivity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setBackgroundDrawableResource(R.mipmap.background_home);
         setContentView(R.layout.activity_analytics_synthetic);
 
         initToolbar(R.id.toolbar, getString(R.string.title_activity_analytics_synthetic));

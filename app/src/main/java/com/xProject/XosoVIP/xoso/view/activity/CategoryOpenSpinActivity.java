@@ -28,6 +28,7 @@ public class CategoryOpenSpinActivity extends BasicActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setBackgroundDrawableResource(R.mipmap.background_home);
         setContentView(R.layout.activity_category_open_spin);
         initToolbar(R.id.toolbar, "Lịch mở thưởng");
         initCheckDay();

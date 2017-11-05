@@ -26,6 +26,7 @@ public class CycleLotoListInfo extends BasicActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setBackgroundDrawableResource(R.mipmap.background_home);
         setContentView(R.layout.activity_cycle_loto_list_info);
         initToolbar(R.id.toolbar, "Chi tiết chu kỳ lô tô");
         initView();

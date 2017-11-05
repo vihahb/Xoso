@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/size_36"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="86dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="@color/table_x">
+
+        <ImageView
+            android:id="@+id/icon_dialog"
+            android:layout_width="@dimen/size_64"
+            android:layout_height="@dimen/size_64"
+            android:src="@mipmap/ic_nav_central" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/dialog_txt_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Thông báo trực tiếp"
+        android:textStyle="bold"
+        android:layout_marginLeft="@dimen/size_24"
+        android:layout_marginRight="@dimen/size_24"
+        android:layout_marginTop="@dimen/size_16"
+        android:textColor="@color/black_65"
+        android:textSize="15sp"/>
+
+    <TextView
+        android:id="@+id/dialog_txt_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/size_24"
+        android:layout_marginRight="@dimen/size_24"
+        android:layout_marginTop="@dimen/size_8"
+        android:textColor="#757575" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/size_8"
+        android:gravity="right|end"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/dialog_btn_negative"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/size_36"
+            android:layout_marginRight="@dimen/size_8"
+            android:background="@drawable/button_transparent"
+            android:minWidth="@dimen/size_64"
+            android:paddingLeft="@dimen/size_8"
+            android:paddingRight="@dimen/size_8"
+            android:textColor="#2196F3"
+            android:text="Không"
+            android:textSize="@dimen/font_13" />
+
+        <Button
+            android:id="@+id/dialog_btn_positive"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/size_36"
+            android:background="@drawable/button_transparent"
+            android:minWidth="@dimen/size_64"
+            android:paddingLeft="@dimen/size_8"
+            android:paddingRight="@dimen/size_8"
+            android:textColor="#2196F3"
+            android:text="Có"
+            android:textSize="@dimen/font_13" />
+    </LinearLayout>
+</LinearLayout>

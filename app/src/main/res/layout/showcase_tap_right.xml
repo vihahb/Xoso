@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:background="#000000"
+    android:gravity="right">
+
+    <ImageView
+        android:id="@+id/image_tap"
+        android:layout_width="@dimen/size_64"
+        android:layout_height="@dimen/size_64"
+        android:layout_alignEnd="@+id/textView3"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/textView3"
+        android:layout_marginEnd="17dp"
+        android:layout_marginRight="17dp"
+        android:layout_marginTop="56dp"
+        android:src="@mipmap/ic_tap_right" />
+
+    <TextView
+        android:layout_below="@id/image_tap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Nhấn vào đây để chọn nhanh ngày tháng"
+        android:layout_marginRight="@dimen/size_36"
+        android:textColor="@android:color/white"
+        android:textSize="12sp"
+        android:id="@+id/textView3" />
+
+</RelativeLayout>

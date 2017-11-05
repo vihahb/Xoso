@@ -67,6 +67,7 @@ public class Constants {
     public static final String CHECK_DONE_N = "check_done_n";
     public static final String CHECK_DONE_C = "check_done_c";
     public static final String CHECK_DONE_S = "check_done_s";
+    public static String TYPE = "type";
 
     public static Authent getAuthent() {
         Authent authent = new Authent();

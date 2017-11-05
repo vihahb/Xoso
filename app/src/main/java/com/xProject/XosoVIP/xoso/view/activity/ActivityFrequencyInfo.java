@@ -28,6 +28,7 @@ public class ActivityFrequencyInfo extends BasicActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setBackgroundDrawableResource(R.mipmap.background_home);
         setContentView(R.layout.activity_frequency_info);
         initToolbar(R.id.toolbar, "Chi tiết TK tần suất bộ số");
         initView();

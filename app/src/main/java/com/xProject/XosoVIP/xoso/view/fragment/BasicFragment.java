@@ -2,11 +2,16 @@ package com.xProject.XosoVIP.xoso.view.fragment;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.xProject.XosoVIP.sdk.callback.DialogListener;
+import com.xProject.XosoVIP.xoso.view.activity.BasicActivity;
 import com.xProject.XosoVIP.xoso.view.activity.inf.BasicView;
 import com.xProject.XosoVIP.R;
 
@@ -59,6 +64,61 @@ public abstract class BasicFragment extends IFragment implements BasicView {
         if (dialogProgress != null)
             dialogProgress.dismiss();
     }
+
+    public void showDialogLive(boolean isTouchOutside, boolean isCancelable, int type, final DialogListener dialogListener) {
+        try {
+            final Dialog dialog = new Dialog(getContext(), R.style.Theme_Transparent);
+            dialog.setContentView(R.layout.dialog_material);
+            dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            dialog.setCancelable(isTouchOutside);
+            dialog.setCanceledOnTouchOutside(isCancelable);
+
+            TextView txt_title = (TextView) dialog.findViewById(R.id.dialog_txt_title);
+            TextView txt_message = (TextView) dialog.findViewById(R.id.dialog_txt_message);
+            Button btn_negative = (Button) dialog.findViewById(R.id.dialog_btn_negative);
+            Button btn_positive = (Button) dialog.findViewById(R.id.dialog_btn_positive);
+            ImageView icon_dialog = (ImageView) dialog.findViewById(R.id.icon_dialog);
+
+            switch (type){
+                case 1:
+                    icon_dialog.setImageResource(R.mipmap.ic_nav_north);
+                    txt_message.setText("Đang trực tiếp quay giải miển Bắc.");
+                    break;
+                case 2:
+                    icon_dialog.setImageResource(R.mipmap.ic_nav_central);
+                    txt_message.setText("Đang trực tiếp quay giải miển Trung.");
+                    break;
+                case 3:
+                    icon_dialog.setImageResource(R.mipmap.ic_nav_south);
+                    txt_message.setText("Đang trực tiếp quay giải miển Nam.");
+                    break;
+            }
+
+            btn_negative.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                    dialogListener.negativeClicked();
+                }
+            });
+
+            btn_positive.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                    dialogListener.positiveClicked();
+                }
+            });
+
+            if (dialog != null)
+                dialog.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e("showDialogLive", "showDialogLive: " + e);
+        }
+    }
+
+
 
 //    /*
 //    * Khởi tạo fragment vào 1 view layout (FrameLayout)

@@ -41,6 +41,7 @@ public class AnalyticsSum extends BasicActivity implements IAnalyticsSumActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setBackgroundDrawableResource(R.mipmap.background_home);
         setContentView(R.layout.activity_analytics_sum);
         initToolbar(R.id.toolbar, "Thống kê theo tổng");
         presenter = new AnalyticsSumActivityPresenter(this);

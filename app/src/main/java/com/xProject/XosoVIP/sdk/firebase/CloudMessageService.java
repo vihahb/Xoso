@@ -6,6 +6,7 @@ import android.util.Log;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.xProject.XosoVIP.sdk.common.Constants;
+import com.xProject.XosoVIP.sdk.service.SocketService;
 import com.xProject.XosoVIP.sdk.utils.Helper;
 import com.xProject.XosoVIP.sdk.utils.MessageNotification;
 import com.xProject.XosoVIP.xoso.model.entity.DataPayload;
@@ -77,14 +78,17 @@ public class CloudMessageService extends FirebaseMessagingService {
                 id_notify = 6;
             }
 
-
             MessageNotification.notify(context, content_notify, id_notify, intentLive);
 
-            if (Helper.isAppRunning(context, "com.xtelsolution.xoso")) {
+            if (Helper.isAppRunning(context, context.getPackageName())) {
                 if (id_notify > 0) {
                     Intent live_intent = new Intent("ACTION_LIVE");
                     live_intent.putExtra(Constants.ACTION_TYPE, id_notify);
                     context.sendBroadcast(live_intent);
+
+                    Intent socket_intent = new Intent(context, SocketService.class);
+                    socket_intent.putExtra(Constants.ACTION_TYPE, id_notify);
+                    context.startService(socket_intent);
                 }
             }
         }

@@ -30,6 +30,7 @@ import java.util.Arrays;
 
 public class FragmentCentralContentPresenter {
 
+    private boolean connected = false;
     private static final String SERVER_ADDRESS = "http://124.158.4.190:3000/";
     private static final String TAG = "FragmentCentralContentP";
     private Socket socket;
@@ -56,7 +57,9 @@ public class FragmentCentralContentPresenter {
                     public void run() {
                         Log.d(TAG, "Socket Connected!");
                         Log.e(TAG, "connect success: " + socket.connected());
-                        initAuthentSocket();
+                        if (!connected){
+                            initAuthentSocket();
+                        }
 
                         /**
                          * BEGIN - Listen current_result */
@@ -73,16 +76,13 @@ public class FragmentCentralContentPresenter {
                                             view.setVisibleTable(true);
                                             switch (resp_result.getData().size()) {
                                                 case 1:
-                                                    view.random(1);
                                                     cat_area_1 = String.valueOf(resp_result.getData().get(0).getCat_id());
                                                     break;
                                                 case 2:
-                                                    view.random(2);
                                                     cat_area_1 = String.valueOf(resp_result.getData().get(0).getCat_id());
                                                     cat_area_2 = String.valueOf(resp_result.getData().get(1).getCat_id());
                                                     break;
                                                 case 3:
-                                                    view.random(3);
                                                     cat_area_1 = String.valueOf(resp_result.getData().get(0).getCat_id());
                                                     cat_area_2 = String.valueOf(resp_result.getData().get(1).getCat_id());
                                                     cat_area_3 = String.valueOf(resp_result.getData().get(2).getCat_id());
@@ -215,7 +215,9 @@ public class FragmentCentralContentPresenter {
                             @Override
                             public void run() {
                                 if (!socket.connected()) {
-                                    socket.connect();
+                                    if (!connected){
+                                        socket.connect();
+                                    }
                                 }
                                 socket.on(Socket.EVENT_CONNECT, onConnect);
                                 socket.on(Socket.EVENT_CONNECT_ERROR, onConnectError);
@@ -288,6 +290,7 @@ public class FragmentCentralContentPresenter {
                     view.getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            connected = true;
                             socket.emit("get_current_result");
                         }
                     });

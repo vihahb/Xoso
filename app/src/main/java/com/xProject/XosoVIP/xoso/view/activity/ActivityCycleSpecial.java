@@ -39,6 +39,7 @@ public class ActivityCycleSpecial extends BasicActivity implements IActivityCycl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cycle_special);
+        getWindow().setBackgroundDrawableResource(R.mipmap.background_home);
         initToolbar(R.id.toolbar, "Chu kỳ đặc biệt");
         presenter = new ActivityCycleSpecialPresenter(this);
         initView();

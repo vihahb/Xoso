@@ -40,6 +40,7 @@ public class AnalyticsLotoAuto extends BasicActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setBackgroundDrawableResource(R.mipmap.background_home);
         setContentView(R.layout.activity_analytics_loto_auto);
         initToolbar(R.id.toolbar, getString(R.string.title_activity_analytics_loto_auto));
         initView();

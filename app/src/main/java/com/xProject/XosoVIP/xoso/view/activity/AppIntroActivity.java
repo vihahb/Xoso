@@ -1,3 +1,4 @@
+/*
 package com.xProject.XosoVIP.xoso.view.activity;
 
 import android.content.Intent;
@@ -307,3 +308,4 @@ public class AppIntroActivity extends AppIntro2 {
         }
     }
 }
+*/

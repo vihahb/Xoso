@@ -123,9 +123,7 @@ public class AppIntroPresenter {
 
     public void getProvinceAPI() {
         if (NetworkUtils.getInstance().isConnected(view.getActivity())) {
-            if (!SharedUtils.getInstance().getBooleanValue(Constants.CATEGORY_FLAG)) {
-                icmd.excute(1);
-            }
+            icmd.excute(1);
         } else{
             view.getProvinceListError();
         }

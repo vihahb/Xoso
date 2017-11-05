@@ -6,10 +6,12 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.xProject.XosoVIP.sdk.common.Constants;
+import com.xProject.XosoVIP.sdk.service.SocketService;
 import com.xProject.XosoVIP.sdk.utils.AlarmUtils;
 import com.xProject.XosoVIP.sdk.utils.Helper;
 import com.xProject.XosoVIP.sdk.utils.MessageNotification;
 import com.xProject.XosoVIP.sdk.utils.SharedUtils;
+import com.xProject.XosoVIP.xoso.ProjectApplication;
 import com.xProject.XosoVIP.xoso.view.activity.MainActivity;
 
 /**
@@ -20,6 +22,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     private static final String TAG = "AlarmReceiver";
     private boolean flag_n = true, flag_c = true, flag_s = true;
+    private boolean notify = true;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -59,7 +62,8 @@ public class AlarmReceiver extends BroadcastReceiver {
             id_notify = 3;
         }
 
-        if (Helper.isAppRunning(context, "com.xtelsolution.xoso")) {
+        if (Helper.isAppRunning(context, ProjectApplication.context.getPackageName())) {
+            notify = false;
             if (id_notify > 0) {
                 Intent live_intent = new Intent("ACTION_LIVE");
                 live_intent.putExtra(Constants.ACTION_TYPE, id_notify);

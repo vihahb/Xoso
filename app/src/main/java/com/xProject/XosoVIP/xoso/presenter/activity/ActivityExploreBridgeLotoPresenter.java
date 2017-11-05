@@ -1,5 +1,7 @@
 package com.xProject.XosoVIP.xoso.presenter.activity;
 
+import android.util.Log;
+
 import com.xProject.XosoVIP.sdk.callback.Icmd;
 import com.xProject.XosoVIP.sdk.utils.DatabaseHelper;
 import com.xProject.XosoVIP.xoso.model.entity.ProvinceEntity;
@@ -22,41 +24,36 @@ public class ActivityExploreBridgeLotoPresenter {
             String url = null;
             switch ((int) params[0]) {
                 case 1:
-                    url = "http://xoso.la/index.php?route=webview/loto&proviceCode=" + speedTemp.getId_cat() + "&endDate=" + speedTemp.getDate_format_end() + "&day_count=" + speedTemp.getDate_count();
+                    url = "http://xoso.la/index.php?route=webview/loto&proviceCode=" + speedTemp.getId_cat() + "&endDate=" + speedTemp.getDate_end() + "&day_count=" + speedTemp.getDate_count();
                     view.returnUrl(url);
                     break;
-
                 case 2:
-                    url = "http://xoso.la/index.php?route=webview/loailoto&proviceCode=" + speedTemp.getId_cat() + "&endDate=" + speedTemp.getDate_format_end() + "&day_count=" + speedTemp.getDate_count();
+                    url = "http://xoso.la/index.php?route=webview/loailoto&proviceCode=" + speedTemp.getId_cat() + "&endDate=" + speedTemp.getDate_end() + "&day_count=" + speedTemp.getDate_count();
                     view.returnUrl(url);
                     break;
-
                 case 3:
-                    url = "http://xoso.la/index.php?route=webview/bachthu&proviceCode=" + speedTemp.getId_cat() + "&endDate=" + speedTemp.getDate_format_end() + "&day_count=" + speedTemp.getDate_count();
+                    url = "http://xoso.la/index.php?route=webview/bachthu&proviceCode=" + speedTemp.getId_cat() + "&endDate=" + speedTemp.getDate_end() + "&day_count=" + speedTemp.getDate_count();
                     view.returnUrl(url);
                     break;
-
                 case 4:
-                    url = "http://xoso.la/index.php?route=webview/loaibachthu&proviceCode=" + speedTemp.getId_cat() + "&endDate=" + speedTemp.getDate_format_end() + "&day_count=" + speedTemp.getDate_count();
+                    url = "http://xoso.la/index.php?route=webview/loaibachthu&proviceCode=" + speedTemp.getId_cat() + "&endDate=" + speedTemp.getDate_end() + "&day_count=" + speedTemp.getDate_count();
                     view.returnUrl(url);
                     break;
-
                 case 5:
-                    url = "http://xoso.la/index.php?route=webview/dacbiet&proviceCode=" + speedTemp.getId_cat() + "&endDate=" + speedTemp.getDate_format_end() + "&day_count=" + speedTemp.getDate_count() + "&special=" + speedTemp.isOnly_special();
+                    url = "http://xoso.la/index.php?route=webview/dacbiet&proviceCode=" + speedTemp.getId_cat() + "&endDate=" + speedTemp.getDate_end() + "&day_count=" + speedTemp.getDate_count() + "&special=" + speedTemp.isOnly_special();
                     view.returnUrl(url);
                     break;
-
                 case 6:
-                    url = "http://xoso.la/index.php?route=webview/lotohainhay&proviceCode=" + speedTemp.getId_cat() + "&endDate=" + speedTemp.getDate_format_end() + "&day_count=" + speedTemp.getDate_count();
+                    url = "http://xoso.la/index.php?route=webview/lotohainhay&proviceCode=" + speedTemp.getId_cat() + "&endDate=" + speedTemp.getDate_end() + "&day_count=" + speedTemp.getDate_count();
                     view.returnUrl(url);
                     break;
-
                 case 9:
                     if (speedTemp.isOnly_special()){
-                        url = "http://xoso.la/index.php?route=webview/chitietlsc&proviceCode=" + speedTemp.getId_cat() + "&start_date="+ speedTemp.getDate_begin() + "&end_date=" + speedTemp.getDate_end() + "&start=" + speedTemp.getPosition_1() + "&end=" + speedTemp.getPosition_2() + "type=bach_thu";
+                        url = "http://xoso.la/index.php?route=webview/kiemtralsc&proviceCode=" + speedTemp.getId_cat() + "&start_date="+ speedTemp.getDate_begin() + "&end_date=" + speedTemp.getDate_end() + "&start=" + speedTemp.getPosition_1() + "&end=" + speedTemp.getPosition_2() + "&type=bach_thu";
                     } else {
-                        url = "http://xoso.la/index.php?route=webview/chitietlsc&proviceCode=" + speedTemp.getId_cat() + "&start_date="+ speedTemp.getDate_begin() + "&end_date=" + speedTemp.getDate_end() + "&start=" + speedTemp.getPosition_1() + "&end=" + speedTemp.getPosition_2() + "type=loto";
+                        url = "http://xoso.la/index.php?route=webview/kiemtralsc&proviceCode=" + speedTemp.getId_cat() + "&start_date="+ speedTemp.getDate_begin() + "&end_date=" + speedTemp.getDate_end() + "&start=" + speedTemp.getPosition_1() + "&end=" + speedTemp.getPosition_2() + "&type=loto";
                     }
+                    Log.e("TAG", "excute: LSC " + url);
                     view.returnUrl(url);
                     break;
             }

@@ -26,6 +26,7 @@ public class AnalyticsDayInfo extends BasicActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_analytics_day_info);
+        getWindow().setBackgroundDrawableResource(R.mipmap.background_home);
         initToolbar(R.id.toolbar, "Chi tiết thống kê theo ngày");
         initView();
         getData();

@@ -11,12 +11,16 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xProject.XosoVIP.R;
+import com.xProject.XosoVIP.sdk.callback.DialogListener;
 
 import java.io.Serializable;
 
@@ -29,6 +33,7 @@ public class BasicActivity extends IActivity {
     private Toast toast;
     private boolean isWaitingForExit = false;
     private Dialog dialogProgress;
+    private boolean isShowing = false;
 
     public void initToolbar(int id, String title) {
         Toolbar toolbar = (Toolbar) findViewById(id);
@@ -43,6 +48,63 @@ public class BasicActivity extends IActivity {
         if (title != null)
             actionBar.setTitle(title);
     }
+
+    public void showDialogLive(boolean isTouchOutside, boolean isCancelable, int type, final DialogListener dialogListener) {
+        try {
+            final Dialog dialog = new Dialog(BasicActivity.this, R.style.Theme_Transparent);
+            dialog.setContentView(R.layout.dialog_material);
+            dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            dialog.setCancelable(isTouchOutside);
+            dialog.setCanceledOnTouchOutside(isCancelable);
+
+            TextView txt_title = (TextView) dialog.findViewById(R.id.dialog_txt_title);
+            TextView txt_message = (TextView) dialog.findViewById(R.id.dialog_txt_message);
+            Button btn_negative = (Button) dialog.findViewById(R.id.dialog_btn_negative);
+            Button btn_positive = (Button) dialog.findViewById(R.id.dialog_btn_positive);
+            ImageView icon_dialog = (ImageView) dialog.findViewById(R.id.icon_dialog);
+            switch (type){
+                case 1:
+                    icon_dialog.setImageResource(R.mipmap.ic_nav_north);
+                    txt_message.setText("Đang trực tiếp quay giải miển Bắc.");
+                    break;
+                case 2:
+                    icon_dialog.setImageResource(R.mipmap.ic_nav_central);
+                    txt_message.setText("Đang trực tiếp quay giải miển Trung.");
+                    break;
+                case 3:
+                    icon_dialog.setImageResource(R.mipmap.ic_nav_south);
+                    txt_message.setText("Đang trực tiếp quay giải miển Nam.");
+                    break;
+            }
+
+            btn_negative.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    isShowing = false;
+                    dialog.dismiss();
+                    dialogListener.negativeClicked();
+                }
+            });
+
+            btn_positive.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    isShowing = false;
+                    dialog.dismiss();
+                    dialogListener.positiveClicked();
+                }
+            });
+
+            if (dialog != null && !isShowing){
+                isShowing = true;
+                dialog.show();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e("showDialogLive", "showDialogLive: " + e);
+        }
+    }
+
 
     /*
     * Hiển thị tiến trình (đang thực hiện)
@@ -215,6 +277,14 @@ public class BasicActivity extends IActivity {
         Intent intent = new Intent(this, clazz);
         intent.putExtra(key, (Serializable) object);
         startActivityForResult(intent, requestCode);
+    }
+
+    public void forceExit(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            this.finishAffinity();
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            finishAndRemoveTask();
+        }
     }
 
     public void showConfirmExitApp() {

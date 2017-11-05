@@ -74,22 +74,18 @@ public class FragmentSouthContentPresenter {
                         Log.e(TAG, "Helper: " + resp_result.toString());
                         switch (resp_result.getData().size()) {
                             case 1:
-                                view.random(1);
                                 cat_area_1 = String.valueOf(resp_result.getData().get(0).getCat_id());
                                 break;
                             case 2:
-                                view.random(2);
                                 cat_area_1 = String.valueOf(resp_result.getData().get(0).getCat_id());
                                 cat_area_2 = String.valueOf(resp_result.getData().get(1).getCat_id());
                                 break;
                             case 3:
-                                view.random(3);
                                 cat_area_1 = String.valueOf(resp_result.getData().get(0).getCat_id());
                                 cat_area_2 = String.valueOf(resp_result.getData().get(1).getCat_id());
                                 cat_area_3 = String.valueOf(resp_result.getData().get(2).getCat_id());
                                 break;
                             case 4:
-                                view.random(4);
                                 cat_area_1 = String.valueOf(resp_result.getData().get(0).getCat_id());
                                 cat_area_2 = String.valueOf(resp_result.getData().get(1).getCat_id());
                                 cat_area_3 = String.valueOf(resp_result.getData().get(2).getCat_id());

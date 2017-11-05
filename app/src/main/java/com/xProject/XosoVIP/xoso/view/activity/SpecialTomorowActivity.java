@@ -38,6 +38,7 @@ public class SpecialTomorowActivity extends BasicActivity implements View.OnClic
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setBackgroundDrawableResource(R.mipmap.background_home);
         setContentView(R.layout.activity_special_tomorow);
         presenter = new SpecialTomorowActivityPresenter(this);
         initToolbar(R.id.toolbar, "Chu kỳ dàn đặc biệt ngày mai");

@@ -42,6 +42,7 @@ public class AnalyticsFrequencyActivity extends BasicActivity implements IAnalyt
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_analytics_frequency);
+        getWindow().setBackgroundDrawableResource(R.mipmap.background_home);
         presenter = new AnalyticsFrequencyActivityPresenter(this);
         initToolbar(R.id.toolbar, "Thống kê tần suất bộ số");
         initView();

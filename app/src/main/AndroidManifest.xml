@@ -7,6 +7,8 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
 
     <application
         android:name="com.xProject.XosoVIP.xoso.ProjectApplication"
@@ -35,10 +37,6 @@
             android:name="com.xProject.XosoVIP.xoso.view.activity.DreamActivity"
             android:label="@string/title_activity_dream"
             android:theme="@style/AppTheme" />
-        <activity
-            android:name="com.xProject.XosoVIP.xoso.view.activity.RandomLotteryActivity"
-            android:label="@string/title_activity_random_lottery"
-            android:theme="@style/AppTheme" />
 
         <receiver android:name="com.xProject.XosoVIP.sdk.receiver.AlarmReceiver" />
 
@@ -47,11 +45,6 @@
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="5765ba05cf4f36a9301d3a8eb9fe7c9e53ecb745" />
-
-        <activity
-            android:name="com.xProject.XosoVIP.xoso.view.activity.TestActivity"
-            android:label="@string/title_activity_test"
-            android:theme="@style/AppTheme" />
 
         <receiver android:name="com.xProject.XosoVIP.sdk.receiver.BootReceiver">
             <intent-filter>
@@ -69,6 +62,8 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+        <service android:name=".sdk.service.SocketService" />
+        <receiver android:name=".sdk.receiver.CheckRunningActivityReceive"/>
 
         <activity
             android:name="com.xProject.XosoVIP.xoso.view.activity.AnalyticsSpeedActivity"
@@ -131,8 +126,6 @@
             android:label="@string/title_activity_setting"
             android:theme="@style/AppTheme" />
         <activity android:name="com.xProject.XosoVIP.xoso.view.activity.WebViewActivity" />
-        <activity android:name="com.xProject.XosoVIP.xoso.view.activity.AppIntroActivity"
-            />
         <activity android:name="com.xProject.XosoVIP.xoso.view.activity.LuckyActivity" />
         <activity android:name="com.xProject.XosoVIP.xoso.view.activity.CategoryOpenSpinActivity" />
         <activity android:name="com.xProject.XosoVIP.xoso.view.activity.BridHistorygeActivity"/>

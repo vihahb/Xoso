@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black_55"
+    android:orientation="vertical"
+    android:gravity="center">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/size_36"
+        android:background="@drawable/round_white"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:background="@drawable/round_red">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <FrameLayout
+                    android:layout_gravity="center"
+                    android:layout_width="65dp"
+                    android:layout_height="65dp">
+                    <View
+                        android:id="@+id/line_white"
+                        android:layout_gravity="center"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:background="@drawable/cirle_white"/>
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:id="@+id/icon_dialog"
+                        android:layout_width="@dimen/size_64"
+                        android:layout_height="@dimen/size_64"
+                        android:src="@mipmap/ic_nav_central" />
+
+                    <TextView
+                        android:id="@+id/tv_live"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="right|top"
+                        android:layout_marginBottom="0dp"
+                        android:background="@drawable/circle_layout"
+                        android:gravity="center"
+                        android:text="Live"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/font_9" />
+                </FrameLayout>
+            </FrameLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/dialog_txt_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Thông báo trực tiếp"
+            android:textStyle="bold"
+            android:layout_marginLeft="@dimen/size_24"
+            android:layout_marginRight="@dimen/size_24"
+            android:layout_marginTop="@dimen/size_16"
+            android:textColor="@color/black_65"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/dialog_txt_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/size_24"
+            android:layout_marginRight="@dimen/size_24"
+            android:layout_marginTop="@dimen/size_8"
+            android:textColor="#757575" />
+
+        <View
+            android:layout_marginTop="@dimen/size_24"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_0_5"
+            android:background="@color/colorPrimary"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/dialog_btn_negative"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/size_48"
+                android:background="@drawable/button_transparent"
+                android:minWidth="@dimen/size_64"
+                android:paddingLeft="@dimen/size_8"
+                android:paddingRight="@dimen/size_8"
+                android:textColor="@color/black_55"
+                android:text="Để sau"
+                android:textSize="@dimen/font_13" />
+            <View
+                android:layout_width="@dimen/size_0_5"
+                android:layout_height="match_parent"
+                android:background="@color/colorPrimary"/>
+
+            <Button
+                android:id="@+id/dialog_btn_positive"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/size_48"
+                android:background="@drawable/button_transparent"
+                android:minWidth="@dimen/size_64"
+                android:paddingLeft="@dimen/size_8"
+                android:paddingRight="@dimen/size_8"
+                android:textColor="#2196F3"
+                android:text="Xem ngay"
+                android:textSize="@dimen/font_13" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

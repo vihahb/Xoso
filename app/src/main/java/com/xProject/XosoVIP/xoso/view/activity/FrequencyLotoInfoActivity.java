@@ -26,6 +26,7 @@ public class FrequencyLotoInfoActivity extends BasicActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setBackgroundDrawableResource(R.mipmap.background_home);
         setContentView(R.layout.activity_frequency_loto_info);
         initToolbar(R.id.toolbar, "Chi tiết tần số nhịp lô tô");
         initView();

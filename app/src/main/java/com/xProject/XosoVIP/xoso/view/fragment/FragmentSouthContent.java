@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
+import com.xProject.XosoVIP.R;
 import com.xProject.XosoVIP.sdk.common.Constants;
 import com.xProject.XosoVIP.sdk.utils.CalendarUtils;
 import com.xProject.XosoVIP.sdk.utils.SharedUtils;
@@ -30,7 +31,6 @@ import com.xProject.XosoVIP.xoso.model.respond.RESP_Result;
 import com.xProject.XosoVIP.xoso.presenter.fragment.FragmentSouthContentPresenter;
 import com.xProject.XosoVIP.xoso.view.activity.MainActivity;
 import com.xProject.XosoVIP.xoso.view.fragment.inf.IFragmentSouthContent;
-import com.xProject.XosoVIP.R;
 
 import java.util.Calendar;
 import java.util.List;
@@ -426,17 +426,17 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
         }
 
         if (rl82 == null) {
-            rl82 = new Roller(tv8_2, 100000, 150, 99, 10);
+            rl82 = new Roller(tv8_2, 100000, 100, 99, 10);
 
         }
 
         if (rl83 == null) {
-            rl83 = new Roller(tv8_3, 100000, 150, 99, 10);
+            rl83 = new Roller(tv8_3, 100000, 100, 99, 10);
 
         }
 
         if (rl84 == null) {
-            rl84 = new Roller(tv8_4, 100000, 150, 99, 10);
+            rl84 = new Roller(tv8_4, 100000, 100, 99, 10);
         }
 
 
@@ -444,16 +444,16 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
          * 7
          * Random number table all*/
         if (rl71 == null) {
-            rl71 = new Roller(tv7_1, 10000, 150, 999, 100);
+            rl71 = new Roller(tv7_1, 10000, 100, 999, 100);
         }
         if (rl72 == null) {
-            rl72 = new Roller(tv7_2, 10000, 150, 999, 100);
+            rl72 = new Roller(tv7_2, 10000, 100, 999, 100);
         }
         if (rl73 == null) {
-            rl73 = new Roller(tv7_3, 10000, 150, 999, 100);
+            rl73 = new Roller(tv7_3, 10000, 100, 999, 100);
         }
         if (rl74 == null) {
-            rl74 = new Roller(tv7_4, 10000, 150, 999, 100);
+            rl74 = new Roller(tv7_4, 10000, 100, 999, 100);
         }
 
         /**
@@ -462,13 +462,13 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
 
 
         if (rl611 == null) {
-            rl611 = new Roller(tv6_1, 10000, 150, 9999, 1000);
+            rl611 = new Roller(tv6_1, 10000, 100, 9999, 1000);
         }
         if (rl612 == null) {
-            rl612 = new Roller(tv6_2, 10000, 150, 9999, 1000);
+            rl612 = new Roller(tv6_2, 10000, 100, 9999, 1000);
         }
         if (rl613 == null) {
-            rl613 = new Roller(tv6_3, 10000, 150, 9999, 1000);
+            rl613 = new Roller(tv6_3, 10000, 100, 9999, 1000);
 
         }
 
@@ -477,14 +477,14 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
          * 6
          * Random number table 2*/
         if (rl621 == null) {
-            rl621 = new Roller(tv6_1_2, 10000, 150, 9999, 1000);
+            rl621 = new Roller(tv6_1_2, 10000, 100, 9999, 1000);
         }
         if (rl622 == null) {
-            rl622 = new Roller(tv6_2_2, 10000, 150, 9999, 1000);
+            rl622 = new Roller(tv6_2_2, 10000, 100, 9999, 1000);
 
         }
         if (rl623 == null) {
-            rl623 = new Roller(tv6_3_2, 10000, 150, 9999, 1000);
+            rl623 = new Roller(tv6_3_2, 10000, 100, 9999, 1000);
         }
 
 
@@ -492,13 +492,13 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
          * 6
          * Random number table 3*/
         if (rl631 == null) {
-            rl631 = new Roller(tv6_1_3, 10000, 150, 9999, 1000);
+            rl631 = new Roller(tv6_1_3, 10000, 100, 9999, 1000);
         }
         if (rl632 == null) {
-            rl632 = new Roller(tv6_2_3, 10000, 150, 9999, 1000);
+            rl632 = new Roller(tv6_2_3, 10000, 100, 9999, 1000);
         }
         if (rl633 == null) {
-            rl633 = new Roller(tv6_3_3, 10000, 150, 9999, 1000);
+            rl633 = new Roller(tv6_3_3, 10000, 100, 9999, 1000);
         }
 
 
@@ -507,13 +507,13 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
          * Random number table 4*/
 
         if (rl641 == null) {
-            rl641 = new Roller(tv6_1_4, 10000, 150, 9999, 1000);
+            rl641 = new Roller(tv6_1_4, 10000, 100, 9999, 1000);
         }
         if (rl642 == null) {
-            rl642 = new Roller(tv6_2_4, 10000, 150, 9999, 1000);
+            rl642 = new Roller(tv6_2_4, 10000, 100, 9999, 1000);
         }
         if (rl643 == null) {
-            rl643 = new Roller(tv6_3_4, 10000, 150, 9999, 1000);
+            rl643 = new Roller(tv6_3_4, 10000, 100, 9999, 1000);
         }
 
 
@@ -522,19 +522,19 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
          * Random number table all*/
 
         if (rl51 == null) {
-            rl51 = new Roller(tv5_1, 10000, 150, 9999, 1000);
+            rl51 = new Roller(tv5_1, 10000, 100, 9999, 1000);
         }
 
         if (rl52 == null) {
-            rl52 = new Roller(tv5_2, 10000, 150, 9999, 1000);
+            rl52 = new Roller(tv5_2, 10000, 100, 9999, 1000);
         }
 
         if (rl53 == null) {
-            rl53 = new Roller(tv5_3, 10000, 150, 9999, 1000);
+            rl53 = new Roller(tv5_3, 10000, 100, 9999, 1000);
         }
 
         if (rl54 == null) {
-            rl54 = new Roller(tv5_4, 10000, 150, 9999, 1000);
+            rl54 = new Roller(tv5_4, 10000, 100, 9999, 1000);
         }
 
 
@@ -542,25 +542,25 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
          * 4
          * Random number table 1*/
         if (rl41 == null) {
-            rl41 = new Roller(tv4_1, 10000, 150, 99999, 10000);
+            rl41 = new Roller(tv4_1, 10000, 100, 99999, 10000);
         }
         if (rl412 == null) {
-            rl412 = new Roller(tv4_2, 10000, 150, 99999, 10000);
+            rl412 = new Roller(tv4_2, 10000, 100, 99999, 10000);
         }
         if (rl413 == null) {
-            rl413 = new Roller(tv4_3, 10000, 150, 99999, 10000);
+            rl413 = new Roller(tv4_3, 10000, 100, 99999, 10000);
         }
         if (rl414 == null) {
-            rl414 = new Roller(tv4_4, 10000, 150, 99999, 10000);
+            rl414 = new Roller(tv4_4, 10000, 100, 99999, 10000);
         }
         if (rl415 == null) {
-            rl415 = new Roller(tv4_5, 10000, 150, 99999, 10000);
+            rl415 = new Roller(tv4_5, 10000, 100, 99999, 10000);
         }
         if (rl416 == null) {
-            rl416 = new Roller(tv4_6, 10000, 150, 99999, 10000);
+            rl416 = new Roller(tv4_6, 10000, 100, 99999, 10000);
         }
         if (rl417 == null) {
-            rl417 = new Roller(tv4_7, 10000, 150, 99999, 10000);
+            rl417 = new Roller(tv4_7, 10000, 100, 99999, 10000);
         }
 
         /**
@@ -568,25 +568,25 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
          * Random number table 2*/
 
         if (rl42 == null) {
-            rl42 = new Roller(tv4_1_2, 10000, 150, 99999, 10000);
+            rl42 = new Roller(tv4_1_2, 10000, 100, 99999, 10000);
         }
         if (rl422 == null) {
-            rl422 = new Roller(tv4_2_2, 10000, 150, 99999, 10000);
+            rl422 = new Roller(tv4_2_2, 10000, 100, 99999, 10000);
         }
         if (rl423 == null) {
-            rl423 = new Roller(tv4_3_2, 10000, 150, 99999, 10000);
+            rl423 = new Roller(tv4_3_2, 10000, 100, 99999, 10000);
         }
         if (rl424 == null) {
-            rl424 = new Roller(tv4_4_2, 10000, 150, 99999, 10000);
+            rl424 = new Roller(tv4_4_2, 10000, 100, 99999, 10000);
         }
         if (rl425 == null) {
-            rl425 = new Roller(tv4_5_2, 10000, 150, 99999, 10000);
+            rl425 = new Roller(tv4_5_2, 10000, 100, 99999, 10000);
         }
         if (rl426 == null) {
-            rl426 = new Roller(tv4_6_2, 10000, 150, 99999, 10000);
+            rl426 = new Roller(tv4_6_2, 10000, 100, 99999, 10000);
         }
         if (rl427 == null) {
-            rl427 = new Roller(tv4_7_2, 10000, 150, 99999, 10000);
+            rl427 = new Roller(tv4_7_2, 10000, 100, 99999, 10000);
         }
 
 
@@ -594,70 +594,70 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
          * 4
          * Random number table 3*/
         if (rl43 == null) {
-            rl43 = new Roller(tv4_1_3, 10000, 150, 99999, 10000);
+            rl43 = new Roller(tv4_1_3, 10000, 100, 99999, 10000);
         }
         if (rl432 == null) {
-            rl432 = new Roller(tv4_2_3, 10000, 150, 99999, 10000);
+            rl432 = new Roller(tv4_2_3, 10000, 100, 99999, 10000);
         }
         if (rl433 == null) {
-            rl433 = new Roller(tv4_3_3, 10000, 150, 99999, 10000);
+            rl433 = new Roller(tv4_3_3, 10000, 100, 99999, 10000);
         }
         if (rl434 == null) {
-            rl434 = new Roller(tv4_4_3, 10000, 150, 99999, 10000);
+            rl434 = new Roller(tv4_4_3, 10000, 100, 99999, 10000);
         }
         if (rl435 == null) {
-            rl435 = new Roller(tv4_5_3, 10000, 150, 99999, 10000);
+            rl435 = new Roller(tv4_5_3, 10000, 100, 99999, 10000);
         }
         if (rl436 == null) {
-            rl436 = new Roller(tv4_6_3, 10000, 150, 99999, 10000);
+            rl436 = new Roller(tv4_6_3, 10000, 100, 99999, 10000);
         }
         if (rl437 == null) {
-            rl437 = new Roller(tv4_7_3, 10000, 150, 99999, 10000);
+            rl437 = new Roller(tv4_7_3, 10000, 100, 99999, 10000);
         }
 
         /**
          * 4
          * Random number table 4*/
         if (rl44 == null) {
-            rl44 = new Roller(tv4_1_4, 10000, 150, 99999, 10000);
+            rl44 = new Roller(tv4_1_4, 10000, 100, 99999, 10000);
         }
         if (rl442 == null) {
-            rl442 = new Roller(tv4_2_4, 10000, 150, 99999, 10000);
+            rl442 = new Roller(tv4_2_4, 10000, 100, 99999, 10000);
         }
         if (rl443 == null) {
-            rl443 = new Roller(tv4_3_4, 10000, 150, 99999, 10000);
+            rl443 = new Roller(tv4_3_4, 10000, 100, 99999, 10000);
         }
         if (rl444 == null) {
-            rl444 = new Roller(tv4_4_4, 10000, 150, 99999, 10000);
+            rl444 = new Roller(tv4_4_4, 10000, 100, 99999, 10000);
         }
         if (rl445 == null) {
-            rl445 = new Roller(tv4_5_4, 10000, 150, 99999, 10000);
+            rl445 = new Roller(tv4_5_4, 10000, 100, 99999, 10000);
         }
         if (rl446 == null) {
-            rl446 = new Roller(tv4_6_4, 10000, 150, 99999, 10000);
+            rl446 = new Roller(tv4_6_4, 10000, 100, 99999, 10000);
         }
         if (rl447 == null) {
-            rl447 = new Roller(tv4_7_4, 10000, 150, 99999, 10000);
+            rl447 = new Roller(tv4_7_4, 10000, 100, 99999, 10000);
         }
 
         /**
          * 3
          * Random number table 1*/
         if (rl311 == null) {
-            rl311 = new Roller(tv3_1, 10000, 150, 99999, 10000);
+            rl311 = new Roller(tv3_1, 10000, 100, 99999, 10000);
         }
         if (rl312 == null) {
-            rl312 = new Roller(tv3_2, 10000, 150, 99999, 10000);
+            rl312 = new Roller(tv3_2, 10000, 100, 99999, 10000);
         }
 
         /**
          * 3
          * Random number table 2*/
         if (rl321 == null) {
-            rl321 = new Roller(tv3_1_2, 10000, 150, 99999, 10000);
+            rl321 = new Roller(tv3_1_2, 10000, 100, 99999, 10000);
         }
         if (rl322 == null) {
-            rl322 = new Roller(tv3_2_2, 10000, 150, 99999, 10000);
+            rl322 = new Roller(tv3_2_2, 10000, 100, 99999, 10000);
         }
 
 
@@ -665,10 +665,10 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
          * 3
          * Random number table 3*/
         if (rl331 == null) {
-            rl331 = new Roller(tv3_1_3, 10000, 150, 99999, 10000);
+            rl331 = new Roller(tv3_1_3, 10000, 100, 99999, 10000);
         }
         if (rl332 == null) {
-            rl332 = new Roller(tv3_2_3, 10000, 150, 99999, 10000);
+            rl332 = new Roller(tv3_2_3, 10000, 100, 99999, 10000);
         }
 
 
@@ -676,10 +676,10 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
          * 3
          * Random number table 4*/
         if (rl341 == null) {
-            rl341 = new Roller(tv3_1_4, 10000, 150, 99999, 10000);
+            rl341 = new Roller(tv3_1_4, 10000, 100, 99999, 10000);
         }
         if (rl342 == null) {
-            rl342 = new Roller(tv3_2_4, 10000, 150, 99999, 10000);
+            rl342 = new Roller(tv3_2_4, 10000, 100, 99999, 10000);
         }
 
 
@@ -688,16 +688,16 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
          * Random number table all*/
 
         if (rl_second_1 == null) {
-            rl_second_1 = new Roller(tv2_1, 10000, 150, 99999, 10000);
+            rl_second_1 = new Roller(tv2_1, 10000, 100, 99999, 10000);
         }
         if (rl_second_2 == null) {
-            rl_second_2 = new Roller(tv2_2, 10000, 150, 99999, 10000);
+            rl_second_2 = new Roller(tv2_2, 10000, 100, 99999, 10000);
         }
         if (rl_second_3 == null) {
-            rl_second_3 = new Roller(tv2_3, 10000, 150, 99999, 10000);
+            rl_second_3 = new Roller(tv2_3, 10000, 100, 99999, 10000);
         }
         if (rl_second_4 == null) {
-            rl_second_4 = new Roller(tv2_4, 10000, 150, 99999, 10000);
+            rl_second_4 = new Roller(tv2_4, 10000, 100, 99999, 10000);
         }
 
         /**
@@ -705,16 +705,16 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
          * Random number table all*/
 
         if (rl_first_1 == null) {
-            rl_first_1 = new Roller(tv1_1, 10000, 150, 99999, 10000);
+            rl_first_1 = new Roller(tv1_1, 10000, 100, 99999, 10000);
         }
         if (rl_first_2 == null) {
-            rl_first_2 = new Roller(tv1_2, 10000, 150, 99999, 10000);
+            rl_first_2 = new Roller(tv1_2, 10000, 100, 99999, 10000);
         }
         if (rl_first_3 == null) {
-            rl_first_3 = new Roller(tv1_3, 10000, 150, 99999, 10000);
+            rl_first_3 = new Roller(tv1_3, 10000, 100, 99999, 10000);
         }
         if (rl_first_4 == null) {
-            rl_first_4 = new Roller(tv1_4, 10000, 150, 99999, 10000);
+            rl_first_4 = new Roller(tv1_4, 10000, 100, 99999, 10000);
         }
 
 
@@ -722,16 +722,16 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
          * DB
          * Random number table all*/
         if (rl_special_1 == null) {
-            rl_special_1 = new Roller(tvDb, 10000, 150, 999999, 100000);
+            rl_special_1 = new Roller(tvDb, 10000, 100, 999999, 100000);
         }
         if (rl_special_2 == null) {
-            rl_special_2 = new Roller(tvDb_2, 10000, 150, 999999, 100000);
+            rl_special_2 = new Roller(tvDb_2, 10000, 100, 999999, 100000);
         }
         if (rl_special_3 == null) {
-            rl_special_3 = new Roller(tvDb_3, 10000, 150, 999999, 100000);
+            rl_special_3 = new Roller(tvDb_3, 10000, 100, 999999, 100000);
         }
         if (rl_special_4 == null) {
-            rl_special_4 = new Roller(tvDb_4, 10000, 150, 999999, 100000);
+            rl_special_4 = new Roller(tvDb_4, 10000, 100, 999999, 100000);
         }
 
 
@@ -740,181 +740,178 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
     private void checkRandomTable1(List<String> special, List<String> first, List<String> second, List<String> third, List<String> fourd, List<String> five, List<String> six, List<String> seven, List<String> eight) {
         if (toDay) {
             if (eight != null) {
-                int size = eight.size();
-                if (size > 0) {
+                if (eight.size() > 0) {
                     if (eight.get(0) != null && !eight.get(0).isEmpty()) {
-                        rl81.shutdownThread(true);
-                    } else {
-                        rl81.run();
+                        if (rl81.isRun())
+                            rl81.shutdownThread(true);
                     }
+                } else {
+                    if (!rl81.isRun())
+                        rl81.run();
                 }
             }
 
-            if (seven != null) {
+            if (eight != null && seven != null && eight.size() == 1) {
                 int size = seven.size();
                 if (size > 0) {
                     if (seven.get(0) != null && !seven.get(0).isEmpty()) {
-                        rl71.shutdownThread(false);
-                    } else {
-                        rl71.run();
+                        if (rl71.isRun())
+                            rl71.shutdownThread(false);
                     }
+                } else {
+                    if (!rl71.isRun())
+                        rl71.run();
                 }
             }
 
             /**
              * Six*/
-            if (six != null) {
-                int size = six.size();
-                if (size > 0) {
-                    switch (size) {
-                        case 1:
-                            if (six.get(0) != null && !six.get(0).isEmpty()) {
-                                rl611.shutdownThread(false);
-                            } else {
-                                rl611.run();
-                            }
-                            break;
-                        case 2:
-                            if (six.get(1) != null && !six.get(1).isEmpty()) {
-                                rl612.shutdownThread(false);
-                            } else {
-                                rl612.run();
-                            }
-                            break;
-                        case 3:
-                            if (six.get(2) != null && !six.get(2).isEmpty()) {
-                                rl613.shutdownThread(false);
-                            } else {
-                                rl613.run();
-                            }
-                            break;
-                    }
+            if (seven != null && six != null && seven.size() == 1) {
+                switch (six.size()) {
+                    case 0:
+                        if (!rl611.isRun())
+                            rl611.run();
+                        break;
+                    case 1:
+                        if (rl611.isRun())
+                            rl611.shutdownThread(false);
+
+                        if (!rl612.isRun())
+                            rl612.run();
+                        break;
+                    case 2:
+                        if (rl612.isRun())
+                            rl612.shutdownThread(false);
+
+                        if (!rl613.isRun()) {
+                            rl613.run();
+                        }
+                        break;
+                    case 3:
+                        if (rl613.isRun())
+                            rl613.shutdownThread(false);
+                        break;
                 }
             }
 
-            if (five != null) {
-                int size = five.size();
-                if (size > 0) {
-                    if (five.get(0) != null && !five.get(0).isEmpty()) {
+            if (six != null && five != null && six.size() == 3) {
+                if (five.size() > 0) {
+                    if (rl51.isRun()) {
                         rl51.shutdownThread(false);
-                    } else {
-                        rl51.run();
                     }
+                } else {
+                    if (!rl51.isRun())
+                        rl51.run();
                 }
             }
 
             /**
              * Fourd*/
-            if (fourd != null) {
-                int size = fourd.size();
-                if (size > 0) {
-                    switch (size) {
-                        case 1:
-                            if (fourd.get(0) != null && !fourd.get(0).isEmpty()) {
-                                rl41.shutdownThread(false);
-                            } else {
-                                rl41.run();
-                            }
-                            break;
-                        case 2:
-                            if (fourd.get(1) != null && !fourd.get(1).isEmpty()) {
-                                rl412.shutdownThread(false);
-                            } else {
-                                rl412.run();
-                            }
-                            break;
-                        case 3:
-                            if (fourd.get(2) != null && !fourd.get(2).isEmpty()) {
-                                rl413.shutdownThread(false);
-                            } else {
-                                rl413.run();
-                            }
-                            break;
-                        case 4:
-                            if (fourd.get(3) != null && !fourd.get(3).isEmpty()) {
-                                rl414.shutdownThread(false);
-                            } else {
-                                rl414.run();
-                            }
-                            break;
-                        case 5:
-                            if (fourd.get(4) != null && !fourd.get(4).isEmpty()) {
-                                rl415.shutdownThread(false);
-                            } else {
-                                rl415.run();
-                            }
-                            break;
-                        case 6:
-                            if (fourd.get(5) != null && !fourd.get(5).isEmpty()) {
-                                rl416.shutdownThread(false);
-                            } else {
-                                rl416.run();
-                            }
-                            break;
-                        case 7:
-                            if (fourd.get(6) != null && !fourd.get(6).isEmpty()) {
-                                rl417.shutdownThread(false);
-                            } else {
-                                rl417.run();
-                            }
-                            break;
-                    }
+            if (five != null && fourd != null && five.size() == 1) {
+                switch (fourd.size()) {
+                    case 0:
+                        if (!rl41.isRun())
+                            rl41.run();
+                        break;
+                    case 1:
+                        if (rl41.isRun())
+                            rl41.shutdownThread(false);
+
+                        if (!rl412.isRun())
+                            rl412.run();
+                        break;
+                    case 2:
+                        if (rl412.isRun())
+                            rl412.shutdownThread(false);
+
+                        if (!rl413.isRun())
+                            rl413.run();
+                        break;
+                    case 3:
+                        if (rl413.isRun())
+                            rl413.shutdownThread(false);
+
+                        if (!rl414.isRun())
+                            rl414.run();
+                        break;
+                    case 4:
+                        if (rl414.isRun())
+                            rl414.shutdownThread(false);
+
+                        if (!rl415.isRun())
+                            rl415.run();
+                        break;
+                    case 5:
+                        if (rl415.isRun())
+                            rl415.shutdownThread(false);
+
+                        if (!rl416.isRun())
+                            rl416.run();
+                        break;
+                    case 6:
+                        if (rl416.isRun())
+                            rl416.shutdownThread(false);
+
+                        if (!rl417.isRun())
+                            rl417.run();
+                        break;
+                    case 7:
+                        if (rl417.isRun())
+                            rl417.shutdownThread(false);
+
+                        break;
                 }
             }
 
-            if (third != null) {
-                int size = third.size();
-                if (size > 0) {
-                    switch (size) {
-                        case 1:
-                            if (third.get(0) != null && !third.get(0).isEmpty()) {
-                                rl311.shutdownThread(false);
-                            } else {
-                                rl311.run();
-                            }
-                            break;
-                        case 2:
-                            if (third.get(1) != null && !third.get(1).isEmpty()) {
-                                rl312.shutdownThread(false);
-                            } else {
-                                rl312.run();
-                            }
-                            break;
-                    }
+            if (fourd != null && third != null && fourd.size() == 7) {
+                switch (third.size()) {
+                    case 0:
+                        if (!rl311.isRun())
+                            rl311.run();
+                        break;
+                    case 1:
+                        if (rl311.isRun())
+                            rl311.shutdownThread(false);
+
+                        if (!rl312.isRun())
+                            rl312.run();
+                        break;
+                    case 2:
+                        if (rl312.isRun())
+                            rl312.shutdownThread(false);
+                        break;
                 }
             }
 
-            if (second != null) {
-                int size = second.size();
-                if (size > 0) {
-                    if (second.get(0) != null && !second.get(0).isEmpty()) {
+            if (third != null && second != null && third.size() == 2) {
+                if (second.size() > 0) {
+                    if (rl_second_1.isRun())
                         rl_second_1.shutdownThread(false);
-                    } else {
+                } else {
+                    if (!rl_second_1.isRun())
                         rl_second_1.run();
-                    }
                 }
             }
 
 
-            if (first != null) {
-                int size = first.size();
-                if (size > 0) {
-                    if (first.get(0) != null && !first.get(0).isEmpty()) {
+            if (second != null && first != null && second.size() == 1) {
+                if (first.size() > 0) {
+                    if (rl_first_1.isRun())
                         rl_first_1.shutdownThread(false);
-                    } else {
+
+                } else {
+                    if (!rl_first_1.isRun())
                         rl_first_1.run();
-                    }
                 }
             }
 
-            if (special != null) {
-                int size = special.size();
-                if (size > 0) {
-                    if (special.get(0) != null && !special.get(0).isEmpty()) {
+            if (first != null && special != null && first.size() == 1) {
+                if (special.size() > 0) {
+                    if (rl_special_1.isRun())
                         rl_special_1.shutdownThread(true);
-                    } else {
+                } else {
+                    if (!rl_special_1.isRun())
                         rl_special_1.run();
-                    }
                 }
             }
         }
@@ -922,182 +919,173 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
 
     private void checkRandomTable2(List<String> special, List<String> first, List<String> second, List<String> third, List<String> fourd, List<String> five, List<String> six, List<String> seven, List<String> eight) {
         if (toDay) {
+
             if (eight != null) {
-                int size = eight.size();
-                if (size > 0) {
-                    if (eight.get(0) != null && !eight.get(0).isEmpty()) {
+                if (eight.size() > 0) {
+                    if (rl82.isRun())
                         rl82.shutdownThread(true);
-                    } else {
+                } else {
+                    if (!rl82.isRun())
                         rl82.run();
-                    }
                 }
             }
 
-            if (seven != null) {
-                int size = seven.size();
-                if (size > 0) {
-                    if (seven.get(0) != null && !seven.get(0).isEmpty()) {
+            if (eight != null && seven != null && eight.size() == 1) {
+                if (seven.size() > 0) {
+                    if (rl72.isRun())
                         rl72.shutdownThread(false);
-                    } else {
+                } else {
+                    if (!rl72.isRun())
                         rl72.run();
-                    }
                 }
             }
+
 
             /**
              * Six*/
-            if (six != null) {
-                int size = six.size();
-                if (size > 0) {
-                    switch (size) {
-                        case 1:
-                            if (six.get(0) != null && !six.get(0).isEmpty()) {
-                                rl621.shutdownThread(false);
-                            } else {
-                                rl621.run();
-                            }
-                            break;
-                        case 2:
-                            if (six.get(1) != null && !six.get(1).isEmpty()) {
-                                rl622.shutdownThread(false);
-                            } else {
-                                rl622.run();
-                            }
-                            break;
-                        case 3:
-                            if (six.get(2) != null && !six.get(2).isEmpty()) {
-                                rl623.shutdownThread(false);
-                            } else {
-                                rl623.run();
-                            }
-                            break;
-                    }
+            if (seven != null && six != null && seven.size() == 1) {
+                switch (six.size()) {
+                    case 0:
+                        if (!rl621.isRun())
+                            rl621.run();
+                        break;
+                    case 1:
+                        if (rl621.isRun())
+                            rl621.shutdownThread(false);
+
+                        if (!rl622.isRun())
+                            rl622.run();
+                        break;
+                    case 2:
+                        if (rl622.isRun())
+                            rl622.shutdownThread(false);
+
+                        if (!rl623.isRun()) {
+                            rl623.run();
+                        }
+                        break;
+                    case 3:
+                        if (rl623.isRun())
+                            rl623.shutdownThread(false);
+                        break;
                 }
             }
 
-            if (five != null) {
-                int size = five.size();
-                if (size > 0) {
-                    if (five.get(0) != null && !five.get(0).isEmpty()) {
+            if (five != null && six.size() == 3) {
+                if (five.size() > 0) {
+                    if (rl52.isRun()) {
                         rl52.shutdownThread(false);
-                    } else {
-                        rl52.run();
                     }
+                } else {
+                    if (!rl52.isRun())
+                        rl52.run();
                 }
             }
 
             /**
              * Fourd*/
-            if (fourd != null) {
-                int size = fourd.size();
-                if (size > 0) {
-                    switch (size) {
-                        case 1:
-                            if (fourd.get(0) != null && !fourd.get(0).isEmpty()) {
-                                rl42.shutdownThread(false);
-                            } else {
-                                rl42.run();
-                            }
-                            break;
-                        case 2:
-                            if (fourd.get(1) != null && !fourd.get(1).isEmpty()) {
-                                rl422.shutdownThread(false);
-                            } else {
-                                rl422.run();
-                            }
-                            break;
-                        case 3:
-                            if (fourd.get(2) != null && !fourd.get(2).isEmpty()) {
-                                rl423.shutdownThread(false);
-                            } else {
-                                rl423.run();
-                            }
-                            break;
-                        case 4:
-                            if (fourd.get(3) != null && !fourd.get(3).isEmpty()) {
-                                rl424.shutdownThread(false);
-                            } else {
-                                rl424.run();
-                            }
-                            break;
-                        case 5:
-                            if (fourd.get(4) != null && !fourd.get(4).isEmpty()) {
-                                rl425.shutdownThread(false);
-                            } else {
-                                rl425.run();
-                            }
-                            break;
-                        case 6:
-                            if (fourd.get(5) != null && !fourd.get(5).isEmpty()) {
-                                rl426.shutdownThread(false);
-                            } else {
-                                rl426.run();
-                            }
-                            break;
-                        case 7:
-                            if (fourd.get(6) != null && !fourd.get(6).isEmpty()) {
-                                rl427.shutdownThread(false);
-                            } else {
-                                rl427.run();
-                            }
-                            break;
-                    }
+            if (five != null && fourd != null && five.size() == 1) {
+                switch (fourd.size()) {
+                    case 0:
+                        if (!rl42.isRun())
+                            rl42.run();
+                        break;
+                    case 1:
+                        if (rl42.isRun())
+                            rl42.shutdownThread(false);
+
+                        if (!rl422.isRun())
+                            rl422.run();
+                        break;
+                    case 2:
+                        if (rl422.isRun())
+                            rl422.shutdownThread(false);
+
+                        if (!rl423.isRun())
+                            rl423.run();
+                        break;
+                    case 3:
+                        if (rl423.isRun())
+                            rl423.shutdownThread(false);
+
+                        if (!rl424.isRun())
+                            rl424.run();
+                        break;
+                    case 4:
+                        if (rl424.isRun())
+                            rl424.shutdownThread(false);
+
+                        if (!rl425.isRun())
+                            rl425.run();
+                        break;
+                    case 5:
+                        if (rl425.isRun())
+                            rl425.shutdownThread(false);
+
+                        if (!rl426.isRun())
+                            rl426.run();
+                        break;
+                    case 6:
+                        if (rl426.isRun())
+                            rl426.shutdownThread(false);
+
+                        if (!rl427.isRun())
+                            rl427.run();
+                        break;
+                    case 7:
+                        if (rl427.isRun())
+                            rl427.shutdownThread(false);
+
+                        break;
                 }
             }
 
-            if (third != null) {
-                int size = third.size();
-                if (size > 0) {
-                    switch (size) {
-                        case 1:
-                            if (third.get(0) != null && !third.get(0).isEmpty()) {
-                                rl321.shutdownThread(false);
-                            } else {
-                                rl321.run();
-                            }
-                            break;
-                        case 2:
-                            if (third.get(1) != null && !third.get(1).isEmpty()) {
-                                rl322.shutdownThread(false);
-                            } else {
-                                rl322.run();
-                            }
-                            break;
-                    }
+            if (fourd != null && third != null && fourd.size() == 7) {
+                switch (third.size()) {
+                    case 0:
+                        if (!rl321.isRun())
+                            rl321.run();
+                        break;
+                    case 1:
+                        if (rl321.isRun())
+                            rl321.shutdownThread(false);
+
+                        if (!rl322.isRun())
+                            rl322.run();
+                        break;
+                    case 2:
+                        if (rl322.isRun())
+                            rl322.shutdownThread(false);
+                        break;
                 }
             }
-
-            if (second != null) {
-                int size = second.size();
-                if (size > 0) {
-                    if (second.get(0) != null && !second.get(0).isEmpty()) {
+            if (third != null && second != null && third.size() == 2) {
+                if (second.size() > 0) {
+                    if (rl_second_2.isRun())
                         rl_second_2.shutdownThread(false);
-                    } else {
+                } else {
+                    if (!rl_second_2.isRun())
                         rl_second_2.run();
-                    }
                 }
             }
 
-
-            if (first != null) {
-                int size = first.size();
-                if (size > 0) {
-                    if (first.get(0) != null && !first.get(0).isEmpty()) {
+            if (second != null && first != null && second.size() == 1) {
+                if (first.size() > 0) {
+                    if (rl_first_2.isRun())
                         rl_first_2.shutdownThread(false);
-                    } else {
+
+                } else {
+                    if (!rl_first_2.isRun())
                         rl_first_2.run();
-                    }
                 }
             }
-
-            if (special != null) {
-                int size = special.size();
-                if (size > 0) {
-                    if (special.get(0) != null && !special.get(0).isEmpty()) {
-                        rl_special_2.shutdownThread(true);
-                    } else {
-                        rl_special_2.run();
-                    }
+            if (first != null && special != null && first.size() == 1) {
+                if (special.size() > 0) {
+                    if (rl_special_1.isRun())
+                        rl_special_1.shutdownThread(true);
+                } else {
+                    if (!rl_special_1.isRun())
+                        rl_special_1.run();
                 }
             }
         }
@@ -1107,181 +1095,171 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
 
         if (toDay) {
             if (eight != null) {
-                int size = eight.size();
-                if (size > 0) {
-                    if (eight.get(0) != null && !eight.get(0).isEmpty()) {
+                if (eight.size() > 0) {
+
+                    if (rl83.isRun())
                         rl83.shutdownThread(true);
-                    } else {
+                } else {
+                    if (!rl83.isRun())
                         rl83.run();
-                    }
                 }
             }
 
-            if (seven != null) {
-                int size = seven.size();
-                if (size > 0) {
-                    if (seven.get(0) != null && !seven.get(0).isEmpty()) {
+            if (eight != null && seven != null && eight.size() == 1) {
+                if (seven.size() > 0) {
+                    if (rl73.isRun())
                         rl73.shutdownThread(false);
-                    } else {
+                } else {
+                    if (!rl73.isRun())
                         rl73.run();
-                    }
                 }
             }
 
             /**
              * Six*/
-            if (six != null) {
-                int size = six.size();
-                if (size > 0) {
-                    switch (size) {
-                        case 1:
-                            if (six.get(0) != null && !six.get(0).isEmpty()) {
-                                rl631.shutdownThread(false);
-                            } else {
-                                rl631.run();
-                            }
-                            break;
-                        case 2:
-                            if (six.get(1) != null && !six.get(1).isEmpty()) {
-                                rl632.shutdownThread(false);
-                            } else {
-                                rl632.run();
-                            }
-                            break;
-                        case 3:
-                            if (six.get(2) != null && !six.get(2).isEmpty()) {
-                                rl633.shutdownThread(false);
-                            } else {
-                                rl633.run();
-                            }
-                            break;
-                    }
+            if (seven != null && six != null && seven.size() == 1) {
+                switch (six.size()) {
+                    case 0:
+                        if (!rl631.isRun())
+                            rl631.run();
+                        break;
+                    case 1:
+                        if (rl631.isRun())
+                            rl631.shutdownThread(false);
+
+                        if (!rl632.isRun())
+                            rl632.run();
+                        break;
+                    case 2:
+                        if (rl632.isRun())
+                            rl632.shutdownThread(false);
+
+                        if (!rl633.isRun()) {
+                            rl633.run();
+                        }
+                        break;
+                    case 3:
+                        if (rl633.isRun())
+                            rl633.shutdownThread(false);
+                        break;
                 }
             }
 
-            if (five != null) {
-                int size = five.size();
-                if (size > 0) {
-                    if (five.get(0) != null && !five.get(0).isEmpty()) {
+
+            if (six != null && five != null && six.size() == 3) {
+                if (five.size() > 0) {
+                    if (rl53.isRun()) {
                         rl53.shutdownThread(false);
-                    } else {
-                        rl53.run();
                     }
+                } else {
+                    if (!rl53.isRun())
+                        rl53.run();
                 }
             }
 
             /**
              * Fourd*/
-            if (fourd != null) {
-                int size = fourd.size();
-                if (size > 0) {
-                    switch (size) {
-                        case 1:
-                            if (fourd.get(0) != null && !fourd.get(0).isEmpty()) {
-                                rl43.shutdownThread(false);
-                            } else {
-                                rl43.run();
-                            }
-                            break;
-                        case 2:
-                            if (fourd.get(1) != null && !fourd.get(1).isEmpty()) {
-                                rl432.shutdownThread(false);
-                            } else {
-                                rl432.run();
-                            }
-                            break;
-                        case 3:
-                            if (fourd.get(2) != null && !fourd.get(2).isEmpty()) {
-                                rl433.shutdownThread(false);
-                            } else {
-                                rl433.run();
-                            }
-                            break;
-                        case 4:
-                            if (fourd.get(3) != null && !fourd.get(3).isEmpty()) {
-                                rl434.shutdownThread(false);
-                            } else {
-                                rl434.run();
-                            }
-                            break;
-                        case 5:
-                            if (fourd.get(4) != null && !fourd.get(4).isEmpty()) {
-                                rl435.shutdownThread(false);
-                            } else {
-                                rl435.run();
-                            }
-                            break;
-                        case 6:
-                            if (fourd.get(5) != null && !fourd.get(5).isEmpty()) {
-                                rl436.shutdownThread(false);
-                            } else {
-                                rl436.run();
-                            }
-                            break;
-                        case 7:
-                            if (fourd.get(6) != null && !fourd.get(6).isEmpty()) {
-                                rl437.shutdownThread(false);
-                            } else {
-                                rl437.run();
-                            }
-                            break;
-                    }
+            if (five != null && fourd != null && five.size() == 1) {
+                switch (fourd.size()) {
+                    case 0:
+                        if (!rl43.isRun())
+                            rl43.run();
+                        break;
+                    case 1:
+                        if (rl43.isRun())
+                            rl43.shutdownThread(false);
+
+                        if (!rl432.isRun())
+                            rl432.run();
+                        break;
+                    case 2:
+                        if (rl432.isRun())
+                            rl432.shutdownThread(false);
+
+                        if (!rl433.isRun())
+                            rl433.run();
+                        break;
+                    case 3:
+                        if (rl433.isRun())
+                            rl433.shutdownThread(false);
+
+                        if (!rl434.isRun())
+                            rl434.run();
+                        break;
+                    case 4:
+                        if (rl434.isRun())
+                            rl434.shutdownThread(false);
+
+                        if (!rl435.isRun())
+                            rl435.run();
+                        break;
+                    case 5:
+                        if (rl435.isRun())
+                            rl435.shutdownThread(false);
+
+                        if (!rl436.isRun())
+                            rl436.run();
+                        break;
+                    case 6:
+                        if (rl436.isRun())
+                            rl436.shutdownThread(false);
+
+                        if (!rl437.isRun())
+                            rl437.run();
+                        break;
+                    case 7:
+                        if (rl437.isRun())
+                            rl437.shutdownThread(false);
+                        break;
                 }
             }
 
-            if (third != null) {
-                int size = third.size();
-                if (size > 0) {
-                    switch (size) {
-                        case 1:
-                            if (third.get(0) != null && !third.get(0).isEmpty()) {
-                                rl331.shutdownThread(false);
-                            } else {
-                                rl331.run();
-                            }
-                            break;
-                        case 2:
-                            if (third.get(1) != null && !third.get(1).isEmpty()) {
-                                rl332.shutdownThread(false);
-                            } else {
-                                rl332.run();
-                            }
-                            break;
-                    }
+            if (fourd != null && third != null && fourd.size() == 7) {
+                switch (third.size()) {
+                    case 0:
+                        if (!rl331.isRun())
+                            rl331.run();
+                        break;
+                    case 1:
+                        if (rl331.isRun())
+                            rl331.shutdownThread(false);
+
+                        if (!rl332.isRun())
+                            rl332.run();
+                        break;
+                    case 2:
+                        if (rl332.isRun())
+                            rl332.shutdownThread(false);
+                        break;
                 }
             }
-
-            if (second != null) {
-                int size = second.size();
-                if (size > 0) {
-                    if (second.get(0) != null && !second.get(0).isEmpty()) {
+            if (third != null && second != null && third.size() == 2) {
+                if (second.size() > 0) {
+                    if (rl_second_3.isRun())
                         rl_second_3.shutdownThread(false);
-                    } else {
+                } else {
+                    if (!rl_second_3.isRun())
                         rl_second_3.run();
-                    }
                 }
             }
-
-
-            if (first != null) {
-                int size = first.size();
-                if (size > 0) {
-                    if (first.get(0) != null && !first.get(0).isEmpty()) {
+            if (second != null && first != null && second.size() == 1) {
+                if (first.size() > 0) {
+                    if (rl_first_3.isRun())
                         rl_first_3.shutdownThread(false);
-                    } else {
+
+                } else {
+                    if (!rl_first_3.isRun())
                         rl_first_3.run();
-                    }
                 }
             }
 
-            if (special != null) {
-                int size = special.size();
-                if (size > 0) {
-                    if (special.get(0) != null && !special.get(0).isEmpty()) {
+            if (first != null && special != null && first.size() == 1) {
+                if (special.size() > 0) {
+                    if (rl_special_3.isRun())
                         rl_special_3.shutdownThread(true);
-                    } else {
+                } else {
+                    if (!rl_special_3.isRun())
                         rl_special_3.run();
-                    }
                 }
             }
         }
@@ -1290,181 +1268,170 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
     private void checkRandomTable4(List<String> special, List<String> first, List<String> second, List<String> third, List<String> fourd, List<String> five, List<String> six, List<String> seven, List<String> eight) {
         if (toDay) {
             if (eight != null) {
-                int size = eight.size();
-                if (size > 0) {
-                    if (eight.get(0) != null && !eight.get(0).isEmpty()) {
+                if (eight.size() > 0) {
+                    if (rl84.isRun())
                         rl84.shutdownThread(true);
-                    } else {
+                } else {
+                    if (!rl84.isRun())
                         rl84.run();
-                    }
                 }
             }
 
-            if (seven != null) {
-                int size = seven.size();
-                if (size > 0) {
-                    if (seven.get(0) != null && !seven.get(0).isEmpty()) {
+            if (eight != null && seven != null && eight.size() == 1) {
+                if (seven.size() > 0) {
+                    if (rl74.isRun())
                         rl74.shutdownThread(false);
-                    } else {
+                } else {
+                    if (!rl74.isRun())
                         rl74.run();
-                    }
                 }
             }
 
             /**
              * Six*/
-            if (six != null) {
-                int size = six.size();
-                if (size > 0) {
-                    switch (size) {
-                        case 1:
-                            if (six.get(0) != null && !six.get(0).isEmpty()) {
-                                rl641.shutdownThread(false);
-                            } else {
-                                rl641.run();
-                            }
-                            break;
-                        case 2:
-                            if (six.get(1) != null && !six.get(1).isEmpty()) {
-                                rl642.shutdownThread(false);
-                            } else {
-                                rl642.run();
-                            }
-                            break;
-                        case 3:
-                            if (six.get(2) != null && !six.get(2).isEmpty()) {
-                                rl643.shutdownThread(false);
-                            } else {
-                                rl643.run();
-                            }
-                            break;
-                    }
+            if (seven != null && six != null && seven.size() == 1) {
+                switch (six.size()) {
+                    case 0:
+                        if (!rl641.isRun())
+                            rl641.run();
+                        break;
+                    case 1:
+                        if (rl641.isRun())
+                            rl641.shutdownThread(false);
+
+                        if (!rl642.isRun())
+                            rl642.run();
+                        break;
+                    case 2:
+                        if (rl642.isRun())
+                            rl642.shutdownThread(false);
+
+                        if (!rl643.isRun()) {
+                            rl643.run();
+                        }
+                        break;
+                    case 3:
+                        if (rl643.isRun())
+                            rl643.shutdownThread(false);
+                        break;
                 }
             }
 
-            if (five != null) {
-                int size = five.size();
-                if (size > 0) {
-                    if (five.get(0) != null && !five.get(0).isEmpty()) {
+            if (six != null && five != null && six.size() == 3) {
+                if (five.size() > 0) {
+                    if (rl54.isRun()) {
                         rl54.shutdownThread(false);
-                    } else {
-                        rl54.run();
                     }
+                } else {
+                    if (!rl54.isRun())
+                        rl54.run();
                 }
             }
 
             /**
              * Fourd*/
-            if (fourd != null) {
-                int size = fourd.size();
-                if (size > 0) {
-                    switch (size) {
-                        case 1:
-                            if (fourd.get(0) != null && !fourd.get(0).isEmpty()) {
-                                rl44.shutdownThread(false);
-                            } else {
-                                rl44.run();
-                            }
-                            break;
-                        case 2:
-                            if (fourd.get(1) != null && !fourd.get(1).isEmpty()) {
-                                rl442.shutdownThread(false);
-                            } else {
-                                rl442.run();
-                            }
-                            break;
-                        case 3:
-                            if (fourd.get(2) != null && !fourd.get(2).isEmpty()) {
-                                rl443.shutdownThread(false);
-                            } else {
-                                rl443.run();
-                            }
-                            break;
-                        case 4:
-                            if (fourd.get(3) != null && !fourd.get(3).isEmpty()) {
-                                rl444.shutdownThread(false);
-                            } else {
-                                rl444.run();
-                            }
-                            break;
-                        case 5:
-                            if (fourd.get(4) != null && !fourd.get(4).isEmpty()) {
-                                rl445.shutdownThread(false);
-                            } else {
-                                rl445.run();
-                            }
-                            break;
-                        case 6:
-                            if (fourd.get(5) != null && !fourd.get(5).isEmpty()) {
-                                rl446.shutdownThread(false);
-                            } else {
-                                rl446.run();
-                            }
-                            break;
-                        case 7:
-                            if (fourd.get(6) != null && !fourd.get(6).isEmpty()) {
-                                rl447.shutdownThread(false);
-                            } else {
-                                rl447.run();
-                            }
-                            break;
-                    }
+            if (five != null && fourd != null && five.size() == 1) {
+                switch (fourd.size()) {
+                    case 0:
+                        if (!rl44.isRun())
+                            rl44.run();
+                        break;
+                    case 1:
+                        if (rl44.isRun())
+                            rl44.shutdownThread(false);
+
+                        if (!rl442.isRun())
+                            rl442.run();
+                        break;
+                    case 2:
+                        if (rl442.isRun())
+                            rl442.shutdownThread(false);
+
+                        if (!rl443.isRun())
+                            rl443.run();
+                        break;
+                    case 3:
+                        if (rl443.isRun())
+                            rl443.shutdownThread(false);
+
+                        if (!rl444.isRun())
+                            rl444.run();
+                        break;
+                    case 4:
+                        if (rl444.isRun())
+                            rl444.shutdownThread(false);
+
+                        if (!rl445.isRun())
+                            rl445.run();
+                        break;
+                    case 5:
+                        if (rl445.isRun())
+                            rl445.shutdownThread(false);
+
+                        if (!rl446.isRun())
+                            rl446.run();
+                        break;
+                    case 6:
+                        if (rl446.isRun())
+                            rl446.shutdownThread(false);
+
+                        if (!rl447.isRun())
+                            rl447.run();
+                        break;
+                    case 7:
+                        if (rl447.isRun())
+                            rl447.shutdownThread(false);
+                        break;
                 }
             }
 
-            if (third != null) {
-                int size = third.size();
-                if (size > 0) {
-                    switch (size) {
-                        case 1:
-                            if (third.get(0) != null && !third.get(0).isEmpty()) {
-                                rl341.shutdownThread(false);
-                            } else {
-                                rl341.run();
-                            }
-                            break;
-                        case 2:
-                            if (third.get(1) != null && !third.get(1).isEmpty()) {
-                                rl342.shutdownThread(false);
-                            } else {
-                                rl342.run();
-                            }
-                            break;
-                    }
+            if (fourd != null && third != null && fourd.size() == 7) {
+                switch (third.size()) {
+                    case 0:
+                        if (!rl341.isRun())
+                            rl341.run();
+                        break;
+                    case 1:
+                        if (rl341.isRun())
+                            rl341.shutdownThread(false);
+
+                        if (!rl342.isRun())
+                            rl342.run();
+                        break;
+                    case 2:
+                        if (rl342.isRun())
+                            rl342.shutdownThread(false);
+                        break;
                 }
             }
 
-            if (second != null) {
-                int size = second.size();
-                if (size > 0) {
-                    if (second.get(0) != null && !second.get(0).isEmpty()) {
+            if (third != null && second != null && third.size() == 2) {
+                if (second.size() > 0) {
+                    if (rl_second_4.isRun())
                         rl_second_4.shutdownThread(false);
-                    } else {
+                } else {
+                    if (!rl_second_4.isRun())
                         rl_second_4.run();
-                    }
                 }
             }
-
-
-            if (first != null) {
-                int size = first.size();
-                if (size > 0) {
-                    if (first.get(0) != null && !first.get(0).isEmpty()) {
+            if (second != null && first != null && second.size() == 1) {
+                if (first.size() > 0) {
+                    if (rl_first_4.isRun())
                         rl_first_4.shutdownThread(false);
-                    } else {
+
+                } else {
+                    if (!rl_first_4.isRun())
                         rl_first_4.run();
-                    }
                 }
             }
 
-            if (special != null) {
-                int size = special.size();
-                if (size > 0) {
-                    if (special.get(0) != null && !special.get(0).isEmpty()) {
+            if (first != null && special != null && first.size() == 1) {
+                if (special.size() > 0) {
+                    if (rl_special_4.isRun())
                         rl_special_4.shutdownThread(true);
-                    } else {
+                } else {
+                    if (!rl_special_4.isRun())
                         rl_special_4.run();
-                    }
                 }
             }
         }
@@ -1678,55 +1645,6 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
         }
     }
 
-    @Override
-    public void random(int random_table) {
-        if (toDay) {
-            switch (random_table) {
-                case 1:
-                    if (rl81 != null) {
-                        rl81.run();
-                    }
-                    break;
-                case 2:
-                    if (rl81 != null) {
-                        rl81.run();
-                    }
-
-                    if (rl82 != null) {
-                        rl82.run();
-                    }
-                    break;
-                case 3:
-                    if (rl81 != null) {
-                        rl81.run();
-                    }
-
-                    if (rl82 != null) {
-                        rl82.run();
-                    }
-                    if (rl83 != null) {
-                        rl83.run();
-                    }
-                    break;
-                case 4:
-                    if (rl81 != null) {
-                        rl81.run();
-                    }
-
-                    if (rl82 != null) {
-                        rl82.run();
-                    }
-                    if (rl83 != null) {
-                        rl83.run();
-                    }
-                    if (rl84 != null) {
-                        rl84.run();
-                    }
-                    break;
-            }
-        }
-    }
-
     private static final String TAG = "FragmentSouthContent";
 
     @Override
@@ -1782,18 +1700,22 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
             case "res_eight":
                 if (newResult.getValue() != null) {
                     if (rl84 != null) {
-                        rl84.shutdownThread(true);
+                        if (rl84.isRun())
+                            rl84.shutdownThread(true);
                     }
-                    rl74.run();
+                    if (!rl74.isRun())
+                        rl74.run();
                     tv8_4.setText(newResult.getValue());
                 }
                 break;
             case "res_seventh":
                 if (newResult.getValue() != null) {
                     if (rl74 != null) {
-                        rl74.shutdownThread(false);
+                        if (rl74.isRun())
+                            rl74.shutdownThread(false);
                     }
-                    rl641.run();
+                    if (!rl641.isRun())
+                        rl641.run();
                     tv7_4.setText(newResult.getValue());
                 }
                 break;
@@ -1802,23 +1724,29 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
                     switch (newResult.getIndex()) {
                         case "0":
                             if (rl641 != null) {
-                                rl641.shutdownThread(false);
+                                if (rl641.isRun())
+                                    rl641.shutdownThread(false);
                             }
-                            rl642.run();
+                            if (!rl642.isRun())
+                                rl642.run();
                             tv6_1_4.setText(newResult.getValue());
                             break;
                         case "1":
                             if (rl642 != null) {
-                                rl642.shutdownThread(false);
+                                if (rl642.isRun())
+                                    rl642.shutdownThread(false);
                             }
-                            rl643.run();
+                            if (!rl643.isRun())
+                                rl643.run();
                             tv6_2_4.setText(newResult.getValue());
                             break;
                         case "2":
                             if (rl643 != null) {
-                                rl643.shutdownThread(false);
+                                if (rl643.isRun())
+                                    rl643.shutdownThread(false);
                             }
-                            rl54.run();
+                            if (!rl54.isRun())
+                                rl54.run();
                             tv6_3_4.setText(newResult.getValue());
                             break;
                     }
@@ -1827,9 +1755,11 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
                 break;
             case "res_fifth":
                 if (rl54 != null) {
-                    rl54.shutdownThread(false);
+                    if (rl54.isRun())
+                        rl54.shutdownThread(false);
                 }
-                rl44.run();
+                if (!rl44.isRun())
+                    rl44.run();
                 tv5_4.setText(newResult.getValue());
                 break;
             case "res_fourth":
@@ -1837,52 +1767,66 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
                     switch (newResult.getIndex()) {
                         case "0":
                             if (rl44 != null) {
-                                rl44.shutdownThread(false);
+                                if (rl44.isRun())
+                                    rl44.shutdownThread(false);
                             }
-                            rl442.run();
+                            if (!rl442.isRun())
+                                rl442.run();
                             tv4_1_4.setText(newResult.getValue());
                             break;
                         case "1":
                             if (rl442 != null) {
-                                rl442.shutdownThread(false);
+                                if (rl442.isRun())
+                                    rl442.shutdownThread(false);
                             }
-                            rl443.run();
+                            if (!rl443.isRun())
+                                rl443.run();
                             tv4_2_4.setText(newResult.getValue());
                             break;
                         case "2":
                             if (rl443 != null) {
-                                rl443.shutdownThread(false);
+                                if (rl443.isRun())
+                                    rl443.shutdownThread(false);
                             }
-                            rl444.run();
+                            if (!rl444.isRun())
+                                rl444.run();
                             tv4_3_4.setText(newResult.getValue());
                             break;
 
                         case "3":
                             if (rl444 != null) {
-                                rl444.shutdownThread(false);
+                                if (rl444.isRun())
+                                    rl444.shutdownThread(false);
                             }
-                            rl445.run();
+                            if (!rl445.isRun())
+                                rl445.run();
                             tv4_4_4.setText(newResult.getValue());
                             break;
                         case "4":
                             if (rl445 != null) {
-                                rl445.shutdownThread(false);
+                                if (rl445.isRun())
+                                    rl445.shutdownThread(false);
                             }
-                            rl446.run();
+                            if (!rl446.isRun())
+                                rl446.run();
                             tv4_5_4.setText(newResult.getValue());
                             break;
                         case "5":
                             if (rl446 != null) {
-                                rl446.shutdownThread(false);
+                                if (rl446.isRun())
+                                    rl446.shutdownThread(false);
                             }
-                            rl447.run();
+                            if (!rl447.isRun())
+                                rl447.run();
                             tv4_6_4.setText(newResult.getValue());
                             break;
                         case "6":
                             if (rl447 != null) {
-                                rl447.shutdownThread(false);
+                                if (rl447.isRun())
+                                    rl447.shutdownThread(false);
                             }
-                            rl341.run();
+                            if (!rl341.isRun())
+                                rl341.run();
                             tv4_7_4.setText(newResult.getValue());
                             break;
                     }
@@ -1894,16 +1838,20 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
                     switch (newResult.getIndex()) {
                         case "0":
                             if (rl341 != null) {
-                                rl341.shutdownThread(false);
+                                if (rl341.isRun())
+                                    rl341.shutdownThread(false);
                             }
-                            rl342.run();
+                            if (!rl342.isRun())
+                                rl342.run();
                             tv3_1_4.setText(newResult.getValue());
                             break;
                         case "1":
                             if (rl342 != null) {
-                                rl342.shutdownThread(false);
+                                if (rl342.isRun())
+                                    rl342.shutdownThread(false);
                             }
-                            rl_second_4.run();
+                            if (!rl_second_4.isRun())
+                                rl_second_4.run();
                             tv3_2_4.setText(newResult.getValue());
                             break;
                     }
@@ -1911,21 +1859,26 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
                 break;
             case "res_second":
                 if (rl_second_4 != null) {
-                    rl_second_4.shutdownThread(false);
+                    if (rl_second_4.isRun())
+                        rl_second_4.shutdownThread(false);
                 }
-                rl_first_4.run();
+                if (!rl_first_4.isRun())
+                    rl_first_4.run();
                 tv2_4.setText(newResult.getValue());
                 break;
             case "res_first":
                 if (rl_first_4 != null) {
-                    rl_first_4.shutdownThread(false);
+                    if (rl_first_4.isRun())
+                        rl_first_4.shutdownThread(false);
                 }
-                rl_special_4.run();
+                if (!rl_special_4.isRun())
+                    rl_special_4.run();
                 tv1_4.setText(newResult.getValue());
                 break;
             case "res_special":
                 if (rl_special_4 != null) {
-                    rl_special_4.shutdownThread(true);
+                    if (rl_special_4.isRun())
+                        rl_special_4.shutdownThread(true);
                 }
                 special_value = newResult.getValue();
                 LotoSpecial_4 = newResult.getValue();
@@ -1939,18 +1892,22 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
             case "res_eight":
                 if (newResult.getValue() != null) {
                     if (rl83 != null) {
-                        rl83.shutdownThread(true);
+                        if (rl83.isRun())
+                            rl83.shutdownThread(true);
                     }
-                    rl73.run();
+                    if (!rl73.isRun())
+                        rl73.run();
                     tv8_3.setText(newResult.getValue());
                 }
                 break;
             case "res_seventh":
                 if (newResult.getValue() != null) {
                     if (rl73 != null) {
-                        rl73.shutdownThread(false);
+                        if (rl73.isRun())
+                            rl73.shutdownThread(false);
                     }
-                    rl631.run();
+                    if (!rl631.isRun())
+                        rl631.run();
                     tv7_3.setText(newResult.getValue());
                 }
                 break;
@@ -1959,23 +1916,29 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
                     switch (newResult.getIndex()) {
                         case "0":
                             if (rl631 != null) {
-                                rl631.shutdownThread(false);
+                                if (rl631.isRun())
+                                    rl631.shutdownThread(false);
                             }
-                            rl632.run();
+                            if (!rl632.isRun())
+                                rl632.run();
                             tv6_1_3.setText(newResult.getValue());
                             break;
                         case "1":
                             if (rl632 != null) {
-                                rl632.shutdownThread(false);
+                                if (rl632.isRun())
+                                    rl632.shutdownThread(false);
                             }
-                            rl633.run();
+                            if (rl633.isRun())
+                                rl633.run();
                             tv6_2_3.setText(newResult.getValue());
                             break;
                         case "2":
                             if (rl633 != null) {
-                                rl633.shutdownThread(false);
+                                if (rl633.isRun())
+                                    rl633.shutdownThread(false);
                             }
-                            rl53.run();
+                            if (!rl53.isRun())
+                                rl53.run();
                             tv6_3_3.setText(newResult.getValue());
                             break;
                     }
@@ -1984,9 +1947,11 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
                 break;
             case "res_fifth":
                 if (rl53 != null) {
-                    rl53.shutdownThread(false);
+                    if (rl53.isRun())
+                        rl53.shutdownThread(false);
                 }
-                rl43.run();
+                if (!rl43.isRun())
+                    rl43.run();
                 tv5_3.setText(newResult.getValue());
                 break;
             case "res_fourth":
@@ -1994,52 +1959,66 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
                     switch (newResult.getIndex()) {
                         case "0":
                             if (rl43 != null) {
-                                rl43.shutdownThread(false);
+                                if (rl43.isRun())
+                                    rl43.shutdownThread(false);
                             }
-                            rl432.run();
+                            if (!rl432.isRun())
+                                rl432.run();
                             tv4_1_3.setText(newResult.getValue());
                             break;
                         case "1":
                             if (rl432 != null) {
-                                rl432.shutdownThread(false);
+                                if (rl432.isRun())
+                                    rl432.shutdownThread(false);
                             }
-                            rl433.run();
+                            if (!rl433.isRun())
+                                rl433.run();
                             tv4_2_3.setText(newResult.getValue());
                             break;
                         case "2":
                             if (rl433 != null) {
-                                rl433.shutdownThread(false);
+                                if (rl433.isRun())
+                                    rl433.shutdownThread(false);
                             }
-                            rl434.run();
+                            if (!rl434.isRun())
+                                rl434.run();
                             tv4_3_3.setText(newResult.getValue());
                             break;
 
                         case "3":
                             if (rl434 != null) {
-                                rl434.shutdownThread(false);
+                                if (rl434.isRun())
+                                    rl434.shutdownThread(false);
                             }
-                            rl435.run();
+                            if (!rl435.isRun())
+                                rl435.run();
                             tv4_4_3.setText(newResult.getValue());
                             break;
                         case "4":
                             if (rl435 != null) {
-                                rl435.shutdownThread(false);
+                                if (rl435.isRun())
+                                    rl435.shutdownThread(false);
                             }
-                            rl436.run();
+                            if (!rl436.isRun())
+                                rl436.run();
                             tv4_5_3.setText(newResult.getValue());
                             break;
                         case "5":
                             if (rl436 != null) {
-                                rl436.shutdownThread(false);
+                                if (rl436.isRun())
+                                    rl436.shutdownThread(false);
                             }
-                            rl437.run();
+                            if (rl437.isRun())
+                                rl437.run();
                             tv4_6_3.setText(newResult.getValue());
                             break;
                         case "6":
                             if (rl437 != null) {
-                                rl437.shutdownThread(false);
+                                if (rl437.isRun())
+                                    rl437.shutdownThread(false);
                             }
-                            rl331.run();
+                            if (!rl331.isRun())
+                                rl331.run();
                             tv4_7_3.setText(newResult.getValue());
                             break;
                     }
@@ -2051,16 +2030,20 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
                     switch (newResult.getIndex()) {
                         case "0":
                             if (rl331 != null) {
-                                rl331.shutdownThread(false);
+                                if (rl331.isRun())
+                                    rl331.shutdownThread(false);
                             }
-                            rl332.run();
+                            if (!rl332.isRun())
+                                rl332.run();
                             tv3_1_3.setText(newResult.getValue());
                             break;
                         case "1":
                             if (rl332 != null) {
-                                rl332.shutdownThread(false);
+                                if (rl332.isRun())
+                                    rl332.shutdownThread(false);
                             }
-                            rl_second_3.run();
+                            if (!rl_second_3.isRun())
+                                rl_second_3.run();
                             tv3_2_3.setText(newResult.getValue());
                             break;
                     }
@@ -2068,21 +2051,26 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
                 break;
             case "res_second":
                 if (rl_second_3 != null) {
-                    rl_second_3.shutdownThread(false);
+                    if (rl_second_3.isRun())
+                        rl_second_3.shutdownThread(false);
                 }
-                rl_first_3.run();
+                if (!rl_first_3.isRun())
+                    rl_first_3.run();
                 tv2_3.setText(newResult.getValue());
                 break;
             case "res_first":
                 if (rl_first_3 != null) {
-                    rl_first_3.shutdownThread(false);
+                    if (rl_first_3.isRun())
+                        rl_first_3.shutdownThread(false);
                 }
-                rl_special_3.run();
+                if (!rl_special_3.isRun())
+                    rl_special_3.run();
                 tv1_3.setText(newResult.getValue());
                 break;
             case "res_special":
                 if (rl_special_3 != null) {
-                    rl_special_3.shutdownThread(true);
+                    if (rl_special_3.isRun())
+                        rl_special_3.shutdownThread(true);
                 }
                 special_value = newResult.getValue();
                 LotoSpecial_3 = newResult.getValue();
@@ -2096,18 +2084,22 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
             case "res_eight":
                 if (newResult.getValue() != null) {
                     if (rl82 != null) {
-                        rl82.shutdownThread(true);
+                        if (rl82.isRun())
+                            rl82.shutdownThread(true);
                     }
-                    rl72.run();
+                    if (!rl72.isRun())
+                        rl72.run();
                     tv8_2.setText(newResult.getValue());
                 }
                 break;
             case "res_seventh":
                 if (newResult.getValue() != null) {
                     if (rl72 != null) {
-                        rl72.shutdownThread(false);
+                        if (rl72.isRun())
+                            rl72.shutdownThread(false);
                     }
-                    rl621.run();
+                    if (!rl621.isRun())
+                        rl621.run();
                     tv7_2.setText(newResult.getValue());
                 }
                 break;
@@ -2116,23 +2108,29 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
                     switch (newResult.getIndex()) {
                         case "0":
                             if (rl621 != null) {
-                                rl621.shutdownThread(false);
+                                if (rl621.isRun())
+                                    rl621.shutdownThread(false);
                             }
-                            rl622.run();
+                            if (!rl622.isRun())
+                                rl622.run();
                             tv6_1_2.setText(newResult.getValue());
                             break;
                         case "1":
                             if (rl622 != null) {
-                                rl622.shutdownThread(false);
+                                if (rl622.isRun())
+                                    rl622.shutdownThread(false);
                             }
-                            rl623.run();
+                            if (!rl623.isRun())
+                                rl623.run();
                             tv6_2_2.setText(newResult.getValue());
                             break;
                         case "2":
                             if (rl623 != null) {
-                                rl623.shutdownThread(false);
+                                if (rl623.isRun())
+                                    rl623.shutdownThread(false);
                             }
-                            rl52.run();
+                            if (!rl52.isRun())
+                                rl52.run();
                             tv6_3_2.setText(newResult.getValue());
                             break;
                     }
@@ -2141,9 +2139,11 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
                 break;
             case "res_fifth":
                 if (rl52 != null) {
-                    rl52.shutdownThread(false);
+                    if (rl52.isRun())
+                        rl52.shutdownThread(false);
                 }
-                rl42.run();
+                if (!rl42.isRun())
+                    rl42.run();
                 tv5_2.setText(newResult.getValue());
                 break;
             case "res_fourth":
@@ -2151,52 +2151,66 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
                     switch (newResult.getIndex()) {
                         case "0":
                             if (rl42 != null) {
-                                rl42.shutdownThread(false);
+                                if (rl42.isRun())
+                                    rl42.shutdownThread(false);
                             }
-                            rl422.run();
+                            if (!rl422.isRun())
+                                rl422.run();
                             tv4_1_2.setText(newResult.getValue());
                             break;
                         case "1":
                             if (rl422 != null) {
-                                rl422.shutdownThread(false);
+                                if (rl422.isRun())
+                                    rl422.shutdownThread(false);
                             }
-                            rl423.run();
+                            if (!rl423.isRun())
+                                rl423.run();
                             tv4_2_2.setText(newResult.getValue());
                             break;
                         case "2":
                             if (rl423 != null) {
-                                rl423.shutdownThread(false);
+                                if (rl423.isRun())
+                                    rl423.shutdownThread(false);
                             }
-                            rl424.run();
+                            if (!rl424.isRun())
+                                rl424.run();
                             tv4_3_2.setText(newResult.getValue());
                             break;
 
                         case "3":
                             if (rl424 != null) {
-                                rl424.shutdownThread(false);
+                                if (rl424.isRun())
+                                    rl424.shutdownThread(false);
                             }
-                            rl425.run();
+                            if (!rl425.isRun())
+                                rl425.run();
                             tv4_4_2.setText(newResult.getValue());
                             break;
                         case "4":
                             if (rl425 != null) {
-                                rl425.shutdownThread(false);
+                                if (rl425.isRun())
+                                    rl425.shutdownThread(false);
                             }
-                            rl426.run();
+                            if (!rl426.isRun())
+                                rl426.run();
                             tv4_5_2.setText(newResult.getValue());
                             break;
                         case "5":
                             if (rl426 != null) {
-                                rl426.shutdownThread(false);
+                                if (rl426.isRun())
+                                    rl426.shutdownThread(false);
                             }
-                            rl427.run();
+                            if (!rl427.isRun())
+                                rl427.run();
                             tv4_6_2.setText(newResult.getValue());
                             break;
                         case "6":
                             if (rl427 != null) {
-                                rl427.shutdownThread(false);
+                                if (rl427.isRun())
+                                    rl427.shutdownThread(false);
                             }
-                            rl321.run();
+                            if (!rl321.isRun())
+                                rl321.run();
                             tv4_7_2.setText(newResult.getValue());
                             break;
                     }
@@ -2208,16 +2222,20 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
                     switch (newResult.getIndex()) {
                         case "0":
                             if (rl321 != null) {
-                                rl321.shutdownThread(false);
+                                if (rl321.isRun())
+                                    rl321.shutdownThread(false);
                             }
-                            rl322.run();
+                            if (!rl322.isRun())
+                                rl322.run();
                             tv3_1_2.setText(newResult.getValue());
                             break;
                         case "1":
                             if (rl322 != null) {
-                                rl322.shutdownThread(false);
+                                if (rl322.isRun())
+                                    rl322.shutdownThread(false);
                             }
-                            rl_second_2.run();
+                            if (!rl_second_2.isRun())
+                                rl_second_2.run();
                             tv3_2_2.setText(newResult.getValue());
                             break;
                     }
@@ -2225,21 +2243,26 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
                 break;
             case "res_second":
                 if (rl_second_2 != null) {
-                    rl_second_2.shutdownThread(false);
+                    if (rl_second_2.isRun())
+                        rl_second_2.shutdownThread(false);
                 }
-                rl_first_2.run();
+                if (!rl_first_2.isRun())
+                    rl_first_2.run();
                 tv2_2.setText(newResult.getValue());
                 break;
             case "res_first":
                 if (rl_first_2 != null) {
-                    rl_first_2.shutdownThread(false);
+                    if (rl_first_2.isRun())
+                        rl_first_2.shutdownThread(false);
                 }
-                rl_special_2.run();
+                if (!rl_special_2.isRun())
+                    rl_special_2.run();
                 tv1_2.setText(newResult.getValue());
                 break;
             case "res_special":
                 if (rl_special_2 != null) {
-                    rl_special_2.shutdownThread(true);
+                    if (rl_special_2.isRun())
+                        rl_special_2.shutdownThread(true);
                 }
                 special_value = newResult.getValue();
                 LotoSpecial_2 = newResult.getValue();
@@ -2253,18 +2276,22 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
             case "res_eight":
                 if (newResult.getValue() != null) {
                     if (rl81 != null) {
-                        rl81.shutdownThread(true);
+                        if (rl81.isRun())
+                            rl81.shutdownThread(true);
                     }
-                    rl71.run();
+                    if (!rl71.isRun())
+                        rl71.run();
                     tv8_1.setText(newResult.getValue());
                 }
                 break;
             case "res_seventh":
                 if (newResult.getValue() != null) {
                     if (rl71 != null) {
-                        rl71.shutdownThread(false);
+                        if (rl71.isRun())
+                            rl71.shutdownThread(false);
                     }
-                    rl611.run();
+                    if (!rl611.isRun())
+                        rl611.run();
                     tv7_1.setText(newResult.getValue());
                 }
                 break;
@@ -2273,23 +2300,29 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
                     switch (newResult.getIndex()) {
                         case "0":
                             if (rl611 != null) {
-                                rl611.shutdownThread(false);
+                                if (rl611.isRun())
+                                    rl611.shutdownThread(false);
                             }
-                            rl612.run();
+                            if (!rl612.isRun())
+                                rl612.run();
                             tv6_1.setText(newResult.getValue());
                             break;
                         case "1":
                             if (rl612 != null) {
-                                rl612.shutdownThread(false);
+                                if (rl612.isRun())
+                                    rl612.shutdownThread(false);
                             }
-                            rl613.run();
+                            if (!rl613.isRun())
+                                rl613.run();
                             tv6_2.setText(newResult.getValue());
                             break;
                         case "2":
                             if (rl613 != null) {
-                                rl613.shutdownThread(false);
+                                if (rl613.isRun())
+                                    rl613.shutdownThread(false);
                             }
-                            rl51.run();
+                            if (!rl51.isRun())
+                                rl51.run();
                             tv6_3.setText(newResult.getValue());
                             break;
                     }
@@ -2298,9 +2331,11 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
                 break;
             case "res_fifth":
                 if (rl51 != null) {
-                    rl51.shutdownThread(false);
+                    if (rl51.isRun())
+                        rl51.shutdownThread(false);
                 }
-                rl41.run();
+                if (!rl41.isRun())
+                    rl41.run();
                 tv5_1.setText(newResult.getValue());
                 break;
             case "res_fourth":
@@ -2308,52 +2343,66 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
                     switch (newResult.getIndex()) {
                         case "0":
                             if (rl41 != null) {
-                                rl41.shutdownThread(false);
+                                if (rl41.isRun())
+                                    rl41.shutdownThread(false);
                             }
-                            rl412.run();
+                            if (!rl412.isRun())
+                                rl412.run();
                             tv4_1.setText(newResult.getValue());
                             break;
                         case "1":
                             if (rl412 != null) {
-                                rl412.shutdownThread(false);
+                                if (rl412.isRun())
+                                    rl412.shutdownThread(false);
                             }
-                            rl413.run();
+                            if (!rl413.isRun())
+                                rl413.run();
                             tv4_2.setText(newResult.getValue());
                             break;
                         case "2":
                             if (rl413 != null) {
-                                rl413.shutdownThread(false);
+                                if (rl413.isRun())
+                                    rl413.shutdownThread(false);
                             }
-                            rl414.run();
+                            if (!rl414.isRun())
+                                rl414.run();
                             tv4_3.setText(newResult.getValue());
                             break;
 
                         case "3":
                             if (rl414 != null) {
-                                rl414.shutdownThread(false);
+                                if (rl414.isRun())
+                                    rl414.shutdownThread(false);
                             }
-                            rl415.run();
+                            if (!rl415.isRun())
+                                rl415.run();
                             tv4_4.setText(newResult.getValue());
                             break;
                         case "4":
                             if (rl415 != null) {
-                                rl415.shutdownThread(false);
+                                if (rl415.isRun())
+                                    rl415.shutdownThread(false);
                             }
-                            rl416.run();
+                            if (!rl416.isRun())
+                                rl416.run();
                             tv4_5.setText(newResult.getValue());
                             break;
                         case "5":
                             if (rl416 != null) {
-                                rl416.shutdownThread(false);
+                                if (rl416.isRun())
+                                    rl416.shutdownThread(false);
                             }
-                            rl417.run();
+                            if (!rl417.isRun())
+                                rl417.run();
                             tv4_6.setText(newResult.getValue());
                             break;
                         case "6":
                             if (rl417 != null) {
-                                rl417.shutdownThread(false);
+                                if (rl417.isRun())
+                                    rl417.shutdownThread(false);
                             }
-                            rl311.run();
+                            if (!rl311.isRun())
+                                rl311.run();
                             tv4_7.setText(newResult.getValue());
                             break;
                     }
@@ -2365,16 +2414,20 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
                     switch (newResult.getIndex()) {
                         case "0":
                             if (rl311 != null) {
-                                rl311.shutdownThread(false);
+                                if (rl311.isRun())
+                                    rl311.shutdownThread(false);
                             }
-                            rl312.run();
+                            if (!rl312.isRun())
+                                rl312.run();
                             tv3_1.setText(newResult.getValue());
                             break;
                         case "1":
                             if (rl312 != null) {
-                                rl312.shutdownThread(false);
+                                if (rl312.isRun())
+                                    rl312.shutdownThread(false);
                             }
-                            rl_second_1.run();
+                            if (!rl_second_1.isRun())
+                                rl_second_1.run();
                             tv3_2.setText(newResult.getValue());
                             break;
                     }
@@ -2382,21 +2435,26 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
                 break;
             case "res_second":
                 if (rl_second_1 != null) {
-                    rl_second_1.shutdownThread(false);
+                    if (rl_second_1.isRun())
+                        rl_second_1.shutdownThread(false);
                 }
-                rl_first_1.run();
+                if (!rl_first_1.isRun())
+                    rl_first_1.run();
                 tv2_1.setText(newResult.getValue());
                 break;
             case "res_first":
                 if (rl_first_1 != null) {
-                    rl_first_1.shutdownThread(false);
+                    if (rl_first_1.isRun())
+                        rl_first_1.shutdownThread(false);
                 }
-                rl_special_1.run();
+                if (!rl_special_1.isRun())
+                    rl_special_1.run();
                 tv1_1.setText(newResult.getValue());
                 break;
             case "res_special":
                 if (rl_special_1 != null) {
-                    rl_special_1.shutdownThread(true);
+                    if (rl_special_1.isRun())
+                        rl_special_1.shutdownThread(true);
                 }
                 special_value = newResult.getValue();
                 LotoSpecial_1 = newResult.getValue();
@@ -2440,7 +2498,7 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
             isLive = false;
             presenter.connectSocket();
         }
-        if (keepConnect){
+        if (keepConnect) {
             presenter.connectSocket();
         }
         if (toDay && TimeUtils.checkTimeInMilisecondNorth(16, 10, 16, 40)) {
@@ -2476,12 +2534,6 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        destroyView();
-    }
-
-    private void destroyView() {
-        if (player != null)
-            player.release();
     }
 
     private boolean getExistsBegin() {
@@ -4624,7 +4676,8 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
         private long delayMillis;
         private int max, min;
 
-        private volatile boolean shutdown;
+        private boolean shutdown;
+        private boolean running;
 
         public Roller(TextView textView, int numTimes, long delayMillis, int max, int min) {
             this.textRoll = textView;
@@ -4638,8 +4691,8 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
         public void run() {
             if (!shutdown) {
                 if (textRoll != null) {
+                    running = true;
                     textRoll.setTextColor(context.getResources().getColor(android.R.color.holo_blue_dark));
-
                     Random rn = new Random();
 //                    int range = max - min + 1;
                     int randomNum = rn.nextInt((max - min) + 1) + min;
@@ -4664,6 +4717,11 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
                 }
             }
             shutdown = true;
+            running = false;
+        }
+
+        public boolean isRun() {
+            return running;
         }
     }
 }
