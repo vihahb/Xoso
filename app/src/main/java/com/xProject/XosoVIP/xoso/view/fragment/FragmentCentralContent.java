@@ -2,7 +2,6 @@ package com.xProject.XosoVIP.xoso.view.fragment;
 
 import android.content.Context;
 import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -17,12 +16,13 @@ import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
+import com.xProject.XosoVIP.R;
 import com.xProject.XosoVIP.sdk.common.Constants;
+import com.xProject.XosoVIP.sdk.utils.AudioPlay;
 import com.xProject.XosoVIP.sdk.utils.CalendarUtils;
 import com.xProject.XosoVIP.sdk.utils.SharedUtils;
 import com.xProject.XosoVIP.sdk.utils.TextUtils;
 import com.xProject.XosoVIP.sdk.utils.TimeUtils;
-import com.xProject.XosoVIP.sdk.utils.Utils;
 import com.xProject.XosoVIP.xoso.model.entity.BeginResult;
 import com.xProject.XosoVIP.xoso.model.entity.ResultLottery;
 import com.xProject.XosoVIP.xoso.model.respond.RESP_LiveLoto;
@@ -31,7 +31,6 @@ import com.xProject.XosoVIP.xoso.model.respond.RESP_Result;
 import com.xProject.XosoVIP.xoso.presenter.fragment.FragmentCentralContentPresenter;
 import com.xProject.XosoVIP.xoso.view.activity.MainActivity;
 import com.xProject.XosoVIP.xoso.view.fragment.inf.IFragmentCentralContent;
-import com.xProject.XosoVIP.R;
 
 import java.util.Calendar;
 import java.util.List;
@@ -113,7 +112,6 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
     private Roller rl83, rl73, rl631, rl632, rl633, rl53,
             rl43, rl432, rl433, rl434, rl435, rl436, rl437,
             rl331, rl332, rl_second_3, rl_first_3, rl_special_3;
-    private MediaPlayer player;
     private boolean toDay, mute = false;
     private AudioManager audioManager;
     private boolean isLive = false;
@@ -121,6 +119,7 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
     private boolean isExistsBegin, isExistsBegin_2, isExistsBegin_3;
     private String LotoSpecial_1, LotoSpecial_2, LotoSpecial_3;
     private LinearLayout loadingView;
+    private TextView tv_title_region;
 
     public static FragmentCentralContent newInstance(long date) {
         FragmentCentralContent fragmentFirst = new FragmentCentralContent();
@@ -157,12 +156,12 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
     public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         context = getContext();
-        player = MediaPlayer.create(getContext(), R.raw.notification11);
         audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
         check_done = SharedUtils.getInstance().getBooleanValue(Constants.CHECK_DONE_C);
         vibrate = SharedUtils.getInstance().getBooleanValue(Constants.ViBRATE_FLAG);
         sound = SharedUtils.getInstance().getBooleanDefaultTrueValue(Constants.SOUND_FLAG);
         loadingView = (LinearLayout) view.findViewById(R.id.loadingView);
+        tv_title_region = (TextView) view.findViewById(R.id.tv_title_region);
         initView(view);
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -175,8 +174,15 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
                     tv_not_yet.setVisibility(View.GONE);
                 }
 
+                if (toDay && TimeUtils.checkTimeInMilisecondNorth(0, 0, 17, 40)){
+                    tv_title_region.setText("Trực tiếp xổ số Miền Trung");
+                } else {
+                    tv_title_region.setText("Kết quả xổ số Miền Trung");
+                }
+
                 if (toDay && TimeUtils.checkTimeInMilisecondNorth(17, 10, 17, 45)) {
                     if (!check_done) {
+                        tv_title_region.setText("Trực tiếp xổ số Miền Trung");
                         presenter.connectSocket();
                     } else {
                         presenter.getResultLottery(getDateTime);
@@ -851,26 +857,19 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
 
     @Override
     public void setNewResult(RESP_NewResult newResult, int position_table) {
+        AudioPlay.getInstance().play(getContext());
         spined = true;
-        if (player != null) {
-            player.start();
-        }
-        if (vibrate) {
-            Utils.vibrateAction();
-        }
         switch (position_table) {
             /**
              * Table 1*/
             case 1:
                 setNewResultTable1(newResult);
                 break;
-
             /**
              * Table 2*/
             case 2:
                 setNewResultTable2(newResult);
                 break;
-
             /**
              * Table 3*/
             case 3:
@@ -1493,30 +1492,19 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
     public void onDestroy() {
         super.onDestroy();
 //        presenter.disconnectSocket();
-        if (player != null) {
-            player.release();
-        }
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        destroyView();
-    }
-
-    private void destroyView() {
-        if (player != null)
-            player.stop();
     }
 
     private void checkRandomTable1(List<String> special, List<String> first, List<String> second, List<String> third, List<String> fourd, List<String> five, List<String> six, List<String> seven, List<String> eight) {
         if (toDay) {
             if (eight != null) {
                 if (eight.size() > 0) {
-                    if (eight.get(0) != null && !eight.get(0).isEmpty()) {
-                        if (rl81.isRun())
-                            rl81.shutdownThread(true);
-                    }
+                    if (rl81.isRun())
+                        rl81.shutdownThread(true);
                 } else {
                     if (!rl81.isRun())
                         rl81.run();
@@ -1868,7 +1856,6 @@ public class FragmentCentralContent extends BasicFragment implements IFragmentCe
         if (toDay) {
             if (eight != null) {
                 if (eight.size() > 0) {
-
                     if (rl83.isRun())
                         rl83.shutdownThread(true);
                 } else {

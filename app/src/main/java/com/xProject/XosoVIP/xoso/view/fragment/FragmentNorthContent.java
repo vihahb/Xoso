@@ -3,7 +3,6 @@ package com.xProject.XosoVIP.xoso.view.fragment;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -20,6 +19,7 @@ import android.widget.TextView;
 
 import com.xProject.XosoVIP.R;
 import com.xProject.XosoVIP.sdk.common.Constants;
+import com.xProject.XosoVIP.sdk.utils.AudioPlay;
 import com.xProject.XosoVIP.sdk.utils.CalendarUtils;
 import com.xProject.XosoVIP.sdk.utils.SharedUtils;
 import com.xProject.XosoVIP.sdk.utils.TextUtils;
@@ -78,8 +78,6 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
     private TextView tvLoto0, tvLoto1, tvLoto2, tvLoto3, tvLoto4, tvLoto5, tvLoto6, tvLoto7, tvLoto8, tvLoto9,
             tvLotoDuoi0, tvLotoDuoi1, tvLotoDuoi2, tvLotoDuoi3, tvLotoDuoi4, tvLotoDuoi5, tvLotoDuoi6, tvLotoDuoi7, tvLotoDuoi8, tvLotoDuoi9;
 
-
-    private MediaPlayer player;
     private boolean toDay, mute = false;
     private AudioManager audioManager;
     private Roller special, first, r71, r72, r73, r74,
@@ -93,6 +91,7 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
     private String LotoSpecial;
     private String tmp_b0 = "", tmp_b1 = "", tmp_b2 = "", tmp_b3 = "", tmp_b4 = "", tmp_b5 = "", tmp_b6 = "", tmp_b7 = "", tmp_b8 = "", tmp_b9 = "";
     private String tmp_e0 = "", tmp_e1 = "", tmp_e2 = "", tmp_e3 = "", tmp_e4 = "", tmp_e5 = "", tmp_e6 = "", tmp_e7 = "", tmp_e8 = "", tmp_e9 = "";
+    private TextView tv_title_region;
 
     public static FragmentNorthContent newInstance(long date) {
         instance = new FragmentNorthContent();
@@ -131,11 +130,11 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
         context = getContext();
         boolean check_done = SharedUtils.getInstance().getBooleanValue(Constants.CHECK_DONE_N);
         audioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
-        player = MediaPlayer.create(getContext(), R.raw.notification11);
         tv_not_yet = findTextView(R.id.tv_not_yet);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+                tv_title_region = (TextView) rootView.findViewById(R.id.tv_title_region);
                 initTextView(rootView);
                 initOtherView(rootView);
                 initRoller();
@@ -148,8 +147,15 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
                     tv_not_yet.setVisibility(View.GONE);
                 }
 
+                if (toDay && TimeUtils.checkTimeInMilisecondNorth(0,0,18,40)){
+                    tv_title_region.setText("Trực tiếp xổ số Truyền thống");
+                } else {
+                    tv_title_region.setText("Kết quả xổ số Truyền thống");
+                }
+
                 if (toDay && TimeUtils.checkTimeInMilisecondNorth(18, 10, 18, 40)) {
                     isLive = true;
+                    tv_title_region.setText("Trực tiếp xổ số Truyền thống");
                     presenter.socketConnect(toDay);
                 } else {
                     presenter.getResultLottery(getDateTime);
@@ -724,6 +730,7 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
         MainActivity mainActivity = (MainActivity) getActivity();
         mainActivity.setEndLive(1);
         SharedUtils.getInstance().putBooleanValue(Constants.CHECK_DONE_N, true);
+        tv_title_region.setText("Kết quả xổ số Truyền thống");
     }
 
     private void initRoller() {
@@ -1120,9 +1127,7 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
 
     @Override
     public void setNewResult(RESP_NewResult newResult) {
-        if (player != null) {
-            player.start();
-        }
+        AudioPlay.getInstance().play(getContext());
         configRoller(newResult);
     }
 
@@ -1890,9 +1895,6 @@ public class FragmentNorthContent extends BasicFragment implements IFragmentNort
         super.onDestroy();
         if (toDay) {
             presenter.disconnectSocket();
-        }
-        if (player != null) {
-            player.release();
         }
     }
 

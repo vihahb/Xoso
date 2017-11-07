@@ -13,13 +13,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.xProject.XosoVIP.R;
 import com.xProject.XosoVIP.sdk.utils.CalendarUtils;
 import com.xProject.XosoVIP.sdk.utils.TimeUtils;
 import com.xProject.XosoVIP.xoso.model.entity.MyCalendar;
 import com.xProject.XosoVIP.xoso.view.adapter.AdapterCalendar;
 import com.xProject.XosoVIP.xoso.view.fragment.inf.OnLoadComplete;
 import com.xProject.XosoVIP.xoso.view.widget.RecyclerTabLayout;
-import com.xProject.XosoVIP.R;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -92,11 +92,7 @@ public class FragmentCentralResult extends BasicFragment implements OnLoadComple
     }
 
     private boolean checkSelectedDay() {
-        if (vpPager.getCurrentItem() == fragmentList.size() - 1) {
-            return true;
-        } else {
-            return false;
-        }
+        return vpPager.getCurrentItem() == fragmentList.size() - 1;
     }
 
     public void queryResult(Calendar calendar) {
@@ -167,6 +163,16 @@ public class FragmentCentralResult extends BasicFragment implements OnLoadComple
         }
     }
 
+    public Calendar getDayForPosition(Calendar FIRST_DAY_OF_TIME, int position) throws IllegalArgumentException {
+        if (position < 0) {
+            throw new IllegalArgumentException("position cannot be negative");
+        }
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(FIRST_DAY_OF_TIME.getTimeInMillis());
+        cal.add(Calendar.DAY_OF_YEAR, position);
+        return cal;
+    }
+
     public static class MyPagerAdapter extends FragmentStatePagerAdapter {
 
         private List<Fragment> list;
@@ -201,15 +207,5 @@ public class FragmentCentralResult extends BasicFragment implements OnLoadComple
             Calendar cal = TimeUtils.getDayForPosition(position);
             return TimeUtils.getTitleTime(mContext, cal.getTimeInMillis());
         }
-    }
-
-    public Calendar getDayForPosition(Calendar FIRST_DAY_OF_TIME, int position) throws IllegalArgumentException {
-        if (position < 0) {
-            throw new IllegalArgumentException("position cannot be negative");
-        }
-        Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(FIRST_DAY_OF_TIME.getTimeInMillis());
-        cal.add(Calendar.DAY_OF_YEAR, position);
-        return cal;
     }
 }

@@ -1,13 +1,17 @@
 package com.xProject.XosoVIP.xoso.view.activity;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomNavigationView;
@@ -18,6 +22,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -59,6 +64,7 @@ import java.util.List;
 
 public class MainActivity extends BasicActivity implements IHomeView, OnCompleteListener, onDateSelectListener {
 
+    public static boolean mainStory = true;
     BroadcastReceiver broadcastLive;
     BroadcastReceiver broadcastClose;
     private List<DrawerMenu> menuList;
@@ -77,8 +83,8 @@ public class MainActivity extends BasicActivity implements IHomeView, OnComplete
     private boolean chec_c = false;
     private boolean chec_s = false;
     private boolean showGuide = false;
-    public static boolean mainStory = true;
     private BroadcastReceiver broadcastChange;
+    private int REQUEST_CODE = 101;
 
 
     @Override
@@ -102,6 +108,41 @@ public class MainActivity extends BasicActivity implements IHomeView, OnComplete
     private void grandPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             PermissionHelper.checkOnlyPermission(Manifest.permission.READ_EXTERNAL_STORAGE, this, 99);
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!Settings.canDrawOverlays(this)) {
+                final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Thông báo");
+                builder.setMessage("Để ứng dụng có thể trợ giúp bạn một cách tốt nhất, vui lòng kích hoạt các quyền dưới đây.\n\n- Hiển thị trên các ứng dụng khác.");
+                builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+                builder.setPositiveButton("Cài đặt", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                        Intent intent = null;
+                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                            intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                                    Uri.parse("package:" + getPackageName()));
+                        }
+                        startActivityForResult(intent, REQUEST_CODE);
+                    }
+                });
+                builder.setCancelable(false);
+                builder.show();
+            }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE && resultCode != Activity.RESULT_OK) {
+            grandPermission();
         }
     }
 
@@ -555,58 +596,6 @@ public class MainActivity extends BasicActivity implements IHomeView, OnComplete
         ((FragmentResult) pagerAdapter.getItem(0)).queryDate(date);
     }
 
-    public static class FragmentPagerAdapter extends FragmentStatePagerAdapter {
-
-        List<Fragment> fragmentList;
-
-        public FragmentPagerAdapter(FragmentManager fragmentManager) {
-            super(fragmentManager);
-            fragmentList = new ArrayList<>();
-            fragmentList.add(FragmentResult.newInstance());
-            fragmentList.add(FragmentAnalytics.newInstance());
-            fragmentList.add(FragmentExplore.newInstance());
-            fragmentList.add(FragmentMore.newInstance());
-        }
-
-        // Returns total number of pages
-        @Override
-        public int getCount() {
-            return fragmentList.size();
-        }
-
-        @Override
-        public int getItemPosition(Object object) {
-            return POSITION_NONE;
-        }
-
-        // Returns the fragment to display for that page
-        @Override
-        public Fragment getItem(int position) {
-            return fragmentList.get(position);
-        }
-
-        // Returns the page title for the top indicator
-        @Override
-        public CharSequence getPageTitle(int position) {
-            String title = null;
-            switch (position) {
-                case 0:
-                    title = "Kết quả";
-                    break;
-                case 1:
-                    title = "Thống kê";
-                    break;
-                case 2:
-                    title = "Soi cầu";
-                    break;
-                case 3:
-                    title = "Thêm";
-                    break;
-            }
-            return title;
-        }
-    }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -684,5 +673,57 @@ public class MainActivity extends BasicActivity implements IHomeView, OnComplete
             }
         });
         showcase.showOnce("Fourd");
+    }
+
+    public static class FragmentPagerAdapter extends FragmentStatePagerAdapter {
+
+        List<Fragment> fragmentList;
+
+        public FragmentPagerAdapter(FragmentManager fragmentManager) {
+            super(fragmentManager);
+            fragmentList = new ArrayList<>();
+            fragmentList.add(FragmentResult.newInstance());
+            fragmentList.add(FragmentAnalytics.newInstance());
+            fragmentList.add(FragmentExplore.newInstance());
+            fragmentList.add(FragmentMore.newInstance());
+        }
+
+        // Returns total number of pages
+        @Override
+        public int getCount() {
+            return fragmentList.size();
+        }
+
+        @Override
+        public int getItemPosition(Object object) {
+            return POSITION_NONE;
+        }
+
+        // Returns the fragment to display for that page
+        @Override
+        public Fragment getItem(int position) {
+            return fragmentList.get(position);
+        }
+
+        // Returns the page title for the top indicator
+        @Override
+        public CharSequence getPageTitle(int position) {
+            String title = null;
+            switch (position) {
+                case 0:
+                    title = "Kết quả";
+                    break;
+                case 1:
+                    title = "Thống kê";
+                    break;
+                case 2:
+                    title = "Soi cầu";
+                    break;
+                case 3:
+                    title = "Thêm";
+                    break;
+            }
+            return title;
+        }
     }
 }

@@ -5,8 +5,8 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.DatePicker;
 
-import com.xProject.XosoVIP.sdk.callback.DateTimePickerListener;
 import com.xProject.XosoVIP.R;
+import com.xProject.XosoVIP.sdk.callback.DateTimePickerListener;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -15,9 +15,9 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class TimeUtils {
+    public static final int DAYS_OF_TIME;
     private static final Calendar FIRST_DAY_OF_TIME;
     private static final Calendar LAST_DAY_OF_TIME;
-    public static final int DAYS_OF_TIME;
     private static final String TAG = "TimeUtils";
 
     static {
@@ -182,11 +182,7 @@ public class TimeUtils {
 
         long timeEndLive = calendarEnd.getTimeInMillis();
 
-        if (curentTimes >= timeSetLive && curentTimes <= timeEndLive) {
-            return true;
-        } else {
-            return false;
-        }
+        return curentTimes >= timeSetLive && curentTimes <= timeEndLive;
 
     }
 

@@ -5,13 +5,13 @@
     android:layout_height="match_parent"
     android:layout_gravity="center">
     <FrameLayout
-        android:background="@color/black_40"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/black_40">
         <LinearLayout
-            android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_margin="@dimen/size_36"
             android:background="@drawable/layout_round"
             android:gravity="center"
@@ -29,8 +29,8 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
                 android:background="@drawable/cirle_progress_background"
-                android:progressDrawable="@drawable/circular_progressbar"
-                android:indeterminate="true"/>
+                android:indeterminate="true"
+                android:progressDrawable="@drawable/circular_progressbar" />
 
             <TextView
                 android:id="@+id/tv_message"
@@ -44,7 +44,6 @@
                 android:text="@string/loading"
                 android:textColor="@color/black_75"
                 android:textSize="@dimen/font_13" />
-
 
             <!--<ProgressBar-->
             <!--android:id="@+id/dialog_progress_progressview"-->

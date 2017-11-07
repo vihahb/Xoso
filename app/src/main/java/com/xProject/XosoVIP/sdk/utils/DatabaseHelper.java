@@ -92,7 +92,7 @@ public class DatabaseHelper {
     }
 
     public <T extends RealmObject> List<T> findObjectByName(Class<T> tClass, String key, String value) {
-        return (List<T>) realm.copyFromRealm(realm.where(tClass).like(key, "*" + value + "*").findAll());
+        return realm.copyFromRealm(realm.where(tClass).like(key, "*" + value + "*").findAll());
     }
 
     public <T extends RealmObject> ArrayList<T> getListOfObjects(Class<T> tClass, String sort_key) {

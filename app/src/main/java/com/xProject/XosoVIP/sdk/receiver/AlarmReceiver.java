@@ -105,19 +105,5 @@ public class AlarmReceiver extends BroadcastReceiver {
             SharedUtils.getInstance().putBooleanValue(Constants.CHECK_DONE_C, false);
             SharedUtils.getInstance().putBooleanValue(Constants.CHECK_DONE_S, false);
         }
-
-//        PendingIntent pendingIntent = PendingIntent.getService(context, 99, intentLive, PendingIntent.FLAG_UPDATE_CURRENT);
-//
-//        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
-//        builder.setContentTitle("Trực tiếp");
-//        builder.setContentText(content_notify);
-//        builder.setSound(Settings.System.DEFAULT_NOTIFICATION_URI);
-//        builder.setDefaults(Notification.DEFAULT_SOUND);
-//        builder.setSmallIcon(R.mipmap.ic_launcher);
-//        builder.setContentIntent(pendingIntent);
-//
-//        int notify_id = intent.getIntExtra(Constants.NOTIFICATION_ID, 0);
-//        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-//        notificationManager.notify(notify_id, builder.build());
     }
 }

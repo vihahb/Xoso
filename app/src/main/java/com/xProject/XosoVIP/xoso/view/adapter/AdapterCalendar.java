@@ -9,9 +9,9 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.xProject.XosoVIP.R;
 import com.xProject.XosoVIP.xoso.model.entity.MyCalendar;
 import com.xProject.XosoVIP.xoso.view.widget.RecyclerTabLayout;
-import com.xProject.XosoVIP.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +43,7 @@ public class AdapterCalendar extends RecyclerTabLayout.Adapter<AdapterCalendar.C
     @Override
     public void onBindViewHolder(CalendarHolder holder, final int position) {
         if (holder instanceof CalendarHolder) {
-            final CalendarHolder calendarHolder = (CalendarHolder) holder;
+            final CalendarHolder calendarHolder = holder;
             final MyCalendar calendar = calendarList.get(position);
             calendarHolder.setData(calendar);
             calendarHolder.itemView.setOnClickListener(new View.OnClickListener() {

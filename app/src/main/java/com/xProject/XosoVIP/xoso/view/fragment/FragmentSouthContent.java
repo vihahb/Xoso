@@ -2,7 +2,6 @@ package com.xProject.XosoVIP.xoso.view.fragment;
 
 import android.content.Context;
 import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -19,6 +18,7 @@ import android.widget.TextView;
 
 import com.xProject.XosoVIP.R;
 import com.xProject.XosoVIP.sdk.common.Constants;
+import com.xProject.XosoVIP.sdk.utils.AudioPlay;
 import com.xProject.XosoVIP.sdk.utils.CalendarUtils;
 import com.xProject.XosoVIP.sdk.utils.SharedUtils;
 import com.xProject.XosoVIP.sdk.utils.TextUtils;
@@ -43,19 +43,19 @@ import java.util.Random;
 public class FragmentSouthContent extends CustomFragment implements IFragmentSouthContent {
 
     private static final String KEY_DATE = "date";
+    private static final String TAG = "FragmentSouthContent";
     boolean isLive = false, check_done = false;
     long millis;
     View view;
+    RESP_NewResult resp_newResult;
+    RESP_Result resp_result;
+    String date_select = "";
+    TextView tv_not_yet, tv_title_region;
     private FragmentSouthContentPresenter presenter;
     private String getDateTime;
     private TextView tvContent, tv_title;
-    //    private OnLoadComplete loadComplete;
-    private NestedScrollView scroll_south;
     private TableLayout table_1, table_2, table_3, table_4;
     private LinearLayout loadingView;
-    RESP_NewResult resp_newResult;
-    RESP_Result resp_result;
-
     /**
      * Value table result lottery
      */
@@ -125,9 +125,7 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
     private Roller rl84, rl74, rl641, rl642, rl643, rl54,
             rl44, rl442, rl443, rl444, rl445, rl446, rl447,
             rl341, rl342, rl_second_4, rl_first_4, rl_special_4;
-    private MediaPlayer player;
     private boolean toDay;
-    String date_select = "";
     private boolean mute = false, keepConnect = false;
     private AudioManager audioManager;
     private Context context;
@@ -138,8 +136,6 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
     private String tmp1_b0 = "", tmp1_b1 = "", tmp1_b2 = "", tmp1_b3 = "", tmp1_b4 = "", tmp1_b5 = "", tmp1_b6 = "", tmp1_b7 = "", tmp1_b8 = "", tmp1_b9 = "";
     private String tmp2_b0 = "", tmp2_b1 = "", tmp2_b2 = "", tmp2_b3 = "", tmp2_b4 = "", tmp2_b5 = "", tmp2_b6 = "", tmp2_b7 = "", tmp2_b8 = "", tmp2_b9 = "";
     private String tmp3_b0 = "", tmp3_b1 = "", tmp3_b2 = "", tmp3_b3 = "", tmp3_b4 = "", tmp3_b5 = "", tmp3_b6 = "", tmp3_b7 = "", tmp3_b8 = "", tmp3_b9 = "";
-    TextView tv_not_yet;
-    boolean createdView = false;
 
     public static FragmentSouthContent newInstance(long date, String day_string) {
         FragmentSouthContent fragmentFirst = new FragmentSouthContent();
@@ -149,7 +145,6 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
         fragmentFirst.setArguments(args);
         return fragmentFirst;
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -164,12 +159,12 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
         onViewCreated();
     }
 
-
     @Override
     protected void onCreateViewFirst(final View view) {
         presenter = new FragmentSouthContentPresenter(this);
         millis = getArguments().getLong(KEY_DATE);
         date_select = getArguments().getString("StringDate");
+
 
         if (millis > 0) {
             final Context context = getActivity();
@@ -179,14 +174,14 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
             toDay = todays.trim().equals(getDateTime.trim());
         }
 
-        player = MediaPlayer.create(getContext(), R.raw.notification11);
         audioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
         check_done = SharedUtils.getInstance().getBooleanValue(Constants.CHECK_DONE_S);
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+                tv_title_region = (TextView) view.findViewById(R.id.tv_title_region);
                 loadingView = (LinearLayout) view.findViewById(R.id.loadingView);
-                scroll_south = (NestedScrollView) view.findViewById(R.id.scroll_south);
                 tvContent = (TextView) view.findViewById(R.id.tvContent);
                 tv_title = (TextView) view.findViewById(R.id.tv_title);
                 tv_not_yet = (TextView) view.findViewById(R.id.tv_not_yet);
@@ -213,8 +208,15 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
                     tv_not_yet.setVisibility(View.GONE);
                 }
 
+                if (toDay && TimeUtils.checkTimeInMilisecondNorth(0, 0, 16, 40)){
+                    tv_title_region.setText("Trực tiếp xổ số Miền Nam");
+                } else {
+                    tv_title_region.setText("Kết quả xổ số Miền Nam");
+                }
+
                 if (toDay && TimeUtils.checkTimeInMilisecondNorth(16, 10, 16, 40)) {
                     if (!check_done) {
+                        tv_title_region.setText("Trực tiếp xổ số Miền Nam");
                         presenter.connectSocket();
                     } else {
                         presenter.getResultLottery(getDateTime);
@@ -230,7 +232,6 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
     protected void onCreateViewAgain(View view) {
 
     }
-
 
     private void getTitle() {
         Calendar calendar = Calendar.getInstance();
@@ -266,10 +267,12 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
             public void onClick(View view) {
                 if (!mute) {
                     mute = true;
+                    sound = false;
                     img_mute.setImageResource(R.mipmap.ic_mute_on);
                     audioManager.setStreamMute(AudioManager.STREAM_MUSIC, true);
                 } else {
                     mute = false;
+                    sound = true;
                     img_mute.setImageResource(R.mipmap.ic_mute);
                     audioManager.setStreamMute(AudioManager.STREAM_MUSIC, false);
                 }
@@ -1117,6 +1120,7 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
 
             /**
              * Six*/
+
             if (seven != null && six != null && seven.size() == 1) {
                 switch (six.size()) {
                     case 0:
@@ -1454,6 +1458,15 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
             case 1:
                 setTable2Hidden();
                 setTable3Hidden();
+                checkRandomTable1(resp_result.getData().get(0).getRes_special(),
+                        resp_result.getData().get(0).getRes_first(),
+                        resp_result.getData().get(0).getRes_second(),
+                        resp_result.getData().get(0).getRes_third(),
+                        resp_result.getData().get(0).getRes_fourth(),
+                        resp_result.getData().get(0).getRes_fifth(),
+                        resp_result.getData().get(0).getRes_sixth(),
+                        resp_result.getData().get(0).getRes_seventh(),
+                        resp_result.getData().get(0).getRes_eight());
                 setResultLotteryTable1(
                         resp_result.getData().get(0).getArea(),
                         resp_result.getData().get(0).getRes_special(),
@@ -1468,6 +1481,15 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
                         resp_result.getData().get(0).getBegin_with());
                 break;
             case 2:
+                checkRandomTable1(resp_result.getData().get(0).getRes_special(),
+                        resp_result.getData().get(0).getRes_first(),
+                        resp_result.getData().get(0).getRes_second(),
+                        resp_result.getData().get(0).getRes_third(),
+                        resp_result.getData().get(0).getRes_fourth(),
+                        resp_result.getData().get(0).getRes_fifth(),
+                        resp_result.getData().get(0).getRes_sixth(),
+                        resp_result.getData().get(0).getRes_seventh(),
+                        resp_result.getData().get(0).getRes_eight());
                 setResultLotteryTable1(
                         resp_result.getData().get(0).getArea(),
                         resp_result.getData().get(0).getRes_special(),
@@ -1480,6 +1502,16 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
                         resp_result.getData().get(0).getRes_seventh(),
                         resp_result.getData().get(0).getRes_eight(),
                         resp_result.getData().get(0).getBegin_with());
+
+                checkRandomTable2(resp_result.getData().get(1).getRes_special(),
+                        resp_result.getData().get(1).getRes_first(),
+                        resp_result.getData().get(1).getRes_second(),
+                        resp_result.getData().get(1).getRes_third(),
+                        resp_result.getData().get(1).getRes_fourth(),
+                        resp_result.getData().get(1).getRes_fifth(),
+                        resp_result.getData().get(1).getRes_sixth(),
+                        resp_result.getData().get(1).getRes_seventh(),
+                        resp_result.getData().get(1).getRes_eight());
                 setResultLotteryTable2(
                         resp_result.getData().get(1).getArea(),
                         resp_result.getData().get(1).getRes_special(),
@@ -1496,6 +1528,15 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
                 break;
             case 3:
                 setTable4Hidden();
+                checkRandomTable1(resp_result.getData().get(0).getRes_special(),
+                        resp_result.getData().get(0).getRes_first(),
+                        resp_result.getData().get(0).getRes_second(),
+                        resp_result.getData().get(0).getRes_third(),
+                        resp_result.getData().get(0).getRes_fourth(),
+                        resp_result.getData().get(0).getRes_fifth(),
+                        resp_result.getData().get(0).getRes_sixth(),
+                        resp_result.getData().get(0).getRes_seventh(),
+                        resp_result.getData().get(0).getRes_eight());
                 setResultLotteryTable1(
                         resp_result.getData().get(0).getArea(),
                         resp_result.getData().get(0).getRes_special(),
@@ -1508,6 +1549,16 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
                         resp_result.getData().get(0).getRes_seventh(),
                         resp_result.getData().get(0).getRes_eight(),
                         resp_result.getData().get(0).getBegin_with());
+
+                checkRandomTable2(resp_result.getData().get(1).getRes_special(),
+                        resp_result.getData().get(1).getRes_first(),
+                        resp_result.getData().get(1).getRes_second(),
+                        resp_result.getData().get(1).getRes_third(),
+                        resp_result.getData().get(1).getRes_fourth(),
+                        resp_result.getData().get(1).getRes_fifth(),
+                        resp_result.getData().get(1).getRes_sixth(),
+                        resp_result.getData().get(1).getRes_seventh(),
+                        resp_result.getData().get(1).getRes_eight());
                 setResultLotteryTable2(
                         resp_result.getData().get(1).getArea(),
                         resp_result.getData().get(1).getRes_special(),
@@ -1520,6 +1571,16 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
                         resp_result.getData().get(1).getRes_seventh(),
                         resp_result.getData().get(1).getRes_eight(),
                         resp_result.getData().get(1).getBegin_with());
+
+                checkRandomTable3(resp_result.getData().get(2).getRes_special(),
+                        resp_result.getData().get(2).getRes_first(),
+                        resp_result.getData().get(2).getRes_second(),
+                        resp_result.getData().get(2).getRes_third(),
+                        resp_result.getData().get(2).getRes_fourth(),
+                        resp_result.getData().get(2).getRes_fifth(),
+                        resp_result.getData().get(2).getRes_sixth(),
+                        resp_result.getData().get(2).getRes_seventh(),
+                        resp_result.getData().get(2).getRes_eight());
                 setResultLotteryTable3(
                         resp_result.getData().get(2).getArea(),
                         resp_result.getData().get(2).getRes_special(),
@@ -1534,6 +1595,15 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
                         resp_result.getData().get(2).getBegin_with());
                 break;
             case 4:
+                checkRandomTable1(resp_result.getData().get(0).getRes_special(),
+                        resp_result.getData().get(0).getRes_first(),
+                        resp_result.getData().get(0).getRes_second(),
+                        resp_result.getData().get(0).getRes_third(),
+                        resp_result.getData().get(0).getRes_fourth(),
+                        resp_result.getData().get(0).getRes_fifth(),
+                        resp_result.getData().get(0).getRes_sixth(),
+                        resp_result.getData().get(0).getRes_seventh(),
+                        resp_result.getData().get(0).getRes_eight());
                 setResultLotteryTable1(
                         resp_result.getData().get(0).getArea(),
                         resp_result.getData().get(0).getRes_special(),
@@ -1546,6 +1616,16 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
                         resp_result.getData().get(0).getRes_seventh(),
                         resp_result.getData().get(0).getRes_eight(),
                         resp_result.getData().get(0).getBegin_with());
+
+                checkRandomTable2(resp_result.getData().get(1).getRes_special(),
+                        resp_result.getData().get(1).getRes_first(),
+                        resp_result.getData().get(1).getRes_second(),
+                        resp_result.getData().get(1).getRes_third(),
+                        resp_result.getData().get(1).getRes_fourth(),
+                        resp_result.getData().get(1).getRes_fifth(),
+                        resp_result.getData().get(1).getRes_sixth(),
+                        resp_result.getData().get(1).getRes_seventh(),
+                        resp_result.getData().get(1).getRes_eight());
                 setResultLotteryTable2(
                         resp_result.getData().get(1).getArea(),
                         resp_result.getData().get(1).getRes_special(),
@@ -1558,6 +1638,16 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
                         resp_result.getData().get(1).getRes_seventh(),
                         resp_result.getData().get(1).getRes_eight(),
                         resp_result.getData().get(1).getBegin_with());
+
+                checkRandomTable3(resp_result.getData().get(2).getRes_special(),
+                        resp_result.getData().get(2).getRes_first(),
+                        resp_result.getData().get(2).getRes_second(),
+                        resp_result.getData().get(2).getRes_third(),
+                        resp_result.getData().get(2).getRes_fourth(),
+                        resp_result.getData().get(2).getRes_fifth(),
+                        resp_result.getData().get(2).getRes_sixth(),
+                        resp_result.getData().get(2).getRes_seventh(),
+                        resp_result.getData().get(2).getRes_eight());
                 setResultLotteryTable3(
                         resp_result.getData().get(2).getArea(),
                         resp_result.getData().get(2).getRes_special(),
@@ -1570,6 +1660,16 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
                         resp_result.getData().get(2).getRes_seventh(),
                         resp_result.getData().get(2).getRes_eight(),
                         resp_result.getData().get(2).getBegin_with());
+
+                checkRandomTable4(resp_result.getData().get(3).getRes_special(),
+                        resp_result.getData().get(3).getRes_first(),
+                        resp_result.getData().get(3).getRes_second(),
+                        resp_result.getData().get(3).getRes_third(),
+                        resp_result.getData().get(3).getRes_fourth(),
+                        resp_result.getData().get(3).getRes_fifth(),
+                        resp_result.getData().get(3).getRes_sixth(),
+                        resp_result.getData().get(3).getRes_seventh(),
+                        resp_result.getData().get(3).getRes_eight());
                 setResultLotteryTable4(
                         resp_result.getData().get(3).getArea(),
                         resp_result.getData().get(3).getRes_special(),
@@ -1645,17 +1745,12 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
         }
     }
 
-    private static final String TAG = "FragmentSouthContent";
-
     @Override
     public void setNewResult(RESP_NewResult newResult, int position_table) {
-        if (player != null) {
-            if (player.isPlaying()) {
-                player.stop();
-            }
-            player.start();
+        if (audioManager!=null){
+            int mod = audioManager.getRingerMode();
         }
-
+        AudioPlay.getInstance().play(getContext());
         Log.e(TAG, "setNewResult: " + date_select);
         keepConnect = true;
         if (toDay) {
@@ -1928,7 +2023,7 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
                                 if (rl632.isRun())
                                     rl632.shutdownThread(false);
                             }
-                            if (rl633.isRun())
+                            if (!rl633.isRun())
                                 rl633.run();
                             tv6_2_3.setText(newResult.getValue());
                             break;
@@ -2469,6 +2564,7 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
         MainActivity mainActivity = (MainActivity) getActivity();
         mainActivity.setEndLive(3);
         SharedUtils.getInstance().putBooleanValue(Constants.CHECK_DONE_S, true);
+        tv_title_region.setText("Kết quả xổ số Miền Nam");
     }
 
     @Override
@@ -2501,22 +2597,21 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
         if (keepConnect) {
             presenter.connectSocket();
         }
-        if (toDay && TimeUtils.checkTimeInMilisecondNorth(16, 10, 16, 40)) {
-            presenter.connectSocket();
-        }
         sound = SharedUtils.getInstance().getBooleanDefaultTrueValue(Constants.SOUND_FLAG);
         if (!sound) {
-            if (audioManager != null) {
-                audioManager.setStreamMute(AudioManager.STREAM_MUSIC, true);
-            }
             if (img_mute != null) {
                 img_mute.setImageResource(R.mipmap.ic_mute_on);
+            }
+            if (audioManager != null) {
+                audioManager.setStreamMute(AudioManager.STREAM_MUSIC, true);
             }
         } else {
             if (img_mute != null) {
                 img_mute.setImageResource(R.mipmap.ic_mute);
             }
-            audioManager.setStreamMute(AudioManager.STREAM_MUSIC, false);
+            if (audioManager != null) {
+                audioManager.setStreamMute(AudioManager.STREAM_MUSIC, false);
+            }
         }
 
     }
@@ -2525,10 +2620,6 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
     public void onDestroy() {
         super.onDestroy();
         presenter.checkSocket();
-
-        if (player != null) {
-            player.release();
-        }
     }
 
     @Override
@@ -4151,9 +4242,6 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
                                         List<String> seven,
                                         List<String> eight, BeginResult beginResult) {
 
-
-        checkRandomTable1(special, first, second, third, fourd, five, six, seven, eight);
-
         tvResgion_1.setText(area);
         tvLotoTitle1.setText(area);
 
@@ -4265,9 +4353,6 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
                                         List<String> seven,
                                         List<String> eight, BeginResult beginResult) {
 
-
-        checkRandomTable2(special, first, second, third, fourd, five, six, seven, eight);
-
         tvResgion_2.setText(area);
         tvLotoTitle2.setText(area);
 
@@ -4378,8 +4463,6 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
                                         List<String> six,
                                         List<String> seven,
                                         List<String> eight, BeginResult beginResult) {
-        checkRandomTable3(special, first, second, third, fourd, five, six, seven, eight);
-
         tvResgion_3.setText(area);
         tvLotoTitle3.setText(area);
 
@@ -4495,8 +4578,6 @@ public class FragmentSouthContent extends CustomFragment implements IFragmentSou
                                         List<String> six,
                                         List<String> seven,
                                         List<String> eight, BeginResult beginResult) {
-        checkRandomTable4(special, first, second, third, fourd, five, six, seven, eight);
-
         tvResgion_4.setText(area);
         tvLotoTitle4.setText(area);
 

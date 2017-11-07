@@ -94,7 +94,29 @@ public class FragmentResult extends BasicFragment {
         check_done_n = SharedUtils.getInstance().getBooleanValue(Constants.CHECK_DONE_N);
         check_done_c = SharedUtils.getInstance().getBooleanValue(Constants.CHECK_DONE_C);
         check_done_s = SharedUtils.getInstance().getBooleanValue(Constants.CHECK_DONE_S);
+        checkLive();
 
+
+//        setViewTab4();
+
+        tmp_flag_region_radio = SharedUtils.getInstance().getIntValue(Constants.FLAG_RADIO_REGION);
+        if (tmp_flag_region_radio > 0) {
+            switch (tmp_flag_region_radio) {
+                case 1:
+                    viewPager.setCurrentItem(0);
+                    break;
+                case 2:
+                    viewPager.setCurrentItem(1);
+                    break;
+                case 3:
+                    viewPager.setCurrentItem(2);
+                    break;
+            }
+        }
+
+    }
+
+    private void checkLive() {
         /**
          * Check live north*/
         if (TimeUtils.checkTimeInMilisecondNorth(18, 10, 18, 40)) {
@@ -130,23 +152,6 @@ public class FragmentResult extends BasicFragment {
         } else {
             setViewTab3(false);
         }
-//        setViewTab4();
-
-        tmp_flag_region_radio = SharedUtils.getInstance().getIntValue(Constants.FLAG_RADIO_REGION);
-        if (tmp_flag_region_radio > 0) {
-            switch (tmp_flag_region_radio) {
-                case 1:
-                    viewPager.setCurrentItem(0);
-                    break;
-                case 2:
-                    viewPager.setCurrentItem(1);
-                    break;
-                case 3:
-                    viewPager.setCurrentItem(2);
-                    break;
-            }
-        }
-
     }
 
     private void setViewTab1(boolean flag) {
